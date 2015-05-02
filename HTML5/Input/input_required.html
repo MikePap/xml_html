@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Input richiesto</title>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+code, pre{ color:rgb(50,150,50); background:#eee; padding:10px; }
+.nota{ color:rgb(250,120,0);}
+.codice{ color:rgb(30,120,30);}
+.grigio{color: grey;}
+.blu{color:#00f;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+dd{ color:#0066FF;}
+tt, em{color:#6a9999}
+
+</style>
+</head>
+<body>
+
+
+<h1>Convalida Input </h1>
+
+<h3>Attributo required</h3>
+
+<p>
+Per definire una convalida sul <tt>campo vuoto</tt>, semplicemente, basta inserire l'attributo <b>required</b> all'interno del tag &lt;input&gt; 
+</p>
+
+<pre>
+&lt;input id="username" placeholder="Inserite un nome" required /&gt;
+</pre>
+<p>
+Risulterà qualcosa del tipo 
+</p>
+
+<form  method="post" >
+	<input id="username" placeholder="Inserite un nome" required />
+	<input type="submit" name="sub" value="Invia"  id="sub" />
+</form>
+
+<p>
+che evidenzierà un messaggio di avvertimento di default (<q>Compilare questo campo</q>) qualora all'invio del form il campo rimarrà vuoto. <br />
+Inoltre l'HTML5 da la possibilità di personalizzare questo comportamento di default con la disponibilità di proprietà che possono essere aggiunte con JavaScript. Il metodo <b>setCustomValidity</b> calza all'occasione per personalizzare il messsaggio di errore.
+</p>
+<pre>
+function validateMessage( input ) {
+	if( input.value.length &lt; 5 ) {
+		input.setCustomValidity( 'Hai l\'obbligo di fornire un numero maggiore di 5 lettere. Grazie' ); 
+	} else {
+	input.setCustomValidity( '' );
+  }
+}
+<span class="grigio">
+La funzione 'validateMessage' va quindi richiamata all'interno del campo input, a cui si vuole far eseguire il controllo, col metodo 'oninput'
+</span>	<span class="blu">
+&lt;textarea id="message" oninput="validateMessage(this)&gt;&lt;/textarea&gt;
+</span>	
+</pre>
+
+
+<span class="grigio">Prova ad inserire meno di 5 lettere </span>
+
+<form  method="post" >
+	<textarea id="message" oninput="validateMessage(this)"></textarea>
+	<input type="submit" name="sub" value="Invia"  id="sub" />
+</form>
+
+
+<script type="text/javascript">
+
+function validateMessage( input ) {
+	if( input.value.length < 5 ) {
+		input.setCustomValidity( 'Hai l\'obbligo di fornire un numero maggiore di 5 lettere. Grazie' ); 
+	} else {
+	input.setCustomValidity( '' );
+	}
+}
+
+</script>
+
+
+
+<h2>Convalida con l'utilizzo delle Regular Expressions </h2>
+
+<p>
+L'HTML5 permette di utilizzare le  <a href="../../../JavaScript/Regular_expression.html">Regular Expressions</a> per definire le operazioni di convalida. <br />
+L'unica cosa da ricordare quando si creano i pattern è che i caratteri ^ e $ che denotano rispettivamente l'inizio e la fine della stringa non sono richiesti in quanto l'HTML5 li inserisce di default.
+</p>
+
+<pre>
+&lt;input id="email-address" required pattern="\S+@[a-z]+.[a-z]{3}" /&gt;
+</pre>
+
+<p>
+Nel caso specifico è ammessa una stringa di tipo email.
+</p>
+
+<form  method="post" >
+	<input id="email-address" required pattern="\S+@[a-z]+.[a-z]{3}" oninput="validateEmail(this)" >
+	<input type="submit" name="sub" value="Invia"  id="sub"  />
+</form>
+
+<script type="text/javascript">
+
+var email = document.getElementById('email-address');
+
+function validateEmail( input ) {
+	if( email.value.length < 5 ) {
+		input.setCustomValidity( 'Inserire una email valida. Grazie' ); 
+	} else {
+	input.setCustomValidity( '' );
+	}
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+</body>
+</html>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xml:lang="it" >
+  <body>
+    <div>
+      <p begin="0.000s" end="6.017s">ciao a tutti</p>
+      <p begin="6.017s" end="10.848s">in questa guida vedremo come utilizzare il software Jdownloader</p>
+      <p begin="10.848s" end="15.416s">Innanzitutto installiamo e scarichiamo il software</p>
+      <p begin="15.416s" end="17.604s">una volta scaricato lo apriamo</p>
+      <p begin="17.604s" end="23.355s">dopo averlo aperto</p>
+      <p begin="23.355s" end="27.226s">se per caso la lingua fosse in inglese cliccate su "impostazioni"</p>
+      <p begin="27.226s" end="31.510s">"Generale" - "Interfaccia Utente"</p>
+      <p begin="31.510s" end="33.867s">e cambiate la lingua in italiano</p>
+      <p begin="33.867s" end="39.611s">successivamente vi verrà chiesto di avvaire il software e la lingua verrà cambiata</p>
+    </div>
+  </body>
+</tt>
+

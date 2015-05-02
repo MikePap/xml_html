@@ -1,0 +1,19 @@
+<?xml version="1.0"  standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <polygon points="100,10 250,190 160,210 80,150"
+  style="fill:red;stroke:purple;stroke-width:1"/>
+</svg>
+
+
+<!--
+
+La primaq linea contiene la dichiarazione XML. L'attributo 'standalone' specifica se il file ha referenze o no ad un'altro file esterno. 'standalone="no"  intende che il file ha referenze ad un file esterno che in questo caso è il DTD.
+La seconda linea fa riferimento al DTD del SVG. tale DTD risiede a "w3.org" e contiene tutti gli elementi SVG ammissibili.  
+
+Il tag SVG ha bisogno del namespace che viene definito nell'attributo 'xmlns' e della versione usata definita nell'attributo 'version'
+
+-->
+
+

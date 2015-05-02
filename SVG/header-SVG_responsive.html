@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Menù header responsive  </title>
+<style type="text/css">
+html, body, div{  margin:0; padding:0;}
+* { 
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+   box-sizing: border-box; 
+}
+
+h1{ color: #00F; font-size:31px; margin-left:100px; padding:5px; }
+h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
+h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
+h4{ color:#ff0; font-size:18px; margin:0; text-align:center; padding:5px; }
+p{ padding-left:15px; }
+dl{margin-left:20px;}
+dt{ color:#039; margin-bottom:5px;}
+dd{ color:#06F; margin-left:10px; }
+li{margin-left:31px;}
+.nota{ color:#F66;}
+.codice{ color:#060}
+pre{color:rgb(50,150,50); margin-left:5px; }
+
+
+div.box{
+position:relative; 
+border: 1px solid #ccc; 
+}
+
+#svgGenitore{
+width:100%; 
+height:300px;
+/*height: 50vh;					corrisponde a metà dell'altezza del viewport	*/
+z-index:2;
+border: 1px solid red; 
+}
+
+#testoCentrale{
+position:absolute; top:0; left:0; 
+width:100%; 
+/*border:1px solid #f00; */
+z-index:4;
+}
+
+div.centrato {
+width:40%;	
+overflow: auto;
+margin:auto;	padding:5px 10px;	color:#ccc;
+position:absolute; top:50px; bottom:auto; left:0; right:0;
+border:1px solid #fff; 
+
+}
+
+</style>
+</head>
+<body>
+
+
+<h1>Creazione menù in header responsive </h1>
+
+<p>
+Funziona in tutti i browser tranne IE8. Safari non supporta la proprietà <q>vh</q> impostata per assegnare  un valore all'altezza del &lt;div&gt; che contiene la figua SVG. <br />
+<span class="nota">Vedere commenti interni riguardo al "viewBox" e "preserveAspectRatio". </span>
+</p>
+
+
+
+<div class="box">
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  id="svgGenitore" >
+
+		<!--parte centralew ellittica-->
+		<svg viewBox="0 0 100 100" preserveAspectRatio="none">
+			<ellipse cx="50" cy="50" rx="48" ry="50" style="fill:#444" />			
+		</svg>
+
+		<!--top-left-->
+		<svg viewBox="0 0 100 100" preserveAspectRatio="xMinYMin" >
+			<a xlink:href="#">
+				<circle cx="14" cy="14" r="14" fill="#0f0" />	
+				<text x="4" y="16" fill="red" font-size="7" font-family="Verdana">Home</text>					
+			</a>
+		</svg>
+
+		<!--top-right-->
+		<svg  viewBox="0 0 100 100" preserveAspectRatio="xMaxYMin" >
+			<a xlink:href="http://www.w3.org/TR/SVG11/">
+				<circle cx="86" cy="14" r="14" fill="#f00" />			
+				<text x="79" y="16" fill="black" font-size="7" font-family="Verdana">SVG</text>					
+			</a>
+		</svg>
+		<!--bottom-left-->
+		<svg viewBox="0 0 100 100" preserveAspectRatio="xMinYMax" >
+			<a xlink:href="#">
+				<circle cx="14" cy="86" r="14" fill="#00f" />			
+				<text x="9" y="89" fill="#000" font-size="7" font-family="Verdana">JS</text>					
+			</a>
+		</svg>
+
+		<!--bottom-right-->
+		<svg viewBox="0 0 100 100" preserveAspectRatio="xMaxYMax" >
+			<a xlink:href="#">			
+				<circle cx="86" cy="86" r="14" fill="#ff0" />			
+				<text x="75" y="88" fill="black" font-size="5.5" font-family="Verdana">Contatti</text>					
+			</a>
+		</svg>
+
+	<div id="testoCentrale">
+		<div class="centrato">
+			<h4>Menù responsive</h4>
+Questo menù è una figura SVG. La figura è responsive ed è formata da cinque elementi di cui i 4 cerchi, posizionati agli angoli, che sono dei collegamenti  e la parte centrale ellittica
+		</div> 	
+	</div> 
+
+</div> 
+
+
+
+
+
+
+<!--
+
+### Posizionamento cerchi agli angoli del 'div.box' ###
+Per far si che il 'preserveAspectRatio' abbia effetto all'interno' del 'viewBox' bisogna ragionare prendendo in considerazione i valori del 'viewBox' e i valori dell'elemento all'interno dell'SVG. 
+In altre parole volendo posizionare il cerchio in un punto del 'div.box', bisogna posizionarlo all'interno del 'viewBox' dell'SVG e poi sarà 'preserveAspectRatio' a  posizionarlo nel 'div.box': il nostro campo di azione deve essere il 'viewBox'. 
+### In questo caso i valori di 'width' e 'height' del 'viewBox' sono entrambi 100 e il nostro cerchio ha un raggio di 14. Volendolo posizionare in alto a destra(top-right), avendo come riferimento il 'viewBox', imposteremo 'cy=14' e 'cx=86'; 86 non è altro che la differenza della 'width' del 'viewBox' meno il raggio. Quindi in questo modo il cerchio è piazzato in alto a destra del 'viewBox' impostato all'SVG che è genitore del cerchio. Dopodichè sarà l'attributo 'preserveAspectRatio' a piazzare l'SVG, genitore del cerchio, in alto a destra del 'div.box' grazie al valore 'xMaxYMin'.  
+
+### Analizzando l'esempio di sotto' abbiamo una larghezza del 'viewBox' di 100 e un'altezza di 300 (differente dall'esempio di sopra). 
+Volendo posizionare il cerchio, con raggio di 50, in basso a destra (bottom-right) imposteremo 'cy=250' dove  250 è la differenza dell'altezza del 'viewBox'(300) e il raggio; mentre 'cx=50' dove 50 è la differenza tra la larghezza del 'viewBox'(100) e il raggio. 
+
+
+		#top-left
+		<svg viewBox="0 0 100 300" preserveAspectRatio="xMinYMin" >
+			<circle cx="50" cy="50" r="50" fill="#0f0" />			
+		</svg>
+
+		#top-right
+		<svg  viewBox="0 0 100 300" preserveAspectRatio="xMaxYMin" >
+			<circle cx="50" cy="50" r="50" fill="#f00" />			
+		</svg>
+		#bottom-left
+		<svg viewBox="0 0 100 300" preserveAspectRatio="xMinYMax" >
+			<circle cx="50" cy="250" r="50" fill="#00f" />			
+		</svg>
+		#bottom-right
+		<svg viewBox="0 0 100 300" preserveAspectRatio="xMaxYMax" >
+			<circle cx="50" cy="250" r="50" fill="#ff0" />			
+		</svg>
+
+----------------------------------------------------
+Il seguente è un metodo di mettere del testo nella parte centrale (ellittica) ma in funziona in Firefox e non in Chrome dove però accetta il testo alternativo
+			<switch>
+				<foreignObject  requiredExtensions="http://www.w3.org/1999/xhtml"  width="50" height="50" x="25" y="10" >
+					<body xmlns="http://www.w3.org/1999/xhtml">
+						<p class="par" >Questo è un menù responsive</p>
+					</body>
+				</foreignObject>			
+
+	### testo alternativo per quei browser che non supportano l'elemento <foreignObject>			
+				<text font-size="10" font-family="Verdana" class="par">
+					<tspan x="20" y="20" class="par">Questo è un menù responsive</tspan>
+				</text>
+
+			</switch>
+
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

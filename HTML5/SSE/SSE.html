@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>aggiornare il server  </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+pre{
+padding:10px; background:#444; color:#ff0; font-weight:bold; 
+}
+
+
+</style>
+</head>
+<!--
+vedere qui: 
+http://www.html5rocks.com/en/tutorials/eventsource/basics/
+-->
+
+<body>
+
+<h1>Metodo per far aggiornare il server </h1>
+
+<a href="http://www.html5rocks.com/en/tutorials/eventsource/basics/">vedi qui</a>
+
+<dl>
+	<dt>Gli eventi sono: </dt>
+	<dd><b>onmessage</b>: per ricevere messaggi dal server </dd>
+	<dd><b>onopen</b>: quando una connessione al server viene aperta</dd>
+	<dd><b>onerror</b>: quando avviene un errore</dd>
+	
+</dl>	
+
+<p>
+Ecco come impostare gli handler: 
+<pre>
+source.addEventListener('message', function(e) {
+  console.log(e.data);
+}, false);
+
+source.addEventListener('open', function(e) {
+  // Connection was opened.
+}, false);
+
+source.addEventListener('error', function(e) {
+  if (e.readyState == EventSource.CLOSED) {
+    // Connection was closed.
+  }
+}, false);
+</pre>
+Nella forma base, nella parte server, il risultato deve contenere la parola chiave <b>data:</b> seguita da ciò che si richiede dal server ed infine seguita da un doppio <b>\n</b> a voler terminare lo stream.  
+<pre>
+data: My message\n\n
+</pre>
+
+In caso di messaggio più lungo si possono usare, in ogni singola riga, molteplici <q>data:</q> facendo terminare ognuna con un <q>\n</q> tranne l'ultima a cui va fatto seguire un doppio <q>\n</q> 
+<pre>
+data: first line\n
+data: second line\n\n
+</pre>
+
+</p>
+
+
+<h3>Volendo utilizzare JSON </h3>
+<p>
+<pre>
+data: {\n
+data: "msg": "hello world",\n
+data: "id": 12345\n
+data: }\n\n
+</pre> 
+e nella parte client :
+<pre>
+source.addEventListener('message', function(e) {
+  var data = JSON.parse(e.data);
+  console.log(data.id, data.msg);
+}, false);
+</pre>
+</p>
+
+<h3>Associare un ID a un evento</h3>
+<p>
+In questo caso l'ID va dichiarato nella prima linea seguito daq <q>data:</q> 
+
+<pre>
+id: 12345\n
+data: GOOG\n
+data: 556\n\n
+</pre>
+La proprietà <b>e.lastEventId</b> rappresenta l'id dichiarato 
+</p>
+
+<h3>Controllo del timeout di riconnessione</h3>
+
+<p>
+Il browser cerca di riconnettersi al server circa ogni tre secondi però questo tempo lo si può cambiare inpostando in una riga la parola chiave <b>retry</b> seguita dal numero di millesecondi che si desidera. La seguente imposta una riconnessione dopo 10 secondi:  
+<pre>
+retry: 10000\n
+data: hello world\n\n
+</pre>
+</p>
+
+<h3>Specificare un nome per un evento </h3>
+
+<p>
+E' possibile creare un evento personalizzato assegnandogli un nome in modo che il client possa ascoltare quel particolare evento. Nell'esempio seguente sono dichiarati 3 tipi di eventi: il primo è un generico <q>messsage</q> e i due successivi hanno un loro nome ('userlogon', 'update')
+<pre>
+data: {"msg": "First message"}\n\n
+event: userlogon\n
+data: {"username": "John123"}\n\n
+event: update\n
+data: {"username": "John123", "emotion": "happy"}\n\n
+</pre>  
+in questo modo li possiamo richiamare dal client così: 
+<pre>
+source.addEventListener('message', function(e) {
+  var data = JSON.parse(e.data);
+  console.log(data.msg);
+}, false);
+
+source.addEventListener('userlogon', function(e) {
+  var data = JSON.parse(e.data);
+  console.log('User login:' + data.username);
+}, false);
+
+source.addEventListener('update', function(e) {
+  var data = JSON.parse(e.data);
+  console.log(data.username + ' is now ' + data.emotion);
+}, false);
+</pre>
+
+</p>
+
+<h3>Cancellare (interrompere) un evento in stream </h3>
+<p>
+Normalmente il browser si autoriconnette alla sorgente evento quando la connnessione si chiude. Ma volendo interrompere definitivamente lo stream è necessario chiamare l'evento <b>close()</b>
+<pre>
+source.close();
+</pre>
+
+</p>
+
+
+
+<button id="apriConnessione">Apri la Connessione</button> 	<button id="chiudiConnessione">Chiudi Connessione</button>
+<br /><br />
+
+<div id="result"></div>
+
+<br /><br /><br /><br /><br /><br />
+
+
+<script type="text/javascript">
+
+/*
+if(typeof(EventSource)!=="undefined"){
+//if (!!window.EventSource) {
+	var source = new EventSource("demo_sse.php");
+	source.onmessage = function(event){
+//		document.getElementById("result").innerHTML = event.data;			// mostra semplicemente la data come da funzione
+		document.getElementById("result").innerHTML += event.data + "<br>";	// qui invece la data viene aggiornata 
+	}
+}else{
+	document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events...";
+}
+*/
+
+// Con "addEventListener" 
+
+function ApriConnessione(){ 
+	Ricezione();
+/*	var source = new EventSource("demo_sse.php");
+	source.addEventListener('open', function(e) {
+//	alert('Connection was opened' );
+		Ricezione();	
+	}, false);
+*/
+};
+
+function ChiudiConnessione(){
+	var source = new EventSource("demo_sse.php");
+	source.close();
+} //
+
+
+//function Ricezione(){
+	var source = new EventSource("demo_sse.php");
+	source.addEventListener('message', function(event) {
+		document.getElementById("result").innerHTML += event.data + "<br>";
+//		document.getElementById("result").innerHTML += event.origin + "<br>";				// http://localhost
+//		document.getElementById("result").innerHTML += event.lastEventId + "<br>";			//
+//		document.getElementById("result").innerHTML += event.channel + "<br>";				// undefined
+//		document.getElementById("result").innerHTML += event.source + "<br>";				// null
+//		document.getElementById("result").innerHTML += event.ports + "<br>";					// undefined
+	}, false);
+//} //
+
+
+
+/*
+var pulsanteApri = document.getElementById('apriConnessione');
+pulsanteApri.addEventListener('click', ApriConnessione, false );
+var pulsanteChiudi = document.getElementById('chiudiConnessione');
+pulsanteChiudi.addEventListener('click', ChiudiConnessione, false);
+*/
+
+
+
+</script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+

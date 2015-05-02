@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE child SYSTEM "data.dtd">
+<child>
+    <name>Baby Ion</name>
+    <weight units="kg">3</weight>
+    <parents>
+        <mother>
+            <name>Neutron</name>
+        </mother>
+        <father>
+            <name>Proton</name>
+        </father>
+    </parents>
+</child>
+
+

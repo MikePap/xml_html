@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>transform</title>
+<style type="text/css">
+html,body,h1,h2,h3,p,dl,dt,dd,pre,ul, embed{ margin:0; padding:5px; }
+h1{ color: #00F; font-size:31px; margin-left:100px; padding:10px; }
+h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
+h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
+p{ padding:5px; }
+dl{margin-left:20px;}
+dt{ color:#039; margin-bottom:5px;}
+dd{ color:#06F; margin-left:10px; }
+li{margin-left:31px;}
+.nota{ color:#F66;}
+.codice{ color:#060}
+.azzurro{
+color:blue;
+}
+pre{color:rgb(50,150,50); margin-left:5px; background:rgb(230,230,230);
+ }
+tt{
+color:green;
+}
+
+svg{
+border: 1px solid #ccc; margin:10px 5px;
+}
+
+</style>
+</head>
+<body>
+
+
+<h1>transform</h1>
+
+<p>
+L'attributo <tt>transform</tt> è utilizzato per applicare delle trasformazioni agli elementi. Le trasformazioni possibili in SVG sono: <b>rotation, scaling, translation e skewing.</b> 
+</p>
+
+
+<h3>Translation</h3>
+
+<p>
+L'attributo <tt>translate</tt> permette di spostare un elemento dalla sua posizione originariamente definita. Il primo argomento dell'attributo <tt>translate</tt> definisce la translazione sull'asse delle x mentre il secondo sull'asse delle y. Attenzione che se passato un solo argomento la translazione farà riferimento solo all'asse delle x mentre quella dell'asse y sarà uguale a zero. I due valori possono essere separati da uno spazio bianco o da una virgola.
+</p>
+
+<pre>
+&lt;svg width="400" height=200&gt;				
+	&lt;circle cx="50" cy="50" r="50" fill="red"/&gt;					<span class="nota">esempio a sinistra (senza transform)</span>
+&lt;/svg&gt; 
+
+&lt;svg width="400" height=200&gt;				
+	&lt;circle cx="50" cy="50" r="50" fill="red" transform="translate(50, 50)"/&gt;	<span class="nota">esempio a destra</span>
+&lt;/svg&gt; 
+</pre>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="400" height="200" >
+		<circle cx="50" cy="50" r="50" fill="red"  />
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="400" height="200" >
+		<circle cx="50" cy="50" r="50" fill="red" transform="translate(50, 50)" />
+	</svg>
+
+</div>
+
+
+<h3>Scaling</h3>
+
+<p>
+L'attributo <tt>scale</tt> permette di ridefinire l'elemento nelle sue misure di <em>width</em> e <em>height</em>, in altre parole se scalarlo o ingrandirlo.
+Il primo argomento lo ridefinisce nella misura della 'width' e il secondo nella misura della 'height'. Se si omette il secondo argomento sarà inteso uguale al primo. I due valori possono essere separati da uno spazio bianco o da una virgola.
+</p>
+
+<pre>
+&lt;svg width="300" height=300&gt;								<span class="nota">esempio a sinistra  </span> 
+	&lt;rect x="50" y="50" width="50" height="30" 		
+	&lt;rect x="50" y="100" width="50" height="30" transform="scale(2)" /&gt;		<span class="nota">lo scaling è solo qui</span>
+&lt;/svg&gt; 
+
+&lt;svg width="300" height=300&gt;								<span class="nota">secondo esempio  </span> 
+	&lt;rect x="50" y="100" width="50" height="30" transform="translate(50 100) scale(2) translate(-25 -50)" /&gt;		<span class="nota"></span>
+&lt;/svg&gt; 
+
+&lt;svg width="300" height=200 viewBox="0 0 150 150" &gt;					<span class="nota">terzo esempio (viewBox ridotto)</span>
+	&lt;rect x="50" y="100" width="50" height="30" /&gt;					
+&lt;/svg&gt; 
+
+&lt;svg width="300" height=300&gt;								<span class="nota">quarto esempio  </span>
+	&lt;rect x="50" y="50" width="50" height="30" /&gt;					
+	&lt;rect x="50" y="100" width="50" height="30" transform="scale(2) translate(-25 -50)" /&gt;					
+&lt;/svg&gt; 
+</pre>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="50" y="50" width="50" height="30" fill="blue" />
+		<rect x="50" y="100" width="50" height="30" fill="blue" transform="scale(2)"  />
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="50" y="100" width="50" height="30" fill="blue" transform="translate(50 100) scale(2) translate(-25 -50)"    />
+
+			<text x="5" y="38" fill="red" font-size="10" font-family="Verdana">transform="translate(50 100)  
+				<tspan x="73" y="50"  >
+								scale(2)
+				</tspan>
+				<tspan x="73" y="62"  >
+								translate(-25 -50)" 
+				</tspan>
+			</text>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" viewBox="0 0 150 150" >
+		<rect x="50" y="100" width="50" height="30" fill="blue" />
+
+		<g>
+			<line x1="0" y1="40" x2="150" y2="40" style="stroke:lime;stroke-width:.5" />
+			<text x="20" y="38" fill="red" font-size="6" font-family="Verdana">50</text>
+			<circle cx="0" cy="40" r="1.5" fill="#000" />
+
+			<circle cx="50" cy="40" r="1.5" fill="#000" />
+			<text x="70" y="38" fill="red" font-size="6" font-family="Verdana">50</text>
+			<circle cx="100" cy="40" r="1.5" fill="#000" />
+			<text x="120" y="38" fill="red" font-size="6" font-family="Verdana">50</text>
+			<circle cx="150" cy="40" r="1.5" fill="#000" />
+		</g>
+
+		<defs>
+			<path id="pathTesto100" d="M40,60 40,20"  />
+			<path id="pathTesto30" d="M40,120 40,60"  />
+			<path id="pathTesto20" d="M40,143 40,85"  />
+		</defs>
+
+		<g>
+			<line x1="40" y1="0" x2="40" y2="150" style="stroke:lime;stroke-width:.5" />
+			<circle cx="40" cy="0" r="1.5" fill="#000" />
+			<text  style="fill:red;" font-size="8" >
+				<textPath xlink:href="#pathTesto100">100</textPath>
+			</text>
+			<circle cx="40" cy="100" r="1.5" fill="#000" />
+
+			<text  style="fill:red;" font-size="8" >
+				<textPath xlink:href="#pathTesto30">30</textPath>
+			</text>
+			<circle cx="40" cy="130" r="1.5" fill="#000" />
+
+			<text style="fill:red;" font-size="8" >
+				<textPath xlink:href="#pathTesto20">20</textPath>
+			</text>
+			<circle cx="40" cy="150" r="1.5" fill="#000" />
+		</g>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="50" y="50" width="50" height="30" fill="blue" />
+		<rect x="50" y="100" width="50" height="30" fill="blue" transform="scale(2) translate(-25 -50) "  />
+		<text x="5" y="200" fill="red" font-size="10" font-family="Verdana">transform=" scale(2)  translate(-25 -50)" </text>
+	</svg>
+</div>
+
+<p>
+Nel primo esempio al rettangolo in basso è stato applicato lo <q>scaling</q> al raddoppio. Nonostante abbia la stessa 'x' e 'y' (quest'ultima un pò maggiore per posizionarlo appena sotto) del rettangolo in alto
+la sua posizione risulta modificata. Significa che lo <q>scale(2)</q> non ha prodotto un raddoppio soltanto delle dimensioni di 'width' e 'height' ma anche di 'x' e 'y'; è cambiato il suo sistema di coordinate, il suo <tt>viewBox</tt> (<a href="viewBox_preserveAspectRatio.html">viewBox</a>). In pratica oltre allo <q>scale</q> si è avuto anche un <q>translating</q> (due translate) come definito nel secondo esempio.  
+<br />
+A dimostrare ciò, nel terzo esempio, otteniamo lo stesso risultato cambiando il <tt>viewBox</tt>. <br />
+Il quarto esempio dimostra come ottenere il raddoppio solo delle dimensioni di 'width' e 'height' senza intaccare la 'x' e 'y'.
+</p>
+
+
+
+<h3>Skewing</h3>
+
+<p>
+L'attributo <tt>skew</tt> permette di inclinare un elemento. Gli attributi permessi sono: <b>skewX</b> e <b>skewY</b>. Il primo specifica la trasformazione sull'asse delle x e il secondo sull'asse delle y. <br />
+Quanto detto su per lo <em>scaling</em> a riguardo del nuovo sistema di coordinate creatosi vale anche qui. 
+</p>
+
+<pre>
+&lt;svg width="400" height=200&gt;				
+	&lt;rect x="0" y="0" width="150" height="100" /&gt;								<span class="nota">esempio a sinistra (senza transform)</span>
+
+	&lt;rect x="0" y="0" width="150" height="100" transform="skewX(20)" /&gt;					<span class="nota">secondo esempio </span> 
+
+	&lt;rect x="0" y="0" width="150" height="100" transform="translate(20,0) skewX(20) translate(-20,0)" /&gt;	<span class="nota">terzo esempio </span> 
+
+	&lt;rect x="50" y="0" width="150" height="100" transform="skewY(20)" /&gt;					<span class="nota">quarto esempio </span> 
+&lt;/svg&gt; 
+</pre>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="200" >
+		<rect x="0" y="0" width="150" height="100" fill="blue" />
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="200" >
+		<rect x="0" y="0" width="150" height="100" fill="blue" transform="skewX(20)"  />
+		<line x1="0" y1="0" x2="70" y2="200"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="200" >
+		<rect x="0" y="0" width="150" height="100" fill="blue" transform="translate(20,0) skewX(20) translate(-20,0) "  />
+		<text x="5" y="160" fill="red" font-size="10" font-family="Verdana">translate(20,0) skewX(20) translate(-20,0) </text>
+	</svg>
+
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="200" >
+		<rect x="50" y="0" width="150" height="100" fill="blue" transform="skewY(20)"  />
+		<line x1="0" y1="0" x2="300" y2="110"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+
+</div>
+
+<p>
+Quello che accade lo si può capire guardando le linee gialle che indicano il cambiamento che si è avuto sul sistema delle coordinate. Nel secondo esempio si nota l'asse delle Y inclinato di 20 gradi (linea gialla); l'asse delle X, anch'esso è inclinato di 20 gradi verso l'alto, non si vede perchè è perpendicolare all'asse delle Y. In pratica avviene, oltre allo <q>skewing</q>, anche il <q>translating</q> (due translate) come dimostra il terzo esempio. <br />
+Mentre nel quarto esempio è definito uno <tt>skewY</tt> ed uno spostamento di 50 sull'asse delle X.
+</p>
+
+
+<h3>Rotation</h3>
+
+<p>
+L'attributo <tt>rotate</tt> permette di ruotare un elemento. La sintassi della funzione è:
+<pre>
+rotate(&lt;rotate-angle&gt;  [&lt;cx&gt; &lt;cy&gt;])
+</pre>
+dove il primo argomento specifica il valore in gradi della rotazione mentre gli altri due (opzionali) rappresentano le coordinate del centro della rotazione. Se questi ultimi non vengono definiti il centro di rotazione corrisponderà a quello di origine cioè angolo in alto a sinistra. Il discorso del centro di rotazione è uguale a quello del <tt>transform-origin</tt> nei CSS. 
+</p>
+<p>
+Vediamo come influisce il <em>rotation</em> sul sistema di coordinate
+<pre>
+&lt;svg width="300" height=300&gt;				
+	&lt;rect x="0" y="0" width="100" height="100" fill="blue" transform="rotate(45) /&gt;		<span class="nota">esempio a destra</span> 
+&lt;/svg&gt; 
+</pre>
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<line x1="300" y1="0" x2="0" y2="300"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="0" y="0" width="100" height="100" fill="blue" transform="rotate(45)" />
+		<line x1="0" y1="0" x2="300" y2="300"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+</div>
+
+<p>
+Nell'esempio a destra si è definito un rettangolo con un angolo di rotazione di 45 gradi senza definire il centro di rotazione (cx e cy). Quindi si presuppone che quest'ultimo sia nell'angolo in alto a sinistra (0,0). La linea gialla indica lo spostamento che subisce il sistema di coordinate riferito all'asse delle X ma in perpendicolare lo spostamento lo subisce anche l'asse delle Y (come si vede nella figura a sinistra). In altre parole le linee gialle di entrambe le figure stanno a mostrare il nuovo sistema di coordinate venutosi a formare
+</p>
+
+<p>
+Nei due esempi seguenti ho provato ad ritoccare la posizione del rettangolo (le coordinate x e y) lasciando inalterato l'angolo di rotazione a 45°
+<pre>
+&lt;svg width="300" height=300&gt;				
+	&lt;rect x="100" y="0" width="100" height="100" fill="blue" transform="rotate(45) /&gt;		<span class="nota">esempio a sinistra</span> 
+	&lt;rect x="100" y="10" width="100" height="100" fill="blue" transform="rotate(45) /&gt;		<span class="nota">esempio a destra</span> 
+&lt;/svg&gt; 
+</pre>
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="0" width="100" height="100" fill="blue" transform="rotate(45)" />
+		<line x1="0" y1="0" x2="300" y2="300"  style="stroke:yellow;stroke-width:1"/>
+		<line x1="0" y1="71" x2="300" y2="71"  style="stroke:lime;stroke-width:1"/>
+	</svg>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="10" width="100" height="100" fill="blue" transform="rotate(45)" />
+		<line x1="0" y1="0" x2="300" y2="300"  style="stroke:yellow;stroke-width:1"/>
+		<line x1="0" y1="71" x2="300" y2="71"  style="stroke:lime;stroke-width:1"/>
+	</svg>
+</div> 
+<p>
+Nel primo esempio dove ho definito uno spostamento orizzontale di 100px si nota come lo spostamento del rettangolo avvenga sul nuovo sistema di coordinate venutosi a creare (rappresentato dalla linea gialla) e non sul vecchio. Nel secondo esempio a destra, oltre allo spostamento in orizzontale (uguale al precedente), si nota lo spostamento in verticale di 10px.<br />
+<em>Le linee verdi sono solo indicative per mostrare la differenza di posizione assunta dall'elemento nei due esempi </em>
+</p>
+
+<p>
+Ora proviamo a definire un centro di rotazione impostando i valori <tt>cx</tt> e <tt>cy</tt>. Si vuole ruotare il rettangolo sul proprio centro di 45°.
+<pre>
+&lt;svg width="300" height=300&gt;				
+	&lt;rect x="100" y="100" width="100" height="100" fill="blue" /&gt;					<span class="nota">esempio a sinistra (senza rotate)</span> 
+	&lt;rect x="100" y="100" width="100" height="100" fill="blue" transform="rotate(45 150 150)" /&gt;	<span class="nota">esempio a destra</span> 
+&lt;/svg&gt; 
+</pre>
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue"  />
+		<line x1="0" y1="0" x2="300" y2="300"  style="stroke:lime;stroke-width:1"/>
+		<line x1="300" y1="0" x2="0" y2="300"  style="stroke:lime;stroke-width:1"/>
+	</svg>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" transform="rotate(45 150 150)"  />
+		<line x1="70" y1="0" x2="300" y2="230"  style="stroke:yellow;stroke-width:1"/>
+		<line x1="70" y1="0" x2="0" y2="70"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+</div> 
+
+<p>
+Per ottenere questo risultato bisogna rilevare il centro che il rettangolo ha sul vecchio sistema di coordinate. Infatti saranno tali valori che una volta definiti come 'cx' e 'cy' faranno ruotare il rettangolo di 45° lasciandolo nella stessa posizione. In altre parole <b>quello che avviene è la rotazione del viewBox</b> che a sua volta influenza la posizione dell'elemento. <br />
+<em>Le linee gialle stanno a mostrare il nuovo sistema di coordinate venutosi a creare. Le linee verdi sono solo indicative</em>
+</p>
+
+<p>
+Di seguito i due esempi mostrano che una trasformazione con <tt>rotate</tt> a cui si definiscono tutti e tre i parametri non è altro che una serie composta da: 
+<b>translate + rotate + translate</b>
+<pre>
+&lt;svg width="300" height=300&gt;				
+	&lt;rect x="100" y="100" width="100" height="100" fill="blue" transform="rotate(45 100 70)" /&gt;					<span class="nota">esempio a sinistra</span> 
+	&lt;rect x="100" y="100" width="100" height="100" fill="blue" transform="translate(100 70) rotate(45) translate(-100 -70)" /&gt;	<span class="nota">esempio a destra</span> 
+&lt;/svg&gt; 
+</pre>
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" transform="rotate(45 100 70)"  />
+	</svg>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" transform="translate(100 70) rotate(45) translate(-100 -70)"  />
+	</svg>
+</div> 
+
+<p>
+Ecco l'esempio di sopra scomposto singolarmente nei vari passaggi. La prima figura rappresenta la posizione iniziale. <br />
+Al primo passagio nella seconda figura si ha una traslazione, <em>del sistema di coordinate</em>, verso destra di 100 e verso il basso di 70; nel terza figura, <em>il sistema di coordinate</em> viene fatto ruotare di 45°; ed infine viene traslato, questa volta, verso l'alto di 70 e verso sinitra di 100. 
+ 
+
+
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" />
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" transform="translate(100 70)"  />
+		<text x="10" y="50" fill="red" font-size="10" font-family="Verdana">translate(100 70)</text>
+		<line x1="100" y1="70" x2="100" y2="300"  style="stroke:yellow;stroke-width:1"/>
+		<line x1="100" y1="70" x2="300" y2="70"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" transform="translate(100 70) rotate(45)"  />
+		<text x="10" y="50" fill="red" font-size="10" font-family="Verdana">translate(100 70) rotate(45)</text>
+		<line x1="0" y1="111" x2="189" y2="300"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" transform="rotate(45 100 70)"  />
+		<text x="10" y="50" fill="red" font-size="10" font-family="Verdana">translate(100 70) rotate(45) translate(-100 -70)</text>
+		<text x=10 y="60" font-size="10" fill="black" >oppure</text>
+		<text x="10" y="70" fill="red" font-size="10" font-family="Verdana">rotate(45 100 70)</text>
+		<line x1="0" y1="12.5" x2="287.5" y2="300"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+</div> 
+
+<h3>Applicare più trasformazioni</h3>
+
+<p>
+Da quanto detto su resta chiaro	che quando si vogliono applicare più trasformazioni, ogni trasformazione è applicata al sistema di coordinate già modificato dalla precedente trsformazione. <br />
+Nei seguenti esempi la trasformazione applicata alla seconda figura modifica il risultato della modifica fatta alla figura precedente 
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" transform="rotate(45 100 70) " />
+		<text x="10" y="50" fill="red" font-size="10" font-family="Verdana">rotate(45 100 70)</text>
+		<line x1="0" y1="12.5" x2="287.5" y2="300"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300" >
+		<rect x="100" y="100" width="100" height="100" fill="blue" transform="rotate(45 100 70) translate(80,0)" />
+
+		<text x="10" y="50" fill="red" font-size="10" font-family="Verdana">rotate(45 100 70) translate(80,0)</text>
+		<line x1="0" y1="12.5" x2="287.5" y2="300"  style="stroke:yellow;stroke-width:1"/>
+	</svg>
+</div> 
+
+<p>
+Alla prima figura è stata applicata una rotazione. Alla seconda figura è appllicata sia una rotazione, uguale alla precedente, che una ulteriore traslazione. Quest'ultima traslazione è applicata al sistema di coordinate già modificato dalla precedente rotazione. Per cui si avrà che il rettangolo si sposta verso destra di 80px lungo il nuovo asse delle X rappresentato dalla linea gialla
+</p>
+
+<h3>Trasformazioni nidificate</h3>
+
+
+<p>
+Qualora dovesse capitare di applicare una trasformazione ad un elemento che sta all'interno di un'altro a cui è già stata applicata una trasformazione, la trasformazione applicata al genitore si rifletterà sull'elemento figlio. <br />
+Un esempio potrebbe essere una figura di una persona formata da più parti (testa, collo, busto, braccia ...)
+
+<pre>
+&lt;svg width="800" height="800" &gt; 
+	&lt;g id="corpo-persona" transform="translate(..) &gt; 
+		&lt;g id="testa" &gt; 
+
+		&lt;/g&gt; 
+		&lt;g id="collo" &gt; 
+
+		&lt;/g&gt; 
+		&lt;g id="busto" &gt; 
+
+		&lt;/g&gt; 
+		&lt;g id="braccia" transform="rotate(...)&gt; 
+
+		&lt;/g&gt; 
+
+		&lt;g id="..." &gt; 
+
+		&lt;/g&gt; 
+
+
+	&lt;/ g&gt; 
+&lt;svg&gt; 
+</pre>
+</p>
+<p>
+Avendo già applicato una traslazione al gruppo genitore <q>corpo-persona</q> la rotazione appplicata alle <q>braccia</q> erediterà la traslazione del <q>corpo-persona</q>  
+</p>
+
+
+<h3>Utilizzo delle proprietà dei CSS nei SVG</h3>
+
+<p>
+Nell' SVG2 (ancora in fase 'draft') l'attributo <tt>transform</tt> è riferito come proprietà  dei CSS. In altre parole le proprietà <tt>transform</tt> dei CSS, specificate nei CSS3, potranno essere applicate agli elementi SVG. Per cui le caratteristiche seguiranno quelle dei CSS3; per esempio gli argomenti dovranno essere separati da virgola, il solo spazio non è valido; la funzione <tt>rotate</tt> non supporterà gli i valori &lt;cx&gt; e &lt;cy&gt;  e si potrà specificare il centro di rotazione con la proprietà <tt>transform-origin</tt>. Inoltre le unità di misura dovranno essere incluse come ad esempio i  <em>deg, rad, px em</em> ecc... <br />
+Un esempio, uguale a quelli visti sopra, di come ruotare un elemento coi CSS sarà il seguente
+<pre>
+#parrot {
+	transform-origin: 50% 50%;			<span class="nota">/* il centro di rotazione impostato al centro dell'elemento */</span>
+	transform: rotate(45deg);
+}
+</pre>
+</p>
+
+<p>
+Inoltre un elemento SVG potrà essere trasformato in un elemento tridimensionale con l'uso di <tt>transform</tt> dei CSS 3D
+<pre>
+#SVGel {
+	transform: perspective(800px) rotate3d(1, 1, 0, 45deg);
+}
+</pre>
+</p>
+
+
+<h2 id="animateTransform" >Trasformazioni con animateTransform</h2>
+
+
+<p>
+Con <tt>animateTransform</tt> si possono applicare delle animazioni agli attributi <em>scale</em>, <em>translate</em>, <em>rotate</em> e <em>skew</em>. Per ottenere  ciò bisogna assegnare all'attributo <tt>type</tt> uno dei seguenti valori: <b>translate, scale, rotate, skewX, skewY</b>. Dopodichè bisogna definire gli attributi <tt>to</tt> e <tt>from</tt>. 
+</p>
+
+<p>
+Esempi con <q>animateTransform</q>: 
+<pre>
+&lt;rect transform="skewX(30)"...&gt; 
+	&lt;animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0" to="90" dur="5s" additive="replace" fill="freeze" /&gt; 
+	&lt;animateTransform attributeName="transform" attributeType="XML" type="scale" from="1" to="2" dur="5s" additive="replace" fill="freeze" /&gt;
+&lt;/rect&gt;  
+</pre> 
+Nell'esempio di sopra entrambe le animazioni hanno "additive=replace" e ciò fa in modo che la prima sostituisca i valori impostati nel rettangolo e la seconda sostituisca i valori della prima producendo un risultato risultato del tipo:
+</p>
+
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="500" height="350" viewBox="0 0 500 350">
+
+<!--provare a togliere lo style di transform-origin 
+		<style>
+				rect{
+						-moz-transform-origin: 75px 75px;
+						transform-origin: 50% 50%;
+					}
+		</style>
+-->
+
+		<rect id="deepPink-rectangle" width="50" height="50" x="50" y="50" fill="deepPink"   />
+
+		<animateTransform 
+						xlink:href="#deepPink-rectangle"
+						attributeName="transform" 
+						attributeType="XML"
+						type="rotate"
+						from="0 75 75"
+						to="360 75 75" 
+						dur="2s"
+						begin="0s"
+						repeatCount="indefinite"
+						fill="freeze"
+		/>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 160 160" width="160" height="160">
+		<circle cx="80" cy="80" r="50" />
+		<g transform=" matrix(0.866, -0.5, 0.25, 0.433, 80, 80)">
+			<path d="M 0,70 A 65,70 0 0,0 65,0 5,5 0 0,1 75,0 75,70 0 0,1 0,70Z" fill="#F00">
+				<animateTransform attributeName="transform" type="rotate" from="360 0 0" to="0 0 0" dur="1s" repeatCount="indefinite" />
+		</path>
+		</g>
+
+		<path d="M 50,0 A 50,50 0 0,0 -50,0Z" transform="matrix(0.866, -0.5, 0.5, 0.866, 80, 80)" />
+
+	</svg>
+</div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br />
+
+
+
+</body>
+</html>

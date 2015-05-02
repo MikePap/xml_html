@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Manipolazione Nodi</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmlstring.js"></script> 
+
+</head>
+
+<body>
+
+
+<h1>Manipolazione Nodi</h1>
+
+<h3>Ottenere il valore di un elemento (nodo)</h3>
+<p class="nota">Per ottenere il valore (testo) di un elemento si usa il metodo <b>nodeValue</b> </p>
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+titolo = xmlDoc.getElementsByTagName("title")[1];			// recupera il secondo nodo <title> dal documento 
+y = titolo.childNodes[0];							// recupera il primo nodo  del nodo recuperato sopra 
+autore = xmlDoc.getElementsByTagName("author")[1].childNodes[0];	// estrae il valore del secondo nodo <author>
+anno = xmlDoc.getElementsByTagName("year")[1].childNodes[0];	// estrae il valore del secondo nodo <year>
+document.write(y.nodeValue);							// il valore del secondo <title>(Harry Potterr) 
+document.write('<br>');
+document.write("<p class='codice'>"+autore.nodeValue+"</p>");	// il valore del secondo <author> 
+//document.write('<br>');
+document.write(anno.nodeValue);						// il valore del secondo <year> 
+
+</script>
+
+<h3>Ottenere il valore di un attributo </h3>
+<p class="nota">Nel DOM gli attributi sono nodi. A differenza degli elementi nodi, che possono avere come valore sia del testo che altri elementi, gli attributi nodi hanno solo valore testo. <br />Ottenere il valore di un attributo significa ottenere il valore del loro testo. Ciò è fatto col il metodo <b>getAttribute()</b></p>
+
+
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+txt = xmlDoc.getElementsByTagName("title")[0].getAttribute("lang");
+document.write(txt);
+
+</script>
+
+<p class="nota">oppure con <b>getAttributeNode()</b> si ottiene soltanto il nodo</p>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.getElementsByTagName("title")[0].getAttributeNode("lang");	// si recupera il nodo ...
+txt = x.nodeValue;									// ... e qui si ottiene il suo valore  
+document.write(txt);
+</script>
+
+
+<h3>Cambiare il valore di un nodo</h3>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.getElementsByTagName("title")[0].childNodes[0];
+document.write(x.nodeValue); 	// restituisce "Everyday Italian"
+document.write("<br>")
+x.nodeValue = "Cambio del valore";  // assegnazione di un'altro valore al nodo
+document.write(x.nodeValue);  // restituisce "Cambio del valore"
+
+</script>
+
+<h3>Cambio del valore di un attributo con "setAttribute()"</h3>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.getElementsByTagName('book');  // recupera il tag 'book'
+x[0].setAttribute("category","food"); // al primo tag 'book' viene impostato un nuovo valore per l'attributo 'category' (in precedenza era COOKING)
+document.write(x[0].getAttribute("category"));  // display del nuovo attributo impostato
+</script>
+
+<p class="nota">oppure ottenendo lo stesso risultato con <b>getAttributeNode()</b> e <b>nodeValue</b> </p>
+
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.getElementsByTagName("book")[0];	// dal primo tag 'book' ...
+y = x.getAttributeNode("category");			// ... si recupera l'attributo 'category' ...
+y.nodeValue = "food";					// ... e si assegna un valore (food) che sostituisce il precedente (COOKING)
+document.write(y.nodeValue);				// lo visualizza 
+</script>
+
+
+
+<h1>Rimpiazzare Nodi</h1>
+
+<p class="nota">Il metodo <b>replaceChild()</b> è usato per sostiuire i nodi</p>
+
+<dl>
+	<dt>Il metodo replaceChild(a,b) richiede due parametri </dt>
+		<dd>il primo parametro (a) rappresenta il nuovo nodo</dd>
+		<dd>il secondo parametro (b) rappresenra il vecchio nodo che deve essere sostituito</dd> 
+</dl>
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.documentElement;			// ROOT 'bookstore'
+
+//create a book element, title element and a text node
+newNode = xmlDoc.createElement("book");			// creazione elemento 'book' 
+newTitle = xmlDoc.createElement("title");			// creazione elemento 'title'
+newText = xmlDoc.createTextNode("A Notebook");		// creazione di testo 
+
+//add the text node to the title node,
+newTitle.appendChild(newText);				// al nuovo elemento 'title' si aggiunge il nuovo testo creato ...
+//add the title node to the book node
+newNode.appendChild(newTitle);				// ... e al nuovo elemento creato 'book' si aggiunge l'elemento 'title' (^) 
+
+y = xmlDoc.getElementsByTagName("book")[0];		// primo nodo 'book' esistente 
+//replace the first book node with the new node
+x.replaceChild(newNode,y);		// il primo nodo è rimpiazzato dal nodo creato sopra ("Everyday Italian" è sostituito con "A Notebook")
+
+z = xmlDoc.getElementsByTagName("title");
+for (i=0; i<z.length; i++){
+document.write(z[i].childNodes[0].nodeValue);
+document.write("<br>");
+} // for 
+</script>
+
+
+<h3>Rimpiazzare del testo in un nodo testo</h3>
+<p class="nota">Il metodo <b>replaceData() </b> è utilizzato per rimpiazzare il testo in un nodo di testo</p>
+
+<dl>
+	<dt>Il metodo replaceData(a,b,c) richiede tre parametri</dt>
+	<dd>il primo parametro (a) rappresenta il punto iniziale da cui incominciare la sostituzione</dd>
+	<dd>il secondo parametro (b) rappresenta il numero dei caratteri da sostituire</dd>
+	<dd>il terzo parametro (c) rappresenta la stringa da inserire</dd>
+</dl>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.getElementsByTagName("title")[0].childNodes[0];		// primo nodo 'title' 
+document.write(x.nodeValue);							// suo valore 
+x.replaceData(0,8,"Easy"); // "Everyday" (contiene otto caratteri) viene sostituito con "Easy"
+
+document.write("<br>");
+document.write(x.nodeValue);
+
+</script>
+
+
+<p class="nota">Ma si può anche utilizzare la proprietà <b>nodeValue</b> (vedere script riga 77-85)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

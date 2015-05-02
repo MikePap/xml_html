@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" 
+width='200' height='250'  id="menu" >
+
+	<defs>
+		<path  stroke-width="1"  
+			d="m 1,1 0,48 c 0,0 9,0.742614 9,-7.250825 0,-7.755776 10,-7.755776 10,-7.755776 l 160,0 c 0,0 9.70971,0.07419 10,7.755776 C 190.30259,49.75638 199,49 199,49 l 1,-48 z" id="elleI"  stroke="white" fill="#444" />
+
+		<text x="100" y="25" font-size="25" fill="yellow" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="bari" > 			Bari
+		</text>
+		<text x="100" y="25" font-size="25" fill="yellow" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="foggia" > 				Foggia
+		</text>	
+
+		<text x="100" y="25" font-size="25" fill="yellow" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="lecce" > 				Lecce		
+		</text>	
+		<text x="100" y="25" font-size="25" fill="yellow" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="taranto" > 				Taranto
+		</text>	
+	</defs>
+	
+	<symbol id="liA"  >
+		<a xlink:href="http://www.w3.org">
+			<use xlink:href="#elleI"></use>
+			<use xlink:href="#bari" ></use>
+		</a>
+	</symbol>
+
+	<symbol id="liB"  >
+		<a xlink:href="http://www.w3.org">
+			<use xlink:href="#elleI"></use>
+			<use xlink:href="#foggia" ></use>
+		</a>
+	</symbol>
+	<symbol id="liC" >
+		<a xlink:href="http://www.w3.org">
+			<use xlink:href="#elleI"></use>
+			<use xlink:href="#lecce" ></use>
+		</a>
+	</symbol>
+	<symbol id="liD" >
+		<a xlink:href="http://www.w3.org">
+			<use xlink:href="#elleI"></use>
+			<use xlink:href="#taranto" ></use>
+		</a>
+	</symbol>
+
+
+	<g>
+		<use x="0" y="0" xlink:href="#liA"  id="li1" >
+			<animate  attributeName="y" begin="uelle.mouseenter" from="0" to="50" dur="200ms"  fill="freeze" />
+			<animate  attributeName="y" begin="menu.mouseleave" to="0" dur="200ms"   fill="freeze" />
+		</use>
+	</g>
+	<g x="0" y="0" >
+		<use x="0" y="0" xlink:href="#liB" >
+			<animate  attributeName="y" begin="uelle.mouseenter + 100ms" from="0" to="100" dur="200ms"  fill="freeze" />
+			<animate  attributeName="y" begin="menu.mouseleave" to="0" dur="200ms"   fill="freeze" />
+		</use>
+	</g>
+	<g x="0" y="0" >
+		<use x="0" y="0" xlink:href="#liC" >
+			<animate  attributeName="y" begin="uelle.mouseenter + 200ms" from="0" to="150" dur="200ms"  fill="freeze" />
+			<animate  attributeName="y" begin="menu.mouseleave" to="0" dur="200ms"   fill="freeze" />
+		</use>
+	</g>
+	<g x="0" y="0" >
+		<use x="0" y="0" xlink:href="#liD"  >
+			<animate  attributeName="y" begin="uelle.mouseenter + 300ms" from="0" to="200" dur="200ms"  fill="freeze" />
+			<animate  attributeName="y" begin="menu.mouseleave" to="0" dur="200ms"   fill="freeze" />
+		</use>
+	</g>
+
+	<g x="0" y="0"  >
+		<rect width="200" height="50" stroke="black" stroke-width="1" fill="#888" id="uelle" ></rect>
+		  <text x="100" y="25" fill="red" font-size="31" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="puglia" >
+			Puglia
+		</text>
+	</g>
+
+</svg>
+

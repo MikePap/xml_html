@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Animazioni 1  </title>
+<style type="text/css">
+html,body,h1,h2,h3,p,dl,dt,dd,pre,ul, embed{ margin:0; padding:0; }
+h1{ color: #00F; font-size:31px; margin-left:100px; padding:10px; }
+h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
+h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
+p{ padding:5px; }
+dl{margin-left:20px;}
+dt{ color:#039; margin-bottom:5px;}
+dd{ color:#06F; margin-left:10px; }
+li{margin-left:31px;}
+.nota{ color:#F66;}
+.codice{ color:#060}
+pre{color:rgb(50,150,50); margin-left:5px; }
+
+svg{ border:1px solid #CCC; margin-left:10px;  }
+embed{ width:300px; height:150px; border:1px solid #CCC; }
+
+.highlight{ background:#FF0;   }
+
+</style>
+</head>
+<body>
+
+<h3>begin, from, to </h3>
+
+<p>
+In questo esempio dove ho definito il <b>repeatCount</b> e il <b>fill='freeze'</b> si nota che quest'ultimo ha effetto solo quando tutta l'animazione è completata e non dopo la prima ripetizione
+</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300px" height="150px" id="jk"  >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green"  >
+		<animate attributeName="cx" begin="2s" from="50" to="250" dur="3s" repeatCount="3" fill="freeze" />
+		<animate attributeName="cy" begin="2s" from="50" to="100" dur="3s" repeatCount="3" fill="freeze" />
+	</circle>
+</svg>
+
+<!--[if lt IE 9]>
+	<p>Per soddisfare IE8 bisogna definire l'elemento &lt;embed&gt; nei CSS </p>
+	<embed src="../allegati/Anim_01.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+<p>
+In questo esempio a differenza del precedente, dove il <b>begin</b> è impostato a 2 secondi, l'ho impostato allo scattare dell'evento <b>click</b> su se stesso
+</p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green" id="cerchio" >
+		<animate attributeName="cx" begin="cerchio.click" from="50" to="250" dur="3s" repeatCount="3" fill="freeze" />
+		<animate attributeName="cy" begin="cerchio.click" from="50" to="100" dur="3s" repeatCount="3" fill="freeze" />
+	</circle>
+
+</svg>
+
+<p>
+Qui invece il <b>begin</b> lo impostato al "mouseover" sull'intero elemento SVG 
+</p>
+ 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="essevugi" >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green" id="cerchio" >
+		<animate attributeName="cx" begin="essevugi.mouseover" from="50" to="250" dur="3s" repeatCount="3" fill="freeze" />
+		<animate attributeName="cy" begin="essevugi.mouseover" from="50" to="100" dur="3s" repeatCount="3" fill="freeze" />
+	</circle>
+
+</svg>
+
+<h3>calcMode, keyTimes, keySplines</h3>
+
+<p><b>linear</b>  </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="escalcmode1" >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green" id="cerchio" >
+		<animate attributeName="fill" dur="6s" calcMode="linear" values="green; yellow; red" fill="freeze"  /> 
+	</circle>
+	<rect x="110" y="10" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="x" dur="10s" values="110; 120; 200" calcMode="linear" repeatCount="3" />
+	</rect>
+</svg>
+
+<p><b>paced</b> </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="escalcmode3" >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green" id="cerchio"  >
+		<animate attributeName="fill" dur="6s" calcMode="paced" values="green; yellow; red" fill="freeze"  /> 
+	</circle>
+	<rect x="110" y="10" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="x" dur="10s" values="110; 120; 200" calcMode="paced" repeatCount="3" />
+	</rect>
+</svg>
+
+<p><b>discrete</b> </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="escalcmode2" >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green" id="cerchio"  >
+		<animate attributeName="fill" dur="6s" calcMode="discrete" values="green; yellow; red" fill="freeze"  /> 
+	</circle>
+	<rect x="110" y="10" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="x" dur="10s" values="110; 120; 200" calcMode="discrete" repeatCount="3" />
+	</rect>
+</svg>
+
+
+<p>Esempio con <b>keyTimes</b>:  I valori del "keyTimes" portano l'animazione ad avere un valore iniziale di 0 e a raggiungere il valore di 50 dopo 8 secondi(80% visto che la durata è di 10s) ed a raggiungere il valore di 100 alla fine dell'animazione. Si vuole, in altre parole, avere un effetto più lento nella prima parte e più rapido nella seconda parte.  </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="eskeytimes1" >
+	<rect x="110" y="10" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="x" dur="10s" values="0; 50; 100"  keyTimes="0; .8; 1" calcMode="linear" repeatCount="3" />
+	</rect>
+</svg>
+<p> Estendendo all'esempio precedente l'uso del <b>keySplines</b> si ha che nella prima parte da 0 a 8s un effetto più soft (0.5 0 0.5 1) mentre nella seconda parte un effetto più improvviso (0 0 1 1) </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="eskeytimes2" >
+	<rect x="110" y="10" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="x" dur="10s" values="0; 50; 100"  repeatCount="3"
+			keyTimes="0; .8; 1" calcMode="spline" keySplines=".5 0 .5 1; 0 0 1 1" /> 
+	</rect>
+</svg>
+
+<p>Un'altro esempio con <b>keyTimes e keySplines</b>. Qui avviene che per efetto del valore del "keyTimes"(0.0; 0.7) il valore di 50 sia raggiunto al 7° secondo e rimanga tale fino alla fine dell'animazione(dei 10 secondi). NON FUNZIONA con Firefox(OK con Chrome e Opera)
+</p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="eskeytimes3" >
+	<rect width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="x" dur="10s" from="0" to="50"  
+			keyTimes="0.0; 0.7" calcMode="spline" keySplines=".5 0 .5 1" /> 
+	</rect>
+</svg>
+
+<h3>repeatCount, repeatDur</h3>
+
+<p>In entrambe questi due esempi con <b>repeatCount</b> la durata totale dell'animazione è di 5 secondi  </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="repdur1" >
+	<rect x="100" y="0" width="50" height="50"  style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="y" from="0" to="100" dur="2.5s" repeatCount="2" /> 
+	</rect>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="repdur2" >
+	<rect x="100" y="0" width="50" height="50"  style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="y" from="0" to="100" dur="2s" repeatCount="2.5" /> 
+	</rect>
+</svg>
+
+<p>In questo esempio un <b>repeatDur</b> di 6s e un <b>dur</b> di 2.5s produrranno due ripetizioni complete(2.5*2=5s) più una parziale di 1s  </p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="100" y="0" width="50" height="50"  style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="y" from="0" to="100" dur="2.5s" repeatDur="6s" /> 
+	</rect>
+</svg>
+
+<p>Qui invece il <b>repeatDur</b> che è di 6s è inferiore al <b>dur</b> che è di 10s. In questo caso l'animazione si interromperà al sesto secondo. Ciò a dire che il <b>repeatDur</b> influenza la durata totale dell'animazione    </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="100" y="0" width="50" height="50"  style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="y" from="0" to="100" dur="10s" repeatDur="6s" /> 
+	</rect>
+</svg>
+
+<h3>end</h3>
+
+<p>l'animazione del rettangolo in basso ha una sua durata con un <q>repeatCount=indefinite</q> ma può terminare anche quando avviene il click sul rettangolo in alto. Definendo la proprietà <tt>fill='freeze'</tt> il rettangolo si blocca nel punto in cui si trova quando avviene l'evento <tt>click</tt> altrimenti torna al punto iniziale </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="50" height="50"  style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)" id="rettangolo1">
+		<animate attributeName="x" from="0" to="100" dur="3s" /> 
+	</rect>
+	<rect x="0" y="60" width="50" height="50"  style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)" id="rettangolo2">
+		<animate attributeName="x" from="0" to="100" dur="5s" repeatCount="indefinite"  end="rettangolo1.click" fill="freeze"  /> 
+	</rect>
+</svg>
+
+<p>Qui l'animazione del rettangolo parte al click su se stesso; ha un <q>repeatDur:indefinite</q> ma è impostato un <b>end</b>  che la fa terminare dopo 10 secondi. Attenzione che se il <tt>click</tt> non avviene entro i 10 secondi dall'inizio (dal caricamento della pagina) non ha più effetto; oppure se il click avviene dopo 6 secondi l'animazione durerà soltanto 4 secondi. </p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="50" height="50"  style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="x" from="0" to="100" begin="click" dur="2s" repeatDur="indefinite" end="10s" /> 
+	</rect>
+</svg>
+
+<h3>accumulate, additive</h3>
+
+<p>Nei due esempi seguenti si intende come <b>additive</b> influenza il <q>from</q> e <q>to</q> sull'animazione della 'width' del rettangolo che è impostata a 50px. A sinistra l'additive è <b>sum</b> che produce un aunmento della 'width' di 30 (from=0 e to=30). Nell'esempio a destra avendo come additive <b>replace</b>  si ha che il valore della 'width' preimpostato venga sostituito da un valore iniziale pari a quello di 'from' ed un valore finale (di animazione) pari a quello di 'to': passa da o a 30. Se additive non è specificata assume il valore di "replace"(default)         </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="50" height="50"  style="fill:rgb(250,150,100);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="width" from="0" to="30" dur="4s" additive="sum" fill="freeze" /> 
+	</rect>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="50" height="50"  style="fill:rgb(250,150,100);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="width" from="0" to="30" dur="4s" additive="replace" fill="freeze" /> 
+	</rect>
+</svg>
+
+<p>Due esempi con <b>accumulate e additive</b> insieme  </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="20" height="50"  style="fill:rgb(250,150,100);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="width" dur="5s" values="0; 15; 10" additive="sum" accumulate="sum" repeatCount="2" /> 
+	</rect>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="20" height="50"  style="fill:rgb(250,150,100);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="width" dur="5s" from="10px" to="20px" accumulate="sum" additive="sum" repeatCount="2" /> 
+	</rect>
+</svg>
+
+<p>L'esempio successivo invece è "cumulativo" ma non "aggiuntivo". Succede che per mezzo di 'additive=replace' non tiene conto del valore impostato per la 'width' ed inizia al valore di 20 aumenta di 10px arrivando a 30px; è cumulativo quindi la seconda iterazione riprende da 30px e aumenta di 10 arrivando a 40px e cosi via. Al termine assumerà il valore iniziale definito(50)  </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="50" height="50"  style="fill:rgb(250,150,100);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="width" dur="5s" repeatCount="10"  from="20" by="10" additive="replace" accumulate="sum" /> 
+	</rect>
+</svg>
+
+<p>Nel seguente esempio viene eseguito un aumento della 'width' con l'evento "mouseover". Al "mouseout" si interrompe l'animazione  </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="50" height="50"  style="fill:rgb(250,150,100);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="width" begin="mouseover" end="mouseout" from="50" to="100" dur="3s" /> 
+	</rect>
+</svg>
+
+<br />
+
+
+
+
+
+
+
+
+
+<!--
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+
+</svg>
+
+
+-->
+
+
+
+</body>
+</html>

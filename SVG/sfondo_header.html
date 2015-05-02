@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>figura di sfondo x container</title>
+<style type="text/css">
+html, body, div, svg{ margin:0; padding:0;  }
+body{font-family: Georgia, "Times New Roman", Times, serif; font-size: 76%;  }
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+code, pre{ color:rgb(50,150,50);}
+
+#container1{
+position:relative; margin:31px auto; width:80%; height:150px; /*background:#CCC;*/
+}
+#container2{
+position:relative; margin:31px auto; width:80%; height:150px; background:green;
+}
+
+#divo1{
+position:absolute; width:60%; left:20%; top:0.97em; font-size:4em; color:#FFF; font-weight:bold; text-align:center; border:1px solid; z-index:3;
+}
+#divo2{
+position:absolute; width:60%; left:20%; top:1.5em; font-size:3em; color:#FFF; font-weight:bold; text-align:center; border:1px solid; z-index:3;
+}
+
+svg{ 
+position:absolute; width:100%; height:100%; margin:0; padding:0; border:1px solid;  z-index:1;
+}
+embed{
+position:absolute; width:100%; height:100%; margin:0; padding:0;  border:1px solid;  
+}
+
+
+</style>
+<script type="text/javascript" src="../jQuery-1.6.min.js"></script>
+</head>
+<body>
+
+<h1>Creazione figura SVG  di sfondo per un header</h1>
+
+<div id="container1">
+	<div id="divo1"> 	abc Olio d'Oliva 	</div> 
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+		<rect x="0" y="0" width="100%" height="100%" fill="#CCC" stroke="blue" stroke-width=".02cm" />
+		<ellipse cx="50%" cy="50%" rx="50%" ry="50%" style="fill:green" />
+		<rect x="0" y="30%" width="5%" height="40%"  fill="#CCC"  />
+		<rect x="95%" y="30%" width="5%" height="40%"  fill="#CCC"  />
+	</svg>
+<!--[if lt IE 9]>
+<embed src="allegati/pattern_sfondo.svg" type="image/svg+xml"  wmode="transparent"  />
+<![endif]--> 
+</div><!--container1-->
+ 
+<div>
+Per aggirare il problema che da il tag &lt;embed&gt; con IE che si sovrappone agli altri elementi e non accetta la proprietà "z-index" bisogna per prima cosa inserire nel tag &lt;embed&gt; la dichiarazione <b>wmode="transparent"</b> che lo pone al di sotto degli altri elementi e poi inserire un &lt;rect&gt;  all'interno del tag &lt;svg&gt; sia nel documento HTML sia nel file svg esterno (quello per IE), Tale &lt;rect&gt; deve avere le dimensioni del "100%" del &lt;svg&gt; e il suo sfondo.   
+</div> 
+
+<div id="container2">
+	<div id="divo2"> 	abc Olio d'Oliva 	</div> 
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+		<ellipse cx="50%" cy="0" rx="50%" ry="30%" fill="#CCC" />
+		<ellipse cx="50%" cy="100%" rx="50%" ry="30%" fill="#CCC" />
+	</svg>
+</div><!--container2-->
+
+
+
+<!--
+bgcolor="#CCC"
+<param name="wmode" value="transparent"> (nel tag OBJECT)
+"wmode=transparent" (nel tag EMBED)
+
+"wmode=transparent"
+<object data="allegati/pattern_sfondo.svg" type="image/svg+xml"></object>
+  <path d="M150 4 L 75 200 L 225 200 Z"  
+style="fill:rgb(255,255,0);stroke:purple;stroke-width:4" />
+
+<rect x="10%" y="10%" width="80%" height="80%"  style="fill:rgb(0,0,255); fill-opacity:0.4; stroke-width:1; stroke:rgb(0,0,0)"/>
+ m 0 10% q 50% 0 100% 10%  Z
+M 0 50 C 200 0  600 0 800 50  Z
+M150 4 L 75 200 L 225 200 Z
+http://localhost/xml_html/SVG/pattern_sfondo.html
+
+-->
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>article element</title>
+<style type="text/css">
+
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+section.sfondo{ background:#FF9;}
+
+</style>
+
+ </head>
+<body>
+
+<h1>article</h1>
+
+
+<section class="sfondo">
+<p class="blu">
+L'elemento <b>article</b> rappresenta un componenete della pagina che consiste di un proprio contenuto e che si intende essere indipendente. Ciò può essere un post di un forum di un blog di un giornale un commento di un utente ecc....
+</p>
+</section>
+
+<section>
+<p class="nota">In questo documento è lecito introdurre il discorso dell'<strong>outline</strong>. 
+Gli elementi Header &lt;H1&gt;-&lt;H6&gt; creano la struttura della pagina. Presi insieme creano un outline (profilo, schema) che può essere usato per visualizzare (navigare nella) la pagina. Sono quindi molto importanti perchè gli <b>Screen Readers</b> li utilizzano per permettere ai <b>non-vedenti</b> di navigare all'interno della pagina. Ci sono degli <a href="http://gsnedders.html5.org/outliner/">strumenti che permettono di visualizzare il contenuto outline della pagina</a> (cioè tutti i nodi H1-H6). 
+</p>
+</section>
+
+<section>
+<p class="blu">
+Secondo l'algoritmo dell'HTML5 l'elemento &lt;article&gt; crea una nuova sezione che rappresenta un nuovo nodo in un documento outline. E ogni sezione (ogni elemento article) può avere il suo elemento &lt;H1&gt;
+</p>
+</section>
+
+
+
+<article>
+ <header>
+  <h1>The Very First Rule of Life</h1>
+  <p><time pubdate datetime="2009-10-09T14:28-08:00"></time></p>
+ </header>
+ <p>If there's a microphone anywhere near you, assume it's hot and
+ sending whatever you're saying to the world. Seriously.</p>
+ <p>...</p>
+ <footer>
+  <a href="../?comments=1">Show comments...</a>
+ </footer>
+</article>
+
+
+<article>
+
+ <header>
+  <h1>The Very First Rule of Life</h1>
+  <p><time pubdate datetime="2009-10-09T14:28-08:00"></time></p>
+ </header>
+ <p>If there's a microphone anywhere near you, assume it's hot and
+ sending whatever you're saying to the world. Seriously.</p>
+ <p>...</p>
+
+ <section>
+  <h1>Comments</h1>
+  <article>
+   <footer>
+    <p>Posted by: George Washington</p>
+    <p><time pubdate datetime="2009-10-10T19:10-08:00"></time></p>
+   </footer>
+   <p>Yeah! Especially when talking about your lobbyist friends!</p>
+  </article>
+  <article>
+   <footer>
+    <p>Posted by: George Hammond</p>
+    <p><time pubdate datetime="2009-10-10T19:15-08:00"></time></p>
+   </footer>
+   <p>Hey, you have the same first name as me.</p>
+  </article>
+
+ </section>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Path  </title>
+<style type="text/css">
+html, body{ margin:0; padding:0;  }
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+code, pre{ color:rgb(50,150,50);}
+
+svg{ width:500px; height:400px; border:1px solid #CCC; display:block;  }
+
+</style>
+<script type="text/javascript" src="../jQuery-1.6.min.js"></script>
+</head>
+<body>
+
+<h1>Path</h1>
+
+<p class="nota">L'elemento &lt;path&gt; è utilizzato per definire un percorso (figura).</p>
+
+<dl>
+	<dt>Per creare una figura con l'elemento &lt;path&gt; sono disponibili i seguenti comandi da impostare all'attributo <b>d</b>: </dt>
+	<dd><b>M</b> = move-to</dd>
+	<dd><b>L</b> = line-to</dd>
+	<dd><b>H</b> = line-to orizzontale</dd>
+	<dd><b>V</b> = line-to verticale</dd>
+	<dd><b>C</b> = curve-to (disegna una curva cubic Bézier)</dd>
+	<dd><b>S</b> = smooth curve-to</dd>
+	<dd><b>Q</b> = quadratic bèzier curve </dd>
+	<dd><b>T</b> = smooth quadratic Bézier curve-to</dd>
+	<dd><b>A</b> = arco ellittico</dd>
+	<dd><b>Z</b> = chiude il path. (Traccia una linea dall'ultimo punto al primo) </dd>
+</dl>	
+
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <path d="M150,4 L75,200 L225,200 Z"  
+style="fill:rgb(255,255,0);stroke:purple;stroke-width:4"   />
+</svg>
+
+<div>
+Il <b>cubic Bézier curve commands</b> viene definito da un punto di partenza, due punti di controllo e un punto finale. Nella figura seguente il punto di partenza è quello rappresentato dal cerchietto vuoto in basso a sinistra (impostazione: M 100,200); il secondo punto da dichiarare (1° punto di controllo) è quello rappresentato dal cerchietto nero in alto a sinistra (impostazione: C 100,100); il terzo punto da dichiarare (secondo punto di controllo) è quello rappresentato dal cerchietto nero in alto a destra (impostazione: 400,100); il quarto punto da dichiarare (punto finale) è quello rappresentato dal cerchietto vuoto in basso a destra (impostazione: 400,200). 
+</div> 
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<path d="M100,200 C100,100 400,100 400,200 " stroke="purple" stroke-width="2" fill="none" />
+	<circle cx="100" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<circle cx="100" cy="100" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="400" cy="100" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="400" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<line x1="100" y1="200" x2="100" y2="100" stroke="grey"  stroke-width="1" />
+	<line x1="400" y1="200" x2="400" y2="100" stroke="grey"  stroke-width="1" />
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<path d="M100,200 C175,100 375,100 300,200 " stroke="purple" stroke-width="2" fill="none" />
+	<circle cx="100" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<circle cx="175" cy="100" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="375" cy="100" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="300" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<line x1="100" y1="200" x2="175" y2="100" stroke="grey"  stroke-width="1" />
+	<line x1="375" y1="100" x2="300" y2="200" stroke="grey"  stroke-width="1" />
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<path d="M100,200 C25,100 475,100 400,200 " stroke="purple" stroke-width="2" fill="none" />
+	<circle cx="100" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<circle cx="25" cy="100" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="475" cy="100" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="400" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<line x1="100" y1="200" x2="25" y2="100" stroke="grey"  stroke-width="1" />
+	<line x1="475" y1="100" x2="400" y2="200" stroke="grey"  stroke-width="1" />
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<path d="M100,200 C100,50 400,350 400,200" stroke="purple" stroke-width="2" fill="none" />
+	<circle cx="100" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<circle cx="100" cy="50" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="400" cy="350" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="400" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<line x1="100" y1="200" x2="100" y2="50" stroke="grey"  stroke-width="1" />
+	<line x1="400" y1="350" x2="400" y2="200" stroke="grey"  stroke-width="1" />
+</svg>
+
+<div>
+il <b>quadratic Bézier curve commands</b> viene definito da un punto di partenza un punto di controllo e un punto finale. Nella figura seguente il punto di partenza è quello rappresentato dal cerchietto vuoto in basso a sinistra (impostazione: M100,200); il secondo punto da dichiarare è il punto di controllo rappresentato dal cerchietto nero (impostazione: Q 200,100); il terzo punto da dichairare è il punto finale rappresentato dal cerchietto vuoto in basso a destra (impostazione: 300,200).
+</div> 
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<path d="M100,200 Q200,100 300,200  " stroke="purple" stroke-width="2" fill="none" />
+	<circle cx="100" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<circle cx="200" cy="100" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="300" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<line x1="100" y1="200" x2="200" y2="100" stroke="grey"  stroke-width="1" />
+	<line x1="200" y1="100" x2="300" y2="200" stroke="grey"  stroke-width="1" />
+
+</svg>
+
+
+<br /><br /><br /><br /><br /><br />
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<path d="M0,400 500,0  " stroke="purple" stroke-width="2" fill="none" />
+
+</svg>
+
+
+<!--
+
+	<circle cx="" cy="" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<circle cx="" cy="" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="" cy="" r="5" stroke="none"  stroke-width="none" fill="black"  />	
+	<circle cx="" cy="" r="5" stroke="black"  stroke-width="1" fill="none"  />	
+	<line x1="" y1="" x2="" y2="" stroke="grey"  stroke-width="1" />
+	<line x1="" y1="" x2="" y2="" stroke="grey"  stroke-width="1" />
+
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

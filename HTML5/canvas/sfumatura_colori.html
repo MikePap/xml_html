@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>sfumatura_colori</title>
+<style type="text/css">  
+body{ margin:0; padding:0;}
+h3{ color:#03F;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:100px; padding:0;  border: 1px solid black;  } 
+   
+</style>  
+
+<script type="text/javascript">  
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');  
+for (var i=0; i<6; i++){    // verticale  
+//ctx.fillStyle = 'rgb('+Math.floor(255-42.5*i)+',255,0)';  // Senza il secondo ciclo
+//ctx.fillRect(i*25,0,25,25);                               // Senza il secondo ciclo
+for (var j=0; j<6; j++){  // orizzontale   
+ctx.fillStyle = 'rgb('+Math.floor(255-42.5*i)+','+Math.floor(255-42.5*j)+',0)';	// si crea lo scaling dell'rgb dei colori considerando il rosso e il giallo.  42.5 è la sesta parte di 255 [nel caso di: 255- 42.5*i ==> avviene prima la moltiplicazione e poi la sottrazione] 
+ctx.fillRect(j*25,i*25,25,25);		// si creano 6 rettangoli 25*25 con le posizioni prodotte dal ciclo 
+} // for   
+} // for   
+}; // chiude la funzione    
+//##### 42.5 è la sesta parte di 255.  #######  255-40*0 => 255 (moltiplica prima 42.5*0=0 e poi fa 255-0=255
+// rgb(250,250,0)
+
+</script>  
+
+</head>  
+
+<body onLoad="draw();"> 
+
+<canvas id="canvas" width="150" height="150"></canvas>
+
+
+
+
+
+</body>
+</html>

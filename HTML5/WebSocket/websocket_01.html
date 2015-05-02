@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>websocket_01  </title>
+<style type="text/css">
+h1{ color:#006600;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color: #F60;}
+.codice{ color:#060;}
+
+</style>
+</head>
+<body>
+
+<h1>WebSocket </h1>
+
+<p>
+E' interessante questo articolo sulla sicurezza per le applicazioni con i web socket <a href="http://www.christian-schneider.net/CrossSiteWebSocketHijacking.html">vedi qui</a>
+</p>
+
+<script  type="text/javascript">
+
+/*
+EchoSocket = function(){
+
+return {
+ws: null,
+
+init: function(url){
+this.ws = new WebSocket(url);
+this.onOpen();
+this.onMessage();
+this.onClose();
+}, // "init"	
+
+doSend: function(msg){
+this.ws.send = function(evt) {
+//console.log(evt.timeStamp)
+//document.write(evt.timeStamp)	
+document.write("Ok");
+}; // 
+}, // "doSend"
+
+onOpen: function(){
+this.ws.onopen = function(evt) {
+//console.log('CONNECTED: ' + evt.type);
+document.write('CONNECTED:' + evt.type);evt
+EchoSocket.ws.send('html5 hacks');
+};
+}, // "onopen"
+
+onClose: function(){
+this.ws.onclose = function(evt) {
+//console.log('CLOSED: ' + ': ' + evt.type);
+document.write('CLOSED: ' + ': ' + evt.type);	 
+};
+}, // "onClose"
+
+onMessage: function(msg){
+this.ws.onmessage = function(evt) {
+//console.log('RESPONSE: ' + ': ' + evt.data);
+document.write('RESPONSE: ' + ': ' + evt.data);
+EchoSocket.ws.close();
+};
+} // "onMessage"
+} // return
+
+}(); // "EchoSocket" 
+ EchoSocket.init("ws://echo.websocket.org/");
+*/
+
+/*
+//[Constructor(in DOMString url, optional in DOMString protocol)] 
+interface WebSocket { readonly attribute DOMString URL; // ready state const unsigned short CONNECTING = 0; 
+const unsigned short OPEN = 1; const unsigned short CLOSED = 2; readonly attribute unsigned short readyState; readonly attribute unsigned long bufferedAmount;  // networking attribute Function onopen; attribute Function onmessage; attribute Function onclose; boolean send(in DOMString data); void close(); }; WebSocket implements EventTarget;
+
+*/
+
+/*
+//var myWebSocket = new WebSocket("ws://www.websockets.org");
+var myWebSocket = new WebSocket('ws://echo.websocket.org/';
+//var myWebSocket = new WebSocket("ws://echo.localhost:8080");
+
+myWebSocket.onopen = function(evt) { alert("Connection open ..."); }; 
+myWebSocket.onmessage = function(evt) { alert( "Received Message: " + evt.data); };
+//myWebSocket.onclose = function(evt) { alert("Connection closed."); };
+
+myWebSocket.send("Hello WebSockets!");						// To send a message to the serve
+myWebSocket.send = function(){ alert("Ok"); }
+myWebSocket.close();												// to terminate the connection
+*/
+
+
+///////////////
+
+EchoSocket = function()
+{
+	return 
+	{
+		ws: null,
+		init: function(url)
+		{
+			this.ws = new WebSocket(url);
+			this.onOpen();
+			this.onMessage();
+			this.onClose();
+		},
+
+		doSend: function(msg)
+		{
+			this.ws.send = function(evt) 
+			{
+				console.log(evt.timeStamp)
+			};
+		},
+
+		onOpen: function()
+		{
+			this.ws.onopen = function(evt) 
+			{
+				console.log('CONNECTED: ' + evt.type);
+				EchoSocket.ws.send('html5 hacks');
+			};
+		},
+
+		onClose: function()
+		{
+			this.ws.onclose = function(evt) {
+			console.log('CLOSED: ' + ': ' + evt.type);
+		};
+		},
+
+		onMessage: function(msg)
+		{Davide Ruiba
+
+			this.ws.onmessage = function(evt) 
+			{
+				console.log('RESPONSE: ' + ': ' + evt.data);
+				EchoSocket.ws.close();
+			};
+		}
+	}
+
+}();
+
+EchoSocket.init("ws://echo.websocket.org/");
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
+

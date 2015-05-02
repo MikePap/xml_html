@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>tag time</title>
+<style type="text/css">
+
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+</style>
+
+</head>
+
+<body>
+
+<h1>dates and times</h1>
+
+<p class="nota">Il tag <strong>time</strong> serve a definire una data o un orario o entrambi </p>
+
+<p>Può aver due attributi <strong>datetime</strong> e <strong>pubdate</strong></p>
+
+<p class="codice">
+&lt;time datetime="2009-10-22T13:59:47-04:00" pubdate="pubdate"&gt;
+</p>
+<p>La <strong>T</strong> posta tra la data e l'orario ha soltanto uno scopo di separazione</p>
+
+<p>
+Sono valide anche le seguenti dichiarazioni: <br />
+<span class="codice">&lt;time datetime="2009-10-22"&gt;last Thursday&lt;/time&gt;  <br />
+&lt;time datetime="2009-10-22"&gt;&lt;/time&gt;
+</span>
+</p>
+
+<p class="nota">
+A proposito dell'attributo <strong>pubdate</strong> c'è da dire che se il tag &lt;time&gt; è posto all'interno di un tag &lt;article&gt; il timestamp si riferisce alla pubblicazione di quell'articolo, mentre se non è all'interrno del tag &lt;article&gt; il timestamp fa riferimento alla data di pubblicazione dell'intero documento
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

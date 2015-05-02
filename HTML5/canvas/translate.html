@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>translate</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+
+#canvas{ margin:10px; padding:0;  border: 1px solid black; } 
+
+#canvas2{ border: 2px solid #000;  margin:10px; }
+
+</style>  
+
+<script type="text/javascript">  
+ 
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');     
+
+ctx.fillRect(0,0,100,100);  // viene tracciato un rettangolo (in alto a sinistra)(è nero per default, non essendo stato impostato nessuno stile)
+ctx.save();
+
+//ctx.moveTo(100,100);	// la differenza tra questo metodo e il "translate" è che questo non è compreso e quindi salvato dal metodo "save()"
+ctx.translate(100,100);		// il rettangolo precedente viene spostato a destra e in basso (è il rettangolo nero al centro) ... 
+ctx.fillRect(0,0,100,100);  // ... e quindi viene nuovamente tracciato assumendo la nuova posizione 
+ctx.save();
+
+ctx.translate(100,-100);     // viene impostato un'altro spostamento (è quello in alto a destra) ... 
+ctx.fillRect(0,0,100,100);  // ... e viene quindi tracciato un terzo rettangolo con le nuove impostazioni 
+//		ctx.save();
+		
+ctx.restore();	// in questo modo annulliamo l'ultima impostazione e recuperiamo la prima impostazione che è quella del rettangolo al centro ...
+ctx.translate(100,100);     // e quindi avremo quello in basso a destra  ... 
+ctx.fillRect(0,0,100,100);  // ... e viene quindi tracciato un terzo rettangolo con le nuove impostazioni  
+	
+ctx.translate(-200,0);		// a questo punto applichiamo l'ultima trasformazione per avere quello in basso a sinistra  
+ctx.fillRect(0,0,100,100);
+
+} // chiude la funzione 'draw' 
+
+</script>  
+
+</head>  
+<body onLoad="draw(); draw2();"> 
+
+<h3>translate(x,y)</h3>
+<p>
+<span class="rosso">Metodo che permette di spostare le coordinate x e y all'interno dell'elemento &lt;canvas&gt; . E' uguale al metodo <q>moveTo()</q> con la differenza che quest'ultimo non è compreso dal metodo "save()" e quindi non è salvato nel settings </span><br />
+Il primo parametro (x) stabilisce di quanti pixel la coordinata x deve essere spostata da sinistra verso destra. 
+Il secondo parametro (y) stabilisce , invece, di quanti pixel la coordinata y deve essere spostata dall'alto verso il basso. <br />
+Se alla 'x' viene dato un valore negativo lo spostamento sarà diretto all'incontrario da destra verso sinistra . Stessa cosa se ad 'y' viene assegnato un valore negativo lo spostamento sarà diretto dal basso verso l'alto. <br />
+<span class="verde">E' buona cosa salvare lo stato del canvas, con il metodo <q>save()</q> prima di ogni trasformazione. In tal caso risulterà più semplice ritornare al precedente settings piuttosto che riapplicare la trasformazione inversa</span>
+</p>
+
+
+<canvas id="canvas" width="300" height="300"></canvas>
+
+  
+<script type="text/javascript">
+function draw2() {
+var ctx = document.getElementById('canvas2').getContext('2d');
+ctx.fillRect(0,0,300,300);		// disegna un rettangolo (nero per default)
+  for (i=0;i<3;i++) {
+    for (j=0;j<3;j++) {
+      ctx.save();
+      ctx.strokeStyle = "#9CFF00";
+      ctx.translate(50+j*100,50+i*100);
+      drawSpirograph(ctx,20*(j+2)/(j+1),-8*(i+3)/(i+1),10);
+      ctx.restore();
+    }
+  }
+} // chiude la funzione 'draw2'
+
+function drawSpirograph(ctx,R,r,O){
+  var x1 = R-O;
+  var y1 = 0;
+  var i  = 1;
+  ctx.beginPath();
+  ctx.moveTo(x1,y1);
+  do {
+    if (i>20000) break;
+    var x2 = (R+r)*Math.cos(i*Math.PI/72) - (r+O)*Math.cos(((R+r)/r)*(i*Math.PI/72))
+    var y2 = (R+r)*Math.sin(i*Math.PI/72) - (r+O)*Math.sin(((R+r)/r)*(i*Math.PI/72))
+    ctx.lineTo(x2,y2);
+    x1 = x2;
+    y1 = y2;
+    i++;
+  } while (x2 != R-O && y2 != 0 );
+  ctx.stroke();
+} // chiude la funzione 'drawSpirograph'
+
+</script>  
+  
+  
+<canvas id="canvas2" width="300" height="300"></canvas> 
+  
+  
+
+</body>
+</html>

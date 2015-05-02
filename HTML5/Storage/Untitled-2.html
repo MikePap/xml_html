@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>sample </title>
+<style type="text/css">
+html,body,div,p,h1,h2,h3,h4,h5,h6,input,textarea,select,span,ul,li,a,img{
+margin: 0;padding:0;
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+display:block; margin: 0;padding:0;
+}
+/* ASSEGNAZIONE DEL "box-sizing:border-box" A TUTTI GLI ELEMENTI DEL DOCUMENTO UTILIZZANDO IL SELETTORE UNIVERSALE * (valido anche in IE 8) */
+* { 
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+   box-sizing: border-box; 
+}
+
+h1{ color: #00F; font-size:24px;}
+h3{ color: #060; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+#prova{
+position:relative; margin:20px auto; width:40%; height:200px; background:red;
+}
+
+
+
+</style>
+
+
+<script type="text/javascript"  src="../../../jQuery-1.6.min.js"></script>
+
+<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.js"> </script>
+</head>
+<body>
+
+
+<h1>titolo</h1>
+
+<select id="colori">
+	<option value="seleziona">Seleziona</option>
+	<option value="#0F0">verde</option>
+	<option value="#f00">rosso</option>
+	<option value="#ff0">giallo</option>
+	<option value="#00f">blù</option>
+	<option value="purple">porpora</option>
+</select>
+
+<script type="text/javascript">
+
+function changeElement(nome_ls,elemento,prop_css) {
+var valore = localStorage.getItem(nome_ls);				// si recupera il valore che ha come nome 'nome_ls' ... 
+var element = document.getElementById(elemento);
+element.style.prop_css = valore;
+} // chiude la funzione 
+//changeElement("sfondo","prova","backgroundColor");
+
+</script>
+
+
+<script  type="text/javascript">
+jQuery(document).ready(function(){
+//localStorage.lastname="Smith";				// 'lastname' è la chiave e "Smith" è il suo valore 
+//localStorage.setItem("bar", value);			// 'bar' è la chiave e 'value' è il suo valore 
+
+//localStorage.larghezza = "80%";
+//localStorage.altezza = "300px";
+//localStorage.sfondo = "#0F0";
+//var larghezza = localStorage.getItem('larghezza');	// 
+//var altezza = localStorage.getItem('altezza');
+//var sfondo = localStorage.getItem('sfondo');
+
+//$("#prova").css({'width':larghezza, 'height':altezza, 'background':sfondo });
+//var sf = $("#prova").css('background-color');  
+//alert(sf);
+
+/*
+if(!localStorage.sfondo){					// se non esiste significa che non è mai stato reimnpostato 
+localStorage.sfondo = "";					// ... 
+}else{
+var sfo = localStorage.getItem('sfondo');			// se esiste si recupera il suo valore ... (che è stato impostato)
+$("#prova").css("background-color", sfo);			// ... e si assegna alla proprietà tale valore 
+} // else 
+*/
+
+/*
+########## funzione che assegna il valore di una proprietà dei CSS ad un elemento il quale sta immagazzinato nel local storage #######
+"nome_ls":		è il nome che identifica la proprietà dei CSS che verrà immagazzinato nel local storage come chiave
+"elemento":		è l'elemento a cui assegnare la proprietà 
+"prop_css":		è una proprietà dei css (width, height, background, color ....)	 
+*/
+function setCSS_ls(nome_ls,elemento,prop_css){
+var valore = localStorage.getItem(nome_ls);				// si recupera il valore che ha come nome 'nome_ls' ... 
+$(elemento).css(prop_css, valore);						// ... e si assegna alla proprietà tale valore 
+}; // chiude "setCSS_ls()"
+
+setCSS_ls("sfondo","#prova","background-color");
+
+/*
+$("#colori").change(function (){		// la select 
+var str = "";
+$("#colori option:selected").each(function () {
+var str = $(this).val();
+$("#prova").css({'background-color':str });
+localStorage.setItem("sfondo", str);
+}); // each
+}); // change  
+*/
+
+function setLS_select(menu,elemento,prop_css,nome_ls){
+$(menu).change(function (){		// la select 
+var str = "";
+$(menu+" option:selected").each(function () {
+var str = $(this).val();
+$(elemento).css(prop_css,str);
+localStorage.setItem(nome_ls, str);
+}); // each
+}); // change  
+}; // chiude "setLS_select()"
+
+setLS_select("#colori","#prova","background-color","sfondo");
+
+}); // chiude ready 
+</script>
+
+
+
+<div id="prova"></div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body> 
+</html>

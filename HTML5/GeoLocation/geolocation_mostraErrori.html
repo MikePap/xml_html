@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Localizzazione posizione in una mappa </title>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250); margin:10px 50px; } 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150); margin:10px 40px; }
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20); margin:10px 31px; }
+.nota{ color:rgb(250,120,0);}
+.codice{ color:rgb(30,120,30);}
+code, pre{ color:rgb(20,150,30); font-weight:bold; background:rgb(235,245,255); padding:10px;}
+tt, em{color:#6a9999}
+.grigio{color:gray;}
+.azzurro{color:rgb(100,150,255);}
+.rosso{color:red;}
+.scuro{color:#333;}
+
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}		
+
+</style>
+</head>
+
+<body>
+
+
+<h1>Geolocalizzazione</h1>
+
+<p>
+In questo documento è definita la funzione di callback in caso di fallimento del rilevamento della posizione geografica con tutte le relative opzioni:
+<pre>
+function showError(error){
+	switch(error.code){
+		case error.PERMISSION_DENIED:
+			x.innerHTML = "L'utente ha rifiutato la richiesta per la localizzazione.";			
+			break;
+		case error.POSITION_UNAVAILABLE:
+			x.innerHTML = "Le informazioni sulla localizzazione non sono disponibili.";		
+			break;
+		case error.TIMEOUT:
+			x.innerHTML = "La richiesta per la localizzazione è scaduta.";							
+			break;
+		case error.UNKNOWN_ERROR:
+			x.innerHTML = "La localizzazione è fallita a causa di un errore inatteso.";		
+			break;
+	}
+} 
+</pre>
+ 
+</p>
+
+
+
+<p id="demo"></p>
+<button onclick="getLocation()">Cliccami per conoscere la tua posizione</button>
+<div id="mapholder"></div>
+<script>
+var x=document.getElementById("demo");
+
+function getLocation(){
+	if (navigator.geolocation){
+	navigator.geolocation.getCurrentPosition(showPosition,showError);
+	}else{
+		x.innerHTML="Geolocation is not supported by this browser.";
+	}
+}
+
+function showPosition(position){
+	var latlon=position.coords.latitude+","+position.coords.longitude;
+	var img_url="http://maps.googleapis.com/maps/api/staticmap?center="  +latlon+"&zoom=14&size=400x300&sensor=false";
+	document.getElementById("mapholder").innerHTML="<img src='"+img_url+"'>";
+}
+
+function showError(error){
+	switch(error.code){
+		case error.PERMISSION_DENIED:
+			x.innerHTML = "L'utente ha rifiutato la richiesta per la localizzazione.";			// "User denied the request for Geolocation"
+			break;
+		case error.POSITION_UNAVAILABLE:
+			x.innerHTML = "Le informazioni sulla localizzazione non sono disponibili.";		//"Location information is unavailable"
+			break;
+		case error.TIMEOUT:
+			x.innerHTML = "La richiesta per la localizzazione è scaduta.";							// "The request to get user location timed out"
+			break;
+		case error.UNKNOWN_ERROR:
+			x.innerHTML = "La localizzazione è fallita a causa di un errore inatteso.";			// "An unknown error occurred"
+			break;
+
+	}
+} // 
+
+</script>
+
+
+
+
+
+</body>
+</html>
+
+

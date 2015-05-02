@@ -1,0 +1,21 @@
+/*	refer to yepnope 	*/
+@charset "utf-8";
+
+h1{
+color:blue;
+}
+
+h3{
+color:green; font-size:15px; margin-left:20px;
+}
+h3 a:link, h3 a:visited{
+text-decoration:none;
+}
+h3 a:hover{
+text-decoration:underline;
+}
+
+code{
+color:green;
+}
+

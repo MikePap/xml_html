@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>  
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<title> Linee</title>  
+<style type="text/css">
+html,body,p,div,canvas,h2,h1,h3{ margin:0; padding:0;}
+h1{ color:#00F; padding:10px;}
+h3{ padding:5px 10px; color:rgb(50,200,50); font-size:18px; }
+p{ padding:5px}
+.nota{ color:#F00;}
+.arancia{color:orange;}
+dt{ margin-left:10px; color:rgb(130,0,70); font-size:1em; font-weight:bold;}
+dd{ font-size:0.9em; color:rgb(50,50,155);}
+
+canvas { margin:50px;  border: 1px solid black; background:#FFFF00; /* da un margine e  crea un bordo all'elemento  */}
+
+</style>
+   
+<script type="text/javascript">  
+
+function draw(){  
+var canvas = document.getElementById('tutorial');  
+//      if (canvas.getContext){  
+        var ctx = canvas.getContext('2d');
+ctx.beginPath();		// è il primo step che ogni volta che viene chiamato si ricomincia a tracciare una nuova forma  
+ctx.moveTo(25,35);	// la nuova forma(linea) parte da 25px da sinistra e da 35px dal top   		  
+ctx.lineTo(105,25);	// i due valori rappresentano rispettivamente le coordinate del punto finale (105 da sinistra e 25 dall'alto). Quindi in definitiva la linea parte a 25 da sinistra e 35 dall'alto e prosegue per una lunghezza di 80(105-25) fino 105 da sinistra e 25 dall'alto.   
+ctx.stroke();		// il metodo "stroke" traccia la linea a differenza del metodo "fill" che (in caso di una forma chiusa) la riempie con un colore
+ 
+ctx.beginPath();		// inizio di un nuovo tracciato  
+ctx.moveTo(45,45);	// impostazione del punto di partenza  		  
+ctx.lineTo(125,60);	// impostazione di un nuovo vertice (secondo) per il proseguimento della linea 
+ctx.lineTo(75, 120);	// impostazione di un nuovo vertice (terzo)
+ctx.lineTo(40,130);	// impostazione di un nuovo vertice (quarto)
+ctx.fillStyle = "rgb(200,0,0)";	// impostazione dello stile della forma    
+ctx.fill();			// riempimento della forma (in questo caso può anche non necessitare il "closePath" per riempire il triangolo)  
+ctx.closePath();		//  chiusura della forma che collega i quattro vertici creati
+//ctx.stroke();     // questo metodo necessita del "closePath" per creare un triangolo senza riempimento
+//ctx.fillColor();
+}
+
+</script>
+
+</head>  
+
+<body onLoad="draw();">  
+ 
+<h1>lineTo(x,y)</h1>
+
+<p class="nota">
+Metodo che permette di tracciare una linea impostando il punto finale con le coordinate <b>x</b> e <b>y</b> dopo aver impostato il punto di partenza con il metodo <b>moveTo(x,y)</b> 
+</p>  
+
+<dl>
+	<dd><b>beginPath()</b>: è il primo step che ogni volta che viene chiamato si ricomincia a tracciare una nuova forma</dd>
+	<dd><b>closePath():</b> metodo che chiude una forma quando sono stati impostati dei punti con <q>lineTo</q></dd>
+	<dd><b>stroke()</b>:  questo metodo è usato per tracciare un contorno o bordo o nel caso di una linea appunto una linea</dd>
+	<dd><b>fill(): </b> questo metodo riempie la forma creata con un colore(impostato con il metodo <b>fillStyle</b>)</dd>
+	
+</dl>	
+
+   
+<canvas id="tutorial" width="150" height="150"></canvas>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>  
+</html>  
+
+
+
+

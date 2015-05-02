@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>prova   </title>
+<style type="text/css">
+video {
+/*
+  width: 307px;
+  height: 250px;
+*/
+  background: rgba(255,255,255,0.5);
+  border: 1px solid #ccc;
+}
+.grayscale {
+-webkit-filter: grayscale(1);
+-moz-filter: grayscale(1);
+-ms-filter: grayscale(1);
+-o-filter: grayscale(1);
+filter: grayscale(1);
+}
+.sepia {
+-webkit-filter: sepia(1);
+filter: sepia(1);
+}
+.blur {
+-webkit-filter: blur(3px);
+filter: blur(3px);
+}
+.brightness{
+-webkit-filter: brightness(5);
+filter: brightness(5);
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+
+<video autoplay></video>
+
+
+
+<script type="text/javascript">
+
+var video = document.querySelector('video');
+
+
+function errorCallback(error){
+	console.log("navigator.getUserMedia error: ", error);
+}
+
+navigator.getUserMedia  = navigator.getUserMedia ||navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia || navigator.msGetUserMedia;
+var vgaConstraints = {
+	video: {
+		mandatory: {
+			maxWidth: 640,
+			maxHeight: 360
+		}
+	}
+};
+
+//navigator.getUserMedia({video: true}, function(stream) {
+navigator.getUserMedia(vgaConstraints, function(stream) {
+	video.src = window.URL.createObjectURL(stream);
+}, errorCallback);
+ 
+
+var idx = 0;
+var filters = ['grayscale', 'sepia', 'blur', 'brightness', ''];
+
+function changeFilter(e) {
+	var el = e.target;
+	el.className = '';
+	var effect = filters[idx++ % filters.length];			// loop through filters.
+	if (effect) {
+		el.classList.add(effect);
+	}
+}
+
+//var video = document.querySelector('video');
+//video.onclick = function (){changeFilter(event) };
+
+document.querySelector('video').addEventListener('click', changeFilter, false);
+
+
+
+/*
+
+0 % 5			// 0
+1 % 5			// 1
+2 % 5			// 2
+2 % 6			// 2
+....
+*/
+  
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

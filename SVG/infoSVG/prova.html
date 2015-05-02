@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>prova</title>
+<style type="text/css">
+html, body, div, svg{  margin:0; padding:0;}
+body{
+background: #fff;
+}
+
+* { 
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+   box-sizing: border-box; 
+}
+
+
+svg#menu{
+margin:0 0 0 400px;
+border: 1px solid #ccc;
+}
+
+div.box{
+width: 100%;
+/*height:100vh;*/
+overflow:auto;
+color:red; font-size:31px; background:red;
+}
+
+
+
+</style>
+</head>
+<body>
+
+
+<body>
+
+<div class="box">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width='200' height='250'  id="menu" >
+
+	<defs>
+		<path  stroke-width="1"  
+			d="m 1,1 0,48 c 0,0 9,0.742614 9,-7.250825 0,-7.755776 10,-7.755776 10,-7.755776 l 160,0 c 0,0 9.70971,0.07419 10,7.755776 C 190.30259,49.75638 199,49 199,49 l 1,-48 z" id="elleI" />
+
+		<text x="100" y="25" font-size="25" fill="yellow" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="bari" > 			Bari
+		</text>
+		<text x="100" y="25" font-size="25" fill="yellow" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="foggia" > 				Foggia
+		</text>	
+
+		<text x="100" y="25" font-size="25" fill="yellow" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="lecce" > 				Lecce
+		</text>	
+		<text x="100" y="25" font-size="25" fill="yellow" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="taranto" > 				Taranto
+		</text>	
+
+
+	</defs>
+	
+	<symbol id="liA"  >
+		<use xlink:href="#elleI"></use>
+		<use xlink:href="#bari" ></use>
+	</symbol>
+
+	<symbol id="liB"  >
+		<use xlink:href="#elleI"></use>
+		<use xlink:href="#foggia" ></use>
+	</symbol>
+
+	<symbol id="liC" >
+		<use xlink:href="#elleI"></use>
+		<use xlink:href="#lecce" ></use>
+	</symbol>
+	<symbol id="liD" >
+		<use xlink:href="#elleI"></use>
+		<use xlink:href="#taranto" ></use>
+	</symbol>
+
+
+	<g>
+		<use x="0" y="0" xlink:href="#liA"   stroke="green" fill="#444" id="li1" >
+			<animate  attributeName="y" begin="uelle.mouseenter" from="0" to="50" dur="200ms"  fill="freeze" />
+			<animate  attributeName="y" begin="menu.mouseleave" to="0" dur="200ms"   fill="freeze" />
+		</use>
+	</g>
+	<g x="0" y="0" >
+		<use x="0" y="0" xlink:href="#liB"  stroke="purple" fill="#444"  >
+			<animate  attributeName="y" begin="uelle.mouseenter + 100ms" from="0" to="100" dur="200ms"  fill="freeze" />
+			<animate  attributeName="y" begin="menu.mouseleave" to="0" dur="200ms"   fill="freeze" />
+		</use>
+	</g>
+	<g x="0" y="0" >
+		<use x="0" y="0" xlink:href="#liC"  stroke="purple" fill="#444"  >
+			<animate  attributeName="y" begin="uelle.mouseenter + 200ms" from="0" to="150" dur="200ms"  fill="freeze" />
+			<animate  attributeName="y" begin="menu.mouseleave" to="0" dur="200ms"   fill="freeze" />
+		</use>
+	</g>
+	<g x="0" y="0" >
+		<use x="0" y="0" xlink:href="#liD"  stroke="purple" fill="#444"  >
+			<animate  attributeName="y" begin="uelle.mouseenter + 300ms" from="0" to="200" dur="200ms"  fill="freeze" />
+			<animate  attributeName="y" begin="menu.mouseleave" to="0" dur="200ms"   fill="freeze" />
+		</use>
+	</g>
+
+
+	<g x="0" y="0"  >
+		<rect width="200" height="50" stroke="black" stroke-width="1" fill="#888" id="uelle" ></rect>
+		  <text x="100" y="25" fill="red" font-size="31" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="puglia" >
+			Puglia
+		</text>
+		  <line x1="0" y1="24" x2="200" y2="24"  style="stroke:#ff0;stroke-width:1"/>
+	</g>
+
+
+
+	<script type="application/ecmascript"> <![CDATA[
+		var li1 = document.getElementById('li1');
+		var li2 = document.getElementById('li2');
+		var uelle = document.getElementById('uelle');
+		var svg = document.getElementById('menu');
+		var puglia = document.getElementById('puglia');
+
+		uelle.addEventListener('click', function(){
+//			li1.setAttribute("fill", "remove");
+//			li1.setAttribute("y", "0");
+//			var jk = li1.getAttribute("x");
+//			li1.setAttribute("xlink:href", "#li")
+//			puglia.textLength = "20px";
+
+//	alert(jk);	
+		}, false);		
+
+
+	]]> </script>
+
+
+</svg>
+</div> 
+
+
+
+
+<!--
+
+
+
+---------------------------------------------------
+		<symbol id="li"  >
+			<path  stroke-width="1"  
+			d="m 1,1 0,48 c 0,0 9,0.742614 9,-7.250825 0,-7.755776 10,-7.755776 10,-7.755776 l 160,0 c 0,0 9.70971,0.07419 10,7.755776 C 190.30259,49.75638 199,49 199,49 l 1,-48 z" />
+		</symbol>
+
+		<use x="0" y="0" xlink:href="#li"   stroke="green" fill="#666" id="li1" >
+			<animate  attributeName="y" begin="uelle.click" from="0" to="50" dur="200ms"  fill="freeze" >
+			<animate  attributeName="x" begin="menu.mouseout" from="0" to="50" dur="200ms" additive="sum"  fill="freeze" >
+		</use>
+
+
+		<use x="0" y="0" xlink:href="#li"  stroke="purple" fill="#333" id="li2" >
+			<animate  attributeName="y" begin="uelle.click + 100ms" from="0" to="100" dur="300ms" fill="freeze" >
+		</use>
+
+----------------------------------------------------------------------
+			<animate  attributeName="y" begin="menu.mouseout" from="50" to="0" dur="200ms"  fill="remove" >
+
+
+m 1,1 0,48 c 0,0 9,0.742614 9,-7.250825 0,-7.755776 10,-7.755776 10,-7.755776 l 160,0 c 0,0 9.70971,0.07419 10,7.755776 C 190.30259,49.75638 199,49 199,49 l 0,-48 z
+
+	<svg width='202' height='52' x="20" y="90" >
+
+m 0,0 0,50 c 0,0 10,-0.257386 10,-8.250825 0,-7.755776 10,-7.755776 10,-7.755776 l 160,0 c 0,0 9.70971,0.07419 10,7.755776 C 190.30259,49.75638 200,50 200,50 l 0,-50 z
+
+
+m 0,0 0,50 c 0,0 10,-0.257386 10,-8.250825 0,-7.755776 10,-7.755776 10,-7.755776 l 160,0 c 0,0 9.70971,0.07419 10,7.755776 C 190.30259,49.75638 200,50 200,50 l 0,-50 z
+
+
+		<path d="m 0,982.3432 0,-30.36053 199.81025,0.75902 0.3795,29.60151 0,0" stroke="purple" stroke-width="1" fill="none" />
+m 0,982.3432 0,-30.36053 199.81025,0.75902 0.3795,29.60151 0,0
+
+m 0,982.1535 -0.00908349,21.0626 c 0.21809046,0 19.93318249,0 19.93318249,-10.43646 0,-10.4433 10.056926,-10.43644 10.056926,-10.43644 l 140.037955,0 c 0,0 10.24667,4e-5 10.24667,10.43644 0,10.43646 19.73435,10.43646 19.73435,10.43646 l 0.18975,-20.8729
+
+
+transform="scale(2)"
+
+filter="url(#textFilter)"		fill-opacity="0.5"
+
+		<pattern id="sbarre" patternUnits="userSpaceOnUse" x="0" y="0" width="100" height="100" viewBox="0 0 100 100">
+			<path d="M0,100  100,0" stroke="purple" stroke-width="40" fill="none" />
+			<path d="M0,0 0,28 28,0	Z " stroke="none"  fill="purple" />
+			<path d="M72,100  100,100	100,72 Z " stroke="none"  fill="purple" />
+		</pattern>
+
+			<path d="M0,100  100,0" stroke="purple" stroke-width="40" fill="none" />
+
+
+-------------------------------------------------------------------
+		<circle cx="20" cy="20" r="15" fill="#fa0000"  /> 
+		<circle cx="10" cy="10" r="9" stroke="#ccc" stroke-width="1" fill="none"  />
+
+			<path d="M1,1 h20 v20 h-20 v-20" fill-opacity='0' stroke-width='.36' stroke-dasharray='0,1,1' stroke='#cccccc'/>
+----------------------------------
+fill-opacity="1"
+
+			<rect x="40" y="40" width="20" height="20" fill="#fa0000" >			</rect>
+
+--------------------------------------------------------------------------------------------------------
+
+			<feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+			<feOffset in="blur" dx="0" dy="0" result="offsetBlur"/>
+			<feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75" specularExponent="20" lighting-color="#bbbbbb"  result="specOut">
+				<fePointLight x="-5000" y="-10000" z="20000"/>
+			</feSpecularLighting>
+			<feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
+			<feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+
+			<feMerge>
+				<feMergeNode in="offsetBlur"/>
+				<feMergeNode in="litPaint"/>
+			</feMerge>
+
+---------------------------------------------
+filter="url(#MyFilter)"
+---------------------------------------------
+			<rect x="0" y="0" width='100' height='100' fill='#320000'  >
+				<animate attributeName="fill" begin="4s" dur="1s" calcMode="linear" values="#320000; #000 " repeatCount="indefinite"  /> 
+			</rect>
+
+			<rect x="10" y="10" width='80' height='80' fill='#640000'  >
+				<animate attributeName="fill" begin="3s" dur="1s" calcMode="linear" values="#640000; #320000" repeatCount="indefinite"  /> 
+			</rect>
+
+			<rect x="20" y="20" width='60' height='60' fill='#960000'  >
+				<animate attributeName="fill" begin="2s" dur="1s" calcMode="linear" values="#960000; #640000" repeatCount="indefinite"   /> 
+			</rect>
+
+			<rect x="30" y="30" width='40' height='40' fill='#c80000'  >
+				<animate attributeName="fill" dur="1s" calcMode="linear" values="#c80000; #960000" repeatCount="indefinite"  /> 
+			</rect>
+
+			<rect x="40" y="40" width="20" height="20" fill="#fa0000"  >
+				<animate attributeName="fill" dur="1s" calcMode="linear" values="#fa0000; #c80000" repeatCount="indefinite" /> 
+			</rect>
+
+-------------------------------------------------------
+
+#fa0000; #c80000; #960000; #640000; #320000
+
+				<animate attributeName="fill" dur="1.5s" calcMode="linear" values="#fa0000; #c80000; #960000; #640000; #320000" fill="freeze"  /> 
+
+(250,0,0)	#fa0000
+(225,0,0)	#e10000	*
+(200,0,0)	#c80000 
+(175,0,0)	#af0000	*
+(150,0,0)	#960000
+(125,0,0)	#7d0000	*
+(100,0,0)	#640000
+(75,0,0)		#4b0000	*
+(50,0,0)	#320000
+
+#400000; #500000; #550000
+			<rect x="0" y="0" width='100' height='100' fill='#400000'  />
+			<rect x="10" y="10" width='80' height='80' fill='#450000'  />
+			<rect x="20" y="20" width='60' height='60' fill='#500000'  />
+			<rect x="30" y="30" width='40' height='40' fill='#550000'  />
+			<rect x="40" y="40" width='20' height='20' fill='#600000'  />
+---------------------------------------------------------------------------------
+			<rect x="0" y="0" width='100' height='100' fill='#fff' stroke-width='.96' stroke-dasharray='0,1,1' stroke='#f00' />
+			<circle cx="50" cy="50" r="50" fill='#ff0' stroke-width='.36'  stroke='#0f0  />
+			<circle cx="10" cy="10" r="10" fill='#fff' stroke-width='.36'  stroke='#f00  />
+
+______________________________________________________________________________________
+	<script type="application/ecmascript"> <![CDATA[
+
+		var path = document.getElementById('rosso');
+//		var lunghezza = path.getTotalLength();
+		var lunghezza = path.pathLength;
+		console.log(lunghezza);				// 438 - 318 - 356
+
+	]]> </script>
+
+
+.......................................
+
+		<path id="verde" fill="none" stroke="#0f0" stroke-width="1" stroke-miterlimit="0"
+				d="M80,100 80,40 1,40 1,120 80,120	80,100 Z" stroke-dasharray="318 318" stroke-dashoffset="318" >
+			<animate attributeName="stroke-dashoffset" begin="2s" dur="2s" from="318" to="0" fill="freeze" />
+		</path>
+
+		<path id="blu" fill="none" stroke="#1E90FF" stroke-width="1" stroke-miterlimit="0"
+				d="M80,80 60,80 60,159 159,159 159,80 80,80 Z" stroke-dasharray="356 356" stroke-dashoffset="356">
+			<animate attributeName="stroke-dashoffset" begin="4s" dur="2s" from="356" to="0" fill="freeze" />
+		</path>
+
+
+..................................................
+		<rect x="61" y="81" width="18" height="18" fill="transparent">
+			<animate	attributeName="fill" attributeType="XML" dur="10ms" begin="6.1s" values="transparent; #fff" fill="freeze"	/>
+		</rect>		
+
+
+.....................................
+stroke-dasharray="300 300" stroke-dashoffset="300"
+
+	<path id="verde" fill="none" stroke="#0f0" stroke-width="1" stroke-miterlimit="0"
+		d="M80,100 80,40 1,40 1,120 80,120	80,100 Z"
+	/>
+
+	<rect x="10" y="10" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="x" dur="10s" values="10; 50; 10" calcMode="linear" repeatCount="3" />
+	</rect>
+
+
+----------------------------------
+http://localhost/xml_html/SVG/Animazioni/Inweb-2.png
+
+................................................
+
+	<script type="application/ecmascript"> <![CDATA[
+		var path = document.getElementById('ciola');
+		path.getTotalLength();				// 1119.22998046875	
+		var lunghezza = path.getTotalLength();
+//console.log();		
+		path.style.transition = path.style.webkitTransition = 'none';
+		path.style.strokeDasharray = lunghezza + ' ' + lunghezza;
+		path.style.strokeDashoffset = lunghezza;
+//		path.getBoundingClientRect();					// ??
+		path.style.transition = path.style.webkitTransition = 'stroke-dashoffset 4s ease-in-out';		
+
+		var pulsante = document.getElementById('pulsante');
+		pulsante.addEventListener('click', function (){
+			path.style.strokeDashoffset = '0';
+		}, false);
+
+	]]> </script>
+
+
+
+-------------------------------------------------------
+	<style type="text/css"><![CDATA[
+			rect {
+				transform-origin: 50% 50%;
+			}
+	]]></style> 
+
+
+### Posizionamento cerchi agli angoli del 'div.box' ###
+Per far si che il 'preserveAspectRatio' abbia effetto all'interno' del 'viewBox' bisogna ragionare prendendo in considerazione i valori del 'viewBox' e i valori dell'elemento all'interno dell'SVG. 
+In altre parole volendo posizionare il cerchio in un punto del 'div.box', bisogna posizionarlo all'interno del 'viewBox' dell'SVG e poi sarà 'preserveAspectRatio' a  posizionarlo nel 'div.box': il nostro campo di azione deve essere il 'viewBox'. 
+### In questo caso i valori di 'width' e 'height' del 'viewBox' sono entrambi 100 e il nostro cerchio ha un raggio di 14. Volendolo posizionare 
+in alto a destra(top-right), avendo come riferimento il 'viewBox', imposteremo 'cy=14' e 'cx=86'; 86 non è altro che la differenza della 'width' del 'viewBox' meno il raggio. Quindi in questo modo il cerchio è piazzato in alto a destra del 'viewBox' impostato all'SVG che è genitore del cerchio. Dopodichè sarà l'attributo 'preserveAspectRatio' a piazzare l'SVG, genitore del cerchio, in alto a destra del 'div.box' grazie al valore 'xMaxYMin'.  
+
+### Analizzando l'esempio di sotto' abbiamo una larghezza del 'viewBox' di 100 e un'altezza di 300 (differente dall'esempio di sopra). 
+Volendo posizionare il cerchio, con raggio di 50, in basso a destra (bottom-right) imposteremo 'cy=250' dove  250 è la differenza dell'altezza del 'viewBox'(300) e il raggio; mentre 'cx=50' dove 50 è la differenza tra la larghezza del 'viewBox'(100) e il raggio. 
+
+
+		#top-left
+		<svg viewBox="0 0 100 300" preserveAspectRatio="xMinYMin" >
+			<circle cx="50" cy="50" r="50" fill="#0f0" />			
+		</svg>
+
+		#top-right
+		<svg  viewBox="0 0 100 300" preserveAspectRatio="xMaxYMin" >
+			<circle cx="50" cy="50" r="50" fill="#f00" />			
+		</svg>
+
+		#bottom-left
+		<svg viewBox="0 0 100 300" preserveAspectRatio="xMinYMax" >
+			<circle cx="50" cy="250" r="50" fill="#00f" />			
+		</svg>
+
+		#bottom-right
+		<svg viewBox="0 0 100 300" preserveAspectRatio="xMaxYMax" >
+			<circle cx="50" cy="250" r="50" fill="#ff0" />			
+		</svg>
+
+
+
+---------------------------------------------------
+---------------------------------------------------
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="100%" height="300" id="svgGenitore" >
+
+-------------------------------
+transform="scale(0.5)"
+
+transform="translate(50%,100)"
+
+-------------------------------
+
+		<svg x="0" y="199">
+			<circle cx="50" cy="50" r="50" fill="#f00" />			
+		</svg>
+
+----------------------------------------------------------
+			<use xlink:href="#jk">
+viewBox="-90% 0 100% 300"
+
+transform="rotate(90)"
+transform="translate()"
+
+------------------------------------
+ OK FUNZIONA ma non è responsive 
+		<script type="application/ecmascript"> <![CDATA[
+			var w = window.screen.width;
+			var svgGenitore = document.getElementById('svgGenitore');
+			var svgGenitoreWidth = window.getComputedStyle(svgGenitore).width;
+			var svgLarghezza = document.getElementById('svgLarghezza');
+			var s = parseFloat(svgGenitoreWidth) - 100;
+			svgLarghezza.setAttribute('x', s+ "px");
+		]]> </script>
+
+
+
+------------------------------------------
+		<style type="text/css"><![CDATA[
+			#sotto {
+				x="0" y="200" 
+			}
+		]]></style> 
+
+.....................
+		<symbol id="my-symbol" x="0" y="0" >					 
+			<circle cx="50" cy="50" r="50" stroke="#333"   fill="#ff0" />		
+		</symbol>
+
+		<use xlink:href="#my-symbol">
+
+stroke-width="5"
+width="300" height="150"
+
+### Lavori Creativi
+Email :		prigigallomichele@yahoo.it
+Pass:			lc-cl-12
+Linkedin:	https://www.linkedin.com/profile/view?id=269676732&trk=nav_responsive_tab_profile_pic
+
+
+
+www.abcoliodoliva.com
+www.kaipai.it 
+www.abcoliodoliva.com/pastaiolo/italiano/home.html 
+www.abcoliodoliva.com/Planet_Cinema/login_reg.php
+
+
+Salve, ho letto il vostro annuncio e ritengo di avere le conoscenze giuste per potervi esservi di aiuto.
+NB: disponibile solo per lavoro freelance
+Cordiali Saluti
+-->
+
+
+<!--
+
+Legge 3/2012 relativa alla "Composizione della crisi da sovraindebitamento"
+
+
+-->
+
+
+
+
+<!--
+http://localhost/xml_html/SVG/infoSVG/prova.html
+-->
+
+
+
+</body>
+</html>

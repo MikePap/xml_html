@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Oggetto comment</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+caption{caption-side: top; text-align:left; color:#999900; font-size:11px;}
+
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+
+</head>
+
+<body>
+
+
+<h1>Commento nodo</h1>
+<p class="nota">L'oggetto <b>Comment</b> rappresenta il contenuto del nodo comment in un documento XML</p>
+
+<table border="1" cellpadding="3" cellspacing="3">
+<caption>Proprietà dell'oggetto Comment </caption>
+<tr>
+	<th>Proprietà</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>data</td>
+    <td>Imposta o restituisce il testo del nodo</td>
+</tr>        
+<tr>
+	<td>length</td>
+    <td>Restituisce la lunghezza del nodo</td>
+</tr>        
+</table>
+
+<table border="1" cellpadding="3" cellspacing="3">
+<caption>Metodi dell'oggetto Comment </caption>
+<tr>
+	<th>Proprietà</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>appendData()</td>
+    <td>Aggiunge dati al nodo</td>
+</tr>    
+<tr>
+	<td>deleteData()</td>
+    <td>Elimina dati dal nodo</td>
+</tr>    
+<tr>
+	<td>insertData()</td>
+    <td>Inserisce dati nel nodo</td>
+</tr>    
+<tr>
+	<td>replaceData()</td>
+    <td>Rimpiazza dati nel nodo</td>
+</tr>    
+<tr>
+	<td>substringData()</td>
+    <td>Estrae dati dal nodo</td>
+</tr>    
+</table>
+
+<h3>data</h3>
+<p class="nota">La proprietà <b>data</b> imposta o restituisce il testo di un commento</p>
+
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books_comment.xml");
+x = xmlDoc.getElementsByTagName("book")[0].childNodes;	// si recupera il primo nodo 'book'
+for(i=0; i<x.length; i++){ 
+if (x[i].nodeType == 8) {						// il valore '8' contradistingue il 'Commento' (il suo nodeType)  
+  document.write(x[i].data);						// viene visualizzato il commento all'interno del primo nodo 'book'
+  document.write("<br>");
+} // if
+} // for 
+
+</script>
+
+<h3>length</h3>
+<p class="nota">La proprietà <b>length</b> restituisce la lunghezza del testo (numero caratteri) di un nodo commento . Non considera, nel computo,
+i tags iniziale <b>&lt;!-- </b>  e finale <b> --&gt;  </b>
+</p> 
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books_comment.xml");
+x = xmlDoc.getElementsByTagName("book")[2].childNodes;
+for (i=0; i<x.length; i++){ 
+if (x[i].nodeType == 8)  { 
+  document.write(x[i].length);
+  document.write("<br>");
+} // if 
+} // for 
+
+</script>
+
+<h3>appendData()</h3>
+<p class="nota">Il metodo <b>appendData()</b> aggiunge dati (testo) alla fine del commento</p>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books_comment.xml");
+x = xmlDoc.getElementsByTagName("book")[0].childNodes;
+
+for (i=0; i<x.length; i++){ 
+if(x[i].nodeType == 8){ 
+  x[i].appendData(" Special Offer");
+  document.write(x[i].data);
+  document.write("<br>");
+} // if  
+} // for 
+</script>
+
+
+<h3>deleteData()</h3>
+<p class="nota">Il metodo <b>deleteData()</b> elimina testo dal commento</p>
+<dl>
+	<dt>Accetta due parametri obbligatori:</dt>
+	<dd>il primo specifica da dove iniziare la rimozione (zero corrisponde alla prima posizione)</dd>
+	<dd>il secondo parametro specifica il numero dei caratteri da eliminare</dd>
+</dl>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books_comment.xml");
+
+x = xmlDoc.getElementsByTagName("book")[0].childNodes;
+
+for (i=0; i<x.length; i++){ 
+if (x[i].nodeType == 8)  { 
+  x[i].deleteData(0,33);	// indica che a partire dalla pozione zero rimuoverà 33 caratteri
+  document.write(x[i].data);
+  document.write("<br>");
+} // if  
+} // for 
+</script>
+
+<h3>insertData()</h3>
+<p class="nota">Il metodo <b>insertData()</b> inserisce testo all'interno di un commento</p>
+
+<dl>
+	<dt>Accetta due parametri obbligatori:</dt>
+	<dd>il primo specifica da dove iniziare l'inserimento (zero corrisponde alla prima posizione)</dd>
+	<dd>il secondo parametro specifica i dati da inserire</dd>
+</dl>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books_comment.xml");
+
+x = xmlDoc.getElementsByTagName("book")[0].childNodes;
+
+for (i=0; i<x.length; i++){ 
+if (x[i].nodeType == 8)  { 
+  //Process only comment nodes
+  x[i].insertData(25,"Italian ");	// inserisce la parola "Italian" a partire dalla 26 posizione
+  document.write(x[i].data);
+  document.write("<br>");
+} // if  
+} // for 
+</script>
+
+
+<h3>replaceData()</h3>
+<p class="nota">Il metodo <b>replaceData()</b> sostituisce dati (testo) in un commento</p>
+
+<dl>
+	<dt>Accetta tre parametri obbligatori:</dt>
+	<dd>il primo specifica da dove iniziare la sostituzione(zero corrisponde alla prima posizione)</dd>
+	<dd>il secondo parametro specifica il numero dei caratteri da sostituire</dd>
+	<dd>il terzo parametro specifica la stringa da sostituire</dd>
+</dl>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books_comment.xml");
+
+x = xmlDoc.getElementsByTagName("book")[0].childNodes;
+
+for(i=0; i<x.length; i++){ 
+if (x[i].nodeType == 8)  { 
+x[i].replaceData(4,6,"Easy");	// indica che la parola "Easy" deve essere a partire dalla quinta posizione e che deve sostituire 6 caratteri (rimpiazzare la parola "Simple")
+document.write(x[i].data);
+document.write("<br>");
+} // if  
+} // for 
+</script>
+
+<h3>substringData()</h3>
+<p class="nota">Il metodo <b>substringData()</b> recupera stringhe da un commento</p>
+
+<dl>
+	<dt>Accetta due parametri obbligatori:</dt>
+	<dd>il primo specifica da dove iniziare l'estrazione dei caratteri (zero corrisponde alla prima posizione)</dd>
+	<dd>il secondo parametro specifica il numero dei caratteri da estrarre</dd>
+</dl>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books_comment.xml");
+x = xmlDoc.getElementsByTagName("book")[0].childNodes;
+
+for(i=0; i<x.length; i++){ 
+if (x[i].nodeType == 8){ 
+y = x[i].substringData(33,11);	// indica che bisogna estrarre 11 caratteri a partire dall 34° posizione 
+document.write(y);
+document.write("<br />");
+} 
+}
+</script>
+
+
+
+
+
+<br /><br /><br /><br /><br /
+
+
+</body>
+</html>

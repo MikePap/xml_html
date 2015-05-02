@@ -1,0 +1,62 @@
+ <!DOCTYPE HTML>
+
+<html>  
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<title> Canvas - struttura nuda </title>  
+<style type="text/css">  
+	 
+html,body,p,div,canvas,h2{ margin:0; padding:0;}
+body{ background:rgb(220,220,255); }
+h2{ color:#0066FF;}
+p,h2{ padding-left:10px;}
+
+#canvas1 { margin-left:50px; border: 1px solid red; }  
+#canvas2{ margin:50px 0 10px 50px; background:rgb(255,200,200); }
+
+</style>  
+
+     <script type="text/javascript">  
+       function draw(){  
+         var canvas = document.getElementById('canvas1');  
+         if (canvas.getContext){  
+           var ctx = canvas.getContext('2d');  
+         }  
+		else{alert("Il browser non supporta l'elemento canvas")}    
+		 
+       }  
+     </script>  
+
+   </head>  
+   <body onLoad="draw();">  
+   
+   <h2>canvas</h2>
+
+     <canvas id="canvas1" width="150" height="150"></canvas>  
+   
+<p>
+L'elemento <strong>canvas</strong> crea una bitmap all'interno del documento. E' un <b>elemento inline</b> (come <q>img</q>). Ha 2 attributi che sono del resto opzionali: il primo rappresenta la sua larghezza(<strong>width</strong>) e il secondo l'altezza (<strong>height</strong>); se omessi l'elemento avrà per default una larghezza di <strong>300pixel</strong> ed un'altezza di <strong>150pixel</strong>. <br>
+L'elemento canvas ha un metodo DOM chiamato <strong>getContext</strong> che accetta un parametro cioè il tipo di contesto. Finora l'unico implementato è il <strong>2d</strong> (bidimensionale). Più in la sarà implementato anche il <strong>3d</strong>.<br>   
+L'elemento canvas può quindi essere trattato come qualsiasi elemento html con i CSS: in questo caso è spostato di 50 pixel da sinistra e ha anche un bordo di colore rosso. <br />
+Al suo interno si puo disegnare qualsiasi forma usando i vari metodi. <br>
+   
+Come si può notare in questa pagina, l'elemento <em>canvas</em> è posto fra l'elemento <strong>h2</strong> (titolo) e questo elemento <strong>p</strong> (questa descrizione) cioè quindi rispettando l'ordine html  
+</p>
+
+
+    <canvas id="canvas2" width="150" height="150"></canvas>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>  
+</html>  

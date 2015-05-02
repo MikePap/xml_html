@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Demo 12  </title>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+code, pre{ color:rgb(20,150,30); font-weight:bold;}
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}		
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+
+</style>
+</head>
+<body>
+
+<h2>Update a record</h2>
+<p>
+Per aggiornare un record il procedimento è quasi simile a come quando lo si aggiunge. Premettendo di aver definito una proprietà chiamata <q>id</q> si usa il metodo <b>put</b> anzichè il metodo <tt>add</tt> 
+<pre>
+var person = {
+	name:name,
+	email:email,
+	created:new Date(),
+	id:someId
+}
+ 
+var request = store.put(person);
+</pre>
+</p>
+
+
+<h2>Delete a record</h2>
+
+<p>
+Per eleminare un record si usa il metodo <b>delete</b> passandogli semplicemente l'identificativo dell'oggetto da eliminare
+<pre>
+var t = db.transaction(["people"], "readwrite");
+var request = t.objectStore("people").delete(thisId);
+</pre>
+
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

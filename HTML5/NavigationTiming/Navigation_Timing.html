@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Navigation Timing </title>
+<style type="text/css">
+h1{ font-size:31px; font-weight:bold; color:rgb(50,50,250); margin-left:50px;} 
+h2{ font-size:25px; font-weight:bold; color:rgb(250,50,150); margin-left:31px;}
+h3{ font-size:20px; font-weight:bold; color:rgb(200,20,20); margin-left:20px;}
+code, pre{ color:rgb(20,150,30); font-weight:bold; background:rgb(230,230,230); margin:0 10px; padding:10px; }
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}
+dl{
+padding:0 10px
+}		
+dt{ color:#003399; margin-bottom:2px; margin-top:10px;}
+dd{ color:#0066FF;}
+p{
+padding-left:10px;
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+<h1> Navigation Timing</h1>
+
+<p>
+La <b>Navigation Timing API</b> ci permette di ottenere dei dati (informazioni) durante il caricamento  di una pagina web. In altre parole ci dà la possibilità di valutare la performance di una pagina web. <br />
+Dall'oggetto genitore <b>window.performance</b> sono accessibili: 
+
+<dl>
+	<dt>window.performance.timing</dt>
+	<dt>window.performance.navigation</dt>
+</dl>
+</p>
+
+<h2>PerformanceTiming </h2>
+
+<p>
+L'interfaccia <q>PerformanceTiming</q> contiene degli attributi (eventi) che ci forniscono dei dati (<b>in millesecondi</b>) durante il ciclo di caricamento di una pagina web. Gli eventi sono i seguenti:
+
+
+<dl>
+	<dt>navigationStart</dt>
+	<dd>restituisce il tempo immediatamente successivo allo scaricamento del precedente documento. Se non c'è un documento scaricato prima questo valore sarà uguale a quello di <q>fetchStart</q> </dd>
+
+	<dt>unloadEventStart</dt>
+	<dd>se il documento precedente e quello corrente hanno la stessa origine questo valore sarà riferito al tempo immediatamente prima che il browser incominci lo scaricamento del documento precedente. Se non c'è un documento precedente oppure i due non hanno la stessa origine il valore restituito sarà uguale a zero 	  </dd>
+
+	<dt>unloadEventEnd</dt>
+	<dd>se il documento precedente e quello corrente hanno la stessa origine questo valore sarà riferito al tempo immediatamente dopo che il browser completi lo scaricamento del documento precedente. Se non c'è un documento precedente oppure i due non hanno la stessa origine il valore restituito sarà uguale a zero</dd>
+
+	<dt>redirectStart</dt>
+	<dd>se ci sono <q>HTTP redirects</q> durante la navigazione e se tutti i redirects sono della stessa origine questo valore sarà coincidente col momento di inizio del redirect altrimenti sarà uguale a zero.    </dd>
+
+	<dt>redirectEnd</dt>
+	<dd>se ci sono <q>HTTP redirects</q> durante la navigazione e se tutti i redirects sono della stessa origine questo valore sarà coincidente col momento in cui si avrà l'ultimo byte di risposta dal redirect altrimenti sarà uguale a zero. </dd>
+
+	<dt>fetchStart</dt>
+	<dd>se la nuova risorsa sarà acquisita con GET o equivalenti questo valore coinciderà col tempo immediatamente precedente a quando il browser comincerà a controllare se c'è della cache disponibile altrimenti coinciderà col tempo di inizio di recupero della risorsa  </dd>
+
+	<dt>domainLookupStart</dt>
+	<dd>questo valore coinciderà col tempo in cui il browser inizierà la ricerca del nome di dominio del documento corrente </dd>
+
+	<dt>domainLookupEnd</dt>
+	<dd>questo valore coinciderà col tempo in cui il browser terminerà la ricerca del nome di dominio del documento corrente</dd>
+
+	<dt>connectStart</dt>
+	<dd>questo valore coinciderà col momento in cui il browser comincerà a stabilire la connessione col server per il recupero del documento </dd>
+
+	<dt>connectEnd</dt>
+	<dd>questo valore coinciderà col momento in cui il browser terminerà la connessione col server per il recupero del documento</dd>
+
+	<dt>secureConnectionStart</dt>
+	<dd>questo è un valore opzionale che ci viene fornito nel caso di connessioni con <q>HTTPS</q> e coincide col momento in cui il browser inizia il processo </dd>
+
+	<dt>requestStart</dt>
+	<dd>questo valore coinciderà col momento in cui il browser inizierà la richiesta al server, oppure alla cache o a una risorsa locale</dd>
+
+	<dt>responseStart</dt>
+	<dd>questo valore coinciderà col momento in cui il browser comincerà a ricevere il primo byte di risposta dal server, oppure dalla cache o da una risorsa locale</dd>
+
+	<dt>responseEnd</dt>
+	<dd>questo valore coinciderà col momento in cui il browser comincerà riceverà l'ultimo byte di risposta dal server, oppure dalla cache o da una risorsa locale</dd>
+
+	<dt>domLoading</dt>
+	<dd>è il momento in cui il browser incomincia ad analizzare il primo byte ricevuto </dd>
+
+	<dt>domInteractive</dt>
+	<dd> segna il momento in cui il browser ha completato l'analisi di tutto l'HTML e la costruzione DOM è completa.</dd>
+
+	<dt>domContentLoadedEventStart</dt>
+	<dd>coincide col momento in cui scatta l'evento <q>domContentLoaded</q>.</dd>
+
+	<dt>domContentLoadedEventEnd</dt>
+	<dd>councide col momento in cui il DOM è pronto e non ci sono fogli di stile che bloccano l'esecuzione di JavaScript, quindi adesso possiamo (idealmente) costruire la struttura di rendering.  </dd>
+
+	<dt>domComplete</dt>
+	<dd>l'intera elaborazione è completa e tutte le risorse sulla pagina (immagini e così via) hanno terminato il download, ad esempio il rotante di caricamento ha smesso di girare.</dd>
+
+	<dt>loadEventStart</dt>
+	<dd> come passaggio finale in ogni caricamento della pagina, il browser lancia un evento di <q>onload</q> che può attivare un'ulteriore logica dell’applicazione.</dd>
+
+	<dt>loadEventEnd</dt>
+	<dd>fine dell'evento <q>onload</q> che corrisponde all'ultimo evento di caricamento della nostra pagina web</dd>
+</dl>
+</p>
+
+
+<h2>PerformanceNavigation</h2>
+
+<p>
+La specifica definisce  l'interfacciache ci permette di sapere come l'utente è arrivato alla nostra pagina. L'oggetto <b>window.performance.navigation </b> contiene due attributi <b>type</b> e <b>redirectCount</b>
+</p>
+
+<h3>window.performance.navigation.type</h3>
+
+<p>
+La proprietà <q>type</q> fornisce un metodo che ci permette di sapere come l'utente è arrivato alla nostra pagina:
+
+</p>
+
+<table border="1" cellspacing="1" cellpadding="3">
+	<tr>
+		<th>valore</th>
+		<th>Descrizione</th>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td>L'utente è arrivato cliccando su un link oppure digitando un URL nella barra degli indirizzi or da un form o da uno script </td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>L'utente è arrivato da un aggiornamento della pagina </td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>L'utente è arrivato digitando i pulsanti <q>Indietro</q> o <q>Avanti</q> della cronologia  </td>
+	</tr>
+	<tr>
+		<td>255</td>
+		<td>L'utente è arrivato in modo diverso (e sconosciuto) da quelli decritti sopra </td>
+	</tr>
+	
+</table>
+
+<h3>window.performance.navigation.redirectCount</h3>
+
+<p>
+La proprietà <q>redirectCount</q> indica quanti <q>redirects</q> sono avvenuti prima di arrivare alla nostra pagina. Se non sono avvenuti nessun redirects allora sarà restituito il valore zero. 
+</p>
+
+
+
+<br /><br /><br />
+
+<img src="../img/inBombay.jpg" alt="" title="" />	
+
+
+
+<script type="text/javascript">
+
+function onLoad() { 
+	var now = new Date().getTime();
+	var page_load_time = now - performance.timing.navigationStart;
+	console.log("User-perceived page loading time: " + page_load_time);
+}
+
+onLoad();
+
+
+function measureCRP() {
+	var t = window.performance.timing,
+	interactive = t.domInteractive - t.domLoading,
+	dcl = t.domContentLoadedEventStart - t.domLoading,
+	complete = t.domComplete - t.domLoading;
+	var stats = document.createElement('p');
+	stats.textContent = 'interactive: ' + interactive + 'ms, ' + 'dcl(domContentLoadedEventStart): ' + dcl + 'ms, complete: ' + complete + 'ms';
+	document.body.appendChild(stats);
+}
+
+
+window.onload = function(){
+	measureCRP();
+}
+
+var navigation = window.performance.navigation;
+var navType = navigation.type;
+var redirectCount = navigation.redirectCount;
+
+console.log(navType);
+console.log(redirectCount);
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+</body>
+</html>
+

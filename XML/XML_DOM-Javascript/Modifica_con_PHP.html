@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Modifica dati per PHP  </title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F; font-size:21px; }
+h3{ color:#663333; font-size:14px; }
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+#jk{ position:relative; width:60%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+</style>
+
+<script type="text/javascript" src="../allegati/jQuery-1.6.min.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmlstring.js"></script> 
+
+</head>
+<body>
+
+<h1>Modifica dati XML con Javascript e aggiornamento con PHP </h1>
+<p class="nota">
+In questo file ho provato a fare delle modifiche ad un file XML (<q>books.xml</q>) utilizzando metodi Javascript e poi inviando, con l'utilizzo di <q>ajax</q>, tali modifiche ad un file PHP per l'aggiornamento del file XML.
+</p>
+
+<h3>Esempio utilizzando il metodo <q>nodeValue</q> per cambiare un valore di un elemento </h3>
+
+<script type="text/javascript">
+/*
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+x = xmlDoc.getElementsByTagName("title")[0].childNodes[0];
+//alert(x);
+//document.write(x.nodeValue);				//  "Everyday Italian"
+x.nodeValue = "Cambio valore";				// assegnazione di un'altro valore al nodo
+//document.write(x.nodeValue);					// restituisce "Cambio valore"
+*/
+</script>
+
+<script  type="text/javascript">
+$(document).ready(function(){
+
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+x = xmlDoc.getElementsByTagName("title")[1].childNodes[0];		// primo valore del tag <title> 
+alert(x.nodeValue);
+x.nodeValue = "Cambio Valore";						// assegnazione di un'altro valore al nodo
+//x.nodeValue = "Harry Potter";					// valore iniziale originale
+
+//$("#jk").text(x.nodeValue);			// OK
+
+$("#evvai").click(function(){
+//alert('ok');
+$.ajax({
+type: "GET",
+url: "Aggiorna_Dati.php",
+data: "titolo=" +x.nodeValue
+}); // $.ajax 
+}); // click 
+
+}); // chiude ready 
+</script>
+
+<button id="evvai">Invia Valore</button>
+
+<h3>Esempio utilizzando le opzioni di una <q>select</q>  </h3>
+
+<script  type="text/javascript">
+jQuery(document).ready(function(){
+
+$("select").change(function(){
+var str = "";
+$("select option:selected").each(function(){	// 
+str += $(this).text() + "";
+//str += $(this).val() + "";				//
+$.ajax({
+type: "GET",
+url: "Aggiorna_Dati.php",
+data: "titolo=" +str
+//data: "name=John&location=Boston"
+}); // $.ajax 
+
+/*
+//####  Alternativa alla precedente  ####
+var indirizzo = "Untitled.php";
+$.get(indirizzo, { titolo : str }, function(data){		// invio dei valori al file PHP 
+$("#jk").html(data);								// inserimento del risultato della richiesta (query) nel <div>
+}); // chiude post 
+*/
+
+}); // chiude select      
+}) // chiude change 
+
+}); // chiude ready 
+</script>
+
+
+<select name="sel" id="sel">
+	<option selected="selected">Harry Potter</option> <!-- E' IMPORTANTE NON LASCIARE SPAZIO VUOTO TRA I TAG ED IL TESTO  -->
+	<option value="01">Primo Titolo</option>
+	<option value="02">Secondo Titolo</option>
+	<option value="03">Terzo Titolo</option>
+	
+</select>
+
+
+<div id="jk"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

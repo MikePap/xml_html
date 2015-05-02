@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>drag e drop 1</title>
+ 
+<style type="text/css">  
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+/*
+#div1 {width:150px; height:150px; padding:10px; border:1px solid #aaa;}
+*/
+#div1, #div2{
+float:left; width:150px; height:150px; margin:10px;padding:10px;border:1px solid #aaaaaa;
+}
+  
+</style>  
+  
+<script type="text/javascript" src="../jQuery-1.6.min.js"> </script>
+
+</head>
+
+<body>
+
+
+<script type="text/javascript">
+function allowDrop(ev){
+	ev.preventDefault();
+}
+
+function drag(ev){
+	ev.dataTransfer.setData("Text",ev.target.id);
+}
+
+function drop(ev){
+	var data=ev.dataTransfer.getData("Text");
+	ev.target.appendChild(document.getElementById(data));
+	ev.preventDefault();
+}
+</script>
+
+<h1>Drag e drop</h1>
+
+<p> Trasporta l'immagine all'interno del rettangolo </p>
+
+<!--
+#####  Esempio con un solo div e l'immagine posta fuori dal div #######
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br />
+<img id="drag1" src="../../Immagini/gocce.jpg" draggable="true" ondragstart="drag(event)" width="100" height="100" />
+-->
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+	<img src="../../Immagini/gocce.jpg" draggable="true" ondragstart="drag(event)" id="drag1" width="100" height="100">
+</div>
+
+<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">div 2</div>
+
+<br />
+
+<p>
+Per spiegazioni --> 
+<a href="http://www.w3schools.com/html/html5_draganddrop.asp">vedi qui</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+

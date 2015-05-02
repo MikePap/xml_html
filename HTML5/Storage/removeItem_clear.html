@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>removeItem </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color: #060; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+
+</style>
+
+
+
+</head>
+<body>
+
+<h3>removeItem(key) & clear()</h3>
+
+<dl>
+	<dt>removeItem(key)</dt>
+    	<dd>Elimina la coppia key/value che ha per chiave quella data nel parametro 'key'</dd>
+    
+    <dt>clear()</dt>    
+    	<dd>Elimina tutte le coppie key/value esistenti</dd>
+</dl>
+
+<br />
+
+Elimina tutti i dati immagazzinati in localStorage <button id="elimina_tutti">Elimina dati</button>
+
+
+
+<script  type="text/javascript">
+var elimina_tutti = document.getElementById('elimina_tutti');
+elimina_tutti.addEventListener('click', function(){
+localStorage.clear();	// elimina tutte le coppie key/value 
+//localStorage.removeItem("bar");	// elimina la coppia key/value che ha come chiave "bar"
+	
+},false);
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+<div id="divo"></div>
+
+
+
+</body> 
+</html>

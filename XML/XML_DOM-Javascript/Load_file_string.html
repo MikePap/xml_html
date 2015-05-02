@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Load file e string</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F; font-size:20px; }
+h3{ color:#663333; font-size:16px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+</style>
+
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmlstring.js"></script> 
+
+</head>
+<body>
+
+<h1>Caricamento di un documento esterno XML e di stringa XML interna al documento</h1>
+
+<h3>loadxmldoc.js</h3>
+<p class="nota">
+Per caricare nella pagina un documento XML da un file esterno  e poterlo manipolare  si utilizza <b>XMLHttpRequest</b> (<a href="http://www.w3schools.com/dom/dom_httprequest.asp">vedere qui l'oggetto</a>). Invece di scrivere il codice nella pagina volta per volta è preferibile scrivere tale codice in un file .js e richiamarlo mettendolo nel tag &lt;head&gt; così come è stato fatto  per tutti i file di questa cartella. Il file .js in questione è <b>loadxmldoc.js</b> e si trova nella cartella <q>Allegati</q>. 
+</p>
+
+<h3>loadxmlstring.js</h3>
+<p class="nota">
+Per poter manipolare una struttura XML creata all'interno di uno script javascript (vedi file <q>Traversing.html</q>) è stato scritto del codice all'interno del file <b>loadxmlstring.js</b> che sarà opportunamente richiamato all'interno del tag &lt;head&gt;. 
+</p>
+
+<p class="codice">
+Per un'approfondimento di quanto sopra <a href="http://www.w3schools.com/dom/dom_loadxmldoc.asp">vedere qui</a>
+</p>
+
+
+
+</body>
+</html>

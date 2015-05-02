@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>lineJoin</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:50px 100px; padding:0;  border: 1px solid black; } 
+	   
+	   
+</style>  
+
+<script type="text/javascript">  
+
+function unione_linee(elem,stile) {
+var ctx = document.getElementById(elem).getContext('2d');
+
+ctx.strokeStyle = 'purple';
+ctx.lineWidth = 10;
+ctx.lineJoin = stile;  
+
+ctx.beginPath();
+ctx.moveTo(20, 20);
+ctx.lineTo(60,140);
+ctx.lineTo(100,20);
+ctx.lineTo(140,140);
+ctx.lineTo(180,20);
+ctx.stroke();
+} // chiude la funzione 'unione_linee'
+      
+
+function draw() {
+var ctx = document.getElementById('canvas').getContext('2d');
+var lineJoin = ['round','bevel','miter'];
+ctx.lineWidth = 10;
+for (i=0;i<lineJoin.length;i++){
+ctx.lineJoin = lineJoin[i];
+ctx.beginPath();
+ctx.moveTo(-5,5+i*40);
+ctx.lineTo(35,45+i*40);
+ctx.lineTo(75,5+i*40);
+ctx.lineTo(115,45+i*40);
+ctx.lineTo(155,5+i*40);
+ctx.stroke();
+} // for 
+} // chiude la funzione 'draw' 
+
+
+
+</script>  
+
+   </head>  
+   <body onLoad="draw(), unione_linee('di_default','miter'), unione_linee('tondo','round'), unione_linee('squadrato','bevel')"> 
+
+<h3>lineJoin</h3>
+<p>
+Questa proprietà definisce lo stile di unione delle linee. Si possono impostare tre differenti valori e sono: <strong>round, bevel, miter</strong>. <br />
+ Di default viene usato il <em>miter</em> che è lo stile "appuntito" (il primo qui sotto).
+</p>
+
+
+<canvas id="di_default" width="200" height="180"></canvas>
+<canvas id="tondo" width="200" height="180"></canvas>
+<canvas id="squadrato" width="200" height="180"></canvas>
+
+
+<canvas id="canvas" width="200" height="180"></canvas>
+  
+
+</body>
+</html>

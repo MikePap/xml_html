@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>bezierCurveTo </title>
+<style type="text/css">
+html,body,p,div,canvas,h2,h1,h3{ margin:0; padding:0;}
+body{ font-family:Geneva, Arial, Helvetica, sans-serif;}
+h1{ color:#00F; padding:10px;}
+p{ padding:5px}
+
+dt{ margin-left:10px; color:rgb(130,0,70); font-size:1em; font-weight:bold;}
+dd{ font-size:0.9em; color:rgb(50,50,155);}
+
+nota{color:orange;}
+#cuore{ border:1px solid; margin: 5px 10px; }
+
+</style>
+
+<script type="text/javascript">  
+	 
+function drawCuore(){
+  // get the canvas element using the DOM
+  var canvas = document.getElementById('cuore');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+// #########################################   bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) 
+    ctx.beginPath();
+    ctx.moveTo(75,40);  // viene stabilito il punto di partenza
+    ctx.bezierCurveTo(75,37,70,25,50,25);
+    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+    ctx.bezierCurveTo(20,80,40,102,75,120);
+    ctx.bezierCurveTo(110,102,130,80,130,62.5);
+    ctx.bezierCurveTo(130,62.5,130,25,100,25);
+    ctx.bezierCurveTo(85,25,75,37,75,40);
+    ctx.fillStyle = "rgb(200,0,0)"; 
+    ctx.fill();
+
+  } else {
+    alert('You need Safari or Firefox 1.5+ to see this demo.');
+  }
+}
+
+</script>  
+
+</head>
+
+<h1>bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)</h1>
+
+   <body onLoad="drawCuore();"> 
+
+
+     <canvas id="cuore" width="150" height="150"></canvas>  
+
+
+<p>
+Una buona spiegazione dell'utilizzo di questo metodo(<b>bezierCurveTo</b>) così come del metodo <b>quadraticCurveTo</b> <a href="https://developer.mozilla.org/en/Canvas_tutorial%3ADrawing_shapes#Bezier_and_quadratic_curves">sta qui</a>'
+</p>
+
+
+<img src="../img/bezierCurveTo.png"  width="" height="" />
+
+
+
+
+
+
+
+
+</body>
+</html>

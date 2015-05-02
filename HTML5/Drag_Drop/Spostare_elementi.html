@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Spostare posizione elementi</title>
+<style type="text/css">
+h1{ font-size:31px; font-weight:bold; color:rgb(50,50,250); margin-left:50px;} 
+h2{ font-size:25px; font-weight:bold; color:rgb(250,50,150); margin-left:31px;}
+h3{ font-size:20px; font-weight:bold; color:rgb(200,20,20); margin-left:20px;}
+code, pre{ color:rgb(20,150,30); font-weight:bold; background:rgb(230,230,230); margin:0 10px; padding:10px; }
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}
+dl{
+padding:0 10px
+}		
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+p{
+padding-left:10px;
+}
+
+
+#box{
+width:50%; margin:31px auto; text-align:center;	border:1px solid;
+}
+#box > div{
+width:100%; padding:20px 0; background:#ccc; 
+}
+
+#box  *+*{
+margin-top:1px;
+}
+
+#box	.uno{
+background:#ff0;
+}
+#box .due{
+background:#f00;
+}
+#box .tre{
+background:green;
+}
+
+#box .quattro{
+background:#fff;
+}
+
+#box .cinque{
+background:#00f;
+}
+
+
+</style>
+</head>
+<body>
+
+<h1>Spostare elementi di posizione</h1>
+
+
+
+<div id="box">
+	<div class="divo uno" draggable="true">div 1</div> 
+	<div class="divo due" draggable="true">div 2</div> 
+	<div class="divo tre" draggable="true">div 3</div> 
+	<div class="divo quattro" draggable="true">div 4</div> 
+	<div class="divo cinque" draggable="true">div 5</div> 
+</div> 
+
+
+
+<script type="text/javascript">
+
+
+var box = document.querySelector('#box');							// box contenitore
+var dragElements = document.querySelectorAll('div.divo');	// elementi <div> che saranno trascinati 
+//console.log(dragElements[1].textContent);
+var elementDragged = null;												// si inizializza una variabile per l'elemento che sta per essere trascinato 
+//console.log(dragElements.length);									// 5
+
+for (var i = 0; i < dragElements.length; i++) {
+
+	dragElements[i].addEventListener('dragstart', function(e) {
+		e.dataTransfer.effectAllowed = 'move';
+		e.dataTransfer.setData('text', this.innerHTML);								// diventa necessario anche se non rilevata con 'getData'
+//		elementDragged = this;
+		elementDragged = e.target;
+//		this.style['cursor'] = "all-scroll";
+//		console.log("l'operazione di drag e drop è iniziata!");			
+
+//		var lista = Array.prototype.slice.call( dragElements );
+//		console.log(lista.indexOf(this) );
+//		e.dataTransfer.setData('text', lista.indexOf(this) );
+	});
+
+// Evento listener per quando il trascinamento termina
+	dragElements[i].addEventListener('dragend', function(e) {
+		elementDragged = null;
+		this.style['cursor'] = "";
+	});
+
+	dragElements[i].addEventListener('mousedown', function(e){
+		this.style['cursor'] = "all-scroll";
+	}, false);
+
+	dragElements[i].addEventListener('mouseup', function(e){
+		this.style['cursor'] = "";
+	}, false);
+
+	dragElements[i].addEventListener('drop', function(e) {
+		if (e.preventDefault) e.preventDefault(); 
+		if (e.stopPropagation) e.stopPropagation();
+		var io = e.target;
+		var succ = io.nextElementSibling;
+		var otTarget = io.offsetTop;																// posizione top dell'elemento target
+		var otTrascinato = elementDragged.offsetTop;											// posizione top dell'elemento trascinato 
+
+		if(otTarget > otTrascinato)
+			box.insertBefore(elementDragged, succ);											// scendere										
+		else
+
+			box.insertBefore(elementDragged, io);												// salire 
+
+//		console.log(dragElements[indice].textContent);
+//		console.log(otTrascinato);
+	}, false);
+
+
+}
+
+box.addEventListener('dragover', function(e) {
+	if (e.preventDefault) {
+		e.preventDefault();
+	}
+	e.dataTransfer.dropEffect = 'move';
+	return false;
+});
+
+/*
+for (var i = 0; i < dragElements.length; i++) {
+	dragElements[i].addEventListener('drop', function(e) {
+		if (e.preventDefault) e.preventDefault(); 
+		if (e.stopPropagation) e.stopPropagation();
+		var io = e.target;
+		var succ = io.nextElementSibling;
+		var otTarget = io.offsetTop;																// posizione top dell'elemento target
+		var otTrascinato = elementDragged.offsetTop;											// posizione top dell'elemento trascinato 
+
+		if(otTarget > otTrascinato)
+			box.insertBefore(elementDragged, succ);											// scendere										
+		else
+			box.insertBefore(elementDragged, io);												// salire 
+
+//		console.log(dragElements[indice].textContent);
+//		console.log(otTrascinato);
+		console.log(indice);
+	}, false);
+}
+*/
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+
+</body>
+</html>

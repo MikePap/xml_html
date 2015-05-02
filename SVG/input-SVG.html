@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>SVG e input  </title>
+<style type="text/css">
+h1{ color:#006600;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color: #F60;}
+.codice{ color:#060;}
+
+html, body{margin:0; padding:0; }
+body {
+  background-color: #FFDC8F;
+}
+
+div {
+font-size: 6em; margin: 10px auto; width: 700px;	height:120px; color: #fff; 	border:1px solid #000;
+}
+
+svg { 
+width: 100px; height: 100px; 
+position: absolute; left: -0.5em; top: 0.1em; border: 2px solid #fff;
+}
+
+label {
+display: inline-block; padding-left: 1.5em;  position: relative; cursor: pointer;
+}
+
+input[type="checkbox"] {
+opacity: 0; width: 40px; height: 40px; border:1px solid #000;
+}
+
+label svg #Path-1 {
+transition: stroke-dashoffset .2s linear; stroke: orange;
+}
+label svg #Path-2 {
+transition: stroke-dashoffset .2s linear .2s; stroke: orange;
+}
+label svg #Path-3 {
+transition: stroke-dashoffset .2s linear; stroke: orange;
+}
+
+
+
+input[type="checkbox"]:checked ~ label svg #Path-1 {
+stroke-dashoffset: 0;
+}
+input[type="checkbox"]:checked ~ label svg #Path-2 {
+stroke-dashoffset: 0;   color: orange;
+}
+input[type="checkbox"]:checked ~ label svg #Path-3 {
+stroke-dashoffset: 0;   color: orange;
+}
+
+
+input[type="checkbox"]:checked ~ label svg {
+/*   border: 2px solid #333; */
+}
+
+input[type="checkbox"]:checked ~ label {
+color: orange;
+}
+
+
+</style>
+</head>
+<body>
+
+<h1>input con SVG</h1>
+
+
+<div>
+	<input type="checkbox" id="option1"/>
+	<label for="option1"> Click me
+		<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+			<path d="M 10,90 90,10" id="Path-1" stroke-width="5" stroke-linecap="butt" fill="none" 
+					stroke-dasharray="150" stroke-dashoffset="150">
+			</path>
+
+			<path d="M 90,90 10,10" id="Path-2" stroke-width="5" stroke-linecap="butt" fill="none" 
+					stroke-dasharray="115" stroke-dashoffset="115">
+			</path>
+
+		<script type="application/ecmascript"> <![CDATA[
+//			var path = document.getElementById('Path-1');
+//			console.log(path.getTotalLength());								// 113.
+
+
+		]]> </script>
+
+
+		</svg>
+	</label>
+</div>
+
+
+
+<div>
+	<input type="checkbox" id="option2"/>
+	<label for="option2"> Click me
+		<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+			<path d="M 8.6209817,20.907363 c 0,0 18.7529753,-6.941051 30.4713043,-10.602617 3.880938,-1.2126561 32.458406,1.059315 3.898585,10.458792 C 15.619889,29.77175 6.5767797,46.854557 24.721696,40.763713 64.131389,30.990915 82.833649,15.731704 83.883954,26.276091 84.96491,37.128194 -0.51913771,62.463737 18.516816,65.444162 48.21006,70.09318 97.874484,34.754909 90.991788,49.073248 83.76049,64.116796 45.692508,71.943108 32.443595,81.359804 22.339017,88.541656 94.947829,75.169377 94.947829,75.169377	"  
+						id="Path-3" stroke-width="10" fill="none"  stroke-dasharray="480" stroke-dashoffset="480" >
+			</path>
+
+		<script type="application/ecmascript"> <![CDATA[
+			var path = document.getElementById('Path-3');
+console.log(path.getTotalLength());								// 261.
+
+
+		]]> </script>
+
+
+		</svg>
+	</label>
+</div>
+
+
+
+
+
+<!--
+M 5,5 50,5	10,40 80,31	40,90	80,80
+
+m 7.9861111,999.41077 79.3402779,0
+M 5.3819444,956.87605 95.3125,956.00799 4.6875,985.17466 90.798611,983.26494
+
+-->
+
+
+
+
+
+
+
+<!--
+http://localhost/xml_html/SVG/input-SVG.html
+
+
+-->
+
+
+
+
+</body>
+</html>
+

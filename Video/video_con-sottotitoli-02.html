@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>video con sottotitoli js</title>
+<style type="text/css">
+html,body,div,video,h1,h2,h3,p{
+margin:0; padding:0; 
+}
+
+h1{ color:#00F; padding:10px;}
+h3{ padding:5px 10px; color:rgb(50,200,50); font-size:18px; }
+p{ padding:5px}
+.nota{ color:#F00;}
+.arancio{color:orange; }
+
+video{
+/*display:block;*/ border:1px solid; width:380px; height:310;  margin-left:20px;
+}
+
+#box{
+position:relative; margin:10px auto; width:80%; padding:10px; border:1px solid #CCC; overflow:auto; 
+}
+div.box div{
+float:left; margin-right:31px; 
+}
+#display{
+height:300px; overflow:auto; 
+}
+#display2{
+padding:10px; background:#333; color:#ff0;
+}
+
+
+</style>
+</head>
+<body>
+
+<h1>Opzioni per il tag <q>track</q> impostabili con JavaScript </h1>
+
+<p>
+Per gli sviluppatori la nota positiva è che per l’elemento track è disponibile una API completa con cui è possibile interagire tramite Javascript con la traccia dei sottotitoli, persino a livello delle singole battute.
+</p>
+
+<div class="box">
+	<div>
+		<video id="myVideo" width="480" height="310" controls  >
+			<source src="allegati/Mother2.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+			<source src="allegati/Mother.webm" type='video/webm; codecs="vp8, vorbis"' />
+			<track id="enTrack" src="allegati/Mother.vtt" label="English" kind="captions" srclang="en" default>
+			<track id="itTrack" src="allegati/Mother-it.vtt" label="Italiano" kind="captions" srclang="it">
+<!--
+se non si vuole che nel controllo del player appaia il pulsante per la visualizzazione dei sottotitoli (il pulsante "CC") allora va cambiato l'attributo "kind" da 'captions' a 'metadata'. 
+-->
+
+		</video>
+		<p><button id="mostra" onclick="cambia();" value="jk" >Mostra i sottotitoli</button></p>
+		<p id="display3"></p>
+	</div>
+	<div>		
+		<div id="display"> </div><!-- è importante lasciare uno spazio in modo che si possa dichiarare la condizione if nella funzione "cambia()"  -->
+		
+	</div>
+	<div>		
+		<div id="display2"></div>
+	</div>
+
+</div><!--box-->
+
+<script type="text/javascript">
+// La seguente funzione "cambia()" richiama le funzioni successive "getCues()" e "libera()" 
+function cambia(){
+var display = document.getElementById("display"); 
+var d0 = display.childNodes[0];
+var d_data = d0.data.length;			// IMPORTANTE: se tra il tag di apertura e chiusura non c'è almeno uno spazio NON rileva la proprietà 'length' 
+var m = document.getElementById("mostra"); 
+var mm = m.childNodes[0];
+if(d_data == 1){					// è importante perchè si verifichi questa condizione che nel <div> ci sia un solo spazio
+getCues();
+mm.data = "Nascondo i sottotitoli";
+}else{
+libera();
+mm.data = "Mostra i sottotitoli";
+}
+}; // chiude la funzione "cambia()" 
+////////////////////////////////////////////
+// funzione che carica tutto la traccia testo in un elemento div <div id="display">
+function getCues() {          
+var myTrack = document.getElementById("itTrack").track;			// è richiamata la traccia in inglese
+var myCues = myTrack.cues;                   
+for (var i = 0; i < myCues.length; i++) {
+document.getElementById("display").innerHTML += (myCues[i].text + "<br>");
+} // for 
+} // chiude la funzione "getCues()"
+///////////
+// Funzione che libera l'elemento <div id='display'> 
+function libera(){
+document.getElementById("display").innerHTML = " ";			// è importante dare lo spazio tra le virgolette in modo che abbia un valore
+}; // chiude la funzione 
+
+
+//////////////////////////////////////////////////
+
+/* funzione che mostra il testo di ogni battuta volta per volta (nell'elemento <div id="display2">). 
+Se si utilizza questo procedimento allora potrebbe essere logico non visualizzare il pulsante "CC". Ciò è possibile cambiando l'attributo "kind" da 'captions' a 'metadata'. 
+*/
+document.addEventListener("DOMContentLoaded", function () {
+    var track = document.getElementById("itTrack");
+    track.addEventListener("cuechange", function () {
+        var myTrack = this.track;
+        var myCues = myTrack.activeCues;                                                   
+        if (myCues.length > 0) {
+            var disp = document.getElementById("display2");
+            disp.innerText = myCues[0].text;
+        }
+    }, false);
+}, false);
+
+////////////////////////////////////////////////
+
+// Funzioni che permettono di cambiare la traccia testo, cioà la scelta dei sottotitoli. (al momento funziona solo con IE 11)
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("myVideo").addEventListener("loadeddata", function () {
+        getTracks();
+    }, false);
+}, false);
+
+function getTracks() {
+var allTracks = document.getElementById("myVideo").textTracks;   
+document.getElementById("display3").innerHTML = "";       
+for (var i = 0; i < allTracks.length; i++) {
+  var temp = document.createElement("div");
+  if (allTracks[i].mode == 2) {
+    temp.innerText = "> " + allTracks[i].label + " <";
+  } else {
+    temp.innerText = allTracks[i].label;
+  }
+  temp.setAttribute("onclick", "changeTrack(" + i + ")");
+  temp.setAttribute("role", "button");
+  temp.setAttribute("id", i);
+  document.getElementById("display3").appendChild(temp);
+}
+} // chiude la funzione "getTracks()"
+
+function changeTrack(index) {
+var allTracks = document.getElementById("myVideo").textTracks;
+for (var i = 0; i < allTracks.length; i++) {
+if (i == index) {
+  allTracks[i].mode = allTracks[i].SHOWING;
+  document.getElementById(i).innerText = "> " + allTracks[i].label + " <";
+} else {
+  allTracks[i].mode = allTracks[i].OFF;
+  document.getElementById(i).innerText = allTracks[i].label;
+}
+}
+} // chiude la funzione "changeTrack()" 
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Poligono</title>
+<style type="text/css">
+html, body{ margin:0; padding:0;  }
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+code, pre{ color:rgb(50,150,50);}
+
+svg{ width:300px; height:250px; border:1px solid #CCC;  }
+embed{ width:300px; height:250px; border:1px solid #CCC; }
+
+
+</style>
+<script type="text/javascript" src="../jQuery-1.6.min.js"></script>
+</head>
+<body>
+
+<h1>Poligono</h1>
+
+<p class="nota">L'elemento &lt;polygon&gt; è utilizzato per creare una figura grafica che contiene almeno 3 lati. L'attributo <b>points</b> definisce le coordinate di ogni vertice della figura</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <polygon points="200,10 250,190 160,210"
+  style="fill:lime;stroke:purple;stroke-width:1"/>
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <polygon points="100,10 250,190 160,210 80,150"
+  style="fill:red;stroke:purple;stroke-width:1"/>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <polygon points="100,10 40,180 190,60 10,60 160,180"
+  style="fill:lime; fill-rule:nonzero;" />
+</svg>
+
+<br />
+
+
+<br />
+<!--[if lt IE 9]>
+	<p class="codice">File SVG esterno incorporato per soddisfare IE 8</p>
+	<embed src="allegati/polygon.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+
+
+
+
+
+
+
+</body>
+</html>

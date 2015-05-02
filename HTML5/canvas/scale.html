@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>scale</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:20px; padding:0;  border: 1px solid black; } 
+   
+	   
+</style>  
+
+<script type="text/javascript">  
+ 
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');     
+
+for(i=0; i<4; i++){
+ctx.fillStyle = "red";
+if(i > 1){			// si vuole che quando i è maggiore di 1 lo scaling sarà di 0.2 ... 
+ctx.scale(0.2,0.2);
+} // if 
+ctx.fillRect(0,0,100,100); 
+ctx.translate(100,100);     
+ctx.scale(2,2);		// ... altrimenti lo scaling sarà di 2  
+} // chiude for 
+
+} // chiude la funzione 'draw()'
+
+function draw2() {  
+var ctx = document.getElementById('canvas2').getContext('2d');     
+ctx.fillStyle = "red";			// si imposta il colore di sfondo della figura da creare 
+ctx.fillRect(0,0,100,100);		// si crea un rettangolo di 100x100 in alto a sinistra 
+ctx.save();					// si salvano le impostazioni 
+
+ctx.translate(100,100);			// si spostano le coordinate di 100 da sinistra e 100 verso il basso 
+ctx.scale(0.5,0.5);			// si riducono le dimensioni del 50% 
+ctx.fillRect(0,0,100,100);		// si disegna quindi un rettangolo con lew nuove impostazioni 
+//ctx.save();
+
+ctx.restore();				// le ultime impostazioni vengono annullate per cui si ritorna alle coordinate iniziali(0,0)
+ctx.fillStyle = "green";		// si assegna un nuovo colore di sfondo 
+ctx.translate(150,150);			// si imposta una nuova translazione spostando quindi le coordinate da (0,0) a (150,150)
+ctx.scale(1.5,1.5);			// si aumentano le dimensioni rispetto alla iniziale che erano di 100x100 diventando 150x150
+ctx.fillRect(0,0,100,100);		// si disegna il rettaqngolo
+ctx.save();
+
+} // chiude la funzione 'draw2()'
+</script>  
+
+   </head>  
+   <body onLoad="draw(); draw2()"> 
+
+
+<h3>scale(x,y)</h3>
+
+<p class="rosso">
+Accetta due parametri. Il primo (x) rappresenta il fattore di riduzione della larghezza e il secondo (y) rappresenta quello dell'altezza. 
+Il valore di riferimento è l'<b>1</b> per cui se per esempio si imposta 0.5 le dimensioni della figura saranno ridotte alla metà mentre se si imposta a 2 le dimensioni della figura saranno raddoppiate ecc... 
+</p>
+
+<canvas id="canvas" width="500" height="450"></canvas>
+
+<canvas id="canvas2" width="500" height="450"></canvas>
+  
+  
+  
+  
+  
+  
+  
+
+</body>
+</html>

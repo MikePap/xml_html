@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Un semplice grafico</title>
+<style>
+section{
+position:relative;
+height: 200px;
+width: 100%;
+background: gray;
+}
+div{
+position: absolute;
+background: red;
+width: 50px;
+bottom: 0px;
+-webkit-transition: height 1s;
+-moz-transition: height 1s;
+transition: height 1s;
+}
+div:nth-child(1){ left: 10px; }
+div:nth-child(2){ left: 70px; }
+div:nth-child(3){ left: 130px; }
+div:nth-child(4){ left: 190px; }
+</style>
+
+</head>
+<body>
+<section>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</section>
+ 
+<script>
+
+if(typeof(EventSource)!=="undefined"){
+	var stocks = new EventSource("grafico_dinamico.php");
+	stocks.addEventListener('message', function (event) {
+		var graph_data = JSON.parse(event.data),
+		d1 = document.querySelector('div:nth-child(1)'),
+		d2 = document.querySelector('div:nth-child(2)'),
+		d3 = document.querySelector('div:nth-child(3)'),
+		d4 = document.querySelector('div:nth-child(4)');
+     
+		d1.style.height = "" + (graph_data.data1 * 20) + "px";		// vedere i CSS 
+		d2.style.height = "" + (graph_data.data2 * 20) + "px";
+		d3.style.height = "" + (graph_data.data3 * 20) + "px";
+		d4.style.height = "" + (graph_data.data4 * 20) + "px";
+	});
+}else{
+	document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events...";
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

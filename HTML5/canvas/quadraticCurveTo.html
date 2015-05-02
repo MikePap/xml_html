@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>quadraticCurveTo</title>
+<style type="text/css">
+html,body,p,div,canvas,h2,h1,h3{ margin:0; padding:0;}
+body{ font-family:Geneva, Arial, Helvetica, sans-serif;}
+h1{ color:#00F; padding:10px;}
+p{ padding:5px}
+
+dt{ margin-left:10px; color:rgb(130,0,70); font-size:1em; font-weight:bold;}
+dd{ font-size:0.9em; color:rgb(50,50,155);}
+
+#fumetto{ border:1px solid; margin:10px;}
+
+</style>
+
+
+<script type="text/javascript">  
+	 
+function drawFumetto(){
+
+var canvas = document.getElementById('fumetto');
+if (canvas.getContext){
+var ctx = canvas.getContext('2d');
+//##############################################    quadraticCurveTo(cp1x, cp1y, x, y)
+ctx.beginPath();
+/*
+ctx.moveTo(75,25);  // viene stabilito il punto di partenza (angolo superiore sinistro)
+ctx.quadraticCurveTo(25,25,25,62.5);	// si percorre verso il basso. l'end-point è stabilito da x=25 e y=62.5 
+ctx.quadraticCurveTo(25,100,50,100);  // si collega al trattto precedente e fissa un nuovo end-point a x=50 e y=100
+ctx.quadraticCurveTo(50,120,30,125);  // il nuovo end-point viene fissato in modo da procedere verso il basso e creare la gambetta del fumetto
+ctx.quadraticCurveTo(60,120,65,100);  // si risale a chiudere la gambetta 
+ctx.quadraticCurveTo(125,100,125,62.5); // si crea l'angolo inferiore destro 
+ctx.quadraticCurveTo(125,25,75,25);  // si crea l'angolo superiore destro 
+ctx.stroke();
+*/
+
+ctx.moveTo(180,50);
+ctx.lineTo(50,50)
+ctx.quadraticCurveTo(20,50,20,70); 
+ctx.lineTo(20,150);
+ctx.quadraticCurveTo(20,180,70,180);
+ctx.quadraticCurveTo(60,220,40,220);
+ctx.quadraticCurveTo(80,220,90,180);
+ctx.lineTo(180,180);
+ctx.quadraticCurveTo(220,180,220,160);
+ctx.lineTo(220,70);
+ctx.quadraticCurveTo(220,50,180,50);
+ctx.stroke();
+
+} else {
+    alert('You need Safari or Firefox 1.5+ to see this demo.');
+}
+} // chiude la funzione 
+
+
+</script>  
+
+
+</head>
+
+   <body onLoad="drawFumetto();"> 
+
+<h1>quadraticCurveTo(cpx, cpy, x, y)</h1>
+
+
+     <canvas id="fumetto" width="250" height="250"></canvas>  
+
+
+<p>
+Una buona spiegazione dell'utilizzo di questo metodo(<b>quadraticCurveTo</b>) così come del metodo <b>bezierCurveTo</b> <a href="https://developer.mozilla.org/en/Canvas_tutorial%3ADrawing_shapes#Bezier_and_quadratic_curves">sta qui</a>'
+</p>
+
+
+
+<img src="../img/quadraticCurveTo.png"  width="" height="" />
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

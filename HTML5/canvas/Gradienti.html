@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Gradienti</title>
+<style type="text/css">  
+html,body,p,div,canvas,h2,h1,h3{ margin:0; padding:0;}
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:20px; padding:0;  border: 1px solid black; } 
+
+body{ font-family:Geneva, Arial, Helvetica, sans-serif;}
+h1{ color:#00F; padding:10px;}
+p{ padding:5px}
+
+dt{ margin-left:10px; color:rgb(130,0,70); font-size:1em; font-weight:bold;}
+dd{ font-size:0.9em; color:rgb(50,50,155);}
+	   
+	   
+</style>  
+
+<script type="text/javascript">  
+
+function draw(){      
+
+var ctx = document.getElementById('lineare').getContext('2d');
+// creazione di gradiente 
+//var lingrad = ctx.createLinearGradient(0,0,200,300);	// essendo x2 diverso da x1 si avrà un gradiente inclinato 
+var lingrad = ctx.createLinearGradient(0,0,0,300);		// qui invece il gradiente è verticale  
+//Provare a cambiare i valori(x1,y1,x2,y2) per vedere i cambiamenti. Per avere un gradiente 'totale' y1=0 e y2=300.Mentre le x definiscono l'inclinazione' del gradiente; se entrambe(x1 ex2) hanno ugual valore il gradiente procede in senso verticale regolarmente senza inclinazione
+
+lingrad.addColorStop(0, 'blue');       // Essendo il primo colore definisce la partenza del gradiente...   
+//lingrad.addColorStop(0.5, 'blue');   // ... qui invece il gradiente parte dalla metà ma lasciando 'blue' pieno nella parte di sopra
+//lingrad.addColorStop(0.6, 'white');  // secondo colore 
+lingrad.addColorStop(1, 'green');   // rappresenta il punto finale del gradiente
+  
+  // assignazione  del gradiente per il  riempimento 
+ctx.fillStyle = lingrad;		// impostazione del gradiente al canvas 
+ctx.fillRect(0,0,300,300);		// creazione della forma in cui sarà inserito il gradiente definito sopra 
+
+} // chiude la funzione 'draw' 
+
+</script>  
+
+   </head>  
+   <body onLoad="draw()"> 
+
+<h3>Gradienti</h3>
+
+<p>
+L'oggetto <strong>canvasGradient</strong> ci permette di creare gradienti <em>lineari</em> e <em>radiali</em> all'interno di una forma grazie a due metodi: 
+</p>
+<dl>
+    <dt>createLinearGradient(x1,y1,x2,y2)</dt>
+    <dd>Accetta 4 argomenti dove x1 e y1 rappresentano il punto iniziale del gradiente e x2 e y2 il punto finale </dd>
+</dl>
+
+<dl>
+    <dt>createRadialGradient(x1,y1,r1,x2,y2,r2)</dt>
+    <dd>Richiede 6 parametri dove x1,y1 e r1 definiscono rispettivamente le coordinate e il raggio del cerchio iniziale mentre x2,y2,r2 definiscono il cerchio finale del gradiente </dd>
+
+</dl>
+<p>Una volta creato l'oggetto <q>canvasGradient</q> c'è bisogno di un terzo metodo che assegna il colore e la posizione offset del gradiente 
+<dl>
+	<dt>addColorStop(position, color)</dt>
+	<dd>Il primo argomento definisce il punto di stop del colore al gradiente; va da 0 a 1. Il secondo argomento definisce il colore del gradiente <br /> Con questo metodo si possono aggiungere più colori al gradiente.
+	</dd>
+</dl>
+
+<canvas id="lineare" width="300" height="300"></canvas>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

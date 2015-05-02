@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Gradiente Radiale</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+svg{ width:200px; height:150px; border:1px solid #CCC; }
+embed{ width:200px; height:150px; border:1px solid #CCC; background:#FF0; }
+
+
+</style>
+</head>
+<body>
+
+
+<h1>Gradiente Radiale</h1>
+
+<p> <span class="nota">
+L'elemento &lt;radialGradient&gt; è utilizzato per definire un gradiente radiale e deve essere inserito all'interno dell'elemento &lt;def&gt;.</span><br />
+Vedere i commenti interni per comprendere il setting dell'elemento &lt;radialGradient&gt; 
+
+</p>
+
+<!--
+- l'attributo 'id' dell'elemento <radialGradient> definisce il nome univoco del gradiente 
+- gli attributi 'cx', 'cy' definiscono il cerchio più estremo mentre 'fx' e 'fy' il cerchio più interno; l'attributo 'r' definisce il raggio.
+- Il gradiente può essere composto da 2 o più colori. Ogni colore è definito in ogni elemento <stop>. L'atributo 'offset' indica dove il gradiente del colore inizia e finisce.
+- L'attributo 'fill' dell'elemento <ellipse> punta all'id del gradiente.  
+-->
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(255,255,255); stop-opacity:0" />
+      <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <radialGradient id="grad2" cx="20%" cy="30%" r="30%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(255,255,255); stop-opacity:0" />
+      <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#grad2)" />
+</svg>
+
+
+
+
+<!--[if lt IE 9]>
+	<p>Per soddisfare IE8</p>
+	<embed src="allegati/GradienteRadiale.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

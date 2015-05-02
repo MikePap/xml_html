@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>new elements in older browser </title>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]--> 
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { display:block; }
+article{ border:1px solid red; }
+
+</style>
+
+</head>
+
+<body>
+
+
+<h1>Rappresentazione dei nuovi elementi HTML5 nei vecchi browser</h1>
+
+<p>
+Visualizzando un documento HTML5 con all'interno alcuni dei suoi nuovi elementi quali &lt;section&gt;, &lt;video&gt;, &lt;canvas&gt; ecc.. nei vecchi browser, 
+tali elementi saranno trattati come elementi sconosciuti. <br />
+Gli elementi sconosciuti, in tutti i maggiori browser vengono trattati come elementi <b>inline</b> (nel CSS: display:'inline'). Quindi, semplicemente, la soluzione potrebbe essere quella di dichiararli nei CSS come elementi di blocco: <br />
+<span class="codice">article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { display:block; }</span><br />
+Questa soluzione però è valida  per tutti tranne che per Internet Explorer (come al solito) la quale la ignorerà; per fortuna c'è Javascript che ci viene in soccorso al quale anche IE si inginocchia come una battona:
+</p>
+<p class="codice">
+
+&lt;html&gt; <br />
+&lt;head&gt; <br />
+&lt;style&gt; <br />
+<span class="nota">  article { display: block; border: 1px solid red } </span><br />
+&lt;/style&gt; <br />
+<span class="nota">&lt;script&gt;document.createElement("article");&lt;/script&gt; </span><br />
+&lt;/head&gt; <br />
+&lt;body&gt; <br />
+&lt;article&gt; <br />
+&lt;h1&gt;Welcome to Initech&lt;/h1&gt; <br />
+&lt;p&gt;This is your &lt;span&gt;first day&lt;/span&gt;.&lt;/p&gt; <br />
+&lt;/article&gt; <br />
+&lt;/body&gt; <br />
+&lt;/html&gt; <br />
+</p>
+<p>
+Quindi definendo l'elemento "article" prima nei CSS come elemento di blocco e poi creandolo con il metodo <b>createElement</b> di Javascript tutto torna come per magia. (fuck you Bill)
+</p>
+
+<p>
+Ma un bel guy di nome <b>Remy Sharp</b> ci ha semplificato la vita creando uno script utilizzando i <b>commenti condizionali</b> semplice ed efficace come sono le cose più belle: <br />
+
+<span class="codice">
+
+&lt;!--[if lt IE 9]&gt; <br />
+&lt;script&gt;  <br />
+  var e = ("abbr,article,aside,audio,canvas,datalist,details," + <br />
+    "figure,footer,header,hgroup,mark,menu,meter,nav,output," +  <br />
+    "progress,section,time,video").split(',');  <br />
+  for (var i = 0; i < e.length; i++) {  <br />
+    document.createElement(e[i]);  <br />
+  }  <br />
+&lt;/script&gt;   <br />
+&lt;![endif]--&gt; <br />
+</span>
+</p>
+
+<p>
+Naturalmente tale script va posto nella parte alta del documento,  preferibilmente nel tag &lt;head&gt;. <br />
+Oppure lo si può puntare direttamente al suo host (ATTENZIONE: usare anche in questo caso il "commento condizionale" ): <br />
+
+<span class="codice">
+
+&lt;head&gt;  <br />
+  &lt;meta charset="utf-8" /&gt; <br />
+  &lt;title&gt;My Weblog&lt;/title&gt; <br />
+<span class="nota">  &lt;!--[if lt IE 9]&gt; <br />
+  &lt;script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;<br />
+  &lt;![endif]--&gt; </span><br />
+&lt;/head&gt; <br />
+
+</span>
+</p>
+
+<h1>Eccomi in azione</h1>
+
+<!-- Per vedere l'effetto su IExplorer provare ad eliminare il "commento condizionale" nel tag head appena sotto il tag title oppure ad eliminare interamente il "commento condizionale" -->
+
+<article>
+	<span>Sono uno &lt;span&gt; in un tag &lt;article&gt;</span> 
+</article>
+
+
+<article>
+	<span>Sono uno &lt;span&gt; in un tag &lt;article&gt;</span>
+</article>
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

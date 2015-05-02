@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<title>Demo 10</title>
+<head>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+code, pre{ color:rgb(20,150,30); font-weight:bold;}
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}		
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+
+</style>
+
+</head>
+<body>
+
+<h2>Uso degli indici</h2>
+<p>
+Gli indici sono una parte fondamentale di IndexedDB (vedi il nome) perchè 	forniscono un modo per recuperare specifiche serie di dati. <br />
+Vanno creati durante l'evento <q>onupgradeneeded</q> col metodo <b>createIndex</b> 
+<pre>
+var objectStore = thisDb.createObjectStore("people", { autoIncrement:true });
+objectStore.createIndex("name","name", {unique:false});
+objectStore.createIndex("email","email", {unique:true});
+</pre>
+Il primo argomento è il nome per l'indice e il secondo è il nome è la proprietà che sarà indicizzata. In genere è preferibile che i due si facciano coincidere. Infine il terzo argomento è un oggetto opzionale in cui si possono passare diverse opzioni.
+</p>
+
+
+
+<hr><hr><hr>
+
+
+
+
+<script>
+var db;
+
+function indexedDBOk() {
+	return "indexedDB" in window;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+	//No support? Go in the corner and pout.
+	if(!indexedDBOk) return;
+
+	var openRequest = indexedDB.open("idarticle_people5",1);
+
+	openRequest.onupgradeneeded = function(e) {
+		var thisDB = e.target.result;
+
+		if(!thisDB.objectStoreNames.contains("people")) {
+			var os = thisDB.createObjectStore("people", {autoIncrement:true});
+			//I want to get by name later
+			os.createIndex("name", "name", {unique:false});
+			//I want email to be unique
+			os.createIndex("email", "email", {unique:true});
+		}
+	}
+
+	openRequest.onsuccess = function(e) {
+		db = e.target.result;
+
+		//Listen for add clicks
+		document.querySelector("#addButton").addEventListener("click", addPerson, false);
+
+		//Listen for get clicks
+		document.querySelector("#getButton").addEventListener("click", getPerson, false);
+
+	}	
+
+	openRequest.onerror = function(e) {
+		//Do something for the error
+	}
+
+
+},false);
+
+
+function addPerson(e) {
+	var name = document.querySelector("#nome").value;
+	var email = document.querySelector("#mail").value;
+
+	console.log("About to add "+name+"/"+email);
+
+	//Get a transaction
+	//default for OS list is all, default for type is read
+	var transaction = db.transaction(["people"],"readwrite");
+	//Ask for the objectStore
+	var store = transaction.objectStore("people");
+
+	//Define a person
+	var person = {
+		name:name,
+		email:email,
+		created:new Date()
+	}
+
+	//Perform the add
+	var request = store.add(person);
+
+	request.onerror = function(e) {
+		alert("Sorry, that email address already exists.");
+		console.log("Error",e.target.error.name);
+		console.dir(e.target);
+		//some type of error handler
+	}
+
+	request.onsuccess = function(e) {
+		console.log("Woot! Did it");
+	}
+}
+
+function getPerson(e) {
+	var name = document.querySelector("#nameSearch").value;
+	if(name === "" ) return;
+
+	var transaction = db.transaction(["people"],"readonly");
+	var store = transaction.objectStore("people");
+	var index = store.index("name");
+
+	var request = index.get(name);
+
+	request.onsuccess = function(e) {
+
+		var result = e.target.result;
+		if(result) {
+			var s = "<h2>Name "+name+"</h2><p>";
+			for(var field in result) {
+				s+= field+"="+result[field]+"<br>";
+			}
+			document.querySelector("#status").innerHTML = s;
+		} else {
+			document.querySelector("#status").innerHTML = "<h2>No match</h2>";
+		}	
+	}	
+
+
+}
+
+</script>
+
+<input type="text" id="nome" placeholder="Name"><br/>
+<input type="email" id="mail" placeholder="Email"><br/>
+<button id="addButton">Add Data</button>
+
+<p/>
+
+<input type="text" id="nameSearch" placeholder="Name"><br/>
+<button id="getButton">Get By Name</button>
+
+<p/>
+
+<div id="status"></div>
+
+
+</body>
+</html>

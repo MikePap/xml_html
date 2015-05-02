@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>yepnope Array</title>
+<style type="text/css">
+
+</style>
+<script type="text/javascript" src="yepnope.1.5.4-min.js"></script>
+</head>
+<body>
+
+<h1>yepnope array</h1>
+
+
+<code><pre>
+yepnope([{
+  load: 'file1.css',
+//load: ['yepnope.css', 'yepnope2.css'],		// carica entrambi ma a prevalere è il secondo file (yepnope2.css)
+  callback: function (url, result, key) {
+    alert('This is definitely file1!');
+  }
+}, {
+  load: 'file2.js',
+  callback: function (url, result, key) {
+    alert('This is definitely file2!');
+  }
+}]);
+</pre></code>
+
+
+
+
+<script type="text/javascript">
+
+yepnope([{				// da notare la parentesi 'quadra'. Perchè si tratta di 2 'load' 
+//load: 'yepnope.css',
+//load: ['yepnope.css', 'yepnope2.css'],		// carica entrambi ma a prevalere è il secondo file (yepnope2.css)
+load: ['yepnope2.css', 'yepnope.css'],		// qui invece prevale sempre il secondo file che è questa volta (yepnope.css)
+callback: function (url, result, key) {
+alert('This is definitely file1!');
+} // callaback 
+},	  
+{
+load: '../../jquery-1.8.2.min.js',
+callback: function (url, result, key) {
+alert('This is definitely file2!');
+$("h1").css('color', 'red');		// sostituisce quello dichiarato nei CSS 
+} // callaback  
+}]);
+
+/*
+// con l'uso di 'key' 
+yepnope({				// invece qui la parentesi 'quadra' non c'è (a differenza si sopra) perche si tratta di un solo 'load' 
+  test: Modernizr.geolocation,
+  yep: {
+    'rstyles': 'regular-styles.css'
+  },
+  nope: {
+    'mstyles': 'modified-styles.css',
+    'geopoly': 'geolocation-polyfill.js'
+  },
+  callback: function (url, result, key) {
+    if (key === 'geopoly') {
+      alert('This is the geolocation polyfill!');
+    }
+  }
+});
+
+///////
+
+yepnope({
+  test: Modernizr.geolocation,
+  yep: {
+    'rstyles': 'regular-styles.css'
+  },
+  nope: {
+    'mstyles': 'modified-styles.css',
+    'geopoly': 'geolocation-polyfill.js'
+  },
+  callback: {
+    'rstyles': function (url, result, key) {
+      alert('This is the regular styles!');
+    },
+    'mstyles': function (url, result, key) {
+      alert('This is the modified styles!');
+    },
+    'geopoly': function (url, result, key) {
+      alert('This is the geolocation polyfill!');
+    }
+  }
+});
+
+//// 'complete' callback.
+
+yepnope({
+  test: Modernizr.geolocation,
+  yep: {
+    'rstyles': 'regular-styles.css'
+  },
+  nope: {
+    'mstyles': 'modified-styles.css',
+    'geopoly': 'geolocation-polyfill.js'
+  },
+  callback: {
+    'rstyles': function (url, result, key) {
+      alert('This is the regular styles!');
+    },
+    'mstyles': function (url, result, key) {
+      alert('This is the modified styles!');
+    },
+    'geopoly': function (url, result, key) {
+      alert('This is the geolocation polyfill!');
+    }
+  },
+  complete: function () {
+    alert('Everything has loaded in this test object!');
+  }
+});
+
+
+
+*/
+
+</script>
+
+
+
+</body>
+</html>
+

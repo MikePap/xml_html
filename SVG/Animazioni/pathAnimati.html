@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Elementi trasformati animatamente </title>
+<style type="text/css">
+
+div{
+margin:10px;	/*float:left; */
+}
+
+svg{
+border: 1px solid #ccc; 
+}
+
+</style>
+</head>
+<body>
+
+<!--	x Esempi		
+
+-->		
+<div>
+	<svg width="400" height="400"	viewbox="0 0 100 100" preserveAspectRatio="none" >
+
+		<defs>
+			<linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+				<stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+				<stop offset="40%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+				<stop offset="60%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+				<stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+			</linearGradient>
+
+			<path fill="none" stroke="#000" stroke-width="5" d="m 2.68,2.35 0,91.8 91.6, -91.6 z" id="tracc1"	/>
+		</defs>
+
+		<use x="0" y="0" xlink:href="#tracc1" />
+		<use x="0" y="0" xlink:href="#tracc2" />
+
+
+
+	</svg>
+</div>
+
+
+<!-- Prima freccia  -->	
+<div>
+	<svg width="200" height="200"  >
+		<path fill="lime" id="limone" >
+			<animate 
+				attributeName="d" 
+				begin="200ms;limone.click"
+				dur="500ms" 
+				fill="freeze"
+				values="	M0,0		0,200		200,200	200,0		Z;
+							M100,0	0,200		200,200	100,0	 	Z";
+			/>
+		</path>
+	</svg>
+</div>
+
+
+<p>Clicca sul rettangolo giallo con SMIL
+</p>
+<!--Rettangolo giallo-->
+<div>
+	<svg width="200" height="200" id="svg8" >
+
+		<path d="M0,0 0,200 200,200 200,0Z" fill="yellow" id="limone2" >
+			<animate attributeName="d" dur="200ms" fill="freeze" begin="svg8.fuk; limone2.mouseenter"
+				values="	M0,0 0,200 200,200 200,0 Z;
+							M100,0 0,200 200,200 100,0 Z";
+				/>
+
+			<animate attributeName="d" dur="200ms" fill="freeze" begin="svg8.mouseleave" 
+				values="M100,0 0,200 200,200 100,0 Z; M0,0 0,200 200,200 200,0 Z";
+				/>
+		</path>
+
+	</svg>
+</div>
+
+
+
+<!-- Triangolo rosso -->	
+<div>
+	<svg width="200" height="200" >
+		<path fill="red">
+			<animate 
+				attributeName="d" 
+				dur="1000ms" 
+				fill="freeze"
+				values="	M0,200	100,200	200,200	Z;
+							M0,200	100,0		200,200	Z";
+			/>
+		</path>
+	</svg>
+</div>
+
+
+<p>
+Il seguente esempio non è perfetto e da un problema: quando si mette il mouse sulla freccia, la freccia scorre in alto. Si abbassa solo quando si esce dall'elemento svg. Però, mentre la freccia è in alto,  se col mouse entriamo nella zona gialla e poi si ritorniamo sopra alla parte di freccia rimasta succede che ripete l'animazione, cioè si abbassa per poi risalire  
+</p>
+
+<!--freccia blu-->	
+<div>
+	<svg width="300" height="300" viewbox="0 0 100 100" id="essevg" >
+
+		<rect x="0" y="0" width="100" height="100" fill="#ff0" id="giallo" />		
+		<path d="	M0,0 0,80 50,100 100,80 100,0 Z" fill="blue" id="frecciaBlu" >
+			<animate 
+				attributeName="d" 
+				begin="frecciaBlu.mouseenter"
+				dur="500ms" 
+				fill="freeze"
+				values="	M0,0 0,80 50,100 100,80 100,0 Z;
+							M0,0 0,10 50,20 100,10 100,0 Z";
+			/>
+
+			<animate 
+				attributeName="d" 
+				begin="essevg.mouseleave"
+				dur="500ms" 
+				fill="freeze"
+				values="	M0,0 0,10 50,20 100,10 100,0 Z;
+							M0,0 0,80 50,100 100,80 100,0 Z";
+
+			/>
+
+		</path>
+	</svg>
+</div>
+
+<p>
+Nel seguente esempio ho fatto qualche cambiamento di impostazione usando gli elementi &lt;defs&gt; e &lt;use&gt; ma il risultato non è cambiato
+</p>
+
+<!--freccia arancione  usoRect.mouseleave; -->	
+<div>
+	<svg width="300" height="300" viewbox="0 0 100 100" id="svg11"  >
+
+		<defs>
+			<rect x="0" y="0" width="100" height="100" fill="#ccc" id="grigio" />		
+			<path d=" M0,0 0,80 50,100 100,80 100,0 Z" fill="orange" id="frecciaArancione" />
+		</defs>
+
+		<use id="usoRect"	xlink:href="#grigio" />		
+
+		<use id="usoFreccia"   xlink:href="#frecciaArancione">
+			<animate attributeName="y" begin="usoFreccia.mouseenter" from="0"  to="-50" dur="400ms"  fill="freeze"		/>
+			<animate attributeName="y" begin="svg11.mouseleave" from="-50"  to="0" dur="200ms"  fill="freeze"		/>
+		</use>
+
+
+	</svg>
+</div>
+
+<p>
+Il problema riscontrato nei precedenti due esempi l'ho risolto utilizzando JavaScript e impostando l'animazione con <em>transition</em> dei CSS
+</p>
+
+<div>
+<!--Freccia verde-->	
+	<svg width="300" height="300" viewbox="0 0 100 100" id="svg10" >
+
+		<rect x="0" y="0" width="100" height="100" fill="#ff0" id="retgiallo" />		
+		<defs>
+			<path d=" M0,0 0,80 50,100 100,80 100,0 Z" fill="green" id="frecciaVerde" />
+		</defs>
+
+			<use id="uso"   xlink:href="#frecciaVerde" />
+
+		<script type="application/ecmascript"> <![CDATA[
+			var uso = document.getElementById('uso');
+			var frecciaVerde = document.getElementById('frecciaVerde');
+			var retgiallo = document.getElementById('retgiallo');
+			var svg10 = document.getElementById('svg10');
+			uso.addEventListener('mouseenter', function(){
+				this.style['transform'] = "translate(0, -70px)";
+				this.style.transition = this.style.webkitTransition = '300ms ease-in-out';		
+//				frecciaVerde.style.transition = frecciaVerde.style.webkitTransition = 'fill 1s ease-in-out';			// NO	
+//				frecciaVerde.style['fill'] = 'red';				// NO
+//				console.log('fuk');
+			}, false);
+
+			svg10.addEventListener('mouseleave', function(){
+				uso.style['transform'] = "translate(0, 0)";
+				uso.style.transition = uso.style.webkitTransition = '300ms ease-in-out';		
+
+			}, false);
+
+		]]> </script>		
+
+	</svg>
+</div>
+
+<p>Con SMIL</p>
+<!--Apriti Sesamo con SMIL -->	
+<div>
+	<svg width="600" height="200"	viewbox="0 0 100 100" preserveAspectRatio="none" id="svg12" >
+
+		<defs>
+			<path fill="#ccc" stroke="red" stroke-width="5" d="M0,0 0,100 	60,100 40,0 Z" stroke-linejoin="round" id="perco1" 	/>
+			<path fill="#ccc" stroke="red" stroke-width="5" d="M40,0 60,100 100,100 100,0 Z" id="perco2"	/>
+		</defs>
+
+		<use x="0" y="0" xlink:href="#perco1" >
+			<animate	attributeName="x"	from="0" to="-40" dur="500ms" begin="perco1.mouseenter; perco2.mouseenter" fill="freeze" />
+			<animate	attributeName="x"	from="-40" to="0" dur="300ms" begin="svg12.mouseleave" fill="freeze" />
+		</use>
+
+		<use x="0" y="0" xlink:href="#perco2" >
+			<animate	attributeName="x"	from="0" to="40" dur="500ms" begin="perco1.mouseenter; perco2.mouseenter" fill="freeze" />
+			<animate	attributeName="x"	from="40" to="0" dur="500ms" begin="svg12.mouseleave" fill="freeze" />
+		</use>
+
+	</svg>
+</div>
+
+
+<p>Con JavaScript e CSS	</p>
+<!--Apriti Sesamo con JavaScript e CSS-->	
+<div>
+	<svg width="600" height="200"	viewbox="0 0 100 100" preserveAspectRatio="none" id="svg14" >
+
+		<rect x="0" y="0" width="100" height="100" fill="#ff0" id="retgiallo22" />		
+		<defs>
+			<linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+				<stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+				<stop offset="40%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+				<stop offset="60%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+				<stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+			</linearGradient>
+
+			<path fill="url(#grad1)" stroke="blue" stroke-width="5" d="M0,0 0,100 50,100 40,60 50,40 40,0 Z" stroke-linejoin="bevel" id="perco11" />
+			<path fill="url(#grad1)" stroke="#000" stroke-width="5" d="M45,0 55,40 45,60 55,100 100,100 100,0 Z" stroke-linejoin="round" id="perco22" />
+			<text x="50" y="50" fill="#444" font-size="6" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="alibaba">
+				Ali Babà Vaffancu'l 
+			</text>		
+			<text fill="#fff" font-size="8" font-family="Verdana" text-anchor="start" dominant-baseline="middle" id="apriti">
+				Apriti
+			</text>		
+			<text fill="#fff" font-size="8" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="sesamo">
+				Sesamo
+			</text>		
+		</defs>
+
+		<use xlink:href="#alibaba" id="" />
+		<use x="0" y="0" xlink:href="#perco11" id="useSesamo1" />
+		<use x="0" y="0" xlink:href="#perco22" id="useSesamo2" />
+		<use x="10" y="50" xlink:href="#apriti" id="useApriti" />
+		<use x="75" y="50" xlink:href="#sesamo" id="useSesamo" />
+
+		<script type="application/ecmascript"> <![CDATA[
+			var svg14 = document.getElementById('svg14');
+			var useSesamo1 = document.getElementById('useSesamo1');
+			var useSesamo2 = document.getElementById('useSesamo2');
+
+			useSesamo1.addEventListener('mouseenter', function(){
+				this.style['transform'] = "translate(-37.5px)";
+				useSesamo2.style['transform'] = "translate(42.5px)";
+				useApriti.style['transform'] = "translate(-80px)";
+				useSesamo.style['transform'] = "translate(100px)";
+
+//				useApriti.style.transition = this.style.webkitTransition = '500ms ease-in-out';						
+				this.style.transition = this.style.webkitTransition = '500ms ease-in-out';		
+			}, false);
+
+			useSesamo2.addEventListener('mouseenter', function(){
+				this.style['transform'] = "translate(42.5px)";
+				useSesamo1.style['transform'] = "translate(-37.5px)";
+				this.style.transition = this.style.webkitTransition = '500ms ease-in-out';		
+				useApriti.style['transform'] = "translate(-80px)";
+				useSesamo.style['transform'] = "translate(100px)";
+
+			}, false);
+
+			svg14.addEventListener('mouseleave', function(){
+				useSesamo1.style['transform'] = "translate(0)";
+				useSesamo2.style['transform'] = "translate(0)";
+
+				useApriti.style['transform'] = "translate(0)";
+				useSesamo.style['transform'] = "translate(0)";
+
+				useSesamo1.style.transition = useSesamo1.style.webkitTransition = '300ms ease-in-out';		
+			}, false);
+
+
+
+		]]> </script>		
+	</svg>
+</div>
+
+
+<p>Con JavaScript e CSS	<button id="apritiS">Apriti Sesamo</button> <button id="chiuditi">Chiuditi Sesamo</button>	</p>
+<!--Apriti Sesamo2 con JavaScript e CSS-->	
+<div>
+	<svg width="600" height="200"	viewbox="0 0 100 100" preserveAspectRatio="none" id="svg15" >
+
+		<rect x="0" y="0" width="100" height="100" fill="#ff0" id="retgiallo222" />		
+		<defs>
+			<linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+				<stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+				<stop offset="40%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+				<stop offset="60%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
+				<stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+			</linearGradient>
+
+			<text x="50" y="50" fill="#444" font-size="6" font-family="Verdana" text-anchor="middle" dominant-baseline="middle" id="alibabaa">
+				Ali Babà Vaffancu'l 
+			</text>		
+			<path fill="url(#grad2)" stroke="#111" stroke-width="5" d="M0,0 0,100 50,100 40,60 50,40 40,0 Z" stroke-linejoin="bevel" id="perco101" />
+			<path fill="url(#grad2)" stroke="#111" stroke-width="5" d="M45,0 55,40 45,60 55,100 100,100 100,0 Z" stroke-linejoin="round" id="perco202" />
+		</defs>
+
+		<use xlink:href="#alibabaa" id="" />
+		<use x="0" y="0" xlink:href="#perco101" id="useSesamo11" />
+		<use x="0.5" y="0.5" xlink:href="#perco202" id="useSesamo22" />
+
+		<script type="application/ecmascript"> <![CDATA[
+			var svg15 = document.getElementById('svg15');
+			var useSesamo11 = document.getElementById('useSesamo11');
+			var useSesamo22 = document.getElementById('useSesamo22');
+//			var useApriti = document.getElementById('useApritii');
+//			var useSesamo = document.getElementById('useSesamoo');
+			var apritiS = document.getElementById('apritiS');
+			var chiuditi = document.getElementById('chiuditi');
+
+			apritiS.addEventListener('click', function(){
+				useSesamo11.style['transform'] = "translate(-37.5px)";
+				useSesamo22.style['transform'] = "translate(42.5px)";
+//				useApriti.style['transform'] = "translate(-80px)";
+//				useSesamo.style['transform'] = "translate(100px)";
+
+				useSesamo11.style.transition = this.style.webkitTransition = '500ms ease-in-out';						
+				useSesamo22.style.transition = this.style.webkitTransition = '500ms ease-in-out';						
+			}, false);
+
+			chiuditi.addEventListener('click', function(){
+				useSesamo11.style['transform'] = "translate(0)";
+				useSesamo22.style['transform'] = "translate(0)";
+//				useApriti.style['transform'] = "translate(0)";
+//				useSesamo.style['transform'] = "translate(0)";
+
+				useSesamo11.style.transition = useSesamo11.style.webkitTransition = '500ms ease-in-out';						
+				useSesamo22.style.transition = useSesamo22.style.webkitTransition = '500ms ease-in-out';						
+			}, false);
+
+		]]> </script>		
+	</svg>
+</div>
+
+
+<p>Punto interrogativo. Funziona in chrome. In Firefox esegue soltanto l'animazione di rotazione </p>
+
+<!--Punto interrogativo -->	
+<div>
+	<svg width="300" height="300"	viewbox="0 0 100 100" preserveAspectRatio="none" id="svg20" >
+
+		<symbol id="hh" >
+			<text x="50" y="50" fill="#444" font-size="36" font-family="Arial" text-anchor="middle" dominant-baseline="middle" id="puntoInt"> ? 
+				<animate attributeName="font-size" values="20;10;5;1;10;20;36" dur="500ms" begin="puntoInt.click" fill="freeze"  /> 
+			</text>		
+		</symbol>
+
+		<use xlink:href="#hh" id="usoInterrogativo" ></use>
+
+		<animateTransform 
+						xlink:href="#usoInterrogativo"
+						attributeName="transform" 
+						attributeType="XML"
+						type="rotate"
+						from="0 50 50"
+						to="360 50 50" 
+						begin="usoInterrogativo.click"
+						dur="500ms"
+						begin="0s"
+						fill="freeze"
+		/>
+
+
+	</svg>
+</div>
+
+
+
+
+<!--
+
+		<script type="application/ecmascript"> <![CDATA[
+			var usoInterrogativo = document.getElementById('usoInterrogativo');
+			usoInterrogativo.addEventListener('click', function(){
+				this.style['transform'] = "rotate(360deg)";
+				this.style['transformOrigin'] = "50% 50%";
+				this.style.transition = this.style.webkitTransition = '500ms ease-in-out';						
+			},false);
+
+		]]> </script>		
+
+
+
+
+
+				<animate attributeName="font-size" values="10; 1; 36" dur="500ms" begin="puntoInt.click" fill="freeze"  /> 
+
+		<use xlink:href="#punto?" id="puntoInterrogativo" >
+
+
+						repeatCount="indefinite"
+
+
+			<line x1="0" y1="50" x2="100" y2="50"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+			<line x1="50" y1="0" x2="50" y2="100"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+
+
+ attributeName="d"  from="M0,0 0,200 200,200	200,0	Z" to="M100,0 0,200 200,200 100,0 Z" dur="500ms" 
+---------------------------------------------------------------------------
+			<animate 
+				attributeName="d" 
+				begin="frecciaVerde.click"
+				dur="500ms" 
+				fill="freeze"
+				values="	M0,0 0,80 50,100 100,80 100,0 Z;
+							M0,0 0,10 50,20 100,10 100,0 Z";
+			/>
+
+			<animate 
+				attributeName="d" 
+				begin="retgiallo.mouseout"
+				dur="500ms" 
+				fill="freeze"
+				values="	M0,0 0,10 50,20 100,10 100,0 Z;
+							M0,0 0,80 50,100 100,80 100,0 Z";
+
+			/>
+
+
+
+-----------------------------------------------------------------------------------------------------------
+		<script type="application/ecmascript"> <![CDATA[
+			var frecciVerde = document.getElementById('frecciVerde');
+			frecciVerde.addEventListener('click', function(){
+				var tracciato = this.getAttribute('d');
+				frecciVerde.style.transition = frecciVerde.style.webkitTransition = 'd 1s ease-in-out';					
+				this.setAttribute('d', "M0,0 0,10 50,20 100,10 100,0 Z");
+
+	console.log(tracciato);
+			}, false);
+		]]> </script>		
+
+
+		<script type="application/ecmascript"> <![CDATA[
+			var frecciaGiu = document.getElementById('frecciaGiu');
+			frecciaGiu.addEventListener('click', function(){
+				var tracciato = this.getAttribute('d');
+			
+	console.log(tracciato);
+			}, false);
+
+
+		]]> </script>		
+
+
+
+Salve sig. Scarcella,
+il certificato va bene. Prima che le diamo la possibilità di creare la vostra scheda da pubblicare nella pagina degli Annunci noi richiediamo una sola cosa: che ci inserite sul vostro sito un link che punti alla nostro sito. Non è importante la posizione 
+
+6. The gunner dream
+9.	The Fletcher Memorial Home
+11. The Final Cut
+13. Two Suns In The Sunset
+-->	
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+</body>
+</html>
+

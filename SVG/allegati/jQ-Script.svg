@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" 
+	 width="300" height="150" id="cerchiogiallo" >
+
+	<script type="application/ecmascript" src="../jQuery-1.6.min.js"> <![CDATA[
+// funziona con Chrome e Opera ma non con Firefox (IE? Safari non visulaizza niente neanche le figure)
+			function jq(){ 
+			$(#cerchio3).css('fill', 'blue');
+			}; //
+		]]> </script>
+
+
+	<circle onclick="jq()"  cx="50" cy="50" r="50" fill="yellow" id="cerchio3"  />
+
+</svg>
+
+<!--
+refer to "ScriptingSVG.html"
+jQ-Script.svg
+-->
+
+

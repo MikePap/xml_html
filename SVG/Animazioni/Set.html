@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Set </title>
+<style type="text/css">
+html,body,h1,h2,h3,p,dl,dt,dd,pre,ul, embed{ margin:0; padding:0; }
+h1{ color: #00F; font-size:31px; margin-left:100px; padding:10px; }
+h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
+h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
+p{ padding:5px; }
+dl{margin-left:20px;}
+dt{ color:#039; margin-bottom:5px;}
+dd{ color:#06F; margin-left:10px; }
+li{margin-left:31px;}
+.nota{ color:#F66;}
+.codice{ color:#060}
+pre{color:rgb(50,150,50); margin-left:5px; }
+
+svg{ border:1px solid #CCC;  }
+embed{ width:300px; height:150px; border:1px solid #CCC; }
+
+#emsvgImm2{ width:200px; height:150px; }
+
+.highlight{ background:#FF0;   }
+
+</style>
+</head>
+<body>
+
+<h1>set</h1>
+
+<p>
+L'elemento &lt;set&gt; permette di definire il valore di un attributo per una specifica durata e dopo che l'animazione è completata l'effetto non è più applicabile e il valore ritorna quello originario come nel caso dell'esempio seguente. Supporta tutti gli attributi compresi quelli che non possono essere interpolati come stringhe e valori boleani. <br />
+L'elemento <tt>set</tt> non è additivo pertanto gli attributi <tt>additive</tt> e <tt>acculmulate</tt> non gli accetta. 
+</p>
+<p>
+Nel momento in cui <tt>set</tt> è usato per una specifica durata non può accettare gli attributi <tt>from</tt> e <tt>by</tt>. Gli attributi permessi sono: <tt>begin, dur, end, min, max, restart, repeatCount, repeatDur, fill</tt>
+</p>
+
+<p>	
+<pre>
+&lt;rect ... &gt; 
+	&lt;set attributeName="stroke-width" to="5px" begin="5s" dur="10s" fill="remove" /&gt; 
+&lt;/rect&gt; 
+</pre>
+</p>
+<p>
+Altro esempio che assegna una classe all'elemento quando l'utente esegue il 'mouseover' e gliela toglie col il 'mouseout': 
+<pre>
+&lt;text&gt; This will highlight if you mouse over it...
+	&lt;set attributeName="class" to="highlight" begin="mouseover" end="mouseout"&gt; 
+&lt;/text&gt; 
+</pre>
+</p>
+
+
+<h3>Esempi con l'elemento <q>set</q>  </h3>
+
+<p>L'esempio successivo è utilizzato l'elemento "set" per l'applicazione di una classe al testo <b>ma non funziona</b></p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<text x="10" y="100" style="fill:red;" id="t1" > 
+This will highlight if you mouse over it...
+		<set attributeName="class" attributeType="CSS" dur="4" to="highlight"  begin="mouseover"  end="mouseout" /> 
+	</text> 
+</svg>
+
+<p>Qui invece ho manipolato il "display" di un elemento modificandolo dopo 3 secondi </p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+	<rect x="0" y="0" width="50" height="50"  style="fill:rgb(250,150,100);stroke-width:1; stroke:rgb(0,0,0)">
+		<set attributeName="display"  to="none" begin="3s"  /> 
+	</rect>
+</svg>
+
+<p>La figura appare al "mouseover" sull'intero elemento SVG e scompare al "mouseout"</p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="svg11"  >
+
+	<rect x="0" y="0" width="150" height="100"  style="fill:rgb(250,50,250);stroke-width:1; stroke:rgb(0,0,0)">
+		<set attributeName="display"  to="none"  /> 
+		<set attributeName="display"  to="block" begin="svg11.mouseover" end="svg11.mouseout" /> 
+	</rect>
+</svg>
+
+<p>Il rettangolo scompare al click su di esso</p>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
+		width="300" height="150" id="svg12"  >
+	<defs>
+		<symbol id="MySymbol">
+			<rect x="0" y="0" width="150" height="100"  style="fill:rgb(250,50,250)" id="rett1" >
+				<set attributeName="display"  to="none" begin="click" />
+			</rect>
+		</symbol>
+	</defs>
+	<use x="20" y="10" xlink:href="#MySymbol"  />
+</svg>
+
+<p>Al "mouseover" sul rettangolo vengono visualizzati altri 2 rettangolini. E' definito un <tt>repeatCount='3'</tt>  </p>
+<svg xmlns="http://www.w3.org/2000/svg" 	xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
+			width="150" height="100" id="svg101"  >
+
+	<defs>
+		<symbol id="gruppo4">
+			<rect x="0"   y="0" width="150" height="100"  fill="rgb(0,250,0)" id="rett6" ></rect>
+			<rect x="150" y="0" width="150" height="100"  fill="rgb(250,0,0)" id="rett5" ></rect>
+			<rect x="300" y="0" width="150" height="100"  fill="rgb(0,0,250)" id="rett4" ></rect>
+			<rect x="450" y="0" width="150" height="100"  fill="rgb(250,50,250)" id="rett3" ></rect>
+		</symbol>
+	</defs>
+		<use width="600" height="100" xlink:href="#gruppo4" >
+			<animate attributeName="x" dur="12s" from="0" to="-450" repeatCount="3" end="click"  />
+			<mouseFollow begin="mouseover" dur="5s" additive="replace" fill="remove" /> 
+		</use>
+	<rect x="10" y="35" width="25" height="25" fill="orange" >	
+		<set attributeName="display"  to="none" />
+		<set attributeName="display"  to="block" begin="svg101.mouseover" end=" svg101.mouseout"  /> 
+		<!-- se mettevo "gruppo4.mouseover" Firefox non lo capiva -->
+	</rect>		
+	<rect x="115" y="35" width="25" height="25" fill="white"  >
+		<set attributeName="display"  to="none" />
+		<set attributeName="display"  to="block" begin="svg101.mouseover;" end="svg101.mouseout"  />  					
+	</rect>
+</svg>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" 	xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="500" height="350" >
+
+		<rect id="deepPink-rectangle" width="50" height="50" x="225" y="125" fill="deepPink"  transform="rotate(0) translate(0 0)"/>
+  
+		<animateTransform 
+           xlink:href="#deepPink-rectangle"
+           attributeName="transform" 
+           attributeType="XML"
+           type="rotate"
+           from="0 250 150"
+           to="360 250 150"
+           dur="2s"
+           begin="0s"
+           repeatCount="indefinite"
+           fill="freeze"
+                    
+		/>
+
+		<set xlink:href="#deepPink-rectangle" attributeName="fill" to="#0099AA" begin="click" dur="3s" />
+
+	</svg>
+</div> 
+
+
+<h3>I seguenti esempi non sono con l'elemento set</h3>
+
+
+<p>Scorrimento di rettangoli (o possibilmente immagini). E' definito un <tt>repeatCount='indefinite'</tt>. L'animazione scatta a apertura documento oppure al <tt>mouseout</tt> e termina al <tt>mouseover</tt>; il problema è che al <tt>moseover</tt> grazie al <tt>fill="freeze"</tt> si blocca nel punto in cui si trova ma al <tt>mouseout</tt> riprende la partenza dall'inizio e non so come farla ripartire dallo stesso punto di fermata   </p>
+<svg xmlns="http://www.w3.org/2000/svg" 	xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
+			width="150" height="100" id="svgci"  >
+
+	<defs>
+		<symbol id="gruppo4">
+			<rect x="0"   y="0" width="150" height="100"  fill="rgb(0,250,0)" id="rett6" ></rect>
+			<rect x="150" y="0" width="150" height="100"  fill="rgb(250,0,0)" id="rett5" ></rect>
+			<rect x="300" y="0" width="150" height="100"  fill="rgb(0,0,250)" id="rett4" ></rect>
+			<rect x="450" y="0" width="150" height="100"  fill="rgb(250,50,250)" id="rett3" ></rect>
+		</symbol>
+	</defs>
+		<use  width="600" height="100" xlink:href="#gruppo4" id="jkk" >
+		<animate attributeName="x" dur="8s"  from="0" to="-450" repeatCount="indefinite"  begin="0;mouseout" end="mouseover" fill="freeze"  />
+<!--
+funziona anche così
+			<animate attributeName="x" dur="12s" values="0; -150; -300; -450" repeatCount="3"  />
+-->
+		
+		</use>
+</svg>
+
+<br />
+
+
+<p>L'animazione scatta al click sul pulsante "Vai" che è fuori dall'elemento SVG </p>
+<button id="pulsante">Vai</button>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
+	width="300" height="150" id="escalcmode1" >
+
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green" id="cerchio" >
+		<animate attributeName="fill" dur="6s" begin="pulsante.click" calcMode="linear" values="green; yellow; red" fill="freeze"  /> 
+	</circle>
+</svg>
+
+<br /><br />
+
+
+
+
+
+<!--
+
+
+
+	<rect x="0" y="0" width="600" height="100"  fill="rgb(250,250,0)" id="box" >	</rect>
+//////////////
+	<rect x="85" y="60" width="25" height="25" fill="orange" >	
+		<set attributeName="display"  to="none" />
+		<set attributeName="display"  to="block" begin="mouseover;rett4.mouseover" end="rett4.mouseout"  />  					
+	</rect>		
+	<rect x="190" y="60" width="25" height="25" fill="white"  >
+		<set attributeName="display"  to="none" />
+		<set attributeName="display"  to="block" begin="mouseover;rett4.mouseover" end="rett4.mouseout"  />  					
+	</rect>
+
+
+	<rect x="75" y="25" width="150" height="100"  fill="rgb(250,50,250)" id="rett3" >
+		<animate attributeName="display" to="none" begin="anim3.end" dur="1" fill="freeze" id="anim4"   />		
+	</rect>
+	<rect x="75" y="25" width="150" height="100"  fill="rgb(0,0,250)" id="rett4" >
+		<animate attributeName="display" to="none" begin="anim2.end" dur="1" fill="freeze" id="anim3"   />		
+	</rect>
+	<rect x="75" y="25" width="150" height="100"  fill="rgb(250,0,0)" id="rett5" >
+		<animate attributeName="display" to="none" begin="anim1.end" dur="1" fill="freeze" id="anim2"   />		
+	</rect>
+
+	<rect x="75" y="25" width="150" height="100"  fill="rgb(0,250,0)" id="rett6" >
+		<animate attributeName="display" to="none" begin="1s" dur="1" fill="freeze" id="anim1"  />
+		<animate attributeName="display" to="block" begin="anim4.end" dur="1" fill="freeze" id="anim1"  />
+	</rect>
+
+
+///////////////////////////////////////////
+
+	<defs>
+		<set attributeName="display"  to="none"  id="oscura"  /> 
+		<set attributeName="display"  to="block" id="mostra" /> 
+	</defs>
+	<symbol id="pp">
+		<g id="grupporett"  fill="rgb(0,50,250)" >
+			<rect x="0" y="40" width="25" height="25"  >
+				<set attributeName="display"  to="none" />
+				<set attributeName="display"  to="block" begin="rett3.mouseover" end="rett3.mouseout"  />  
+			</rect>		
+			<rect x="105" y="40" width="25" height="25"  />
+		</g>
+	</symbol>
+	<defs>
+		<set attributeName="display"  to="none" xlink:href="#grupporett" id="jk" />
+	</defs>
+	<defs>
+		<set attributeName="display"  to="block" begin="rett3.mouseover" end="rett3.mouseout" xlink:href="#grupporett" id="kk" />
+	</defs>
+
+	<defs>
+			<rect x="0" y="0" width="150" height="100"  style="fill:rgb(250,50,250)" id="rett3" />
+	</defs>
+
+	<use x="75" y="25" xlink:href="#rett3" />
+	<use x="85" y="25" xlink:href="#pp" />
+
+
+//////////////////////////////////////
+
+	<use xlink:href="#jk" />	
+	<use xlink:href="#kk" />	
+funziona anche senza questa dichiarazione
+
+
+	<use x="20" y="10" xlink:href="#grupporett" />
+			<rect x="20" y="20" width="100" height="50"  style="fill:rgb(0,50,250)" id="rett4" >
+				<set attributeName="display"  to="none"  /> 
+				<set attributeName="display"  to="block" begin="rett3.mouseover" end="rett3.mouseout" /> 
+			</rect>
+
+
+<use xlink:href="#oscura" />
+
+
+-->
+
+
+
+
+
+
+
+<!--
+			<animate attributeName="x" from="0" to="100" dur="5s"    /> 
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150"  >
+
+</svg>
+
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+
+-->
+<br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+</body>
+</html>

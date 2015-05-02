@@ -1,0 +1,20 @@
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='485' height='485'>
+	<defs>
+		<g id='a'>
+			<rect fill='#e6e6e6' width='97' height='97'/>
+			<rect x='97' fill='#f2f2f2' width='97' height='97'/>
+			<rect x='194' fill='#ffffff' width='97' height='97'/>
+			<rect x='291' fill='#f6f6f6' width='97' height='97'/>
+			<rect x='388' fill='#ffffff' width='97' height='97'/>
+			<rect x='485' fill='#e6e6e6' width='97' height='97'/>
+			<rect x='582' fill='#f2f2f2' width='97' height='97'/>
+			<rect x='679' fill='#ffffff' width='97' height='97'/>
+			<rect x='776' fill='#f6f6f6' width='97' height='97'/>
+		</g>
+	</defs>
+	<use x='-388' y='0' xlink:href='#a'/>  
+	<use x='-291' y='97' xlink:href='#a'/>
+	<use x='-194' y='194' xlink:href='#a'/>
+	<use x='-97' y='291' xlink:href='#a'/>
+	<use x='0' y='388' xlink:href='#a'/>
+</svg>

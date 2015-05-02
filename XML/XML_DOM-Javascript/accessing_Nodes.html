@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Acesso ai Nodi</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<h1>Acesso ai Nodi</h1>
+
+<dl>
+	<dt>Si può avere accesso ai nodi in tre modi</dt>
+    	<dd>Con il metodo <b>getElementsByTagName()</b> </dd>
+        <dd>Attraversando l'albero gerarchiale</dd>
+        <dd>Navigando tra i nodi dell'albero usando le relazioni</dd>
+</dl>
+
+
+<div class="code">
+<b>x.getElementsByTagName("title");</b> // restituisce tutti gli elementi  'title' dell'elmento 'x'  
+<br />
+<b>xmlDoc.getElementsByTagName("title");</b> // restituisce tutti gli elemnti 'title' del documento
+<br />
+<b>xmlDoc</b> è fa riferimento al documento medesimo (vedere file <a href="http://localhost/xml_html/XML/allegati/loadxmldoc.js">loadxmldoc.js</a>  )
+</div>
+
+<div class="code">
+<b>xmlDoc=loadXMLDoc("books.xml"); </b> // carica il file "books.xml"
+<br />
+<b>x=xmlDoc.getElementsByTagName("title");</b> // tutta la lista di elementi 'title' viene immagazzinata nella variabile 'x'
+<br />
+<b>y=x[2]; </b> // nella variabile 'y' viene conservato il valore del terzo elemento 'title'
+</div>
+
+<div class="code">
+<b>xmlDoc=loadXMLDoc("books.xml"); </b> // carica il file "books.xml"
+<br />
+<b>x=xmlDoc.getElementsByTagName("title");</b> // tutta la lista di elementi 'title' viene immagazzinata nella variabile 'x'
+<br />
+<b>
+for (i=0;i&lt;x.length;i++) { <br />
+  document.write(x[i].childNodes[0].nodeValue); </b> // restituisce tutta la lista di elementi 'title'<br />
+<b>  document.write("&lt;br /&gt;"); } 
+</b>
+</div>
+
+
+<h3>Proprietà "nodeType"</h3>
+
+<table border="1" cellpadding="3" cellspacing="3">
+<tr>
+	<th>Nodi</th>
+    <th>nodeType</th>
+</tr>	
+<tr>
+	<td>Elemento</td>
+    <td>1</td>
+</tr>
+<tr>
+	<td>Attributo</td>
+    <td>2</td>
+</tr>
+<tr>
+	<td>Testo</td>
+    <td>3</td>
+</tr>
+<tr>
+	<td>CDATA</td>
+    <td>4</td>
+</tr>
+
+
+<tr>
+	<td>Commento</td>
+    <td>8</td>
+</tr>
+<tr>
+	<td>Documento</td>
+    <td>9</td>
+</tr>
+
+
+
+</table>
+
+
+
+<!--
+
+http://localhost/xml_html/XML/allegati/loadxmlstring.js
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

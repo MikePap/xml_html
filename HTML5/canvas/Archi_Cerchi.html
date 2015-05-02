@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Archi</title>
+<style type="text/css">
+html,body,p,div,canvas,h2,h1,h3{ margin:0; padding:0;}
+h1{ color:#00F; padding:10px;}
+h3{ padding:5px 10px; color:rgb(50,200,50); font-size:18px; }
+p{ padding:5px}
+.nota{ color:#F00;}
+canvas{margin: 0 10px;}
+#tutorial{ /*margin:10px;*/ border:1px solid;}
+#second{ border:1px solid #FF0000;}
+#faccina_sorridente{ margin:20px; border:1px solid; 
+/*width:150px; height:150px; *** IMPORTANTE -> non impostare qui la 'width' e la 'height' ma lall'interno dell'elemento  */ }
+
+#divo{ margin:20px; border:1px solid; width:150px; height:150px;}
+
+
+</style>
+<script type="text/javascript">  
+
+/*
+
+"startAngle" e "endAngle"  (4° e 5° parametro della funzione "arc") vanno impostati in radianti. 
+Partendo dalla formula: 1 radiante = 180°/Math.PI (dove Math.PI è p greco che è uguale a 3.14) 
+abbiamo che:		1 grado = Math.PI/180 radianti 
+				180 : Math.PI = valore_gradi : x	(x è il valore in radianti del corrispondente valore_gradi)
+				x = Math.PI*valore_gradi/180  
+30°  = Math.PI/6
+45°  = Math.PI/4
+90°  = Math.PI/2
+180° = Math.PI
+270° = Math.PI*3/2
+360° = Math.PI*2
+*/
+
+function draw_arc(elem,x,y,raggio,gradi,verso){			// 50,50,50,'90',false  
+var canvas = document.getElementById(elem);  
+var ctx = canvas.getContext('2d');  
+var radians = (Math.PI/180)* gradi;  // converte i gradi in radianti (Math.PI è il p greco)
+ctx.beginPath();  // 
+ctx.arc(x,y,raggio,0,radians,verso);
+//impostando lo 'startAngle' a zero vuol dire che l'arco(cerchio) partirà a 50 dalla destra del centro, essendo il raggio di 50. E procederà di 90°(qual'è l'endAngle') in senso orario essendo il 'verso' uguale a false.
+ctx.stroke();					// metodo che permette di tracciare la figura 
+}; // chiude la funzione 'draw_arc'    
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+function draw_arc_fill(elem,x,y,raggio,gradi,verso,riempimento){	// 120,80,50,180,false		
+var canvas = document.getElementById(elem);  
+var ctx = canvas.getContext('2d');  
+var radians = (Math.PI/180)* gradi;  // converte i gradi in radianti (Math.PI è il p greco)
+ctx.beginPath();  // 
+ctx.arc(x,y,raggio,0,radians,verso);
+// vedere spiegazione riga 45
+ctx.fillStyle = riempimento;
+ctx.fill();
+}; // chiude la funzione 'draw_arc_fill'    
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+function draw_SmileFace(){
+  var canvas = document.getElementById('faccina_sorridente');
+  if (canvas.getContext){
+    var ctx = canvas.getContext('2d');
+    // Draw shapes
+var gradi = 360;	
+var radians = (Math.PI/180)* gradi;  // converte i gradi in radianti (Math.PI è il p greco)
+ctx.beginPath();
+ctx.arc(75,75,50,0,radians,true);		// creazione cerchio grande (faccia) 
+ctx.moveTo(110,75);				// Si sposta lo startPoint. Senza questo metodo si vedrebbe una linea che collega il cerchio facciale e la bocca. In pratica i due archi vengono scollegati perchè stanno entrambi all'interno dello stesso begin.Path(); "x=110" rappresenta lo start_point della bocca (che parte da destra) e segue una tratiettoria antioraria(false) fino all'end_point
+//ctx.moveTo(40,75);
+ctx.arc(75,75,35,0,Math.PI,false);		// bocca. Come se fosse (Math.PI/180)*180 => forma un semicerchio[vedi sopra funzione 'draw_arc_fill'])
+ctx.moveTo(65,65);				// qui lo start_point viene fissato a sinistra perchè poi seguirà un percorso antiorario(true)   
+ctx.arc(60,65,5,0,Math.PI*2,true);		// occhio sinistro. Math.Pi*2 = 360°(forma un cerchio intero)
+ctx.moveTo(95,65);				// lo startPoint viene spostato verso destra per poter disegnare l'occhio destro 
+ctx.arc(90,65,5,0,Math.PI*2,true);		// occhio destro 
+ctx.stroke();
+  } else {
+    alert('You need Safari or Firefox 1.5+ to see this demo.');
+  }
+} // chiude la funzione 'draw_SmileFace' 
+      
+
+</script>  
+
+</head>
+
+<body onload="draw_arc('tutorial',50,50,50,90,false), draw_arc_fill('second',120,80,50,180,false,'rgb(200,200,0)'), draw_SmileFace()">
+
+<h1>Creazione di Archi e Cerchi</h1>
+
+<h3>arc(x, y, radius, startAngle, endAngle, anticlockwise)</h3>
+
+<p class="nota">
+<b>x</b> e <b>y</b> rappresentano le coordinate del centro del cerchio; <b>radius</b> è il raggio; <b>startAngle</b> e <b>endAngle</b> rappresentano il punto di partenza e il punto finale dell'arco in radianti misurato dall'asse delle <q>x</q> (vedere spiegazioni in riga 45 all'interno della funzione <q>draw_arc</q> e <a href="https://developer.mozilla.org/en/Canvas_tutorial%3ADrawing_shapes#Arcs">qui</a>); il parametro <b>anticlockwise</b> è un valore booleano che se <q>true</q> disegna l'arco (cerchio) in senso antiorario se <q>false</q> lo disegna in senso orario.  
+</p>
+
+
+<canvas id="tutorial" width="250" height="150"></canvas>
+
+<canvas id="second" width="300" height="200"></canvas>
+
+<p>
+Da notare il posizionamento dei due elementi <em>canvas</em>. I due elementi sono susseguenti ed essendo elementi inline (come img) si posizionano uno di fianco all'altro. Il secondo <em>canvas</em> avendo un'altezza maggiore detta l'altezza dello spazio che occupano all'interno del loro blocco. Da notare che il primo <em>canvas</em> si posiziona verso il basso lasciando la differenza di altezza verso l'alto.
+</p>
+
+<canvas id="faccina_sorridente" width="150" height="150"></canvas>
+
+
+<p class="nota">
+Per questa figura si è utilizzato il metodo <strong>moveTo(x,y)</strong> per spostare lo start Point(punto di partenza) da una tracciato all'altro  rimanendo sempre all'interno dello stesso <q>beginPath</q>;
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Inserimento di Immagini</title>
+<style type="text/css">
+h1{ color:rgb(100,100,255)}
+h3{ color:rgb(200,50,150); /*margin-left:50px;*/ }
+.rosso{ color:#F00;}
+.verde{ color:green;}
+/*canvas { margin:50px; padding:0;  border: 1px solid black; } */
+
+#imm_1, #imm_2{display:none; } /* questa regola può anche non esserci (vedere commento riga 98)  */
+
+dt{ color:#900; margin-left:10px;}
+dd{ color:#330;}
+
+</style>
+</head>
+<body onload="draw2(); draw3()">
+
+<h1>Inserimento Immagini nell'elemento canvas</h1>
+
+<dl>
+	<dt>Per poter importare immagini esterne in un elemento &lt;canvas&gt; c'è bisogno di 2 passaggi: <br /> </dt>
+	<dd>Per prima cosa c'è bisogno di un riferimento all'oggetto <em>Image</em> di Javascript (new Image)</dd>
+	<dd>Dopodiche caricare l'immagine con la funzione <b>drawImage</b> in cui si stabilisce anche la posizione che l'immagine avrà nell'elemento canvas. <br />
+	il metodo <q>drawImage</q> può avere 3, 5 o 9 parametri:
+	</dd>
+</dl>	
+
+<h3>Esempio 1: drawImage(image, x, y)</h3>
+
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+
+<script type="text/javascript">
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+var img = new Image();
+img.onload = function(){
+ctx.drawImage(img,50,10);
+};
+img.src="../../Immagini/batuffolo.jpg";
+</script>
+
+
+<h3>Esempio 2: drawImage(image, x, y, width, height) -- Scaling</h3>
+<p class="rosso">
+Per la comprensione dei parametri <a href="https://developer.mozilla.org/en-US/docs/Canvas_tutorial/Using_images#Scaling">vedere qui</a> 
+</p>
+
+<canvas id="second_canvas" width="120" height="160" style="border:1px solid #CCC">
+Il tuo browser non supporta il tag canvas: CAMBIALO
+</canvas>
+
+<script type="text/javascript">
+function draw2() {
+  var ctx = document.getElementById('second_canvas').getContext('2d');
+  var img = new Image();
+  img.onload = function(){
+    for (var i=0;i<4;i++){
+      for (var j=0;j<3;j++){
+        ctx.drawImage(img,j*40,i*40,40,40);		// 40 x 40 sono le dimensioni dell'immagine "cerca_pagina.jpg"
+      }
+    }
+  };
+  img.src = '../../Immagini/cerca_pagina.jpg';
+} // chiude la funzione 'draw2' 
+</script>
+
+<h3>Esempio 3: drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) -- Slicing </h3>
+
+<p class="rosso">
+Per la comprensione degli 8 parametri <a href="https://developer.mozilla.org/en-US/docs/Canvas_tutorial/Using_images#Slicing">vedere qui</a>. Vedere anche i commenti interni alla funzione <q>draw3()</q> 
+</p>
+
+<canvas id="terzo_canvas" width="250" height="175" style="border:1px solid red" >
+
+
+<script type="text/javascript" >
+
+function draw3() {
+var canvas = document.getElementById('terzo_canvas');
+var ctx = canvas.getContext('2d');
+/* Inserimento prima Immagine (fumetto: shadow2.png) 
+il primo parametro fa riferimento all'id dell'immagine; i successivi 2 parametri al posizionamento dell'immagine all'interno dell'elemento canvas  
+*/
+ctx.drawImage(document.getElementById('imm_1'),0,0);
+ 
+/* Inserimento di una parte della seconda immagine (in Bombay.jpg)
+il primo parametro fa riferimento all'id dell'immagine; i successivi 4 parametri fanno riferimento al taglio dell'immagine della relativa immagine di sorgente e i finali 4 parametri alla localizzazione dell'immagine sorgente tagliata nell'elemento canvas 
+*/
+ctx.drawImage(document.getElementById('imm_2'),	130,10,220,115,	10,50,220,115);
+
+/* NOTA: le immagini che sono state inserite nell'elemento canvas sono state posizionate all'interno del documento HTML a cui si è applicata la regola nei CSS "display:none" (così come indicato sul sito 'Mozilla Developer') MA CI0' NON E' NECESSARIO: anche senza tale regola le immagini non verranno visualizzate (provare per credere)	
+*/
+ 
+} // chiude la funzione "draw3" 
+// shadow2.png -- 200 x 175 
+
+</script>
+
+
+<img src="../../Immagini/shadow2.png"  width="250" height="175" id="imm_1" />
+<img src="../../Immagini/inBombay.jpg"  width="600" height="402" id="imm_2" />
+
+
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>yepnope Object</title>
+<style type="text/css">
+.nota{
+color:orange;
+}
+</style>
+<script type="text/javascript" src="yepnope.1.5.4-min.js"></script>
+<script type="text/javascript" src="modernizr.js"></script>
+</head>
+<!--
+http://yepnopejs.com/
+-->
+
+<body>
+
+<h1>yepnope (Object)</h1>
+<h3>Per approfondimenti: <a href="http://yepnopejs.com/">sito yepnope</a> </h3>
+<p class="nota">Lo script <b>yepnope.js</b> va posto subito dopo il tag di chiusura <q> &lt;/style&gt; </q>  dei CSS   </p>
+
+
+<code>
+<pre>
+yepnope([{
+  test : /* boolean(ish) - Something truthy that you want to test             */,
+  yep  : /* array (of strings) | string - The things to load if test is true  */,
+  nope : /* array (of strings) | string - The things to load if test is false */,
+  both : /* array (of strings) | string - Load everytime (sugar)              */,
+  load : /* array (of strings) | string - Load everytime (sugar)              */,
+  callback : /* function ( testResult, key ) | object { key : fn }            */,
+  complete : /* function                                                      */
+}, ... ]);
+</pre>
+</code>
+
+<code>
+<pre>
+/// Utilizzando "Modernizr" 
+yepnope({
+  test: Modernizr.geolocation,
+  yep: 'regular-styles.css',
+  nope: ['modified-styles.css', 'geolocation-polyfill.js'],
+  callback: function (url, result, key) {
+    if (url === 'modified-styles.css') {
+      alert('The Styles loaded!');
+    }
+  }
+});
+</pre>
+</code>
+
+
+
+<script type="text/javascript">
+
+
+/*
+yepnope({
+load: '../../jquery-1.8.2.min.js'
+$("h1").css('color', 'red');			// NON FUNZIONA 
+}
+);
+*/
+//////////////////////////////////
+/*
+yepnope({
+//load: '../../jquery-1.8.2.min.js',
+load: ['../../jquery-1.8.2.min.js', 'yepnope.css'],		// questo in caso si voglia caricare più script 
+//load: ['yepnope.css', '../../jquery-1.8.2.min.js'],		// qui, a differenza del precedente, prevalgono gli stili dichiarati nei CSS	
+callback: function (url, result, key) {
+//alert('jQuery.js has loaded!');
+//alert(url);									// qui vengono restituiti 2 alert dei rispettivi script 
+$("h1").css('color', 'red');		//
+
+} // callback
+});
+*/
+
+///////////////////
+
+/*
+yepnope({
+load: ['../../jquery-1.8.2.min.js', 'yepnope.css'],		// questo in caso si voglia caricare più script 
+//load: ['yepnope.css', '../../jquery-1.8.2.min.js'],		// qui, a differenza del precedente, prevalgono gli stili dichiarati nei CSS	
+callback: function (url, result, key) {
+//alert('jQuery.js has loaded!');
+alert(url);									// qui vengono restituiti 2 alert dei rispettivi script 
+//$("h1").css('color', 'red');		//
+}, // callback
+complete: function () {
+alert('Everything has loaded in this test object!');
+$("h1").css('color', 'red');		// sostituisce quello dichiarato nei CSS 
+} // complete 
+});
+
+*/
+
+
+///////// utilizzando "Modernizr" 
+yepnope({
+  test: Modernizr.geolocation,
+  yep: 'yepnope.css',
+  nope: ['modified-styles.css', 'geolocation-polyfill.js'],
+  callback: function (url, result, key) {
+    if (url === 'yepnope.css') {	// sta a significare che il geolocation è supportato
+      alert('The Styles loaded!');
+    } 
+  }
+});
+
+
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

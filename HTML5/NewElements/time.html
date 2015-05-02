@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>time element</title>
+<style type="text/css">
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+
+</style>
+
+ </head>
+
+<body>
+
+<section>
+<p class="rosso">
+The <b>time</b> tag defines a time or a date, or both. <br />
+The time element is not necessary for encoding dates or times since marking it up would not be particularly useful.
+</p>
+<p class="blu">
+Il tag <b>time</b> definisce il tempo(orario) o la data per un elemento o entrambi. <br />
+Non è necessario taggare ogni data o tempo(orario) se non c'è un'utilità.
+</p>
+
+<p>
+Può avere due attributi <strong>datetime</strong> e <strong>pubdate</strong>. <br />
+<q>datetime</q> specifica una data e non il tempo (ora); Il formato è rappresentato in questo modo: <b>2011-12-25 </b> (anno-mese-giorno) <br />
+e si vuole includere anche il tempo aggiungere la lettera <strong>T</strong> dopo la data e inserire il tempo nel seguente formato: <b>23:42:59</b>(ora:minuti:secondi <em>eventuale fuso orario</em>) <br />
+<span class="rosso"><time datetime="2009-10-22T13:59:47-04:00" pubdate> October 22, 2009T1:59pm EDT</time></span> <br />
+L'attributo <q>pubdate</q> restituisce un valore boleano e sta ad indicare il timestamp dell'elemento   &lt;article&gt; se quest'ultimo contiene l'elemento &lt;time&gt; ; se invece l'elemento &lt;time&gt; non sta all'interno di un elemento &lt;article&gt; il timestamp si riferisce all'intero documento. Per ciascun &lt;article&gt; può esserci solo un singolo tag &lt;time&gt; con pubdate e la stessa cosa vale per l'intero documento.
+</p>
+
+</section>
+
+<div class="vevent">
+ <a class="url" href="http://www.web2con.com/">http://www.web2con.com/</a>
+  <span class="summary">Web 2.0 Conference</span>:
+  <time class="dtstart" datetime="2007-10-05">October 5</time> -
+  <time class="dtend" datetime="2007-10-20">19</time>,
+  at the <span class="location">Argent Hotel, San Francisco, CA</span>
+ </div>
+ 
+
+<article>
+ <h1>Small tasks</h1>
+ <footer>Published <time pubdate>2009-08-30</time>.</footer>
+ <p>I put a bike bell on his bike.</p>
+</article>
+
+<article>
+<p>
+We open at <time>10:00</time> every morning.
+</p
+><p>
+I have a date on <time datetime="2008-02-14">Valentines day</time>
+</p>
+</article>
+
+
+
+</body>
+</html>

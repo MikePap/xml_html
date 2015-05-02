@@ -1,0 +1,49 @@
+<?xml version="1.0" standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<svg	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+			width="250" height="150" version="1.1" id="svgImm1" >
+
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/batuffolo.jpg" id="imm" >
+		<title>My image 2</title>
+	</image>
+
+	<script type="application/ecmascript"> <![CDATA[
+		var imm = document.getElementById('imm');
+		imm.addEventListener('mouseover', function(){
+			this.setAttribute("xlink:href", "../../Immagini/gocce.jpg");
+		}, false)
+
+		imm.addEventListener('mouseout', function(){
+			this.setAttribute("xlink:href", "../../Immagini/batuffolo.jpg");
+		}, false)
+	]]> </script>
+
+
+</svg>
+
+
+<!--
+
+il seguente va bene lo stesso
+
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/gocce.jpg" id="imm11" >
+		<title>My image 1</title>
+		<set attributeName="display"  to="none" begin="mouseout" end="imm22.mouseover" />
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/batuffolo.jpg" id="imm22" >
+		<title>My image 2</title>
+		<set attributeName="display"  to="none" begin="mouseover" end="imm11.mouseout"  />
+	</image>
+
+
+
+
+
+
+-->
+
+

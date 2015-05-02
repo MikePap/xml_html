@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Localizzazione posizione coordinate </title>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250); margin:10px 50px; } 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150); margin:10px 40px; }
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20); margin:10px 31px; }
+.nota{ color:rgb(250,120,0);}
+.codice{ color:rgb(30,120,30);}
+code, pre{ color:rgb(20,150,30); font-weight:bold; background:rgb(235,245,255); padding:10px;}
+tt, em{color:#6a9999}
+.grigio{color:gray;}
+.azzurro{color:rgb(100,150,255);}
+.rosso{color:red;}
+.scuro{color:#333;}
+
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}		
+
+</style>
+</head>
+<body>
+
+<h1>Geolocalizzazione</h1>
+
+<p>
+La geolocalizzazione consente di individuare automaticamente la posizione geografica dell'utente attraverso il browser. <br />
+Mediante la geolocalizzazione, infatti, i browser con supporto per HTML5 sono in grado di risalire alla posizione dell'utente mediante l'indirizzo IP assegnato dal provider di connessione, dalla vicinanza alla cella di comunicazione (in caso di connessione mobile) oppure tramite l'antenna GPS eventualmente integrata nel dispositivo. <br />
+Il rilevamento della posizione georafica, ovviamente, avviene solo a seguito di esplicito assenso del diretto interessato (che verrà avvisato della richiesta della pagina web di effettuare il tracciamento della posizione, richiesta alla quale potra acconsentire oppure no).
+</p>
+<p>
+La posizione geografica restituita dal browser è espressa sotto forma di coordinate (latitudine e longitudine) che potranno poi essere utilizzate mediante Javascript. Le nuove API per la geolocalizzazione si basano su una nuova proprietà dell'oggetto <em>navigator</em>: <b>navigator.geolocation</b>. <br />
+Al fine di verificare se il browser offre supporto a queste nuove API di HTML5 è sufficiente, quindi, effettuare una chiamata condizionale di questo tipo:
+<pre>
+if (navigator.geolocation) {
+	//... browser HTML5-ready con supporto per la geolocalizzazione
+}else{
+	// ...nessun supporto alla geolocalizzazione
+}
+</pre>
+</p>
+
+
+<h3>getCurrentPosition()</h3>
+
+<p>
+Qualora il browser supporti la geolocalizzazione vene richiamata la funzione getCurrentPosition() la quale ammette tre argomenti:
+<dl>
+	<dt>callback in caso di successo</dt>
+	<dt>callback in caso di fallimento</dt>
+	<dt>opzioni:</dt>
+		<dd><b>enableHighAccuracy</b>:  può essere <em>true</em> o <em>false</em>; consiste nella richiesta al dispositivo di inviare la posizione con il massimo livello di accuratezza (attivando, ad esempio, il GPS del dispositivo); questa richiesta produce una eccessivo consumo di risorse pertanto potrebbe essere sconsigliato sui device mobile </dd>
+		<dd><b>timeout</b>: durata massima dell'attesa per la rilevazione della posizione (in millisecondi); in altre parole è il tempo massimo permesso a <em>getCurrentPosition</em> per passare alla funzione di <em>successCallback</em>; non è incluso il tempo che il browser spende per ottenere i permessi dall'utente.    </dd>
+		<dd><b>maximumAge:</b> età massima (in millisecondi) del rilevamento dopodichè il browser efettuerà un nuovo tracciamento della posizione. Può essere anche impostato a <q>infinity</q> e in tal caso la posizione rilevata sarà l'unica disponibile.  </dd>
+</dl>	
+<pre>
+navigator.geolocation.getCurrentPosition(
+	success_callback, error_callback, { enableHighAccuracy: false }
+);
+
+
+function getLocation(){
+	if (navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(
+			showPosition, 
+			errorCallback, 
+			{enableHighAccuracy:false, timeout:80000, maximumAge:600000} );
+	}else{
+		x.innerHTML="Geolocation non è supportato da questo browser.";
+	}
+}
+
+function showPosition(position){
+	var x=document.getElementById("demo");
+	x.innerHTML =
+		"Latitude: " + position.coords.latitude + 
+		"Longitude: " + position.coords.longitude;	
+}
+
+function errorCallback (){
+	// .... 
+}
+
+</pre>
+</p>
+
+
+<h3>watchPosition</h3>
+
+<p>
+Oltre al meotodo <em>getCurrentPosition</em> c'è un'altro metodo <b>watchPosition</b> che è simile al precedente ma dinamico il  quale monitorizza la posizione del dispositivo e invoca l'appropriato <em>callback</em> qualora la posizione cambia. <br />
+Quando chiamato restituisce un valore univoco che identifica l'operazione, dopodichè similmente al metodo <em>getCurrentPosition</em> effettua le chiamate a <em>successCallback </em> o <em>errorCallback</em>; naturalmente se la posizione cambia un nuovo valore identificativo sarà creato; <br />
+Il metodo <em>watchPosition</em> può essere interrotto invocando il metodo <b>clearWatch</b> che accetta come unico argomento l'identificativo di una posizione creata.
+</p>
+<p>
+Dal metodo <em>getCurrentPosition</em> (o da <em>watchPosition</em>) è possibile ottenere diversi parametri relativi al dispositivo:
+<dl>
+	<dd><b>latitude</b>:	coordinata di latitudine della posizione</dd>
+	<dd><b>longitude</b>: coordinata di longitudine</dd>
+	<dd><b>altitude</b>:	altezza della posizione (in metri)</dd>
+	<dd><b>accuracy</b>: indica la precisione del livello di latitudine e longitudine. Specificata in metri. Non deve essere un valore negativo</dd>
+	<dd><b>altitudeAccuracy</b>: come accuracy ma per l'altitudine </dd>
+	<dd><b>heading</b>: indica la direzione di viaggio del dispositivo. E' espressa in gradi da 0° a 360° </dd>
+	<dd><b>speed:</b> indica la magnitude del componente orizzontale della velocità del dispositivo    </dd>
+</dl>	
+
+</p>
+
+
+
+
+
+<br />
+
+
+
+<p id="demo"></p>
+
+<button onclick="getLocation()">Cliccami per sapere le tue coordinate</button>
+
+<script>
+
+function getLocation(){
+	if (navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(
+		showPosition,
+		errorCallback, 
+		{enableHighAccuracy:false, timeout:80000, maximumAge:600000} 
+		);
+	}else{
+		x.innerHTML="Geolocation is not supported by this browser.";
+	}
+}
+
+/*
+Dal 'getCurrentPosition' è possibile ottenere diversi parametri della posizione del dispositivo: 
+# latitude:		coordinata di latitudine della posizione; 
+# longitude:	coordinata di longitudine;
+# altitude:		altezza della posizione (in metri)
+# accuracy:		indica la precisione del livello di latitudine e longitudine. Specificata in metri. Non deve essere un valore negativo
+# altitudeAccuracy:		come sopra ma per l'altitudine 
+# heading:		indica la direzione di viaggio del dispositivo. E' espressa in gradi da 0° a 360° 
+# speed:			indica la magnitude del componente orizzontale della velocità del dispositivo    
+
+
+*/
+
+function showPosition(position){
+	var x = document.getElementById("demo");
+	x.innerHTML = 
+		"Latitude: " + position.coords.latitude  + 
+		"<br>Longitude: " + position.coords.longitude +
+		"<br>Altitudine: " + position.coords.altitude +
+		"<br>Precisione lat e lon: " + position.coords.altitude +
+		"<br>Precisione altitudine: " + position.coords.altitudeAccuracy +
+		"<br>Direzione dispositivo: " + position.coords.heading +
+		"<br>Velocità dispositivo: " + position.coords.speed;
+}
+
+function errorCallback(){}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br />
+
+
+
+
+</body>
+</html>
+

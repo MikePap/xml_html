@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Node list</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmlstring.js"></script> 
+</head>
+
+<body>
+
+
+
+<h1>Node list</h1>
+
+
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books.xml");  // carica il file "books.xml"
+
+x = xmlDoc.getElementsByTagName("title"); // tutta la lista di elementi 'title' viene immagazzinata nella variabile 'x'
+txt = x[0].childNodes[0].nodeValue;  // restituisce il valore  del primo nodo figlio di 'title'
+document.write(txt);
+</script>
+
+
+<h3>Node List Length</h3>
+
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books.xml");	// carica il file "books.xml"
+
+x = xmlDoc.getElementsByTagName('title');  // tutta la lista di elementi 'title' viene immagazzinata nella variabile 'x'
+for (i=0; i<x.length; i++){  // attraversa tutti gli elementi 'title' ... 
+document.write(x[i].childNodes[0].nodeValue); // ... e recupera i valori di ogni primo elemento figlio
+document.write("<br />");
+}
+</script>
+
+<h3>Attribute List</h3>
+<p class="nota"><b>attributes</b> e <b>getNamedItem</b> </p>
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books.xml");		// carica il file "books.xml"
+
+x = xmlDoc.getElementsByTagName("book")[0].attributes;	// immagazzina in 'x' l'attributo del primo elemento 'book' 
+document.write(x.getNamedItem("category").nodeValue);		// visualizza il valore dell'attributo 'category'
+document.write("<br>" + x.length);  // ed infine visualizza il numero degli attributi
+</script>
+
+
+
+<h3>Verifiche e controlli sui nodi</h3>
+
+<p class="nota">IL metodo <b>hasAttributes()</b> permette di verificare se un nodo contiene un attributo. Restituisce un valore boleano <b>true o false</b> </p>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+x = xmlDoc.getElementsByTagName('book')[0];
+
+document.write(x.hasAttributes());	// NON FUNZIONA CON IE (mio 8)
+
+</script>
+
+<p class="nota">Il metodo <b>hasChildNodes()</b> permette di verificare se un nodo contiene dei nodi figli (al suo interno)</p>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+x = xmlDoc.getElementsByTagName("book")[0];
+
+document.write(x.hasChildNodes());	// L'UNICO CHE  FUNZIONA CON IE (mio 8)
+
+</script>
+
+<p class="nota">Il metodo <b>isEqualNode()</b> permete di verificare se due nodi specifici sono uguali</p>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+x = xmlDoc.getElementsByTagName("book")[0];
+y = xmlDoc.getElementsByTagName("book")[1];
+
+document.write(x.isEqualNode(y));	// NON FUNZIONA CON IE (mio 8)
+
+</script>
+
+<p class="nota">Il metodo <b>isSameNode()</b> permette di verificare se un nodo è lo stesso in un'altro dato</p>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.getElementsByTagName("book")[0];
+y = xmlDoc.getElementsByTagName("book")[1];
+
+document.write(x.isSameNode(y));	// NON FUNZIONA CON IE (mio 8)
+</script>
+
+
+<p class="nota">Il metodo <b>lookupNamespaceURI()</b> restituisce il namespace URI riferito allo specifico prefisso del nodo </p>
+
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books_ns.xml");
+
+x= x mlDoc.getElementsByTagName("book")[0];
+y = xmlDoc.getElementsByTagName("book")[1];
+
+document.write(x.lookupNamespaceURI("c"));
+document.write('<br>');
+document.write(y.lookupNamespaceURI("x"));	// NON FUNZIONA CON IE (mio 8)
+</script>
+
+<p class="nota">Il metodo <b>lookupPrefix()</b> restituisce il prefisso di un determinato namespace URI di un nodo</p>  
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books_ns.xml");
+
+x = xmlDoc.getElementsByTagName("book")[0];
+
+document.write(x.lookupPrefix("http://www.w3schools.com/children/"));	// NON FUNZIONA CON IE (mio 8)
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

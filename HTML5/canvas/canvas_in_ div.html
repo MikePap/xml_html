@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Canvas in div</title>
+
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px; }
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:0; padding:0;  /*border: 1px solid black; */} 
+	   
+#box{ position:relative; margin:50px auto; width:180px; height:180px;  border:1px solid;}
+div.testo{ position: relative; margin:10px auto;  width:auto; height:auto; padding:5px; color:#FFF; text-align:left; font-size:11px; z-index:2;}
+div.canvass{ position:absolute; top:0; left:0; width:auto; height:auto; z-index:1;}
+
+
+</style>  
+
+
+<script type="text/javascript" src="../JS/Rettangoli_Arrotondati.js"></script>  
+
+</head>
+
+<body onLoad="Rettangolo_Arrotondato('cuore',180,180,30,  Lin_Gradiente2('cuore',50,180,'#00F','#F00')  )"> 
+
+<!--
+<body onLoad="Rettangolo_Arrotondato('cuore',180,180,30,'rgba(200,0,0,0.7)')"> 
+-->
+
+
+
+<h3>Creazione di sfondo con elemento &lt;canvas&gt; </h3>
+
+
+<p class="rosso">
+Per avere l'immagine del &lt;canvas&gt; sotto il testo, ho messo entrambi all'interno di 2 &lt;div&gt;; il &lt;div&gt; del &lt;canvas&gt; in <b>position:absolute</b> e il &lt;div&gt; del testo in <b>position:relative</b>. Ho quindi assegnato gli <b>z-index</b> appropriati.  <br />
+Sono richiamate le funzioni <b>Rettangolo_Arrotondato</b> che crea un rettangolo nel &lt;canvas&gt; e che richiama a sua volta la funzione <b>Lin_Gradiente2</b> che attribuisce un gradiente al &lt;canvas&gt;
+</p>
+
+
+<div id="box"> 
+	<div class="testo">
+Per avere l'immagine del canvas sotto il testo, ho messo entrambi all'interno di 2 div; il div del canvas in <b>position:absolute</b> e il div del testo in <b>position:relative</b>. Ho quindi assegnato gli <b>z-index</b> appropriati.  
+	</div>
+	<div class="canvass">     
+		<canvas id="cuore" width="180" height="180"></canvas>  
+	</div>
+</div><!--box-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

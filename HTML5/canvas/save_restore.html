@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>save restore</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:50px; padding:0;  border: 1px solid black; } 
+
+	   
+</style>  
+
+<script type="text/javascript">  
+
+
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');  
+
+// default settings		// il default 'fillStyle' è nero
+ctx.fillRect(0,0,150,150);   //  draw a rectangle with "default settings"
+ctx.save();                  //  Save the default state
+
+// primo settings 
+ctx.fillStyle = '#00F'       // Make changes to the settings (blue)
+ctx.fillRect(15,15,120,120); // Draw a rectangle with new settings
+ctx.save();                  // Save the current state
+
+// secondo settings 
+ctx.fillStyle = '#FFF'       // Make changes to the settings (bianco)
+//  ctx.globalAlpha = 0.5;    
+ctx.fillRect(30,30,90,90);   // Draw a rectangle with new settings
+
+ctx.restore();			// Restore previous state (le precedenti impostazioni(2° settings) vengono annullate e quindi ritornano applicabili quelle precedenti(1°settings)
+//ctx.restore();			// se qui applico anche un secondo restore mi sarà restituito il settings di default 
+ctx.fillRect(45,45,60,60);	// Draw a rectangle with restored settings (1° settings)
+
+ctx.restore();			// Restore original state (A questo punto viene annullato anche il primo settings e quindi ritornamno applicabile la prima impostazione di default
+ctx.fillRect(60,60,30,30);	// Draw a rectangle with restored settings (default settings)
+
+//########  Il metodo 'restore()' diventa quindi applicabile solo se le impostazioni sono salvate utilizzando il metodo 'save()'
+
+
+} // #######  chiude la funzione  #########
+
+</script>  
+
+</head>  
+<body onLoad="draw()"> 
+
+<h3>save()  & restore()</h3>
+
+<p>
+I metodi <em>save</em> e <em>restore</em> sono utilizzati per salvare e richiamare e ripristinare le impostazioni (settings) applicate al canvas (figura). Entrambi i metodi non accettano parametri. <br />
+<span class="rosso"> Ogni volta che il metodo <q>save</q> è chiamato gli stili (settings) applicati  al canvas sono inserite in una pila o array.</span> Gli stili a cui si fa riferimento possono essere sia trasformazioni (<span class='verde'>translate, rotate and scale</span>) che i vari <span class='verde'> strokeStyle, fillStyle, globalAlpha, lineWidth, lineCap, lineJoin, miterLimit, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, globalCompositeOperation properties</span>. <br />
+<span class="rosso"> Ogni volta che il metodo <q>restore</q> viene chiamato l'ultimo <b>save settings</b> viene rimosso dalla pila e viene quindi restituito il penultimo <b>save settings</b> </span> (vedere commenti della funzione 'draw' per questa figura).
+
+</p>
+
+
+
+<canvas id="canvas" width="300" height="300"></canvas>
+
+  
+  
+  
+  
+  
+  
+  
+
+</body>
+</html>

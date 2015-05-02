@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>XML Advanced</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif;}
+h1{ color: #00F; font-size:24px; text-align:center;}
+h2{ color: #60C; font-size:21px;}
+h3{ color:rgb(130,0,80); font-size:18px;}
+h4{ color:#333; font-size:16px;}
+dt{ color:#003399; margin-bottom:5px; font-size:14px;}
+dd{ color:#0066FF; font-size:12px;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+p, span{ font-size:12px;}
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+/*table# td:nth-child(even){ text-align:left;}*/
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+pre{ margin:0; padding:0;}
+
+div.head{ text-align:left; margin:31px 0;}
+div.head ul{ /*width:400px;*/}
+div.head ul li{ list-style-type:none; display: inline-table; border:1px solid;   }
+div.head ul li a:link, div.head ul li a:visited{ text-decoration:none; color:#600; padding:5px; display:block; }
+div.head ul li a:hover{ background:#999;}
+.top{ text-align:center; font-size:18px;}
+
+
+</style>
+
+</head>
+
+<body>
+<span><a name="top_barra">&nbsp;</a></span>
+
+<h1>XML Advanced</h1>
+
+<div class="head">
+<ul>
+	<li><a href="#namespace">XML Namespaces</a></li>
+    <li><a href="#cdata">XML CDATA</a></li>
+    <li><a href="#encoding">XML Encoding</a></li>
+    <li><a href="#server">XML Server</a></li>
+    <li><a href="#dom">XML DOM Advanced</a></li>
+</ul>
+
+
+</div><!--head-->
+
+<h3><a name="namespace">XML Namespaces</a></h3>
+
+<p class="nota">L' XML Namespaces fornisce un metodo per evitare conflitti fra i nomi degli elementi che si utilizzano all'interno del documento</p>
+
+<p>Nell'XML i nome degli elementi sono definiti dallo sviluppatore. Se per esempio utilizziamo un tag di nome &lt;table&gt; in cui definiamo delle dichiarazioni ciò può portare ad un conflitto con il tag &lt;table&gt; dell'HTML. <br />
+Per evitare questo conflitto si utilizzano i prefissi.   
+</p>
+
+<span>Mettendo i prefissi davanti ai nomi dei tag si vanno a creare dei nomi differenti</span>
+<div class="code">
+<pre>
+&lt;h:table&gt;
+  &lt;h:tr&gt;
+    &lt;h:td&gt;Apples&lt;/h:td&gt;
+    &lt;h:td&gt;Bananas&lt;/h:td&gt;
+  &lt;/h:tr&gt;
+&lt;/h:table&gt;
+
+&lt;f:table&gt;
+  &lt;f:name&gt;African Coffee Table&lt;/f:name&gt;
+  &lt;f:width&gt;80&lt;/f:width&gt;
+  &lt;f:length&gt;120&lt;/f:length&gt;
+&lt;/f:table&gt;
+</pre>
+</div>
+
+<p class="codice">Quando si usano i prefissi in XML deve essere definito il cosidetto <strong>namespace</strong>. <br />
+Il namespace è definito mediante l'attributo <strong>xmlns</strong> nel tag iniziale di un elemento. <br />
+La sintassi della dichiarazione è la seguente: <strong>xmlns:prefix="URI"</strong>
+</p>
+
+<span>Nell'esempio seguente l'attributo "xmlns" nel tag &lt;table&gt; definisce i prefissi "h:" ed "f:" per ogni namespace "URI". <br />
+Da notare che quando viene definito un namespace per un elemento tutti i figli devono portare lo stesso namespace. </span>
+<div class="code">
+<pre>
+&lt;root&gt;
+
+&lt;h:table xmlns:h="http://www.w3.org/TR/html4/"&gt;
+  &lt;h:tr&gt;
+    &lt;h:td&gt;Apples&lt;/h:td&gt;
+    &lt;h:td&gt;Bananas&lt;/h:td&gt;
+  &lt;/h:tr&gt;
+&lt;/h:table&gt;
+
+&lt;f:table xmlns:f="http://www.w3schools.com/furniture"&gt;
+  &lt;f:name&gt;African Coffee Table&lt;/f:name&gt;
+  &lt;f:width&gt;80&lt;/f:width&gt;
+  &lt;f:length&gt;120&lt;/f:length&gt;
+&lt;/f:table&gt;
+
+&lt;/root&gt;
+</pre>
+</div>
+
+<span>Ma è anche possibile dichiare i namespace nella root</span>
+<div class="code">
+<pre>
+&lt;root
+xmlns:h="http://www.w3.org/TR/html4/"
+xmlns:f="http://www.w3schools.com/furniture"&gt;
+
+&lt;h:table&gt;
+  &lt;h:tr&gt;
+    &lt;h:td&gt;Apples&lt;/h:td&gt;
+    &lt;h:td&gt;Bananas&lt;/h:td&gt;
+  &lt;/h:tr&gt;
+&lt;/h:table&gt;
+
+&lt;f:table&gt;
+  &lt;f:name&gt;African Coffee Table&lt;/f:name&gt;
+  &lt;f:width&gt;80&lt;/f:width&gt;
+  &lt;f:length>120&lt;/f:length&gt;
+&lt;/f:table&gt;
+
+&lt;/root&gt;
+</pre>
+</div>
+
+<p class="nota"><b>Il namespace URI non è utilizzato dal parser XML per ricavare informazioni. Il solo scopo è quello di rendere il namespace univoco.  <br />
+Ciò sottointende che l'identificatore di un namespace (URI) può essere rappresentato da una qualsiasi stringa, purché sia univoca. Quindi non è necessario che corrisponda ad un file pubblicato sul Web</b> 
+</p>
+<p>Spesso le compagnie utilizzano dei namespace che puntano a delle pagine che contengono informazioni sui namesspace. Nell'esempio di sopra si è utilizzato un namespace (http://www.w3.org/TR/html4/) che punta ad una pagina in cui sono riportate le specifiche dell'HTML 4. 
+</p>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+<h3><a name="cdata">XML CDATA</a></h3>
+
+<p class="nota">Tutto il testo di un documento XML viene analizzato dal parser. Ma quello contenuto dal tag <b>CDATA</b> sarà ignorato. </p>
+
+<h4>PCDATA - Parsed Character Data</h4>
+<p class="nota">Parsed Character Data (PCDATA) è un termine usato per indicare un testo che sarà analizzato dal parser. </p>
+
+<p>Il parser non controlla soltanto gli elementi (i tag). Per il semplice motivo che un elemento può contenere altri elementi il parser controlla anche il testo all'interno del tag </p>
+<div class="code">
+<pre>
+&lt;message&gt;<span class="nota">Questo testo sarà analizzato perchè il parser spera di trovare altri elementi come nell'altro tag</span>&lt;/message&gt;
+
+&lt;nome&gt;
+  &lt;first&gt;Mike&lt;/first&gt;
+  &lt;last&gt;Pap&lt;/last&gt;
+&lt;/nome&gt;
+</pre>
+</div>
+
+<h4>CDATA - (Unparsed) Character Data</h4>
+<p class="nota">Il termine CDATA è usato per indicare un testo che non sarà analizzato dal parser.</p>
+
+<p>Caratteri come "&lt;" o "&amp;" sono illegali perchè possono essere interpretati erroneamente. Per esempio "&lt;" il parser lo interpreta come l'inizio del tag mentre in uno scrpt di Javascript  indica "maggiore". Ecco percciò che quando si vogliono utilizzare script la sezione CDATA diventa utile
+</p>
+
+<span>Una sezione CDATA inizia con  "&lt;![CDATA["  e termina con "]]&gt;":
+</span>
+<div class="code">
+<pre>
+&lt;script&gt;
+&lt;![CDATA[
+function matchwo(a,b)
+{
+if (a < b && a < 0) then
+  {
+  return 1;
+  }
+else
+  {
+  return 0;
+  }
+}
+]]&gt;
+&lt;/script&gt;
+</pre>
+</div>
+
+<p class="codice">Una sezione CDATA non può contenere la stringa "]]&gt;", cosi come sezioni CDATA all'interno di altre sezioni. <br />
+La parte "]]&gt;" che indica la fine della sezione non può contenere spazi o interruzioni di linee </p>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h3><a name="encoding">XML Encoding</a></h3>
+<p>I documenti XML possono contenere caratteri non ASCII, come <b>æ ø å</b> Norvegiani o  <strong>ê è é</strong> Francesi. <br />
+Per evitare errori bisogna specificare l'attributo <strong>encoding</strong> nel tag di apertura del documento XML </p>
+
+<span></span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+</pre>
+</div>
+
+
+<dl>
+	<dt>Consigli</dt>
+		<dd>Definire sempre l'attributo "encoding" </dd>
+    	<dd>Utilizzare un editor che supporta "encoding"</dd>
+    	<dd>Cercare di sapere quale "encoding" usa l'editor ed usare quello stesso</dd>
+
+</dl>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+
+<h3><a name="server">XML on the Server</a></h3>
+
+<p>I file XML sono file di testo come i file HTML e possono essere generati da un web server standard</p>
+
+<h4>XML e PHP</h4>
+
+<span>Per generare un XML usando PHP:  </span>
+<div class="code">
+<pre>
+&lt;?php
+header("Content-type: text/xml");
+echo "&lt;?xml version='1.0' encoding='ISO-8859-1'?&gt;";
+echo "&lt;note&gt;";
+echo "&lt;from&gt;Jani&lt;/from&gt;";
+echo "&lt;to&gt;Tove&lt;/to&gt;";
+echo "&lt;message&gt;Remember me this weekend&lt;/message&gt;";
+echo "&lt;/note&gt;";
+?&gt; 
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+<h3><a name="dom">XML DOM Advanced</a></h3>
+
+<p>Il risultato dello script è: </p>
+
+<script type="text/javascript">
+if (window.XMLHttpRequest){			// code for IE7+, Firefox, Chrome, Opera, Safari
+xmlhttp=new XMLHttpRequest();
+}else{						// code for IE6, IE5
+xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+}
+xmlhttp.open("GET","allegati/books.xml",false);
+xmlhttp.send();
+xmlDoc=xmlhttp.responseXML; 
+txt=xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+document.write(txt);
+
+</script>
+
+<p>Per approfondire questo argomento leggersi il <a href="http://www.w3schools.com/dom/default.asp" target="_blank">tutorial su XML e DOM</a></p>
+
+
+<p class="top"><a href="#top_barra">SU</a></p>
+
+
+
+
+
+                                           
+<!-- 
+<span></span>
+<div class="code">
+<pre>
+
+</pre>
+</div>
+-->
+
+<br /><br /><br />
+
+</body>
+</html>

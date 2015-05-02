@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Menù  </title>
+<style type="text/css">
+html, body{ margin:0; padding:0;  }
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+#box{ position:relative; margin:50px auto; width:800px; height:400px; background:#CCC; border:1px solid; }
+#content{ position:absolute; left:120px; top:0; height:100%; background:#FFF; z-index:1; }
+
+#menu{ position:absolute; left:0; top:0; width:240px; height:60px;  /*background:rgb(250,250,0);*/ z-index:2; }
+
+</style>
+</head>
+<body>
+
+
+<div id="box">
+
+<div id="content">Content Content Content Content Content Content Content Content Content Content Content Content Content Content Content Content Content Content Content ContentContent Content Content Content Content  
+</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  id="menu">
+
+	<g id="rett_citta" style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(100,100,100)" >
+		<rect x="0" y="0" width="119" height="19" >
+			<animate attributeName="x" dur="0.5" from="0" to="120" begin="t_puglia.click;puglia.click;" fill="freeze"  />
+			<animate attributeName="x" dur="0.2" from="0" to="0"  begin="campania.mouseover;content.mouseover" fill="freeze" />
+		</rect>
+		<rect x="0" y="20" width="119" height="19" >
+			<animate attributeName="x" dur="0.5" from="0" to="120" begin="t_puglia.click+0.5s;puglia.click+0.5s;" fill="freeze"  />
+			<animate attributeName="x" dur="0.2" from="0" to="0"  begin="campania.mouseover;content.mouseover" fill="freeze" />
+		</rect>
+		<rect x="0" y="40" width="119" height="19" />
+	</g>
+	<g id="t_citta"  font-family="Verdana" font-size="12" font-weight="bold" text-anchor="middle" >
+		<text x="60" y="13"  id="t_bari">Bari
+			<animate attributeName="x" dur="0.5" from="60" to="180" additive="sum" begin="t_puglia.click;puglia.click;" fill="freeze"  />
+			<animate attributeName="x" dur="10ms" from="180" to="60" begin="campania.mouseover;content.mouseover" fill="freeze"  />
+		</text>
+		<text x="60" y="33"  id="t_Lecce"> Lecce
+			<animate attributeName="x" dur="0.5" from="60" to="180"  begin="t_puglia.click+0.5s;puglia.click+0.5s;" fill="freeze"  />
+			<animate attributeName="x" dur="0.2" from="180" to="60" begin="campania.mouseover;content.mouseover" fill="freeze"  />
+		</text>
+
+		<text x="60" y="53"  id="t_Taranto">
+			Taranto
+		</text>
+	</g>
+
+	<g id="rett_parent" style="fill:rgb(250,0,0);stroke-width:1; stroke:rgb(100,100,100)" >
+		<rect x="0" y="0" width="119" height="19" id="puglia" />
+		<rect x="0" y="20" width="119" height="19" id="campania" />
+		<rect x="0" y="40" width="119" height="19" id="sicilia" />
+	</g>
+	<g id="t_regioni" font-family="Verdana" font-size="12" font-weight="bold" text-anchor="middle" >
+		<text x="60" y="13" id="t_puglia">
+			Puglia
+		</text>
+		<text x="60" y="33" id="t_campania">
+			Campania
+		</text>
+
+		<text x="60" y="53" id="t_sicilia">
+			Sicilia
+		</text>
+	</g>
+
+
+
+
+</svg>
+
+
+</div><!--box-->
+
+
+
+
+</body>
+</html>

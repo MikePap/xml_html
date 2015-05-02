@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Shadow</title>
+<style type="text/css">  
+body{ margin:0; padding:0;}
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:50px; padding:0;  border: 1px solid black; } 
+
+dt{ color:#900; font-size:20px; margin-left:20px;}
+dd{ color:#330; margin-left:40px;}
+   
+	   
+</style>  
+
+<script type="text/javascript">  
+
+
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');  
+
+// Creazione rettangolo rosso       
+ctx.fillStyle = "red";
+ctx.shadowOffsetX = -5;				// 5 fuori dal lato sinistro 
+ctx.shadowOffsetY = -3;				// 5 fuori dal lato superiore 
+//ctx.shadowOffsetX = 5;				// 5 fuori dal lato destro 
+//ctx.shadowOffsetY = 5;				// 5 fuori dal lato inferiore 
+ctx.shadowBlur = 1;  
+ctx.shadowColor = "rgba(0, 50, 0, 0.4)";
+ctx.fillRect(10,10,200,100);
+
+// Creazione stringa di testo 
+ctx.shadowOffsetX = 2;  
+ctx.shadowOffsetY = 2;  
+ctx.shadowColor = "rgba(0, 0, 0, 0.6)";
+ctx.fillStyle = "blue";
+ctx.font = "20px bold Times New Roman ";  
+ctx.fillText("Fuck You", 25, 150);  // 
+	
+} // chiude la funzione 'draw' 
+
+</script>  
+
+   </head>  
+   <body onLoad="draw()"> 
+
+<h3>Shadow</h3>
+
+<dl>
+    <dt>context . shadowColor [ = rgb, esadecimale, ecc..  ]</dt>
+        <dd>Definisce il colore dell'ombreggiatura</dd>
+</dl>
+<dl>
+	<dt>context . shadowOffsetX [ = float ]</dt>
+	<dd>Definisce il valore che l'ombra avrà in larghezza. Se tale valore è negativo l'ombra sarà diretta da destra verso sinistra. Default è 0</dd>
+</dl>
+<dl>
+	<dt>context . shadowOffsetY [ = float ]</dt>
+	<dd>Definisce la distanza dell'ombra dall'alto. Se tale valore è negativo l'ombra sarà diretta da destra verso l'alto. Default è 0</dd>
+</dl>
+<dl>
+    <dt>context . shadowBlur [ = float ]</dt>
+        <dd>Definisce un valore di opacità all'ombreggiatura. Default è 0</dd>
+</dl>
+
+
+<canvas id="canvas" width="300" height="200"></canvas>
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<title>Demo 6</title>
+
+<head>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+code, pre{ color:rgb(20,150,30); font-weight:bold;}
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}		
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+
+</style>
+</head>
+<body>
+
+<h2>Aggiungere dati</h2>
+
+<p>
+Per aggiungere dati si utilizza il metodo <b>add</b> ma prima bisogna aprire una transazione in cui specificare la tabella o le tabelle su cui lavorare
+<pre>
+var transaction = db.transaction(["people"],"readwrite");
+</pre>
+Il primo argomento è un array delle tabelle ed il secondo è il tipo della transazione che può essere <q>readonly</q> (solo lettura) e <q>readwrite</q> (lettura e scrittura). <br />
+Dopodichè bisogna indicare con quale tabella si vuole lavorare
+<pre>
+var store = transaction.objectStore("people");
+</pre> 
+ed infine si può utilizzare il metodo <tt>add</tt> dopo che si è creato un oggetto, naturalmente
+<pre>
+var person = {
+	name:nome,
+	email:mail,
+	created:new Date()
+}
+
+var request = store.add(person,1);
+</pre>
+Qui da notare è il secondo argomento che è la chiave che odentifica univocamente l'oggetto. Nello script della pagina <q>nome</q> ed <q>mail</q> sono i valori di due campi input inseriti in un form che alla digitazione del pulsante <q>Add data</q> fa aggiungere i dati relativi nel nostro object stores  <q>people</q>. Questo fa si che ad ogni aggiunta di dati (nome ed email) si vada ad affiancare sempre la stessa chiave il che, dovendo essere un valore univoco, produrrà un errore. Il rimedio a questo, voluto, errore è rappresentato nel <q>test7</q> successivo.
+</p>
+
+<hr><hr><hr>
+
+
+
+<script>
+var db;
+
+function indexedDBOk() {
+	return "indexedDB" in window;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+	//No support? Go in the corner and pout.
+	if(!indexedDBOk) return;
+	
+	var openRequest = indexedDB.open("idarticle_people",1);
+
+	openRequest.onupgradeneeded = function(e) {
+		var thisDB = e.target.result;
+
+		if(!thisDB.objectStoreNames.contains("people")) {
+			thisDB.createObjectStore("people");
+		}
+	}
+
+	openRequest.onsuccess = function(e) {
+
+		db = e.target.result;
+
+		//Listen for add clicks
+		document.querySelector("#addButton").addEventListener("click", addPerson, false);
+	}	
+
+	openRequest.onerror = function(e) {
+		//Do something for the error
+	}
+
+
+},false);
+
+
+function addPerson(e) {
+	var name = document.querySelector("#name").value;
+	var email = document.querySelector("#email").value;
+
+	console.log("About to add "+name+"/"+email);
+
+	var transaction = db.transaction(["people"],"readwrite");
+	var store = transaction.objectStore("people");
+
+	//Define a person
+	var person = {
+		name:name,
+		email:email,
+		created:new Date()
+	}
+
+	//Perform the add
+	var request = store.add(person,1);
+
+	request.onerror = function(e) {
+		console.log("Error",e.target.error.name);
+		//some type of error handler
+	}
+
+	request.onsuccess = function(e) {
+		console.log("Woot! Did it");
+	}
+}
+</script>
+
+<input type="text" id="name" placeholder="Name"><br/>
+<input type="email" id="email" placeholder="Email"><br/>
+<button id="addButton">Add Data</button>
+
+</body>
+</html>

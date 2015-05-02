@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Gradiente Radiale</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:50px; padding:0;  border: 1px solid black; } 
+	   
+</style>  
+
+<script type="text/javascript">  
+
+function draw(){      
+
+var ctx = document.getElementById('canvas').getContext('2d');
+
+// Create gradients
+var radgrad1 = ctx.createRadialGradient(45,45,10,52,50,30);			// impostazione di gradiente (verde-giallo) 
+radgrad1.addColorStop(0, '#A7D30C');
+radgrad1.addColorStop(0.9, '#019F62');
+radgrad1.addColorStop(1, 'rgba(1,159,98,0)');
+  
+var radgrad2 = ctx.createRadialGradient(105,105,20,112,120,50);		// impostazione gradiente (rosso-rosa) 
+radgrad2.addColorStop(0, '#FF5F98');
+radgrad2.addColorStop(0.75, '#FF0188');
+radgrad2.addColorStop(1, 'rgba(255,1,136,0)');
+
+var radgrad3 = ctx.createRadialGradient(95,15,15,   102,20,40);		// impostazione gradiente (blue)
+radgrad3.addColorStop(0, '#00C9FF');
+radgrad3.addColorStop(0.8, '#00B5E2');
+radgrad3.addColorStop(1, 'rgba(0,201,255,0)');
+
+var radgrad4 = ctx.createRadialGradient(0,150,50,   0,140,90);		// impostazione gradiente giallo 
+radgrad4.addColorStop(0, '#F4F201');
+radgrad4.addColorStop(0.8, '#E4C700');
+radgrad4.addColorStop(1, 'rgba(228,199,0,0)');
+  
+// draw shapes
+// E' IMPORTANTE NOTARE CHE I GRADIENTI CREATI CON IL METODO "createRadialGradient" ALTRO NON SONO CHE LO STYLE ASSEGNATO AL RETTANGOLO IN QUESTIONE'
+ctx.fillStyle = radgrad4;			// giallo 
+ctx.fillRect(0,0,150,150);
+
+ctx.fillStyle = radgrad3;
+ctx.fillRect(0,0,150,150);			// blue 
+ 
+ctx.fillStyle = radgrad2;
+ctx.fillRect(0,0,150,150);			//  rosso
+
+ctx.fillStyle = radgrad1;
+ctx.fillRect(0,0,150,150);			// verde 
+
+
+} // chiude la funzione 'draw' 
+
+</script>  
+
+</head>  
+<body onLoad="draw()"> 
+
+<h3>createRadialGradient</h3>
+<p class="rosso">createRadialGradient(x1,y1,r1,x2,y2,r2)</p>
+<p> <span class="verde">dove x1,y1 e r1 definiscono rispettivamente le coordinate e il raggio del cerchio iniziale mentre x2,y2,r2 definiscono il cerchio finale del gradiente</span>. <br />
+Importante notare che l'oggetto gradiente creato con tale metodo altro non è che lo stile da assegnare al rettangolo in questione sia esso il <q>fillStyle</q> o lo <q>strokeStyle</q>. (vedere i commenti all'interno)
+</p>
+
+<canvas id="canvas" width="300" height="200"></canvas>
+
+
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>

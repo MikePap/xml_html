@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Gradiente Lineare</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:50px; padding:0;  border: 1px solid black; } 
+	   
+	   
+</style>  
+
+<script type="text/javascript">  
+
+function draw(){      
+
+var ctx = document.getElementById('canvas').getContext('2d');
+
+// Creazione gradienti
+var lingrad = ctx.createLinearGradient(0,0,0,150);  // creazione di gradiente per il riempimento del rettangolo 
+lingrad.addColorStop(0, '#00ABEB');		// azzurro che parte da 0 (sopra)
+lingrad.addColorStop(0.5, '#fff');		// il bianco si inserisce a metà 
+lingrad.addColorStop(0.5, '#66CC00');	// a metà viene inserito il verde che ... 
+lingrad.addColorStop(1, '#fff');		// ... sfuma alla fine in un bianco   
+
+// creazione di gradiente per il contorno dell'altro rettangolo vuoto (al centro)
+var lingrad2 = ctx.createLinearGradient(0,50,0,95);  
+lingrad2.addColorStop(0.5, '#000');			// la sfumatura(gradiente) del contorno del rettangolo vuoto  parte dalla metà ...  
+lingrad2.addColorStop(1, 'rgba(0,0,0,0)');	// ... per arrivare alla fine con un opacità massima (0)
+
+// assign gradients to fill and stroke styles
+ctx.fillStyle = lingrad;			// assegnazione del primo gradiente per il riempimento del rettangolo
+ctx.strokeStyle = lingrad2;			// assegnazione del secondo gradiente per il contorno del secondo rettangolo 
+  
+// creazione delle forme dei due rettangoli 
+ctx.fillRect(10,10,130,130);			// tracciamento rettangolo pieno 
+ctx.strokeRect(50,50,50,50);			// tracciamento rettangolo vuoto 
+
+} // chiude la funzione 'draw'  
+
+</script>  
+
+   </head>  
+   <body onLoad="draw()"> 
+
+<h3>createLinearGradient</h3>
+
+<p class="rosso">createLinearGradient(x1,y1,x2,y2)</p>
+<p> <span class="verde">dove x1 e y1 rappresentano il punto iniziale del gradiente e x2 e y2 il punto finale</span>. <br />
+Importante notare che l'oggetto gradiente creato con tale metodo altro non è che lo stile da assegnare al rettangolo in questione sia esso il <q>fillStyle</q> o lo <q>strokeStyle</q>. (vedere i commenti all'interno)
+</p>
+
+
+<canvas id="canvas" width="200" height="200"></canvas>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>

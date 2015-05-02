@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>  
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<title> Rettangolo</title>  
+
+<style type="text/css">  
+html,body,p,div,canvas{ margin:0; padding:0;}
+h3{ color:#03F;}
+p,h3{ padding-left:10px;}
+em{ color:#606;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+/*canvas {  border: 1px solid red; /* crea un bordo all'elemento  } */
+#canvas_rettangolo{  margin:30px 0 0 100px; background:#FF0; border: 1px solid red; }
+
+</style>  
+   
+   
+<script type="text/javascript">  
+
+function draw(){  
+var canvas = document.getElementById('canvas_rettangolo');  
+if (canvas.getContext){  
+	var ctx = canvas.getContext('2d');  
+	ctx.fillStyle="#F00";		// attribuzione dello stile colore        
+	ctx.fillRect(25,25,100,100);	// disegna un rettangolo pieno (non essendo specificato il colore, per default usa il nero). I primi due valori(x e y) corrispondono rispettivamente alla distanza sinistra e top, mentre gli altri due rispettivamente alla larghezza("width") e altezza("height") del rettangolo       
+	ctx.clearRect(45,45,60,60);  // cancella pixel dal rettangolo precedentemente creato 
+	ctx.strokeRect(50,50,50,50);  // crea un rettangolo con solo contorno (bordo) 
+ //       ctx.strokeRect(10,10,100,100);  // 
+}  
+} // chiude la funzione   
+
+
+
+     </script>  
+   </head>  
+   <body onLoad="draw();"> 
+   
+   <h3>Disegnare un rettangolo all'interno dell'elemento canvas. </h3>
+
+<p>Ci sono tre metodi per disegnare un rettangolo all'interno dell'elemento canvas. Tutti e 3 accettano 4 argomenti di cui i primi due rappresentano rispettivamente le coordinate x ed y del top-left del rettangolo e gli altri due rappresentano la larghezza e altezza del rettangolo: <br>
+<strong>context . <span class="rosso">fillRect</span>(x, y, w, h)</strong> -> disegna un rettangolo pieno<br>
+<strong>context . <span class="rosso">clearRect</span>(x, y, w, h)</strong> -> cancella, rimuove pixel <br>
+<strong>context . <span class="rosso">strokeRect</span>(x, y, w, h)</strong> -> disegna un rettangolo senza riempimento (solo il contorno) 
+</p>   
+   
+   
+    
+     <canvas id="canvas_rettangolo" width="150" height="150"></canvas>  
+     
+
+<p>
+All'elemento canvas è stato dato un <q>background</q> di colore giallo con bordo rosso all'interno del quale è stato creato un primo rettangolo con <em>fillRect</em> di dimensioni 100x100 a 25 da left e da top; dopodichè usando il metodo <em>clearRect</em> si è creato un rettangolo posizionato all'interno di quello esistente: in pratica questo metodo non fa altro che cancellare e rimuovere pixel dal rettangolo esistente rivelando quindi lo sfondo dell'elemento canvas (giallo). Infine usando il metodo <em>strokeRect</em> si è creato un rettangolo vuoto(solo il contorno) all'interno dell'area creata con <em>clearRect</em>   
+
+</p>
+
+
+
+
+
+
+     
+     
+</body>  
+</html>  
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>nav element</title>
+<style type="text/css">
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+section.sfondo{ background:#99FF00;}
+
+</style>
+
+ </head>
+<body>
+
+<section class="sfondo">
+<p class="rosso">
+The <b>nav</b> element represents a section of a page that links to other pages or to parts within the page: a section with navigation links. <br />
+Not all groups of links on a page need to be in a nav element — only sections that consist of major navigation blocks are appropriate for the nav  element.
+</p>
+<p class="blu">
+L'elemento <b>nav</b> rappresenta una sezione della pagina che contiene links ad altre pagine o ad altre parti all'interno della pagina. <br />
+Non tutti i links in una pagina devono per forza essere in un elemento nav - solo per quelli che rappresentano la barra di navigazione principale è più appropriato che siano in questa sezione. Ciò non toglie che all'interno di una pagina ci siano più di un elemento nav (vedi esempio in questa pagina).
+</p>
+</section>
+
+
+ <h1>The Wiki Center Of Exampland</h1>
+ <nav>
+  <ul>
+   <li><a href="/">Home</a></li>
+   <li><a href="/events">Current Events</a></li>
+   ...more...
+  </ul>
+ </nav>
+
+ <article>
+  <header>
+   <h1>Demos in Exampland</h1>
+   <p>Written by A. N. Other.</p>
+  </header>
+ 
+  <nav>
+   <ul>
+    <li><a href="#public">Public demonstrations</a></li>
+    <li><a href="#destroy">Demolitions</a></li>
+    ...more...
+   </ul>
+  </nav>
+ 
+ <nav>
+   <h1>Ancora uno </h1>
+ 
+ </nav>
+ 
+  <div>
+   <section id="public">
+    <h1>Public demonstrations</h1>
+    <p>...more...</p>
+   </section>
+   <section id="destroy">
+    <h1>Demolitions</h1>
+    <p>...more...</p>
+   </section>
+   ...more...
+  </div>
+ 
+  <footer>
+   <p><a href="?edit">Edit</a> | <a href="?delete">Delete</a> | <a href="?Rename">Rename</a></p>
+  </footer>
+ </article>
+
+ <footer>
+  <p><small>© copyright 1998 Exampland Emperor</small></p>
+ </footer>
+
+
+
+</body>
+</html>

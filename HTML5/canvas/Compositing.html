@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Compositing</title>
+<style type="text/css">
+
+h1{ margin-left:31px; padding:0; color:rgb(100,100,255); font-size:31px;  }
+h3{ margin-left:50px; padding:0; color:rgb(200,100,150);  font-size:20px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+
+canvas { border: 2px solid #000; margin-bottom: 5px; }
+td { padding: 7px; }
+
+</style>
+<script type="text/javascript" src="../../jQuery-1.6.min.js"></script>
+</head>
+<body onload="draw(); draw2()">
+
+<h1>Compositing</h1>
+<p class="rosso">
+Le figure che vengono disegnate sono posizionate (<q>z-index</q>), per default,  una sopra l'altra e precisamente l'ultima si sovrappone alla precedente. Ad ogni modo quest'ordine può essere modificato con la proprietà <b>globalCompositeOperation</b>. 
+</p>
+<p>
+<span class="verde">
+globalCompositeOperation = type  <br />
+</span>
+dove <q>type</q> è una stringa rapresentante una delle 12 operazioni del <q>compositing</q>. <q>source-over</q> è quella di default che posiziona l'ultima figura disegnata sopra quella già esistente.
+</p>
+
+<script type="application/x-javascript">
+var compositeTypes = ['source-over','source-in','source-out','source-atop', 'destination-over','destination-in','destination-out','destination-atop',
+'lighter','darker','copy','xor' ];		// variabile che comprende le 12 operazioni del 'compositing' 
+
+function draw(){
+
+for (i=0;i<compositeTypes.length;i++){
+var label = document.createTextNode(compositeTypes[i]);	// la stringa che rappresenta ogni operazione del 'compositing' che viene ... 
+document.getElementById('lab'+i).appendChild(label);		// ... aggiunta ad ogni elemento <label> 
+var ctx = document.getElementById('tut'+i).getContext('2d');	// si individuano tutti gli elementi <canvas> di id="tut..."
+
+// Tracciamento dei rettangoli 
+ctx.fillStyle = "#09f";			// applicazione di stile per lo sfondo (riempimento)
+ctx.fillRect(15,15,70,70);		// disegna i rettangoli
+
+// Impostazione della proprietà 'compositing' 
+ctx.globalCompositeOperation = compositeTypes[i];
+       
+// Tracciamento dei cerchi 
+ctx.fillStyle = "#f30";				// applicazione del colore di sfondo (riempimento)
+ctx.beginPath();					// inizio tracciamento
+ctx.arc(75,75,35,0,Math.PI*2,true);		// disegna i cerchi 
+ctx.fill();
+} // for 
+} // chiude la funzione 'draw()'
+
+</script>
+
+
+<table>
+        <tr>
+          <td><canvas id="tut0" width="125" height="125"></canvas><br/><label id="lab0"></label></td>
+          <td><canvas id="tut1" width="125" height="125"></canvas><br/><label id="lab1"></label></td>
+          <td><canvas id="tut2" width="125" height="125"></canvas><br/><label id="lab2"></label></td>
+          <td><canvas id="tut3" width="125" height="125"></canvas><br/><label id="lab3"></label></td>
+        </tr>
+        <tr>
+          <td><canvas id="tut4" width="125" height="125"></canvas><br/><label id="lab4"></label></td>
+          <td><canvas id="tut5" width="125" height="125"></canvas><br/><label id="lab5"></label></td>
+          <td><canvas id="tut6" width="125" height="125"></canvas><br/><label id="lab6"></label></td>
+          <td><canvas id="tut7" width="125" height="125"></canvas><br/><label id="lab7"></label></td>
+        </tr>
+        <tr>
+          <td><canvas id="tut8" width="125" height="125"></canvas><br/><label id="lab8"></label></td>
+          <td><canvas id="tut9" width="125" height="125"></canvas><br/><label id="lab9"></label></td>
+          <td><canvas id="tut10" width="125" height="125"></canvas><br/><label id="lab10"></label></td>
+          <td><canvas id="tut11" width="125" height="125"></canvas><br/><label id="lab11"></label></td>
+        </tr>
+      </table>
+
+
+<h3>Cambiamento ordine di posizionamento con <q>destination-over</q> </h3>
+
+
+<script type="text/javascript">
+function draw2(){
+var ctx = document.getElementById('canvas2').getContext('2d');     
+ctx.fillStyle = "#00F";
+ctx.fillRect(10,10,100,100);
+
+//ctx.globalCompositeOperation = "destination-over";	
+// mettendo qui la regola fa si che la prima figura sta sopra tutte le altre e la seconda sulla terza
+
+ctx.fillStyle = "#0F0";
+ctx.fillRect(50,20,80,80);
+
+ctx.globalCompositeOperation = "destination-over";	
+// qui invece fa si che la seconda figura stia sopra le altre e la prima sta in seconda posizione sopra la terza e tutte quelle che potrebbero venire dopo la terza. 
+
+ctx.fillStyle = "#F00";
+ctx.arc(100,100,50,0,Math.PI*2,true);
+ctx.fill();
+} // chiude la funzione 'draw2()'
+
+
+</script>
+
+
+<canvas id="canvas2" width="180" height="180">
+</canvas>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

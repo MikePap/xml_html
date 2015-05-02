@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CDATA section</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+caption{caption-side: top; text-align:left; color:#999900; font-size:11px;}
+
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmlstring.js"></script> 
+
+</head>
+
+<body>
+
+
+<h1>Oggetto CDATA section</h1>
+
+<p class="nota">
+Una sezione CDATA contiene testo che non sarà analizzato dal parser. I tags all'interno delle sezioni CDATA non saranno trattati come markup e le entità non saranno espanse. <br />
+Il motivo di ciò è di inserire al suo interno frammenti XML senza la necessità di fare l'escape. Una sezione CDATA non può essere annidata (inserita una nell'altra).
+</p>
+
+<table border="1" cellpadding="3" cellspacing="3">
+<caption>Proprietà della sezione CDATA </caption>
+<tr>
+	<th>Proprietà</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>data</td>
+    <td>Imposta o restituisce il testo del nodo</td>
+</tr>        
+<tr>
+	<td>length</td>
+    <td>Restituisce la lunghezza della sezione CDATA</td>
+</tr>        
+</table>
+
+<table border="1" cellpadding="3" cellspacing="3">
+<caption>Metodi della sezione CDATA </caption>
+<tr>
+	<th>Proprietà</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>appendData()</td>
+    <td>Aggiunge dati al nodo</td>
+</tr>    
+<tr>
+	<td>deleteData()</td>
+    <td>Elimina dati dal nodo</td>
+</tr>    
+<tr>
+	<td>insertData()</td>
+    <td>Inserisce dati nel nodo</td>
+</tr>    
+<tr>
+	<td>replaceData()</td>
+    <td>Rimpiazza dati nel nodo</td>
+</tr>    
+<tr>
+	<td>splitText()</td>
+    <td>Divide il nodo CDATA in due nodi</td>
+</tr>    
+<tr>
+	<td>substringData()</td>
+    <td>Estrae dati dal nodo</td>
+</tr>    
+</table>
+
+
+<h3>data</h3>
+<p class="nota">La proprietà <b>data</b> restituisce i dati di un nodo scelto (selezionato)</p>
+
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books_cdata.xml");
+x = xmlDoc.getElementsByTagName("html");
+for (i=0; i<x.length; i++){
+document.write(x[i].childNodes[0].data);
+document.write("<br >");
+} // for
+
+</script>
+
+<h3>length</h3>
+<p class="nota">La proprietà <b>length</b> restituisce il numero dei caratteri di un nodo (compreso eventuali tag o altro)</p>
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books_cdata.xml");
+x = xmlDoc.getElementsByTagName("html")[0].childNodes[0]; // si recupera il primo nodo 'html'
+document.write(x.data);	// il testo del nodo è "Stunning" 
+document.write(" - Length: ");
+document.write(x.length);	// mostra "16" perchè considera anche i tag che abbracciano il testo (<b>Stunning!</b>)
+
+</script>
+
+<h3>appendData()</h3>
+<p class="nota">Il metodo <b>appendData()</b> aggiunge dati alla fine del nodo CDATA</p>
+<script type="text/javascript">
+
+xmlDoc=loadXMLDoc("../allegati/books_cdata.xml");
+x = xmlDoc.getElementsByTagName("html")[0].childNodes[0];	// si recupera il primo nodo 'html'
+//x.appendData(" Wonderful!");	// si aggiunge la parola " Wonderful!"
+x.appendData("<span class='codice'> Wonderful!</span>");	// si aggiunge la parola " Wonderful!" (con tag span)
+document.write(x.data);	// visualizza il contenuto finale
+
+</script>
+
+<h3>deleteData()</h3>
+<p class="nota">Il metodo <b>deleteData()</b> elimina dati da un nodo CDATA</p>
+<dl>
+	<dt>Accetta due parametri obbligatori:</dt>
+    	<dd>il primo specifica da dove iniziare la rimozione (zero corrisponde alla prima posizione)</dd>
+        <dd>il secondo parametro specifica il numero dei caratteri da eliminare</dd>
+</dl>
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books_cdata.xml");
+x = xmlDoc.getElementsByTagName("html")[0].childNodes[0];
+x.deleteData(0,4);	// rimuove i primi quattro caratteri a partire dal primo (zero)
+document.write(x.data);//essendo il nodo "<b>Stunning!</b>", rimuove esattamente "<b>S" dando come risultato "tunning!" (il tag di chiusura bold non ha più effetto avendo rimosso la prima parte)
+
+</script>
+
+<h3>insertData</h3>
+<p class="nota">Il metodo <b>insertData()</b> inserisce dati al nodo CDATA</p> 
+<dl>
+	<dt>Accetta due parametri obbligatori:</dt>
+	<dd>il primo specifica da dove iniziare l'inserimento (zero corrisponde alla prima posizione)</dd>
+	<dd>il secondo parametro specifica i dati da inserire</dd>
+</dl>
+
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books_cdata.xml");
+x = xmlDoc.getElementsByTagName("html")[0].childNodes[0];
+x.insertData(3,"Wonderful and ");	// inserisce la stringa a partire dalla terza posizione; in questo caso i primi tre caratteri sono formati dal tag "<b>" per cui ... 
+document.write(x.data);	// ... si avrà che anche a stringa inserita sarà abbracciata dal tag 'bold'
+
+</script>
+
+
+<h3>replaceData()</h3>
+<p class="nota">Il metodo <b>replaceData()</b> rimpiazza dati in un nodo CDATA</p>
+<dl>
+	<dt>Accetta tre parametri obbligatori:</dt>
+	<dd>il primo specifica da dove iniziare la sostituzione(zero corrisponde alla prima posizione)</dd>
+	<dd>il secondo parametro specifica il numero dei caratteri da sostituire</dd>
+	<dd>il terzo parametro specifica la stringa da sostituire</dd>
+</dl>
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books_cdata.xml");
+x = xmlDoc.getElementsByTagName("html")[0].childNodes[0];
+document.write("Il dato iniziale contenuto nel nodo è: " +x.nodeValue);
+document.write("<br>");
+x.replaceData(3,8,"Fantastic");
+document.write("Il dato filnale dopo la sostituzione è: " +x.nodeValue);
+
+</script>
+
+<h3>splitText()</h3>
+<p class="nota">
+Il metodo <b>splitText()</b> divide il nodo testuale (testo) in due nodi ad una specificata posizione. Accetta un solo parametro che indica la posizione da dove effettuare la divisione</p>
+
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books_cdata.xml");
+x = xmlDoc.getElementsByTagName("html")[0].childNodes[0];
+y = x.splitText(8);	// indica che la divisione del nodo avverrà alla posizione 8. Avendo come valore nodo iniziale "<b>Stunning!</b>" avremo che la divisione avverrà dopo "<b>Stunn" per cui si otterranno due stringhe "<b>Stunn" e "ing!</b>" entrambe abbracciate dal tag 'bold'
+document.write(x.nodeValue);	// "<b>Stunn"
+document.write("<br>");
+document.write(y.nodeValue);	// "ing!</b>"	
+
+</script>
+
+<h3>substringData()</h3>
+<p class="nota">Il metodo <b>substringData()</b> estrae una stringa da un nodo CDATA</p>
+<dl>
+	<dt>Accetta due parametri obbligatori:</dt>
+    	<dd>il primo specifica da dove iniziare l'estrazione dei caratteri (zero corrisponde alla prima posizione)</dd>
+        <dd>il secondo parametro specifica il numero dei caratteri da estrarre</dd>
+</dl>
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books_cdata.xml");
+
+x=xmlDoc.getElementsByTagName("html")[0].childNodes[0]
+
+y = x.substringData(3,4);	// indica che l'estrazione avverrà dal quarto carattere e che i caratteri estratti saranno 4. Quindi avendo come valore nodo iniziale "<b>Stunning!</b>" avremo come risultato di estrazione "Stun"
+
+document.write(x.nodeValue);	// "<b>Stunning!</b>"
+document.write("<br>");		
+document.write(y);				// "Stun"
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br />
+
+
+</body>
+</html>

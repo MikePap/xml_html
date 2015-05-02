@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Localizzazione </title>
+<style type="text/css">
+
+</style>
+<script>
+/*
+function get_location() {
+	navigator.geolocation.getCurrentPosition(show_map);
+}
+
+function show_map(position) {
+	var latitude = position.coords.latitude;
+	var longitude = position.coords.longitude;
+//	let's show a map or do something interesting!
+}
+*/
+
+
+function lookup_location() {
+	geo_position_js.getCurrentPosition(show_map, show_map_error);
+}
+
+
+function show_map(loc) {
+//	$("#geo-wrapper").css({'width':'320px','height':'350px'});
+	var box = document.getElementById('geo-wrapper');
+	box.style['width'] = '320px';
+	box.style['height'] = '350px';
+	var map = new GMap2(document.getElementById("geo-wrapper"));
+	var center = new GLatLng(loc.coords.latitude, loc.coords.longitude);
+	map.setCenter(center, 14);
+	map.addControl(new GSmallMapControl());
+	map.addControl(new GMapTypeControl());
+	map.addOverlay(new GMarker(center, {draggable: false, title: "You are here (more or less)"}));
+}
+
+function show_map_error() {
+//	$("#live-geolocation").html('Unable to determine your location.');
+
+}
+
+
+</script>
+</head>
+
+<body onload="lookup_location()">
+
+
+<div id="geo_wrapper"></div> 
+
+
+
+
+
+
+<script src="gears_init.js"></script>
+<script src="geo.js"></script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<svg xmlns='http://www.w3.org/2000/svg'  width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" >
+
+		<rect x="0"  y="0"  width="100" height="100" fill="#320000" rx="1" ry="2" />
+		<rect x="5"  y="5"  width="90"  height="90"  fill="#4b0000" rx="1" ry="2" />
+		<rect x="10" y="10" width="80"  height="80"  fill="#640000" rx="1" ry="2" />
+		<rect x="15" y="15" width="70"  height="70"  fill="#7d0000" rx="1" ry="2" />	
+		<rect x="20" y="20" width="60"  height="60"  fill="#960000" rx="1" ry="2" />	
+		<rect x="25" y="25" width="50"  height="50"  fill="#af0000" rx="1" ry="2" />
+		<rect x="30" y="30" width="40"  height="40"  fill="#c80000" rx="1" ry="2" />
+		<rect x="35" y="35" width="30"  height="30"  fill="#e10000" rx="1" ry="2" />
+		<rect x="40" y="40" width="20"  height="20"  fill="#fa0000" rx="1" ry="2" />
+
+</svg>
+
+

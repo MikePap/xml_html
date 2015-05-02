@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<list>
+  <description>Sam's Shopping List</description>
+  <!--item list follows-->
+  <items><item units="3">eggs</item><item units="100 gm">salt</item><![CDATA[You can't make an omelette without <b>breaking eggs</b>]]></items>
+  <?xml-dummy-pi shop('now')?>
+</list>

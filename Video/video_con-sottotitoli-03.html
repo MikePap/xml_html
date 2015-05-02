@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>video sottotitoli 3  </title>
+<style type="text/css">
+html,body,div,video,h1,h2,h3,p{
+margin:0; padding:0; 
+}
+
+h1{ color:#00F; padding:10px;}
+h3{ padding:5px 10px; color:rgb(50,200,50); font-size:18px; }
+p{ padding:5px}
+.nota{ color:#F00;}
+.arancio{color:orange; }
+
+video{
+display:block; border:1px solid; width:380px; height:310;  margin-left:20px;
+}
+</style>
+</head>
+<body>
+
+<h1>Prova video sottotitoli con traccia TTML o VTT  </h1>
+
+<p>
+I formati supportati dall'elemento <q>track</q> del video sono:  <b>TTML-1.0</b> e <b>WebVTT</b>. <br />
+Il primo dei due formati gode del supporto sia del W3C sia dell’industria, essendo usato, ad esempio, per i sottotitoli su siti come Netflix e Hulu. Sintatticamente si presenta come un vero e proprio linguaggio di markup XML. <br />
+WebVTT (Web Video Text Tracks) è invece, attualmente, l’opzione preferibile per ottenere il miglior supporto cross-browser. <br />
+Il formato WEBVTT è un pò più semplice da compilare, ma anche il formato TTML non è complicato. Nella stessa caretella di questo file ho caricato due tracce relative al video "prim.mp4" per entrambi i formati: quello che fa riferimento al formato TTML ha estensione <b>ttml</b> e quello relativo al formato WEBVTT ha estensione <b>vtt</b>. <br />
+<span class="nota"> Le tracce dei formati li ho realizzati con un tool molto semplice e utile messo a disposizione dal sito della microsoft: <a href="http://ie.microsoft.com/testdrive/Graphics/CaptionMaker/">vedere qui</a>   </span>
+</p>
+
+
+<video width="480" height="310" controls preload>
+	<source src="allegati/prim.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+	<source src="allegati/prim.webmvp8.webm" type='video/webm; codecs="vp8, vorbis"' />
+	<source src="allegati/prim.ogv" type='video/ogg; codecs="theora, vorbis"' />
+<!-- 	
+	<track src="allegati/prim.ttml" label="italiano" kind="captions" srclang="it"  />
+il formnato "ttml" è supportato al momento (21/11/2013) da IE 11 (da quanto riferito) 
+-->
+
+	<track src="allegati/prim.vtt" label="italiano" kind="captions" srclang="it"  />
+<!--
+il formato "vtt" al momento è supportato da Chrome - Opera e IE 11
+-->
+
+
+</video>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

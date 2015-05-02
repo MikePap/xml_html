@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>prova  </title>
+<style type="text/css">
+
+html, body{margin:0; padding:0; }
+body{ /*background:#333;*/ }
+body {
+  background-color: #FFDC8F;
+}
+div {
+  font-size: 6em;
+  margin: 3em auto;
+  width: 700px;	height:120px;
+  color: #fff;
+  font-family: Indie Flower;
+	border:1px solid #000;
+}
+
+
+
+svg { 
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: -.5em; 
+  top: 0.1em;
+  border: 2px solid #fff;
+}
+label {
+  display: inline-block;
+  padding-left: 1.5em;
+  position: relative;
+  cursor: pointer;
+  
+}
+input[type="checkbox"] {
+  opacity: 0;
+  width: 40px;
+  height: 40px;
+border:1px solid #000;
+}
+label svg #Path-1 {
+  transition: stroke-dashoffset .2s linear;
+  stroke: orange;
+}
+label svg #Path-2 {
+  transition: stroke-dashoffset .2s linear .2s;
+  stroke: orange;
+}
+
+
+input[type="checkbox"]:checked ~ label svg #Path-1 {
+  stroke-dashoffset: 0;
+}
+input[type="checkbox"]:checked ~ label svg #Path-2 {
+  stroke-dashoffset: 0;   color: orange;
+}
+input[type="checkbox"]:checked ~ label svg {
+/*   border: 2px solid #333; */
+}
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+
+
+
+<div>
+	<input type="checkbox" id="option"/>
+	<label for="option"> Click me
+		<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+			<path d="M 10,90 90,10" id="Path-1" stroke-width="5" stroke-linecap="butt" fill="none" 
+					stroke-dasharray="150" stroke-dashoffset="150">
+			</path>
+
+			<path d="M 90,90 10,10" id="Path-2" stroke-width="5" stroke-linecap="butt" fill="none" 
+					stroke-dasharray="150" stroke-dashoffset="150">
+			</path>
+
+		<script type="application/ecmascript"> <![CDATA[
+			var path = document.getElementById('Path-1');
+console.log(path.getTotalLength());								// 70
+
+
+		]]> </script>
+
+
+		</svg>
+	</label>
+</div>
+
+
+
+
+
+
+<br />
+<br />
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
+
+			<path d="M21,2 C13.4580219,4.16027394 1.62349378,18.3117469 3,19 C9.03653312,22.0182666 25.2482171,10.3758914 30,8 C32.9363621,6.53181896 41.321398,1.67860195 39,4 C36.1186011,6.8813989 3.11316157,27.1131616 5,29 C10.3223659,34.3223659 30.6434647,19.7426141 35,18 C41.2281047,15.5087581 46.3445303,13.6554697 46,14 C42.8258073,17.1741927 36.9154967,19.650702 33,22 C30.3136243,23.6118254 17,31.162498 17,34 C17,40.4724865 54,12.4064021 54,17 C54,23.7416728 34,27.2286213 34,37" id="Path-1" stroke-width="4" fill="none" stroke-dasharray="270" stroke-dashoffset="270">
+			</path>
+
+
+
+
+----------------------------------------------------------------------------------
+
+  <polyline  style="fill:none;stroke:black;stroke-width:1" >
+		<animate 
+			attributeName="points" 
+			dur="2000ms" 
+			repeatCount="1"
+			values="
+						0,50 	0,50;
+						0,50 100,50;
+						100,50 100,50;
+						100,50 100,150;
+			" 
+			fill="freeze"
+		/>
+
+	</polyline>
+
+
+------------------------------
+// quadrato
+	<line x1="100" y1="100" x2="100" y2="100"  style="stroke:rgb(255,0,0);stroke-width:1" >
+		<animate attributeName="x2" dur="1s" repeatCount="1" from="100" to="200" fill="freeze"/>
+	</line>
+	<line x1="200" y1="100" x2="200" y2="100"  style="stroke:rgb(255,0,0);stroke-width:1" >
+		<animate attributeName="y2" dur="1s" begin="1s" repeatCount="1" from="100" to="200" fill="freeze"/>
+	</line>
+	<line x1="200" y1="200" x2="200" y2="200"  style="stroke:rgb(255,0,0);stroke-width:1" >
+		<animate attributeName="x2" dur="1s" begin="2s" repeatCount="1" from="200" to="100" fill="freeze"/>
+	</line>
+	<line x1="100" y1="200" x2="100" y2="200"  style="stroke:rgb(255,0,0);stroke-width:1" >
+		<animate attributeName="y2" dur="1s" begin="3s" repeatCount="1" from="200" to="100" fill="freeze"/>
+	</line>
+
+-----------------------------------------
+
+	<line x1="0" y1="200" x2="0" y2="200"  style="stroke:rgb(255,0,0);stroke-width:1" >
+		<animate attributeName="x2" dur="2s" repeatCount="2" from="0" to="400" fill="freeze"/>
+	</line>
+
+	<line x1="0" y1="200" x2="400" y2="200"  style="stroke:rgb(255,0,0);stroke-width:1" >
+		<animate attributeName="y1" dur="2s" repeatCount="2" from="200" to="0" />
+		<animate attributeName="y2" dur="2s" repeatCount="2" from="200" to="400" />
+	</line>
+.....................................................................
+
+	<path fill="#1EB287"	stroke="purple" stroke-width="2" >
+		<animate 
+			attributeName="d" 
+			dur="2000ms" 
+			repeatCount="2"
+			values="
+			" 
+			fill="freeze"
+		/>
+
+
+	</path>
+
+
+
+						M100,200 C100,65 300,65 300,200		C300,335 100,335 100,200  Z;
+						M0,200   L0,0 400,0 400,200 			L400,400 0,400 0,200 Z;
+
+
+
+
+						M0,200   C0,0 400,0 400,200 			C400,400 0,400 0,200 Z;
+
+					M100,200 Q200,0 300,200 Q200,400 100,200 Z;			
+					M20,50 C50,0 80,50 Z;			
+
+						M50,0 L0,100 L100,100 L100,100 Z;						
+						M0,0  L0,100 L100,100 L100,0 Z; 
+						M50,0 L0,100 L100,100 L100,100 Z;												
+
+
+M50 0 L0 100 L100 100 Z;
+M0 0 L0 100 L100 100 Z;
+
+viewbox="0 0 100 100"
+						M 0,0 C 50,0 50,0 100,0 100,50 100,50 100,100 50,100 50,100 0,100 0,50 0,50 0,0 Z;
+						M 25,50 C 37.5,25 37.5,25 50,0 75,50 75,50 100,100 50,100 50,100 0,100 12.5,75 12.5,75 25,50 Z; 
+
+
+......................................
+<div class="box"> 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="400" height="400"  >
+
+	<circle cx="200" cy="200" r="100" stroke="purple"  stroke-width="2" fill="rgb(255,255,0)" fill-opacity="1" />
+	<line x1="0" y1="200" x2="400" y2="200"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+	<line x1="200" y1="0" x2="200" y2="400"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+
+	<line x1="0" y1="100" x2="400" y2="100"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+	<line x1="0" y1="300" x2="400" y2="300"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+
+	<line x1="100" y1="0" x2="100" y2="400"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+	<line x1="300" y1="0" x2="300" y2="400"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+
+	<line x1="100" y1="200" x2="200" y2="100"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+	<line x1="100" y1="200" x2="200" y2="300"  style="stroke:rgb(255,0,0);stroke-width:1"/>
+
+</svg>
+</div>
+
+
+-->
+
+
+<!--
+http://localhost/xml_html/SVG/Animazioni/prova.html
+-->
+
+</body>
+</html>

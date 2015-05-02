@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>GradienteLineare</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+svg{ width:200px; height:150px; border:1px solid #CCC; }
+embed{ width:200px; height:150px; border:1px solid #CCC; }
+
+</style>
+</head>
+<body>
+
+<h1>Gradiente Lineare</h1>
+
+<p class="nota">L'elemento &lt;linearGradient&gt; è utilizzato per definire un gradiente lineare e deve essere inserito all'interno dell'elemento &lt;def&gt;. <br />
+ </p>
+
+<dl>
+	<dt>Si possono creare gradienti orizzontali, verticali e angolari</dt>
+	<dd>Il gradiente orizzontale si crea impostando differentemente <q>x1</q> e <q>x2</q> mentre <q>y1</q> e <q>y2</q> devono essere uguali </dd>
+	<dd>Il gradiente verticale si crea impostando <q>y1</q> e <q>y2</q> differentemente e <q>x1</q> e <q>x2</q> devono essere uguali  </dd>
+	<dd>Il gradiente angolare si crea impostando differentemente <q>x1, x2, y1 e y2</q> </dd>
+	
+</dl>	
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#grad2)" />
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#grad3)" />
+  <text fill="#fff" font-size="45" font-family="Verdana" x="50" y="86">
+  SVG</text>
+</svg>
+
+
+<p>
+l’attributo <b>gradientUnits</b> stabilisce il sistema di riferimento per i valori delle coordinate indicate negli attributi x1,y1,x2 e y2. <br />
+Il valore <b>userSpaceOnUse</b> indica che le coordinate sono espresse rispetto al sistema di riferimento dell’immagine mentre il valore <b>objectBoundingBox</b> indica che le coordinate sono riferite all’elemento grafico a cui verrà applicato il gradiente.
+
+</p>
+
+
+<!--[if lt IE 9]>
+	<p>Per soddisfare IE8</p>
+	<embed src="allegati/GradienteLineare.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+
+
+
+<!--[if lt IE 9]>
+	<p>Per soddisfare IE8</p>
+	<embed src="allegati/GradienteRadiale.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+
+
+
+
+</body>
+</html>

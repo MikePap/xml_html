@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>localStorage</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+
+</style>
+
+<script type="text/javascript" src="../../../jQuery-1.6.min.js"> </script>
+<!-- <script type="text/javascript" src="../Modernizr_v2.0.js"> </script> collegamneto locale al file -->
+<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.js"> </script>
+
+</head>
+
+<body>
+
+
+
+<h1>localStorage</h1>
+
+<p class="nota">L'oggetto <strong>localStorage</strong> immagazzina dati (come i cookie) senza limiti di tempo. <br />
+I dati sono immagazzinati nella forma <b>chiave/valore</b> e saranno disponibili il giorno dopo o settimana o anno dopo.  <br />
+Il valore massimo di dati che possono essere aggiunti è al momento (06/08/2011) di <b>5 megabytes</b> </p>
+
+
+
+<script>
+$(document).ready(function(){
+ 
+localStorage.lastname="Smith";					// 'lastname' è il "nome" e "Smith" è il suo valore 
+//document.write("Last name: " + localStorage.lastname);
+$("#divo-01").text("Cognome: " + localStorage.lastname);
+
+//alert(localStorage.length);
+//alert(jk);
+
+
+}); // chiude ready 
+</script>
+
+<div id="divo-01"></div>
+
+<p class="codice">L'esempiop seguente conta il numero di visite della pagina</p>
+
+
+<script>
+$(document).ready(function(){
+ 
+if (localStorage.pagecount)		// 'pagecount' è il nome della chiave. Se 'pagecount' è gia presente (immagazzinato) ...
+	{
+	localStorage.pagecount=Number(localStorage.pagecount) +1;	// ... viene ulteriormente aumentato di 1 ... 
+	}
+else
+	{
+	localStorage.pagecount=1;						// ... altrimenti lo si imposta a 1 
+	}
+//document.write("Visits: " + localStorage.pagecount + " time(s).");
+
+$("#divo-02").text("Visitata: " + localStorage.pagecount + " volte.");
+
+
+}); // chiude ready 
+
+</script>
+
+
+<div id="divo-02"></div>
+
+
+<p>Refresh the page to see the counter increase.</p>
+
+<p>Close the browser window, and try again, and the counter will continue.</p>
+
+
+
+
+
+
+
+</body>
+</html>

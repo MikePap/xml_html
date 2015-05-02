@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>lineCap</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:50px; padding:0;  border: 1px solid black; color:;  } 
+
+</style>  
+
+<script type="text/javascript">  
+
+function draw() {
+var ctx = document.getElementById('canvas').getContext('2d');
+ 
+var lineCap = ['butt','round','square'];
+
+// Tracciamento linee guida blue 
+ctx.strokeStyle = '#09f';
+ctx.beginPath();
+ctx.moveTo(10,10);
+ctx.lineTo(140,10);
+ctx.moveTo(10,140);
+ctx.lineTo(140,140);
+ctx.stroke();
+
+// Traccoamento linee
+ctx.strokeStyle = 'black';
+for (i=0;i<lineCap.length;i++){	// si tracciano tre linee per quanti sono i valori dell'array della variabile 'lineCap' 
+ctx.lineWidth = 15;
+ctx.lineCap = lineCap[i];
+ctx.beginPath();
+ctx.moveTo(25+i*16,10);		// le linee vengono spostate di 25 da sinistra (16 è 1 in più della loro larghezza)
+ctx.lineTo(25+i*16,140);	// con un'altezza(lunghezza) di 140
+ctx.stroke();
+} // for 
+} // chiude la funzione 'draw' 
+      
+
+function stile_cap(elem,cappello) {
+var ctx = document.getElementById(elem).getContext('2d');
+
+ctx.strokeStyle = 'blue';
+ctx.lineWidth = 15;
+ctx.lineCap = cappello;
+
+ctx.beginPath();
+ctx.moveTo(25, 10);
+ctx.lineTo(25,140);
+ctx.stroke();
+} // chiude la funzione 'stile_cap' 
+
+</script>  
+
+</head>  
+
+<body onLoad="draw(), stile_cap('di_default','butt'), stile_cap('tondo','round'), stile_cap('quadrata','square')"> 
+
+<h3>lineCap</h3>
+<p>
+Questa proprietà determina come sarà lo stile della parte finale della linea. Ci sono tre possibili valori per questo stile: <strong>butt, round, square.</strong> <br /> 
+Il valore di default è <em>butt</em>.</p>
+
+<canvas id="di_default" width="50" height="150"></canvas>
+
+<canvas id="tondo" width="50" height="150"></canvas>
+
+<canvas id="quadrata" width="50" height="150"></canvas>
+
+
+
+<canvas id="canvas" width="150" height="150"></canvas>
+
+
+
+
+
+</body>
+</html>

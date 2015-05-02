@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>tag Datalist </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+</style>
+</head>
+<body>
+
+<h1>datalist</h1>
+
+<p>The &lt;datalist&gt;  tag specifies a list of pre-defined options for an &lt;input&gt;  element. <br />
+
+<span class="nota">
+Il tag  &lt;datalist&gt; specifica una lista di opzioni per un elemento &lt;input&gt;. Tale lista viene visualizzata appena l'utente incomincia (aziona il focus) a scrivere nel campo </span>   <br />
+
+</p>
+
+<form action="demo_form.asp" method="get">
+<input list="browsers" name="browser">
+<datalist id="browsers">
+  <option value="Internet Explorer">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+</datalist>
+<input type="submit">
+</form>
+
+<p>
+Non è supportato in Internet Explorer 9 e precedenti versioni, o in Safari.
+</p>
+
+
+
+
+
+
+
+</body>
+</html>

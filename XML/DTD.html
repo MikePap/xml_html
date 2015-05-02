@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>DTD</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif;}
+h1{ color: #00F; font-size:24px;}
+h3{ color:rgb(130,0,80); font-size:18px;}
+dt{ color:#003399; margin-bottom:5px; font-size:14px;}
+dd{ color:#0066FF; font-size:12px;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+p{ font-size:12px;}
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+table#attributi td:nth-child(even), table#default_value td:nth-child(even){ text-align:left;}
+table #entita{}
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+pre{ margin:0; padding:0;}
+
+.bold{ font-weight:bold;}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>DTD (Document Type Definition)</h1>
+<p class="nota">Un DTD definisce la struttura di un documento XML tramite una lista legale di elementi ed attributi.</p>
+<p>Può essere definito all'interno dello stesso documento XML </p>
+<div class="code">
+<code>
+&lt;!DOCTYPE root-element [element-declarations]&gt;
+</code>
+</div>
+<div class="code">
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE note [
+&lt;!ELEMENT note (to,from,heading,body)&gt;
+&lt;!ELEMENT to (#PCDATA)&gt;
+&lt;!ELEMENT from (#PCDATA)&gt;
+&lt;!ELEMENT heading (#PCDATA)&gt;
+&lt;!ELEMENT body (#PCDATA)&gt;
+]&gt;
+&lt;note&gt;
+&lt;to>Tove&lt;/to&gt;
+&lt;from>Jani&lt;/from&gt;
+&lt;heading>Reminder&lt;/heading&gt;
+&lt;body>Don't forget me this weekend&lt;/body&gt;
+&lt;/note&gt;
+</pre>
+</div>
+
+<p>oppure in un file esterno (note.dtd)</p>
+
+<div class="code">
+<pre>
+&lt;!ELEMENT note (to,from,heading,body)&gt;
+&lt;!ELEMENT to (#PCDATA)&gt;
+&lt;!ELEMENT from (#PCDATA)&gt;
+&lt;!ELEMENT heading (#PCDATA)&gt;
+&lt;!ELEMENT body (#PCDATA)&gt;
+</pre>
+</div>
+
+<dl>
+	<dt>Considerando il punto di vista del DTD, tutti i documenti XML sono costituiti dai seguenti blocchi: </dt>
+    	<dd><b>Elementi</b>: la parte principale della struttura</dd>
+        <dd><b>Attributi</b>: forniscono informazioni sugli elementi</dd>
+        <dd><b>Entità</b>: sono caratteri che hanno un significato differente dagli altri e devono essere trattati diversamente (vedi tabella) </dd>
+        <dd><b>PCDATA</b>: rappresenta i caratteri che saranno esaminati dal parser</dd>
+        <dd><b>CDATA</b>: rappresenta la parte che non sarà esaminata dal parser</dd>
+</dl>
+
+<table id="entita" border="1" cellpadding="3" cellspacing="3">
+<tr>
+	<th>Entity</th>
+    <th>Caratteri</th>
+</tr>
+<tr>
+	<td>& lt;</td>
+    <td>&lt;</td>
+</tr>
+<tr>
+	<td>& gt;</td>
+    <td>></td>
+</tr>
+<tr>
+	<td>& amp;</td>
+    <td>&amp;</td>
+</tr>
+<tr>
+	<td>& quot;</td>
+    <td>&quot;</td>
+</tr>
+<tr>
+	<td>& apos;</td>
+    <td>'</td>
+</tr>
+</table>
+
+
+<h3>Elementi</h3>
+<p>Nel DTD gli elementi sono dichiarati con la dichiarazione <b>ELEMENT</b></p>
+
+<div class="code bold">
+<pre>
+&lt;!ELEMENT element-name category&gt;
+or
+&lt;!ELEMENT element-name (element-content)&gt;
+</pre>
+</div>
+<p>La <b>category</b> può avere una delle seguenti "keyword": "EMPTY" - "#PCDATA" - "ANY" oppure con uno o con la sequenza di più elementi figli</p>
+
+<div class="code">
+<pre>
+&lt;!ELEMENT br EMPTY&gt; // &lt;br /&gt;
+&lt;!ELEMENT from (#PCDATA)&gt;  // l'elemento 'from' racchiude del testo
+&lt;!ELEMENT note ANY&gt; // può contenere qualsiasi combinazione di caratteri analizzabili
+// esempio di sequenza di 4 nodi figli
+&lt;!ELEMENT note (to,from,heading,body)&gt; 
+&lt;!ELEMENT to (#PCDATA)&gt;
+&lt;!ELEMENT from (#PCDATA)&gt;
+&lt;!ELEMENT heading (#PCDATA)&gt;
+&lt;!ELEMENT body (#PCDATA)&gt;
+// esempi di varie dichiarazioni di un solo nodo figlio
+&lt;!ELEMENT note (message)&gt; // semplice
+&!ELEMENT note (message+)&gt; //  + sta ad indicare che tale figlio(message) può esserci una o più volte all'interno di 'note'
+&lt;!ELEMENT note (message*)&gt; // '*' sta ad indicare che il figlio può stare più volte oppure no 
+&lt;!ELEMENT note (message?)&gt; // '?' sta ad indicare che il figlio può starci una volta oppure no
+&lt;!ELEMENT note (to,from,header,(message|body))&gt; // '|' sta ad indicare che può starci uno dei due fra 'message' e 'body' oltre tutti gli altri
+&lt;!ELEMENT note (#PCDATA|to|from|header|message)*&gt; // questa dichiarazione intende che 'note' può contenere nessun elemento oppure sequenze dei quattro 
+</pre>
+</div>
+
+<h3>Attributi</h3>
+<p>Gli attributi sono dichiarati con la dichiarazione <strong>ATTLIST</strong></p>
+
+<div class="code">
+<pre><b>
+&lt;!ATTLIST element-name attribute-name attribute-type default-value &gt; </b>
+DTD esempio:
+&lt;!ATTLIST payment type CDATA "check"&gt;
+XML esempio:
+&lt;payment type="check" /&gt;
+</pre>
+</div>
+
+<p>L'<b>attribute-type</b> può essere uno dei seguenti: </p>
+<table id="attributi" border="1" cellpadding="3" cellspacing="3">
+<tr>
+	<th>Tipo</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>CDATA</td>
+    <td>Il valore è il dato carattere</td>
+</tr>    
+<tr>
+	<td>(en1|en2|..)</td>
+    <td>Il valore deve essere uno fra quelli della lista</td>
+</tr>    
+<tr>
+	<td>ID</td>
+    <td>Il valore è un Id unico</td>
+</tr>    
+<tr>
+	<td>IDREF</td>
+    <td>Il valore è l'Id di un'altro elemento</td>
+</tr>    
+<tr>
+	<td>IDREFS</td>
+    <td>Il valore è una lista di altri Id</td>
+</tr>    
+<tr>
+	<td>NMTOKEN</td>
+    <td>Il valore è un nome XML valido</td>
+</tr>    
+<tr>
+	<td>NMTOKENS</td>
+    <td>Il valore è una lista di nomi XML validi</td>
+</tr>    
+<tr>
+	<td>ENTITY</td>
+    <td>Il valore è un'entità</td>
+</tr>    
+<tr>
+	<td>ENTITIES</td>
+    <td>Il valore è una lista di entità</td>
+</tr>    
+<tr>
+	<td>NOTATION</td>
+    <td><em>l valore è il nome di una notazione</em></td>
+</tr>    
+<tr>
+	<td>xml:</td>
+    <td>Il valore è predefinito valore XML</td>
+</tr>    
+
+
+</table>
+
+<p>Il <b>default-value</b> può essere uno dei seguenti:  can be one of the following:</p>
+
+<table id="default_value" border="1" cellpadding="3" cellspacing="3">
+<tr>
+	<th>Valore</th>
+    <th>Spiegazione</th>
+</tr>
+<tr>
+	<td>value</td>
+    <td>Il valore di default dell'attributo</td>
+</tr>
+<tr>
+	<td>#REQUIRED</td>
+    <td>L'attributo è richiesto</td>
+</tr>
+<tr>
+	<td>#IMPLIED</td>
+    <td>L'attributo non è richiesto</td>
+</tr>
+<tr>
+	<td>#FIXED value</td>
+    <td>Il valore dell'attributo è impostato</td>
+</tr>
+
+</table>
+
+
+<div class="code">
+<pre>
+<b>default-value "value"</b>
+DTD:
+&lt;!ELEMENT square EMPTY&gt;
+&lt;!ATTLIST square width CDATA "0"&gt;
+&lt;square width="100" /&gt;  // Valid XML
+</pre>
+</div>
+
+<p class="codice">Nell'esempio di sopra l'elemento 'square' ha un'attributo 'width' di tipo 'CDATA' ed un "default-value"  di 0. Significa che se la 'width' non viene impostata assumerà il valore di zero</p>
+
+<div class="code">
+<pre>
+<b>default-value "#REQUIRED"</b>
+DTD:
+&lt;!ATTLIST person number CDATA #REQUIRED &gt;
+&lt;person number="5677" /&gt;   //  Valid XML
+&lt;person /&gt; 		//  Invalid XML
+</pre>
+</div>
+<p class="codice">Nell'esempio di sopra non essendoci un valore di default impostato si costringe, con l'uso di "#REQUIRED" ad inserire necessariamente un valore </p>
+
+<div class="code">
+<pre>
+<b>default-value "#IMPLIED"</b>
+DTD:
+&lt;!ATTLIST contact fax CDATA #IMPLIED&gt;
+&lt;contact fax="555-667788" /&gt;  // Valid XML
+&lt;contact /&gt;  // Valid XML
+</pre>
+</div>
+
+<p class="codice">Nell'esempio di sopra, l'uso della keyword "#IMPLIED" indica che il "defaul-value" non è necessario(richiesto)</p>
+
+<div class="code">
+<pre>
+<b>default-value "#FIXED"</b>
+DTD:
+&lt;!ATTLIST sender company CDATA #FIXED "Linux"&gt;
+&lt;sender company="Linux" /&gt;  // Valid XML
+&lt;sender company="W3Schools" /&gt;  // Invalid XML
+</pre>
+</div>
+
+<P class="codice">Nell'esempio di sopra è impostato il 'default-value' "Linux". Ciò costringe l'autore ad inserirlo, in caso contrario il parser restituisce l'errore.</P>
+
+
+<h3>Entità</h3>
+<p>Le Entità sono variabili usate per definire referenzazioni per testo standard o speciali caratteri. È possibile definire entità personalizzate all'interno di un Dtd in modo da sostituire qualsiasi sequenza di caratteri.</p>
+
+<p>Possono essere dichiarate internamente </p>
+<div class="code bold">
+<pre>
+&lt;!ENTITY entity-name "entity-value"&gt;
+</pre>
+</div>
+
+<div class="code">
+<pre>
+DTD Example:
+&lt;!ENTITY writer "Donald Duck."&gt;
+&lt;!ENTITY copyright "Copyright W3Schools."&gt;
+XML example:
+&lt;author&gt; &writer;&copyright; &lt;/author&gt;
+</pre>
+</div>
+
+<p> o esternamente</p>
+
+<div class="code bold">
+<pre>
+&lt;!ENTITY entity-name SYSTEM "URI/URL"&gt;
+</pre>
+</div>
+
+<div class="code">
+<pre>
+DTD Example:
+&lt;!ENTITY writer SYSTEM "http://www.w3schools.com/entities.dtd" &gt;
+&lt;!ENTITY copyright SYSTEM "http://www.w3schools.com/entities.dtd" &gt;
+XML example:
+&lt;author&gt; &writer;&copyright; &lt;/author&gt;
+</pre>
+</div>
+
+<br /><br /><br />
+
+<p>Un esempio piuttosto completo di dichiarazione di un DTD</p>
+
+<div class="code">
+<pre>
+&lt;!DOCTYPE CATALOG [
+<b>// definizione di tre entità</b>
+&lt;!ENTITY AUTHOR "John Doe"&gt;  
+&lt;!ENTITY COMPANY "JD Power Tools, Inc."&gt;
+&lt;!ENTITY EMAIL "jd@jd-tools.com"&gt;
+
+&lt;!ELEMENT CATALOG (PRODUCT+)&gt;  // <b>l'elemento CATALOG può contenere uno o più elementi PRODUCT </b>
+
+&lt;!ELEMENT PRODUCT // <b>l'elemento PRODUCT può contenere ... </b>
+(SPECIFICATIONS+,OPTIONS?,PRICE+,NOTES?)&gt;  // <b>uno o più elementi SPECIFICATIONS e PRICES. OPTIONS e NOTES possono starci una volta oppure no</b>
+&lt;!ATTLIST PRODUCT  // <b>l'elemento PRODUCT contiene gli attributi ...</b>
+NAME CDATA #IMPLIED  // <b>l'attributo NAME può esserci ed avere un valore oppure può non esserci  </b>
+CATEGORY (HandTool|Table|Shop-Professional) "HandTool" // <b>può avere uno fra i 4 valori specificati. Se CATEGORY non è impostata assumerà il valore "HandTool" </b>
+PARTNUM CDATA #IMPLIED  // <b>uguale all'attributo NAME</b>
+PLANT (Pittsburgh|Milwaukee|Chicago) "Chicago"  // <b>discorso simile all'attributo CATEGORY</b>
+INVENTORY (InStock|Backordered|Discontinued) "InStock"&gt; // <b>discorso simile all'attributo CATEGORY e PLANT</b>
+
+&lt;!ELEMENT SPECIFICATIONS (#PCDATA)&gt;  // <b>l'elemento  racchiude del testo ... </b>
+&lt;!ATTLIST SPECIFICATIONS  			// <b>... e contiene gli attributi ... </b>
+WEIGHT CDATA #IMPLIED  // <b>vedi attributi NAME e PARTNUM</b>
+POWER CDATA #IMPLIED&gt;  // <b>vedi sopra</b>
+
+&lt;!ELEMENT OPTIONS (#PCDATA)&gt; // <b>l'elemento  racchiude del testo ... </b>
+&lt;!ATTLIST OPTIONS               // <b>... e contiene gli attributi ... </b>
+FINISH (Metal|Polished|Matte) "Matte"  // <b>discorso simile all'attributo CATEGORY e PLANT</b>
+ADAPTER (Included|Optional|NotApplicable) "Included"  // <b>vedi sopra </b>
+CASE (HardShell|Soft|NotApplicable) "HardShell"&gt;   // <b>vedi sopra </b>
+
+&lt;!ELEMENT PRICE (#PCDATA)&gt;  // <b>l'elemento  racchiude del testo ... </b>
+&lt;!ATTLIST PRICE 			// <b>... e contiene gli attributi ... </b>
+MSRP CDATA #IMPLIED
+WHOLESALE CDATA #IMPLIED
+STREET CDATA #IMPLIED
+SHIPPING CDATA #IMPLIED&gt;
+
+&lt;!ELEMENT NOTES (#PCDATA)&gt;
+
+]&gt;
+</pre>
+</div>
+
+<br /><br /><br />
+
+
+
+
+</body>
+</html>

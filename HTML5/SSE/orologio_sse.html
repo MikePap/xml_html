@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>orologio con server sent </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+</style>
+<script type="text/javascript" src="../../jquery-1.8.2.min.js"></script>
+</head>
+<body>
+
+<h1>Orologio con Server Sent Events</h1>
+
+<p class="nota">Utilizzo dei <q>Server-sent events</q> per la creazione di un orologio </p>
+
+
+
+<script type="text/javascript">
+
+//if (!!window.EventSource) {
+if(typeof(EventSource)!=="undefined")
+{
+	var source = new EventSource("orologio_sse.php");
+	source.addEventListener('message', function(event) 
+	{
+		var nuovo = document.createElement("div");
+		var testo =  document.createTextNode(event.data); 
+		nuovo.appendChild(testo);
+		document.body.appendChild(nuovo);
+		var precedente = document.getElementsByTagName("div")[0];		// è il <div> creato precedentemente ...
+		document.body.removeChild(precedente);									// ... che viene rimosso per avere visualizzato sempre un solo <div>
+	}, false);
+}
+else
+{
+	document.getElementById("result").innerHTML="Spiacente il browser non supporta i server-sent events...";
+}
+  
+
+</script>
+
+<div></div><!-- è necessario impostare questo div di partenza-->
+ 
+
+
+<script  type="text/javascript">
+jQuery(document).ready(function(){
+// SOLO UNA PROVA MA E' CHIARO CHE NON FUNZIONA 
+
+/*
+var source = new EventSource("orologio_sse.php");
+
+source.addEventListener('message', function(event) {
+
+var nuovo = document.createElement("div");
+
+var testo =  document.createTextNode(event.data); 
+nuovo.appendChild(testo);
+document.body.appendChild(nuovo);
+
+var precedente = document.getElementsByTagName("div")[0];
+document.body.removeChild(precedente);
+
+}, false);
+*/
+
+}); // chiude ready 
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

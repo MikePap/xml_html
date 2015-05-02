@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>prova</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+#essevg{ width:300px; height:200px; border: 1px solid; }
+#essevg1{ width:300px; height:200px; border: 1px solid; }
+#cerchio{  }  /* cx:50px; cy:60px   ---->  NON FUNZIONA PERCHE' SONO DEGLI ATTRIBUTI */
+
+#essevg2{ width:300px; height:200px; border: 1px solid; }
+#essevg3{ width:300px; height:200px; border: 1px solid; }
+
+#divo{ 
+position:relative; width:500px; height:450px; background:#CCC; border: 1px solid; 
+background: linear-gradient(top, blue, white);			/* GENERALE */
+background: -moz-linear-gradient(top, blue, white);		/* per FIREFOX  */
+background:-webkit-linear-gradient(top, blue, white); 	/* per CHROME E SAFARI */
+background:-o-linear-gradient(top, blue, white);		/* per OPERA */
+}
+
+#essevg4{ position:relative; margin:20px 10px;  /*width:300px; height:200px;*/ border: 1px solid;  }
+
+
+#essevg5{ width:200px; height:50px; border: 1px solid;  }
+#essevg6{ /*width:200px; height:200px;*/ border: 1px solid;  }
+
+svg{ border:1px solid #CCC; }
+
+#emsvgImm2{ width:250px; height:150px; }
+
+#svgImm303{
+width:200px; height:200px;
+}
+
+</style>
+<script type="text/javascript" src="../jQuery-1.6.min.js"></script>
+</head>
+
+<body>
+
+
+
+<script  type="text/javascript">
+jQuery(document).ready(function(){
+
+//$("#cerchio").css({cx:50, cy:60});				// NON FUNZIONA PECHE' SONO DEGLI ATTRIBUTI 
+//$("#cerchio").attr({cx:80, cy:60});				// FUNZIONA E SOSTITUISCONO GLI ATTRIBUTI IMPOSTATI ALL'INTERNO DEL TAG <circle>  
+
+
+$("#cerchio").click(function(){
+//$(this).hide();							// FUNZIONA 
+
+
+
+var raggio = $(this).attr('r');
+var left =  $(this).attr('cx');
+var top = $(this).attr('cy');
+
+//$(this).animate({'r':raggio }, 1000);				// NON FUNZIONA 
+//$(this).animate({'r':30 }, 1000);				// NON FUNZIONA 
+//alert(raggio);
+//$(this).animate({'r':60 }, 1000);				// NON FUNZIONA 
+//$(this).attr('r', 30);					// FUNZIONA 
+//$(this).animate({'cx':100, 'cy':70 }, 1000);		// NON FUNZIONA
+//$(this).animate({left:100, top:70 }, 1000);
+//$(this).attr({ 'cx':100, 'cy':70 });			// FUNZIONA 
+//$(this).fadeOut('1000');					// FUNZIONA
+//$(this).fadeTo("slow", 0.33);				// FUNZIONA 
+//setTimeout("$('#jk').attr('r',30)", 2000);		// FUNZIONA 
+
+
+//$('#essevg').css('width', 600);
+//$('#essevg').animate({'width':200 }, 1500);
+//setTimeout("$(this).animate({'r': 50}, 'slow')", 1000);
+//setTimeout("$('#jk').attr('r',30)", 1000);		// FUNZIONA MA SENZA L'USO DEL 'this' 
+//setTimeout("$(this).attr('r',30)", 1000);			// NON FUNZIONA USANDO IL 'this' 
+
+// @@##### il metodo 'animate' non funziona mentre funzionano i metodi 'fade()', 'hide()', 'slideUp()', 'setTimeout()'
+}); // click 
+
+
+
+}); // chiude ready 
+</script>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  id="essevg">
+	<rect x="50" y="40" width="200" height="100" style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="5s" repeatCount="2" />
+	</rect>
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  id="essevg1">
+<rect x="50" y="40" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+   <animate attributeName="width"  from="100px"  to="150px" 
+            begin="0s" dur="5s" />
+   <animate attributeName="height" from="100px" to="120px"
+            begin="0s" dur="5s" />
+</rect>
+</svg>
+
+
+<!--[if lt IE 9]>
+	<embed src="allegati/animation.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+<!--
+<circle cx="50" cy="60" r="40" id="cerchio" stroke="black"  stroke-width="2" fill="blue"/>
+
+-->
+
+
+<br />
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  id="essevg2">
+
+<g transform="scale(5)">
+  <rect x="10" y="10" width="20" height="20"/>
+</g>
+</svg>
+
+<br />
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  id="essevg3">
+<rect width="100" height="100"  fill="red" >
+	<animate attributeName="x"  from="0" to="30" dur="2.5s" repeatDur="7s"  />
+</rect>
+</svg>
+
+<br /><br /><br />
+
+<div id="divo">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="essevg4" x="10%" y="20%"	 width="200" height="350" > 
+		<rect x="0" y="40" width="200" height="100" style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)">
+			<animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="5s" repeatCount="2" />
+	</rect>
+	</svg>
+</div><!--divo-->
+ 
+
+<svg width="8cm" height="3cm"
+     xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <desc>Local URI references within ancestor's 'defs' element.</desc>
+  <defs>
+    <linearGradient id="Gradient01">
+      <stop offset="20%" stop-color="#39F" />
+      <stop offset="90%" stop-color="#F3F" />
+    </linearGradient>
+  </defs>
+  <rect x="1cm" y="1cm" width="6cm" height="1cm" 
+        fill="url(#Gradient01)"  />
+
+  <!-- Show outline of canvas using 'rect' element -->
+  <rect x=".01cm" y=".01cm" width="7.98cm" height="2.98cm"
+        fill="none" stroke="blue" stroke-width=".02cm" />
+
+</svg>
+
+<br />
+
+
+<svg width="250" height="250" version="1.1" id="essevg6"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <desc>This graphic links to an external image
+  </desc>
+  <image x="10" y="10" width="100px" height="100px"
+         xlink:href="../Immagini/tide_rising2.jpg">
+    <title>My image</title>
+  </image>
+</svg>
+
+<br />
+
+<svg width="250" height="250" version="1.1" id="essevg6"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<rect x="50" y="40" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)">
+   <animate attributeName="width"  from="100px" to="150px" begin="0s" dur="5s" fill="freeze" />
+   <animate attributeName="height" from="100px" to="120px" begin="0s" dur="5s" fill="freeze" />
+</rect>
+</svg>
+
+
+<svg width="250" height="250" version="1.1" id="essevg6"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<g id="group1" fill="red"> 
+		<rect x="1cm" y="1cm" width="1cm" height="1cm"/> 
+		<rect x="3cm" y="1cm" width="1cm" height="1cm"/> 
+	</g> 
+	<g id="group2" fill="blue"> 
+		<rect x="1cm" y="3cm" width="1cm" height="1cm"/> 
+		<rect x="3cm" y="3cm" width="1cm" height="1cm"/> 
+	</g>
+</svg>
+
+<p>Il rettangolo scompare al click(mouseover) su di esso</p>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
+		width="300" height="150" id="svg455" >
+	<defs>
+		<symbol id="MySymbol">
+			<rect x="0" y="0" width="150" height="100"  style="fill:rgb(250,50,250)" id="rett1" >
+				<set attributeName="display"  to="none" begin="mouseover" />
+			</rect>
+		</symbol>
+	</defs>
+	<use x="20" y="10" xlink:href="#MySymbol"  />
+</svg>
+
+<br />
+<p>Al "mouseover" sul rettangolo vengono visualizzati altri 2 rettangolini  </p>
+<svg xmlns="http://www.w3.org/2000/svg" 	xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
+			width="150" height="100"  >
+
+	<rect x="0" y="0" width="150" height="100" fill="orange" id="ttr" />	
+
+	<rect x="10" y="35" width="25" height="25" fill="white" >	
+		<set attributeName="display"  to="none" />
+		<set attributeName="display"  to="block" begin="mouseover;ttr.mouseover" end="ttr.mouseout"  />  					
+	</rect>		
+	<rect x="115" y="35" width="25" height="25" fill="white"  >
+		<set attributeName="display"  to="none" />
+		<set attributeName="display"  to="block" begin="mouseover;ttr.mouseover" end="ttr.mouseout"  />  					
+	</rect>
+</svg>
+
+<br /><br />
+
+<svg	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+			width="250" height="150" version="1.1" id="svgImm1" >
+	<desc>This graphic links to an external image</desc>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../Immagini/batuffolo.jpg" id="imm1" >
+		<title>My image 1</title>
+	<set attributeName="display"  to="none" begin="click" end="imm4.click"  />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../Immagini/epidermide.jpg" id="imm2" >
+		<title>My image 2</title>
+	<set attributeName="display"  to="none" begin="click;imm4.click" end="imm1.click"  />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../Immagini/macchie.jpg" id="imm3" >
+		<title>My image 3</title>
+	<set attributeName="display"  to="none" begin="click;imm4.click" end="imm2.click"  />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../Immagini/gocce.jpg" id="imm4" >
+		<title>My image 4</title>
+	<set attributeName="display"  to="none" begin="click" end="imm3.click"  />  					
+	</image>
+<!-- alla terza immagine è stato impostato anche un begin="imm4.click"; senza ciò avverrebbe che quando avviene il primo click sulla 4° immagine (che è la prima ad essere visualizzata all'apertura del documento) anche se viene richiamata la prima immagine apparirebbe la terza anzichè la prima,  perchè avendo solo un begin="click" (che vuol dire che scompare solo al click su se stessa)  perchè sta posizionata prima della prima immagine. 
+Stesso discorso vale per la seconda
+ -->
+</svg>
+
+<br /><br />
+
+
+<svg	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+			width="250" height="150" version="1.1" id="svgImm3" >
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../Immagini/batuffolo.jpg" id="imm101"  >
+		<title>My image 1</title>
+		<set attributeName="display"  to="none"  />  					
+		<animate attributeName="display" from="block" to="none" begin="click" dur="3s"  fill="freeze"   /> 		
+		<animate attributeName="display" from="none" to="block" begin="imm104.click" dur="3s"  fill="freeze"   /> 		
+		<animate attributeName="opacity" from="1" to="0" begin="click" dur="3s"   />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../Immagini/epidermide.jpg" id="imm102"  >
+		<set attributeName="display"  to="none"  />  					
+		<title>My image 2</title>
+		<animate attributeName="display" from="block" to="none" begin="click" dur="3s"  fill="freeze"   /> 		
+		<animate attributeName="display" from="none" to="block" begin="imm101.click" dur="3s"  fill="freeze"   /> 		
+		<animate attributeName="opacity" from="1" to="0" begin="click" dur="3s"   />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../Immagini/macchie.jpg" id="imm103"  >
+		<title>My image 3</title>
+		<set attributeName="display"  to="none"  />  					
+		<animate attributeName="display" from="block" to="none" begin="click" dur="3s"  fill="freeze"   /> 		
+		<animate attributeName="display" from="none" to="block" begin="imm102.click" dur="3s"  fill="freeze"   /> 		
+		<animate attributeName="opacity" from="1" to="0" begin="click" dur="3s"   />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../Immagini/gocce.jpg" id="imm104"  >
+		<title>My image 4</title>
+		<animate attributeName="display" from="block" to="none" begin="click" dur="3s"  fill="freeze"   /> 		
+		<animate attributeName="display" from="none" to="block" begin="imm103.click" dur="3s"  fill="freeze"   /> 		
+		<animate attributeName="opacity" from="1" to="0" begin="click" dur="3s"   />  					
+	</image>
+
+</svg>
+
+<br /><br />
+
+<svg	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+			width="250" height="150" version="1.1" id="svgImm303" >
+
+	<path d="M0,100 L100,0 L200,100 L100,200   Z " stroke="black" stroke-width="2" fill="red" />
+
+
+</svg>
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+<!--
+
+	<rect x="0" y="0" width="100%" height="100%"  style="fill:rgb(250,200,200)" id="rett454" >
+
+
+	<rect x="130" y="10" width="80" height="50"  style="fill:rgb(250,150,100);stroke-width:1; stroke:rgb(0,0,0)">
+		<animate attributeName="display" from="block" to="none" begin="click" dur="5s"   />  					
+		<animate attributeName="opacity" from="1" to="0" begin="click" dur="5s"   />  					
+	</rect>
+
+
+
+calcMode="paced"
+
+	<animate attributeName="display"  to="none" begin="click" dur="5s" calcMode="paced"  />  					
+
+
+
+
+////////
+
+		<animate attributeName="opacity"  from="1" to="0.1" begin="click" dur="5" end="imm4.click"  />  					
+		<animate attributeName="display"  to="none" begin="click" dur="5" end="imm4.click"  />  					
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

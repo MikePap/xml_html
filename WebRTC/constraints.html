@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>constraints   </title>
+<style type="text/css">
+video {
+background: #222;
+/*
+width: 80%;
+height:80%;
+*/}
+
+</style>
+</head>
+<body>
+
+
+
+
+
+
+<video autoplay></video>
+
+<button id="vai"onclick="parti()">Play</button>
+<button id="ferma" onclick="blocca()" >Stop</button>
+<button id="accadi">in HD</button>
+<button id="vugia">VGA</button>
+
+<script type="text/javascript">
+ 
+navigator.getUserMedia  = navigator.getUserMedia ||navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+var video = document.querySelector('video');
+//var ferma = document.getElementById('ferma');
+//var vai = document.getElementById('vai'); 
+var hd = document.getElementById('accadi');
+var vga = document.getElementById('vugia');
+var stream;
+
+
+var constraints = {audio: false, video: true};
+
+var hdConstraints = {
+	video: {
+		mandatory: {
+			minWidth: 1280,		// 1280
+			minHeight: 720			// 720
+		}
+	}
+};
+var vgaConstraints = {
+	video: {
+		mandatory: {
+			maxWidth: 640,
+			maxHeight: 360
+		}
+	}
+};
+
+function successCallback(stream) {
+	window.stream = stream;							// stream available to console
+	if (window.URL) {
+		video.src = window.URL.createObjectURL(stream);
+	} else {
+		video.src = stream;
+	}
+}
+
+function errorCallback(error){
+	console.log("navigator.getUserMedia error: ", error);
+}
+
+navigator.getUserMedia(vgaConstraints, successCallback, errorCallback);
+
+
+function blocca (){
+	video.src = "";
+//	return successCallback(stream);
+};
+
+function parti(){
+	successCallback(stream);
+//	navigator.getUserMedia(hdConstraints, successCallback, errorCallback);
+};
+
+
+function getMedia(constraints){
+	if (!!stream) {							// !! converts non-boolean to boolean. 
+		video.src = null;
+		stream.stop();
+	}
+	navigator.getUserMedia(constraints, successCallback, errorCallback);
+}
+
+
+hd.onclick = function(){getMedia(hdConstraints)};
+vga.onclick = function(){getMedia(vgaConstraints)};
+
+/*
+// Le seguenti non pussono funzionare perchè la funzione getMedia() ha un'argomento
+hd.addEventListener('click', 
+	function getMedia(hdConstraints){
+}, false)
+
+vga.addEventListener('click', 
+	function getMedia(vgaConstraints){
+}, false)
+*/
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

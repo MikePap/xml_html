@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>lineWidth</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:100px; padding:0;  border: 1px solid black; color:;  } 
+	   
+	   
+</style>  
+
+<script type="text/javascript">  
+
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');  
+for (var i = 0; i < 10; i++){  // vengono create 10 linee 
+ctx.lineWidth = 1+i; // parte da 1.0 units fino a 10 units 
+ctx.beginPath();  
+ctx.moveTo(5+i*10, 5);		// ogni linea è spostata a destra di 5(margine) ed ha un margine fra linea e linea di 10. Parte da 5 dall'alto ...
+ctx.lineTo(5+i*10, 140);	// ... ed arriva a 140
+ctx.strokeStyle = "rgb(0,255,0)"; 
+ctx.stroke();  
+} // for  
+} // chiude la funzione 'draw'   
+
+</script>  
+
+   </head>  
+   <body onLoad="draw();"> 
+
+<h3>lineWidth</h3>
+<p>
+Questa proprietà stabilisce lo spesore di una linea. Per default questo valore è impostato a <b>1.0 units</b> 
+</p>
+
+<canvas id="canvas" width="250" height="150"></canvas>
+
+
+
+
+
+</body>
+</html>

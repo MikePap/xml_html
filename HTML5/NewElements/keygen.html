@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>tag Keygen  </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+
+table{
+background:rgb(220,220,255);
+}
+th{
+background:#333; color:#FFF;
+}
+td:nth-child(1){
+font-weight:bold; 
+}
+caption{
+color:#F66; text-align:left; 
+}
+#nascosto{
+display:none;
+}
+
+</style>
+</head>
+<body>
+
+<h1>keygen</h1>
+
+<p class="codice">
+Questo elemento non è supportato in Internet Explorer. Funziona bene in Firefox e Chrome e in Safari dalla versione 6. <b>In Opera, ho notato che  il valore della variabile GET nella barra degli indirizzi nel file di arrivo, non viene mostrata, il che è ancora meglio.
+</p>
+
+<form action="demo_keygen.php" method="get">
+	Username: <input type="text" name="usr_name">
+	Encryption: <keygen name="security">
+	<input type="submit" value="Invia">
+</form>
+
+<table id="tabella" width="60%" border="1" cellspacing="3" cellpadding="3">
+<caption>Attributi per l'elemento &lt;keygen&gt;</caption>
+<tr>
+	<th>Attributo</th>
+	<th>Descrizione</th>
+</tr>
+<tr>
+	<td>autofocus</td>
+	<td>Specifica che l'elemento keygen debba automaticamente ottenere il <q>focus</q> al caricamento della pagina </td>
+</tr>
+<tr>
+	<td>challenge</td>
+	<td>Specifies that the value of the &lt;keygen&gt;  element should be challenged when submitted</td>
+</tr>
+<tr>
+	<td>disabled</td>
+	<td>Indica che l'elemento keygen debba essere disabilitato </td>
+</tr>
+<tr>
+	<td>form</td>
+	<td>Specifica l'appartenenza dell'elemento keygen ad uno o più form  </td>
+</tr>
+<tr>
+	<td>keytype</td>
+	<td>Specifica l'algoritmo di sicurezza della chiave. Gli algoritmi possibili sono tre: <b>rsa, dsa, ec </b> </td>
+</tr>
+<tr>
+	<td>name</td>
+	<td>Specifica il nome dell'elemento keygen </td>
+</tr>
+</table>
+
+<p>Interesante è l'attributo <b>form</b> che ci permette di dichiarare l'elemento keygen al di fuori del form. E' necessario indicare, appunto nell'attributo <q>form</q>, l'id del form. La cosa che trovo interessante è che lo si può nascondere con i CSS. 
+</p>
+
+<form action="demo_keygen.php" method="get" id="secureform">
+	Username: <input type="text" name="usr_name">
+	<input type="submit">
+</form>
+
+<div id="nascosto"> 
+Encryption: <keygen name="security" form="secureform">
+</div>
+
+<p>
+Il campo keygen è al di fuori del precedente form e posto all'interno di un div con <q>display:none</q> 
+</p>
+
+
+
+
+
+</body>
+</html>

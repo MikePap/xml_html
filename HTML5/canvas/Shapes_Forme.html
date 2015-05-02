@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Forme</title>
+<style type="text/css">
+html,body,p,div,canvas,h2,h1,h3{ margin:0; padding:0;}
+body{ font-family:Geneva, Arial, Helvetica, sans-serif;}
+h1{ color:#00F; padding:10px;}
+p{ padding:5px}
+
+dt{ margin-left:10px; color:rgb(130,0,70); font-size:1em; font-weight:bold;}
+dd{ font-size:0.9em; color:rgb(50,50,155);}
+
+</style>
+
+</head>
+
+<body>
+<h1>Creazione di forme</h1>
+<p>
+L'elemento <strong>canvas</strong> supporta una sola forma il <strong>rettangolo</strong>. Per creare altre forme bisogna tracciare più punti con l'uso di vari metodi
+</p>
+
+<dl>
+    <dt>context.beginPath()</dt>
+    <dd>Ogni volta che tale metodo è richiamato si può iniziare a tracciare una nuova forma</dd>
+</dl>
+
+<dl>
+     <dt>context.moveTo(x, y)</dt>
+     <dd>E' il primo step in cui si fissa il primo punto da cui far partire la forma tramite le coordinate x ed y (<a href="Archi_Cerchi.html">vedere il file "Archi_Cerchi.html")</a> </dd>
+</dl>
+<dl>
+     <dt>context.closePath()</dt>
+     <dd>Questo metodo sta ad indicare che la forma è chiusa</dd>
+</dl>
+<dl>
+     <dt>context.lineTo(x, y)</dt>
+     <dd>Fissa un nuovo punto che si collega al precedente tramite una linea</dd>
+</dl>
+<dl>
+     <dt>context.rect(x, y, w, h)</dt>
+     <dd>disegna un rettangolo dove il left-top è impostato dalle coordinate x-y e larghezza ed altezza da w e h. Questo metodo a differenza di <strong>fillRect(x,y,w,h)</strong> ha bisogno del metodo <strong>begin.Path()</strong>
+     </dd>
+</dl>
+<dl>
+     <dt>context.arc(x, y, radius, startAngle, endAngle [, anticlockwise ] )</dt>
+     <dd>Questo metodo permette di disegnare arci e cerchi. I primi 2 parametri rappresentano le coordinate del centro dell'arco(cerchio); il terzo parametro è il suo <em>raggio</em>. Il quarto e quinto indicano l'inizio e la fine della traiettoria della circonferenza; traiettoria che può essere cambiata con l'aggiunta del sesto parametro che è booleano ed accetta il <em>true</em> ed il <em>false</em> 
+     </dd>
+</dl>
+<dl>
+     <dt>context . quadraticCurveTo(cpx, cpy, x, y)</dt>
+     <dd>La x e y stabiliscono le coordinate dell'end-point; i primi due parametri impostano le coordinate del punto di controllo della curva <a href="quadraticCurveTo.html">(vedere file "quadraticCurveTo.html")</a> 
+     </dd>
+</dl>
+<dl>
+     <dt>context . bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)</dt>
+     <dd>La x e y stabiliscono le coordinate dell'end-point; i primi 4 parametri stabiliscono le coordinate dei due punti di controllo che, invece, ha questo metodo. <a href="bezierCurveTo.html">(vedere file "bezierCurveTo.html") </a>
+     </dd>
+</dl>
+<dl>
+     <dt></dt>
+     <dd></dd>
+</dl>
+<dl>
+     <dt></dt>
+     <dd></dd>
+</dl>
+<dl>
+     <dt></dt>
+     <dd></dd>
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

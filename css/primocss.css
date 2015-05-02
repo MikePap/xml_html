@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS x css_associato.xml */
+
+
+
+CATALOG{ background-color: #ffffff; width: 100%; }
+
+CD{display: block; margin-bottom: 30pt; margin-left: 0; }
+
+TITLE{ color: #FF0000; font-size: 20pt;}
+
+ARTIST{ color: #0000FF; font-size: 30pt; }
+
+COUNTRY,PRICE,YEAR,COMPANY{display: block; color:rgb(100,100,200); margin-left: 20pt; }
+
+
+width{ color:#666633; margin-left:10px; display:block;}
+
+#divo{color:green;}
+
+
+

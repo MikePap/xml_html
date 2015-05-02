@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Applicazione effetti CSS</title>
+<style type="text/css">
+video {
+/*
+  width: 307px;
+  height: 250px;
+*/
+  background: rgba(255,255,255,0.5);
+  border: 1px solid #ccc;
+}
+
+/*	invece delle percentuali si possono usare le unità: da 0 a 1 (da 0% a 100%) 		*/
+
+.grayscale {
+-webkit-filter: grayscale(80%);
+-moz-filter: grayscale(80%);
+-ms-filter: grayscale(80&);
+-o-filter: grayscale(80%);
+filter: grayscale(80%);							/*	da 0% a 100%(completamente grigio)	*/
+}
+.sepia {
+-webkit-filter: sepia(1);
+filter: sepia(1);									/*	da 0% a 100%(completamente seppia)	*/
+}
+.saturate{
+-webkit-filter: saturate(50%);
+filter: saturate(50%);							/*	da 0%(completamente grigio) a 100%(nulla di fatto)	*/
+}
+.hue-rotate{
+-webkit-filter: hue-rotate(180deg);
+filter: hue-rotate(180deg);					/*	da 0deg(nulla di fatto) a 360deg		*/
+}
+.invert{
+-webkit-filter: invert(80%);
+filter: invert(80%);								/*	da 0% a 100%(completamente ribaltato)	*/
+}
+.opacity{
+-webkit-filter: opacity(50%);
+filter: opacity(50%);							/*	da 0%(tutto trasparente) a 100%	*/												
+}
+.brightness{
+-webkit-filter: brightness(300%);	
+filter: brightness(300%);						/*	da 0%(immagine tutta nera) a n%	*/
+}
+.contrast{
+-webkit-filter: contrast(2);
+filter: contrast(2);								/*	da 0%(immagine tutta grigia) a n%	*/
+}
+.blur {
+-webkit-filter: blur(3px);
+filter: blur(3px);								/*	in px	*/
+}
+.drop-shadow{
+-webkit-filter: drop-shadow(8px 8px 12px black );
+filter: drop-shadow(8px 8px 12px black );				/*	tipo box shadow	*/
+}
+
+</style>
+</head>
+<body>
+
+<h1>Applicazione di effetti CSS all'elemento video</h1>
+
+<video autoplay></video>
+
+<select name="effetti" id="effetti">
+	<option value="normale">Normale</option>
+	<option value="grayscale">scala di grigi</option>
+	<option value="sepia">Seppia</option>
+	<option value="saturate">Saturazione 50%</option>
+	<option value="hue-rotate">hue-rotate</option>
+	<option value="invert">Inversione</option>
+	<option value="opacity">Opacità 50%</option>
+	<option value="brightness">Brillantezza 300%</option>
+	<option value="contrast">Contrasto 200%</option>
+	<option value="blur">Nebbia</option>
+	<option value="drop-shadow">Ombreggiamento</option>
+	
+
+</select>
+
+
+
+<script type="text/javascript">
+
+var video = document.querySelector('video');
+
+
+function errorCallback(error){
+	console.log("navigator.getUserMedia error: ", error);
+}
+
+navigator.getUserMedia  = navigator.getUserMedia ||navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia || navigator.msGetUserMedia;
+var vgaConstraints = {
+	video: {
+		mandatory: {
+			maxWidth: 640,
+			maxHeight: 360
+		}
+	}
+};
+
+//navigator.getUserMedia({video: true}, function(stream) {
+navigator.getUserMedia(vgaConstraints, function(stream) {
+	video.src = window.URL.createObjectURL(stream);
+}, errorCallback);
+ 
+
+var idx = 0;
+var filters = ['grayscale', 'sepia', 'saturate', 'hue-rotate', 'invert', 'opacity', 'brightness', 'contrast', 'blur', 'drop-shadow', ''];
+
+function changeFilter(e) {
+	var el = e.target;
+	el.className = '';
+	var effect = filters[idx++ % filters.length];			// 
+	if (effect) {
+		el.classList.add(effect);
+	}
+}
+//document.querySelector('video').addEventListener('click', changeFilter, false);
+//document.querySelector('video').onclick = function (){changeFilter(event) };
+/*
+
+0 % 5			// 0
+1 % 5			// 1
+2 % 5			// 2
+2 % 6			// 2
+....
+*/
+
+document.querySelector('#effetti').addEventListener('change', 
+function (){
+	var video = document.querySelector('video');
+
+	if(this.value === 'normale'){
+		video.className = "";
+	}else{
+		video.className = "";					// eliminare la classe eventuale esistente altrimenti si sommano
+		video.classList.add(this.value);
+	}
+
+//	this.value === 'normale' ? video.className = "" : video.classList.add(this.value)
+}
+, false);
+
+
+
+
+  
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

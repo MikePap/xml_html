@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Creazione Nodi</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmlstring.js"></script> 
+
+</head>
+
+<body>
+
+
+<h1>Creazione Nodi</h1>
+
+<h3>Creazione di elementi</h3>
+<p class="nota">Il metodo <b>createElement()</b> crea un elemento nodo</p>
+<script type="text/javascript">
+
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+newel=xmlDoc.createElement("edition"); // creazione del nodo "edition"
+x=xmlDoc.getElementsByTagName("book")[0]; 	// recupero del primo nodo 'book' ...
+x.appendChild(newel);		// ... ed inserimento (nello stesso) del nodo creato
+document.write(x.getElementsByTagName("edition")[0].nodeName);	// visualizza il nome del nodo creato 
+
+</script>
+
+
+<h3>Creazione di un attributo </h3>
+<p class="nota">Il metodo <b>createAttribute()</b> è utilizzato per crere un nodo attributo</p>
+<script type="text/javascript">
+
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+newatt=xmlDoc.createAttribute("edition"); // creazione di attributo "edition"
+newatt.nodeValue="first";	// assegnazione di un nodo testo per l'attributo 'edition'
+x=xmlDoc.getElementsByTagName("title");	// recupero del nodo 'title' ... 
+x[0].setAttributeNode(newatt);	//... ed assegnazione al primo 'title' dell'attributo 'edition'
+document.write("Edition: ");
+document.write(x[0].getAttribute("edition")); // visualizzazione del valore dell'attributo ('first') 
+
+</script>
+
+<p class="nota">Con il metodo <b>setAttribute()</b> invece si può creare un attributo ed il suo valore </p>
+
+<script type="text/javascript">
+
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+x=xmlDoc.getElementsByTagName("title");
+x[0].setAttribute("edition","first");	// viene creato l'attributo ('edition') ed il suo valore ('first')
+document.write("Edition: ");
+document.write(x[0].getAttribute("edition"));	// viene visualizzato l'attributo 
+
+</script>
+
+
+<h3>Creazione di un nodo testuale</h3>
+
+<p class="nota">Il metodo <b>createTextNode()</b> permette di creare un nodo testuale (semplicemente del testo) </p>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+newel=xmlDoc.createElement("edizione");	// creazione del nodo "edizione"
+newtext=xmlDoc.createTextNode("prima");	// creazione di un nodo testuale ... 
+newel.appendChild(newtext);				//... e inserimento dello stesso all'interno del nodo 'edizione' 
+
+x=xmlDoc.getElementsByTagName("book")[0];	// recupero del primo nodo 'book' ... 
+x.appendChild(newel);						//... ed inserimento nello stesso del nuovo nodo creato 'edizione'
+
+document.write(x.getElementsByTagName("title")[0].childNodes[0].nodeValue);	// visualizzazione del valore del primo nodo 'title' 
+document.write(" - Edizione: ");
+document.write(x.getElementsByTagName("edizione")[0].childNodes[0].nodeValue);	// visualizzazione del nodo testuale ('prima') che sta all'interno del nodo 'edizione'. 
+
+</script>
+
+<h3>Creazione di un nodo sezione CDATA</h3>
+<p class="nota">Il metodo <b>createCDATASection()</b> permette di creare una sezione CDATA</p>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+newCDATA=xmlDoc.createCDATASection("Special Offer & Book Sale > 5");	// viene creato un nodo di sezione CDATA 
+
+x=xmlDoc.getElementsByTagName("book")[0];	// si recupera il primo nodo 'book' ... 
+x.appendChild(newCDATA);					// ... e si inserisce nelo stesso il nodo CDATA creato
+
+document.write(x.lastChild.nodeValue);	// attraverso il metodo 'lastChild' si visualizza il nodo CDATA creato perchè esso è posizionato alla fine dei nodi figli di 'book'
+</script>
+
+<h3>Creazione di un nodo commento</h3>
+<p class="nota">Il metodo <b>createComment()</b> permette di creare un nodo commento</p>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+newComment=xmlDoc.createComment("Revised April 2008");	// qui si crea il nodo commento
+
+x=xmlDoc.getElementsByTagName("book")[0];	// si recupera il primo nodo 'book' ... 
+x.appendChild(newComment);					// ... e si inserisce nelo stesso il nodo commento creato
+
+document.write(x.lastChild.nodeValue);	// attraverso il metodo 'lastChild' si visualizza il nodo commento creato perchè esso è posizionato alla fine dei nodi figli di 'book'
+</script>
+
+
+<h3>Aggiungere un nodo</h3>
+
+<p class="nota">Il metodo <b>appendChild()</b> permette di aggiungere un nodo all'interno del nodo in questione. <b>Il nodo creato si va a posizionare alla fine dei nodi esistenti</b></p>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+newel=xmlDoc.createElement("NuovoNodo"); 	// creazione di nodo
+
+x=xmlDoc.getElementsByTagName("book")[0];	// recupero del primo nodo 'bbok' ... 
+x.appendChild(newel);						//... ed inserimento nello stesso del nodo creato
+
+document.write(x.getElementsByTagName("NuovoNodo")[0].nodeName);	// visualizzazione del nodo creato
+</script>
+
+
+<p class="nota">Altro metodo per inserire un nodo è <b>insertBefore()</b> che inserisce il nodo prima di uno specificato nodo</p>
+
+<dl>
+	<dt>Il metodo insertBefore(a,b) accetta due parametri</dt>
+	<dd>il primo parametro (a) rappresenta il nuovo nodo da aggiungere</dd>
+	<dd>il secondo parametro (b) rappresenta la posizione di uno specifico nodo. Il nodo aggiunto si andrà a posizionare primo di quest'ultimo</dd>
+</dl>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+newNode=xmlDoc.createElement("book");	// creazione di un nuovo nodo
+
+x=xmlDoc.documentElement;	// "documentElement "  RAPPRESENTA SEMPRE IL NODO 'root'
+y=xmlDoc.getElementsByTagName("book");
+
+document.write("Book elements before: " + y.length);
+document.write("<br>");
+x.insertBefore(newNode,y[3]);	// inserimento del nodo creato prima del quarto nodo 'book'
+
+y=xmlDoc.getElementsByTagName("book");
+document.write("Book elements after: " + y.length);
+</script>
+
+<h3>Aggiungere del testo ad un nodo testo</h3>
+<p class="nota">Il metodo <b>insertData()</b> permette di aggiungere del testo in un nodo di testo esistente</p>
+<dl>
+	<dt>Il metodo <b>insertData(a,b)</b> accetta due parametri:</dt>
+    	<dd>il primo parametro (a) rappresenta la posizione in cui far partire l'inserimento</dd>
+        <dd>il secondo parametro (b) rappresenta la stringa da inserire</dd>
+</dl>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+x=xmlDoc.getElementsByTagName("title")[0].childNodes[0];// recupera il primo nodo del primo nodo 'title' (il testo del primo nodo 'title') ... 
+document.write(x.nodeValue);						//... e lo visualizza
+//x.insertData(0,"Easy ");		//Aggiunge il testo "Easy " all'inizio della stringa esistente ...
+x.insertData(9,"Easy ");		//Aggiunge il testo "Easy " dopo 9 lettere (dopo la parola 'Everyday') ...
+document.write("<br >");
+document.write(x.nodeValue);	// quindi rivisualizza il nodo di cui sopra e questa volta mostra un'altro risultato
+
+</script>
+
+
+<h3>Clonare un nodo</h3>
+<p class="nota">Il metodo <b>cloneNode()</b> permette di clonare uno specificato nodo. <br />
+Richiede un parametro <b>(true o false)</b> a seconda se deve includere tutti gli attributi e nodi figli del nodo da clonare</p> 
+
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+x=xmlDoc.getElementsByTagName('book')[0];	// si recupera il primo nodo 'book'... 
+cloneNode=x.cloneNode(true);	// ... e lo si clona completamente (con tutti i suoi nodi figli ed attributi) ... 
+xmlDoc.documentElement.appendChild(cloneNode);	// ... e lo si inserisce nel documento (alla fine)
+
+// Per comtrollare se l'inserimento del clone è avvenuto eseguiamo un ciclo per mostrare i valori del nodo 'title'
+y=xmlDoc.getElementsByTagName("title");
+for (i=0; i<y.length; i++){
+document.write(y[i].childNodes[0].nodeValue);
+document.write("<br />");
+} // chiude for
+</script>
+
+
+
+
+
+
+
+
+<br /><br /><br /><br />
+
+
+</body>
+</html>

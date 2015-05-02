@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>drawImage</title>
+<style type="text/css">  
+h2{ color:#0000FF;}
+p{ color:#999900;}
+ canvas { margin:0; padding:0;  /*border: 1px solid black; /* crea un bordo all'elemento  */} 
+  	   
+</style>  
+     <script type="text/javascript">  
+
+    function draw() {  
+        var ctx = document.getElementById('canvas').getContext('2d');  
+        var img = new Image();  
+        img.onload = function(){  
+          ctx.drawImage(img,0,0);  
+         ctx.beginPath();  
+          ctx.moveTo(30,96);  
+          ctx.lineTo(70,66);  
+          ctx.lineTo(103,76);  
+         ctx.lineTo(170,15);  
+         ctx.stroke();  
+       }  
+       img.src = '../../Immagini/grafico_canvas.png';  
+     }  
+
+/*
+function draw() {
+  var ctx = document.getElementById('canvas').getContext('2d');
+  var img = new Image();
+  img.src = '../../../Immagini/grafico_canvas.png';
+  img.onload = function(){
+    ctx.drawImage(img,0,0);
+    ctx.beginPath();
+    ctx.moveTo(30,96);
+    ctx.lineTo(70,66);
+    ctx.lineTo(103,76);
+    ctx.lineTo(170,15);
+    ctx.stroke();
+ }
+}
+*/
+</script>  
+
+</head>
+
+   <body onLoad="draw();"> 
+
+<h2>Creazione di grafico</h2>
+<p>Viene impiegata un'immagine di sfondo a rappresentare lo sfondo del grafico con l'uso dell'evento <b>onload</b> e poi con il metodo <b>lineTo()</b> viene creata la linea del grafico
+</p>
+
+
+
+<canvas id="canvas" width="200" height="150"></canvas>
+
+
+
+</body>
+</html>

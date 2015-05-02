@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>load dati</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+
+#jk{ position:relative; margin:50px 31px; width:400px; /*height:300px;*/ padding:5px; border:1px solid;}
+
+</style>
+<script type="text/javascript" src="../allegati/jQuery-1.6.min.js"></script> 
+
+</head>
+
+<body>
+
+<h1>Caricamento script da file php </h1>
+
+<p class="nota">Il file php "ajax-jquery_script.php" contiene uno script che estrae dati da un file xml tramite <b>xpath</b>. <br />
+In questo file si carica tale script con la funzione <b>load</b> di jquery 
+</p>
+
+<script  type="text/javascript">
+$(document).ready(function(){
+
+$('button').click(function(){
+url = "ajax-jquery_script.php";
+$('#jk').load(url);
+}); //chiude click
+
+/*
+//$(window).load(function(){ // Run a function when the page is fully loaded including graphics
+$.ajax({
+  url: "x_ajax-jquery.php",
+  success: function(data){
+    $("#jk").html(data);
+  }
+}); // chiude ajax
+//}); // chiude load
+*/
+
+}); // chiude ready 
+</script>
+
+
+
+<button>clik me</button>
+
+
+<div id="jk"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

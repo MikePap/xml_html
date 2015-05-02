@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Traversing</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmlstring.js"></script> 
+
+</head>
+
+<body>
+
+<h1>Attraversare l'albero</h1>
+
+
+<script type="text/javascript">
+
+text="<book>";
+text=text+"<title>Everyday Italian</title>";
+text=text+"<author>Giada De Laurentiis</author>";
+text=text+"<year>2005</year>";
+text=text+"</book>";
+
+xmlDoc = loadXMLString(text);	// carica l'xml creato utilizzando la funzione 'loadXMLString'(vedi "loadxmlstring.js" nella cartella allegati)
+
+// "documentElement "  RAPPRESENTA SEMPRE IL NODO 'root' che in queto caso è 'book'
+x = xmlDoc.documentElement.childNodes;
+for (i=0; i<x.length; i++)
+  {
+  document.write(x[i].nodeName);
+  document.write(": ");
+  document.write(x[i].childNodes[0].nodeValue);
+  document.write("<br />");
+  }
+</script>
+
+
+<h3>Differenze dei browser nell'analisi del DOM</h3>
+<p class="nota">Internet Explorer non considera gli spazi vuoti o le nuove linee come testo di nodo, mentre gli altri browser lo fanno</p>
+
+
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.documentElement.childNodes;
+document.write("Number of child nodes: " + x.length);
+</script>
+
+<br /><br />
+
+<script type="text/javascript">
+
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+x = xmlDoc.getElementsByTagName("book")[0];	// si recupera il primo elemento ...
+document.write(x.parentNode.nodeName);		// ... per poi arrivare al nome del suo genitore 
+</script>
+
+<br /><br />
+
+<h3>Navigando nel DOM</h3>
+
+<dl>
+	<dt>Le proprietà che definiscono le parentele tra i nodi nel DOM sono:</dt>
+    	<dd>parentNode</dd>
+    	<dd>childNodes</dd>
+    	<dd>firstChild</dd>
+    	<dd>lastChild</dd>
+    	<dd>nextSibling</dd>
+    	<dd>previousSibling</dd>       
+</dl>
+
+<p class="nota">
+<b>IMPORTANTE:</b> Vedere la funzione <b>get_firstChild(n)</b> all'interno della pagina. <br />
+La funzione ha lo scopo di evitare errori quando si usano le proprietà su descritte (parentNode, childNodes ecc..) perchè i browser si comportano diversamente quando devono analizzare gli spazi vuoti e le nuove linee. Quindi il suo scopo è di controllare che il nodo successivo sia un elemento nodo e non uno spazio vuoto o una nuova linea altrimenti applica il 'nextSibling' cioè il nodo fratello successivo.
+</p>
+
+<script type="text/javascript">
+// La seguente funzione ha lo scopo di evitare errori quando si usano le proprietà su descritte (parentNode, childNodes ecc..) perchè i browser si comportano diversamente quando devono analizzare gli spazi vuoti e le nuove linee. Quindi il suo scopo è di controllare che il nodo successivo sia un elemento nodo e non uno spazio vuoto o una nuva linea altrimenti prosegue al 'sibling' cioè il nodo fratello successivo
+function get_firstChild(n){
+y = n.firstChild;  		// qui si instanzia 'y' come primo figlio di 'n' 
+while (y.nodeType!=1){		// attraverso la proprietà 'nodeType' si controlla se il 'tipo' del primo figlio sia un elemento e non uno spazio vuoto o nuova linea (il valore 1 corrisponde al 'nodeType' del nodo 'Elemento')  (vedere la riga 109)
+  y = y.nextSibling; }	// ... nel caso non fosse un elemento allora si instanzia 'y' come elemento fratello 
+return y;			// ... altrimenti restituisce il primo figlio di 'y'
+} // chiude la funzione
+</script>
+<script type="text/javascript">
+xmlDoc = loadXMLDoc("../allegati/books.xml");
+
+//x = xmlDoc.getElementsByTagName("book")[1].firstChild;  // qui si avrà il risultato 'Harry Potter' solo in IE mentre non darà risultato negli altri browser, questo perchè il primo nodo di 'book' è o uno spazio vuoto o una nuova linea che questi ultimi le considerano e IE no.  
+
+x = get_firstChild(xmlDoc.getElementsByTagName("book")[1]);	// con la funzione "get_firstChild(n)" si avrà lo stesso risultato in tutti i browser 
+//document.write(x.nodeName);
+document.write(x.childNodes[0].nodeValue);  // 
+</script>
+
+<br /><br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

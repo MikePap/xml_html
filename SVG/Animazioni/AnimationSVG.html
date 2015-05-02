@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Animazioni</title>
+<style type="text/css">
+
+html,body,h1,h2,h3,p,dl,dt,dd,pre,ul, embed{ margin:0; padding:5px; }
+h1{ color: #00F; font-size:31px; margin-left:100px; padding:10px; }
+h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
+h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
+p{ padding:5px; }
+dl{margin-left:20px;}
+dt{ color:#039; margin-bottom:5px;}
+dd{ color:#06F; margin-left:10px; }
+li{margin-left:31px;}
+.nota{ color:#F66;}
+.codice{ color:#060}
+pre{color:rgb(50,150,50); margin-left:5px; background:rgb(240,240,240); padding:5px; }
+
+embed{ border:1px solid #CCC; }
+
+</style>
+</head>
+<body>
+
+<h1>Animazioni</h1> 
+
+<p class="nota">
+SVG incorpora le caratteristiche di animazione definite in <a href="http://www.w3.org/TR/2001/REC-smil-animation-20010904/">SMIL Animation</a> aggiunte a delle specifiche estensioni proprie (<a href="http://www.w3.org/TR/SVG11/animate.html#SVGExtensionsToSMILAnimation">vedi qui</a>): <br />
+<dl>
+	<dt>Estensioni SVG compatibili con SMIL</dt>
+	<dd><b>animateTransform</b></dd>
+	<dd><b>path</b>(attributo)</dd>
+	<dd><b>mpath</b>(elemento)</dd>
+	<dd><b>keyPoints</b>(attributo)</dd>
+	<dd><b>rotate</b>(attributo)</dd>
+</dl>	
+</p>
+
+<h3>Attributi Target</h3>
+
+<dl>
+	<dt><b>attributeName</b>: indica il nome dell'attributo specifico che è spesso definito da una proprietà dei CSS (width, height,visibility, ecc..) o da un attributo XML(x,y,transform, rotate, ecc..). In alcuni casi lo stesso nome di attributo è associato a attributi simili in diversi linguaggi; per cui è utile in questi casi specificare un attributo opzionale <q>attributeType</q></dt>
+
+	<dt><b>attributeType</b>: è opzionale e indica il namespace in cui l'attributo target e i suoi valori sono definiti. I valori che accetta sono:</dt>
+	<dd><q>CSS</q>: indica che il valore dell'attributeName è una proprietà dei CSS.</dd>
+	<dd><q>XML</q>: indica che  il valore dll'attributeName è il nome di un attributo definito nei namespace XML. </dd>
+	<dd><q>auto</q>: è il valore di default; in questo caso il parser valuta prima tra le proprietà dei CSS e se nessuna proprietà corrisponde al valore assegnato all'attributeName valuta i namespace XML di default. </dd>
+</dl>	
+
+<p>
+Nella seguente <a href="http://www.w3.org/TR/SVG2/styling.html#SVGStylingProperties">tabella</a> sono indicati gli attributi dei CSS e quelli specifici degli SVG  che possono essere animati solo con SMIL.
+</p>
+
+<h3>Elementi Target</h3>
+<p>
+Un elemento di animazione può definire l'elemento target dell'animazione sia esplicitamente che implicitamente. Se nessun target è specificato esplicitamente l'elemento target è, implicitamente, quello genitore. Il caso più comune è quando l'elemento di animazione è dichiarato all'interno dell'elemento genitore; in questo caso non c'è bisogno di speificarlo: 
+<pre>
+	&lt;rect x="50" y="40" width="100" height="100"  style="fill:rgb(0,0,255);stroke-width:1; stroke:rgb(0,0,0)"&gt; 	
+		&lt;animate attributeName="width"  from="100px"  to="150px" begin="0s" dur="5s" &gt; 
+	&lt;/rect&gt; 
+</pre>
+</p>
+<p>
+I seguenti due attributi possono essere utilizzati per identificare l'elemento target esplicitamente: 
+<dl>
+	<dt><b>targetElement</b>: <q>IDREF</q>. Il valore di questo attributo deve essere un attributo XML identificativo di un elemento all'interno del documento host </dt>
+	<dd>
+		<pre>
+			&lt;animate targetElement="foo" attributeName="bar" ... /&gt; 
+		</pre>
+	</dd>
+	<dt><b>href</b>:  <q>uri-reference</q>. Questo attributo specifica un <q>XLink locator</q>  </dt>
+	<dd>
+		<pre>
+			&lt;foo xmlns:xlink="http://www.w3.org/1999/xlink" &gt;
+			...
+			&lt;animate xlink:href="#foo" attributeName="bar" .../&gt; 			
+			...
+			&lt;/foo&gt; 
+ 
+		</pre>
+	</dd>
+	<dd>oppure</dd>
+	<dd>
+		<pre>
+			&lt;svg xmlns:xlink="http://www.w3.org/1999/xlink" ...&gt;
+ 				&lt;image xlink:href="foo.png" .../&gt; 			
+			&lt;/svg&gt; 
+		</pre>
+	</dd>
+</dl>	
+Quando si utilizza l'attributo <q>href</q> si possono definire degli aggiuntivi attributi <q>XLink</q>  (<b>type, actuate, show</b>) in un <q>DTD</q>. Per ulteriori informazioni vedere la sezione <a href="http://www.w3.org/TR/SVG11/linking.html"> SVG Linking</a> oppure <a href="http://www.w3.org/TR/xlink/">XML Linking Language (XLink)</a> 
+</p>
+
+<h3>Attributi che controllano il tempo delle animazioni</h3>
+<p class="nota">
+Il tempo di un animazione può essere definito semplicemente impostando gli attributi <q>begin</q> e <q>dur</q> che specificano rispettivamente l'inizio e la durata dell'animazione. L'inizio dell'animazione può essere specificata in diversi modi; sia da uno specificato tempo che anche da un evento (esempio mouse: click). <a href="http://www.w3.org/TR/smil-animation/#TimingModelDetails">Vedere qui (tutto il capitolo 3.6)</a> 
+</p>
+
+<dl>
+	<dt><b>begin</b>: indica quando l'animazione dell'elemento deve tornare attiva. Il suo valore è una lista di valori separati da un punto e virgola perchè un elemento animato può interrompe e riprendere l'animazione più volte. Se non viene specificato il suo valore è '0', ciò vol dire che l'animazione incomincia all'apertura del documento<br />
+Può essere specificata in diversi modi:
+	 </dt>
+	<dd><b>Offset values</b>: valori che indicano quando un elemento deve iniziare o terminare relativamente:
+<pre>
+02:30:03    = 2 hours, 30 minutes and 3 seconds
+50:00:10.25 = 50 hours, 10 seconds and 250 milliseconds
+3.2h    = 3.2 hours = 3 hours and 12 minutes
+
+02:33   = 2 minutes and 33 seconds
+00:10.5 = 10.5 seconds = 10 seconds and 500 milliseconds
+
+45min   = 45 minutes
+30s     = 30 seconds
+5ms     = 5 milliseconds
+12.467  = 12 seconds and 467 milliseconds
+
+00.5s = 500 milliseconds
+00:00.005 = 5 milliseconds
+</pre>  
+	</dd>
+	<dd><b>Syncbase values</b>: valori che fanno riferimento ad un'altro elemento 
+<pre>
+begin=" x.begin "     : Begin when "x" begins
+begin="x.end-5s"      : Begin 5 seconds before "x" ends
+begin="x.begin + 1m"  : End 1 minute after "x" begins
+</pre>
+	</dd>
+	<dd><b>Event values</b>: valori che fanno riferimento ad un evento (DOM)
+<pre>
+begin=" x.load "        : Begin when "load" is observed on "x"
+begin="x.focus+3s"      : Begin 3 seconds after an "focus" event on "x"
+begin="x.endEvent+1.5s" : Begin 1 and a half seconds after an "endEvent" event on "x"
+begin="x.repeat"        : Begin each time a repeat event is observed on "x"
+</pre>
+	</dd>
+	<dd><b>Repeat values</b>: (repeat) sono varianti di event values
+<pre>
+&lt;animate id="foo" repeatCount="10" end="endAnim.click" ... /&gt;	<span class="nota">l'animazione terminerà quando e se ci sarà il 'click' sull'immagine </span>
+&lt;img id="endAnim" begin="foo.repeat(2)" .../&gt;	<span class="nota">L'immagine sarà visualizzata quando l'animazione sarà ripetuta(repeat) la seconda volta  </span>
+</pre>
+	</dd>
+	<dd><b>AccessKey values</b>: valori che fanno riferimento all'input esercitato dall'utente con la tastiera. Il pulsante <q>Alt</q> non è ammesso. Può seguire anche un valore di tempo sempre relativo al <q>keypress</q> dato dall'utente
+	</dd>
+	<dd><b>Wallclock-sync values</b>: valori che definiscono il tempo di inizio relativamente ad tempo reale effettivo. <a href="http://www.w3.org/TR/smil-animation/#Timing-WallclockSyncValueSyntax">vedere qui</a>
+<pre>
+YYYY-MM-DDThh:mm:ss.sTZD (e.g. 1997-07-16T19:20:30.45+01:00) <span class="nota">data completa più ore, minuti, secondi e frazione decimali di secondi</span>
+<span class="nota">I seguenti 6 esempi specificano tutti l'inizio al 1° gennaio del 2000 a mezzanotte </span>	
+begin="wallclock(2000-01-01Z)"	
+begin="wallclock( 2000-01-01T00:00Z )"
+begin="wallclock( 2000-01-01T00:00:00Z )"
+begin="wallclock( 2000-01-01T00:00:00.0Z )"
+begin="wallclock( 2000-01-01T00:00:00.0Z )"
+begin="wallclock( 2000-01-01T00:00:00.0-00:00 )"
+
+begin="wallclock( 1990-07-28T15:30-08:00 )"	<span class="nota">inizio alle 15.30 del 28 luglio 1990 nella Pacific US time zone: </span>	
+begin="wallclock( 08:00 )"			<span class="nota">inizio alle 8 della mattina (ovunque il documento sia presentato)</span>
+
+</pre>	
+	</dd>
+	<dd><b>indefinite</b>: l'inizio dell'animazione sarà determinata da una chiamata al metodo "beginElement()" oppure da un link impostato sull'elemento</dd>
+
+	<dt><b>dur</b>: specifica la semplice durata dell'animazione. Se non viene definito il suo valore sarà <q>indefinite</q>. I suoi attributi possono essere: </dt>
+	<dd><b>Clock values</b>: specifica la lunghezza della semplice durata dell'animazione. Il suo valore deve essere maggiore di 0. Vedere l'attributo <q>Offset values</q> di <q>begin</q> </dd>
+	<dd><b>media</b>: specifica la semplice durata intrinseca al media definito. Valido per elementi che definiscono i media </dd>
+	<dd><b>indefinite</b>: specifica la semplice durata come "indefinita" e ciò avviene quando l'attributo "dur" non è dichiarato. </dd>
+</dl>	
+
+<h3>Attributi che definiscono il cambiamento dei valori degli attributi target </h3>
+
+<p class="nota">
+In aggiunta agli attributi che controllano il tempo dell'animazione ci sono altri quattro attributi che possono definire il cambiamento del valore dell'attributeName.
+</p>
+<p>
+<dl>
+	<dt><b>from</b>: specifica il valore dell'inizio </dt>
+	<dt><b>to</b>: specifica il valore finale </dt>
+	<dt><b>by</b>: specifica un valore relativo </dt>
+	<dt><b>values</b>: specifica una lista di più valori separati da punto e virgola </dt>
+</dl>	
+<p>
+Se è definita una lista di valori ("values") eventuali "from" "to" e "by" saranno ignorati e l'animazione applicherà quei valori nel corso dell'animazione. Le combinazioni possibili sono le seguenti:
+<dl>
+	<dt><b>from-to animation</b> </dt>
+	<dd>l'animazione avrà un valore iniziale impostato in "from" e un valore finale impostato in "to" </dd>
+	<dt><b>from-by animation</b></dt>
+	<dd>l'animazione avrà un valore iniziale impostato in "from" e tale valore aumenterà nel corso dell'animazione di un valore impostato in "by". Può essere usato solo con attributi che supportano le addizioni (per la maggior parte valori numerici)</dd>
+	<dt><b>by animation</b></dt>
+	<dd>l'animazione  avrà un valore iniziale stabilito e aumenterà di un valore impostato in "by". Può essere usato solo con attributi che supportano l'addizioni </dd>
+	<dt><b>to animation</b></dt>
+	<dd>l'animazione avrà un valore iniziale stabilito e terminerà con un valore finale impostato in "to" </dd>
+</dl>	
+</p>
+
+<span class="nota">Esempio <b>from-to</b>: la 'width' del rettangolo durante i 10 secondi di durata passerà da 50 a 100 pixel </span> 
+<pre>
+&lt;rect ...&gt; 
+	&lt;animate attributeName="width" from="50" to="100" dur="10s"/&gt; 
+&lt;/rect&gt; 
+</pre>
+<span class="nota">Esempio <b>from-by</b>: qui la 'width' aumenterà di 25 passando da 50 a 75   </span>
+<pre>
+&lt;rect ...&gt; 
+	&lt;animate attributeName="width" from="50" by="25" dur="10s"/&gt;  
+&lt;/rect&gt; 
+</pre>
+<span class="nota">Esempio <b>by</b>: qui dalla misura originale di 40 aumenterà di 30 fino a diventare 70</span>
+<pre>
+&lt;rect width="40" ...&gt; 
+	&lt;animate attributeName="width" by="30" dur="10s"/&gt;  
+&lt;/rect&gt; 
+</pre>
+<span class="nota">Esempio <b>to</b>: qui passerà dall'originale di 40 ai 100</span> 
+<pre>
+&lt;rect width="40" ...&gt; 
+	&lt;animate attributeName="width" to="100" dur="10s"/&gt;  
+&lt;/rect&gt; 
+</pre>
+<span class="nota">Esempio <b>values</b> (lista valori): qui nei 10 secondi di durata passerà da 40 a 100 e infine a 40</span> 
+<pre>
+&lt;rect ...&gt; 
+	&lt;animate attributeName="width" values="40;100;40" dur="10s"/&gt; 
+&lt;/rect&gt; 
+</pre>
+</p>
+
+
+<h3>Attributi che definiscono il cambiamento dei valori durante le animazioni</h3>
+<p class="nota">
+Per default una semplice interpolazione lineare  è eseguita su valori equamente distanziati nell'arco durata dell'animazione. Vi sono degli attributi aggiuntivi per manipolare e controllare l'interpolazione ( <a href="http://www.w3.org/TR/2001/REC-smil-animation-20010904/#AnimFuncCalcMode">Vedere qui</a> ). Essi sono: 
+<dl>
+	<dt><b>calcMode</b>: specifica il modo dell'interpolazione dell'animazione. Il default è <q>linear</q> ma se l'attributo non supporta l'interpolazione linear (in caso di stringhe) assumerà la modalità <q>discrete</q>. Può avere uno dei seguenti valori: </dt>
+	<dd><b>discrete</b>: specifica che la funzione animazione deve passare da un valore all'altro senza nessuna interpolazione </dd>
+	<dd><b>linear</b>: è quella di default ed è la semplice interpolazione lineare che conosciamo</dd>
+	<dd><b>paced</b>: definisce l'interpolazione che produce un pari passo di cambiamento in tutta l'animazione </dd>
+	<dd><b>spline</b>: interpola da un valore al successivo della lista dei valori in base a una funzione tempo definita dal metodo <q>cubic Bezier spline</q>; i punti dello <q>spline</q> sono definiti nell'attributo <q>keyTimes</q> e i punti di controllo per ogni intervallo sono definiti nell'attributo <q>keySplines</q> </dd>
+		
+	<dt><b>keyTimes</b>: una lista di valori tempo separati da un punto e virgola(;) usata per controllare il passo dell'animazione. Ogni valore della lista corrisponde al corrispondente della lista dei valori dell'attributo <tt>values</tt>. I valori del <tt>keyTimes</tt> vanno da 0 a 1 ed è come se fosse da 0% a 100% </dt>
+
+	<dt><b>keySplines</b>: un set di punti di controllo Bezier associati con la lista <q>keyTimes</q> che definiscono una funzione cubica Bezier per il controllo del passo dell'animazione.  '  </dt>
+</dl>	
+</p>
+
+<p>
+Esempi: <br />
+
+Il seguente esempio descrive una semplice animazione in modalità <b>discrete</b>. Da notare che il <q>calcMode</q> non è specificato per cui di dovrebbe presupporre il default "linear" ma invece la modalità utilizzata sarà "discrete" per il fatto i valori sono delle stringhe che non possono essere interpolati e quindi ogni stringa dei 4 valori sarà di 2 secondi per ognuna. 
+<pre>
+&lt;animate attributeName="foo" dur="8s" values="bar; fun; far; boo" /&gt; 
+</pre>
+</p>
+<p>
+Un'altro esempio di <b>discrete</b> è il seguente dove l'attributo "stroke-linecap" deve valutare delle stringhe per cui implicitamente accetta la modalita "discrete" di "calcMode" che farà si di avere nei primi 5 secondi la proprietà 'round' e per gli altri restanti 5 secondi la proprietà 'square'.
+<pre>
+&lt;rect stroke-linecap="butt"...&gt; 
+	&lt;animate attributeName="stroke-linecap" from="round" to="square" dur="10s"/ &gt; 
+&lt;/rect&gt; 
+</pre>
+</p>
+<p>
+La modalità <b>discrete</b> può essere usata con <b>keyTimes</b> come nell'esempio successivo. Qui la modalità "keyTimes" interagisce con i valori facendo in modo che il valore di 'green' sia di 5 secondi così come quello di 'yellow' e che poi il colore cambi in 'red' e rimanga tale 
+<pre>
+&lt; animateColor attributeName="color" dur="10s" calcMode="discrete" values="green; yellow; red" keyTimes="0.0; 0.5;" /&gt; 
+</pre>
+</p>
+<p>
+L'esempio seguente mostra una semplice animazione in modalità <b>linear</b>. Qui il valore di 'x' cabbierà da 0 a 10 nei primi 5 secondi e da 10 a 100 nei restanti 5 appunto perchè la durata è di 10 secondi
+<pre>
+&lt;animate attributeName="x" dur="10s" values="0; 10; 100" calcMode="linear" /&gt; 
+</pre>
+</p>
+<p>
+Nell'esempio successivo viene mostrata la stessa dichiarazione ma con modalità <b>paced</b>. Qui, invece, succede che che nella prima parte del segmento il valore di 'x' passerà da 0 a 10 in 1 solo secondo mentre nella seconda parte passerà da 10 a 100 in 9 secondi. In pratica i valori vengono proporzionati alla durata.
+<pre>
+&lt;animate attributeName="x" dur="10s" values="0; 10; 100" calcMode="paced" /&gt; 
+</pre>
+</p>
+<p>
+Il seguente esempio mostra l'uso dell'attributo <b>keyTimes</b>. I valori del "keyTimes" portano l'animazione ad avere un valore iniziale di 0 e a raggiungere il valore di 50 dopo 8 secondi(80% visto che la durata è di 10s) ed a raggiungere il valore di 100 alla fine dell'animazione. Si vuole, in altre parole, avere un effetto più lento nella prima parte e più rapido nella seconda parte. 
+<pre>
+&lt;animate attributeName="x" dur="10s" values="0; 50; 100"  keyTimes="0; .8; 1" calcMode="linear" /&gt; 
+</pre> 
+</p>
+<p>
+Estendendo all'esempio precedente l'uso del <b>keySplines</b> si ha che nella prima parte da 0 a 8s un effetto più soft (0.5 0 0.5 1) mentre nella seconda parte un effetto più improvviso (0 0 1 1)
+<pre>
+&lt;animate attributeName="x" dur="10s" values="0; 50; 100"  keyTimes="0; .8; 1" calcMode="spline" keySplines=".5 0 .5 1; 0 0 1 1" /&gt; 
+</pre>
+</p>
+<p>
+Un'altro esempio con <b>keyTimes e keySplines</b>. Qui avviene che per efetto del valore del "keyTimes"(0.0; 0.7) il valore di 20 sia raggiunto al 7° secondo e rimanga tale fino alla fine dell'animazione(dei 10 secondi).    
+<pre>
+&lt;animate attributeName="foo" from="10" to="20" dur="10s" keyTimes="0.0; 0.7" calcMode="spline" keySplines=".5 0 .5 1" /&gt; 
+</pre>
+</p><!--chiude il paragrafo sugli Esempi-->
+
+<h3>Ripetizione di animazioni</h3>
+<p class="nota">La ripetizione di animazione consente all'animazione di essere ripetuta varie volte o infinite. I metodi sono: </p>
+<dl>
+	<dt> <b>repeatCount</b>: definisce il numero delle riptezioni che può avere un'animazione. Può avere i seguenti valori: </dt>
+	<dd><b>valore numerico</b>: il valore deve essere naturalmente maggiore di 0 e può anche essere decimale (es: 2.5)</dd>
+	<dd><b>indefinite</b>: l'animazione si ripete fino alla chiusura del documento</dd>
+	
+	<dt><b>repeatDur</b>: definisce la durata totale della ripetizione o se vogliamo la durata dell'animazione. Può avere i seguenti valori:</dt>
+	<dd><b>Clock values</b>: vedere  <q>Offset values</q> dell'attributo <q>begin</q> </dd>
+	<dd><b>indefinite</b>: l'animazione si ripete fino alla chiusura del documento</dd>
+</dl>	
+
+<p>
+<pre>
+<span class="nota">l'animazione sarà ripetuta 2 volte per cui la durata totale sarà si 5 secondi</span>
+&lt;animate attributeName="top" from="0" to="10" dur="2.5s" repeatCount="2" /&gt; 
+
+<span class="nota">qui sarà ripetuta 2 volte e mezza e si avrà un tempo totale di 7.5 secondi</span>
+&lt;animate attributeName="top" from="0" to="10" dur="3s" repeatCount="2.5" /&gt; 
+
+<span class="nota">Avendo un "repeatDur" di 7s vuol dire che si verificheranno due ripetizioni complete(2.5*2=5s) più una parziale di 2s </span>
+&lt;animate attributeName="top" from="0" to="10" dur="2.5s" repeatDur="7s" /&gt; 
+
+<span class="nota">qui l'animazione non avrà effetto perchè la durata non è definita per cui l'attributeName rimarrà 'red' </span>
+&lt;animate attributeName="fill" from="red" to="blue" repeatCount="2" /&gt; 
+
+<span class="nota">qui la durata non è definita però è definito il "repeatDur" che produrrà l'animazione (NON E' VERO) </span>
+&lt;animate attributeName="fill" from="red" to="blue"  repeatDur="10s" /&gt; 
+
+<span class="nota"> qui "repeatDur" è inferiore a "dur" e questo farà interrompere l'animazione ai 7s e allo stesso tempo il valore di 'top' si bloccherà a 17  </span>
+&lt; animate attributeName="top" from="10" to="20" dur="10s" repeatDur="7s" /&gt; 
+</pre>
+</p>
+
+<h3>accumulate e additive</h3>
+
+<dl>
+	<dt><b>accumulate</b>: controlla se un'animazione è cumulativa. Può avere i seguenti valori: </dt>
+	<dd><b>sum</b>: ripete la stessa animazione di quella precedente partendo dal punto in cui quest'ultima ha terminato </dd>
+	<dd><b>none</b>: è il default che ripete semplicemente ma non è cumulativa </dd>
+</dl>	
+<p>
+L'attributo <tt>accumulate</tt> è ignorato se l'animazione non è ripetuta oppure se l'animazione viene definita con il solo attributo <tt>to</tt>
+</p>
+
+<p>
+<b>Esempi con accumulate e additive:</b> <br />
+Nell'esempio seguente è definita una 'pulsing' animazione che farà aumentare la 'width' di un rettangolo di 100px in 50s. Avviene che ogni semplice animazione porta la 'width' ad aumentare di 15 e a concludere a 10; quindi dopo i primi 5 secondi da 20 iniziale la 'width' diventerà 30; l'animazione si ripeterà ripartendo (cumulativa) da 30 fino a diventare 40 a fine seconda animazione. Quindi dopo 10 ripetizioni avremo una 'width' di 120px
+<pre>
+&lt;rect width="20px"...&gt; 
+	&lt;animate attributeName="width" dur="5s" values="0; 15; 10" additive="sum" accumulate="sum" repeatCount="10" /&gt; 
+&lt;/rect&gt; 
+</pre>
+</p>
+<p>
+Qui è da notare il fatto che il valore di "additive" non è dichiarato per cui sarà assunto quello di default che è "replace" che fa si che il valore originale dell'attributo (in questo caso la 'width') venga ignorato per cui si avrà che il rettangolo aumenterà da 10 a 20 nei primi 5s e poi da 20 a 30 nei successivi 5s e così via fino a diventare di 110 dopo 10 ripetizioni. 
+<pre>
+&lt;rect width"20px" ... &gt; 
+	&lt;animate attributeName="width" dur="5s" from="10px" to="20px" accumulate="sum" repeatCount="10" /&gt; 
+&lt;/rect&gt; 
+</pre>
+</p>
+<p>
+L'esempio seguente rende l'animazione esplicitamente 'additive' e quindi l'animazione inizia con il valore della 'width' a 20px e dopo i primi 5 secondi diventa 30px e così via 
+<pre>
+&lt;rect width="20px"...&gt; 
+&lt;animate attributeName="width" dur="5s" from="10px" to="20px" accumulate="sum" additive="sum" repeatCount="10" /&gt; 
+&lt;/recxt&gt; 
+</pre>
+</p><!--Fine esempi accumulate -->
+
+<dl>
+	<dt><b>additive</b>: permette di definire un'animazione additiva. Può avere i seguenti valori:</dt>
+	<dd><b>sum</b>: definisce che l'animazione aggiungerà i valori già dichiarati o altre animazioni.  </dd>
+	<dd><b>replace</b>: è il valore di default. E definisce che l'animazione sostituirà i valori già dichiarati o altre animazioni ' </dd>
+</dl>	
+
+<p>Per capire il funzionamento di questo attributo che rende l'animazione diciamo così <q>aggiuntiva</q> è meglio guardare il seguente esempio. Qui succede che l'animazione fa si che la 'width' parta da 20px e diventi 30px in 10 secondi. Ciò significa che i 10px di incremento che separano il "from" dal "to" si vanno ad aggiungere al valore iniziale della 'width' che è di 20px. Se non fosse stato dichiarato l'attributo "additive" il parser avrebbe valutato il suo valore di default che è <b>replace</b> ed l'animazione avrebbe trasformato la 'width' portandola da un valore iniziale di 0 ad 10px, in altre parole avrebbe ignorato e sostituito il valore iniziale dichiarato di 20px.    
+<pre>
+&lt;rect width="20px" ...&gt; 
+	&lt;animate attributeName="width" from="0px" to="10px" dur="10s" additive="sum" /&gt; 
+&lt;/rect&gt; 
+</pre>
+</p>
+<p>
+Nell'esempio successivo l'immagine si muove lungo il primo 'path'; poi inizia il secondo 'path' appena finisce il primo ed infine parte il terzo appena termina il secondo 
+<pre>
+&lt;img ...&gt; 
+	&lt;animateMotion begin="0" dur="5s" path="[some path]" additive="sum" fill="freeze" /&gt; 
+	&lt;animateMotion begin="5s" dur="5s" path="[some path]" additive="sum" fill="freeze" /&gt; 
+	&lt;animateMotion begin="10s" dur="5s" path="[some path]" additive="sum" fill="freeze" /&gt; 
+&lt;/img&gt; 
+</pre>
+</p>
+<p>
+Altro esempio interessante è il seguente dove ogni qualvolta l'utente muove il mouse sull'immagine interrompe il movimento dell'immagine prodotto dalla precedente dichiarazione "animateMotion". Quando il "mouseFollow" termina allora il suo effetto si interrompe e "animateMotion" riprende il suo percorso.
+<pre>
+&lt;img ...&gt; 
+	&lt;animateMotion dur=10s repeatDur="indefinite" path="[some nice path]" /&gt; 
+	&lt;mouseFollow begin="mouseover" dur="5s" additive="replace" fill="remove" /&gt; 
+&lt;/img&gt; 
+</pre>
+</p>
+<p class="nota">Gli attributi "by" e "to" possono non tenere conto dell'"additive" se : <br />
+&bull; "by" è definito senza il "from". In tal caso l'animazione è come se fosse "additive=sum" <br />
+&bull; "to" è definito senza il "from" e l'attributo supporta le "addition". In tal caso l'animazione viene a diventare un misto di "additive" e "non-additive" e ad ogni modo il valore specificato dal "to" si sovrappone al valore dichiarato come se l'animazione fosse "non-additive"   
+</p>
+<p>
+Nel seguente esempio sono definite due "additive" animazioni. La prima "by-animation" applica un attributo delta 'x' da 0 a -10 e la seconda "to-animation" porta il valore della 'x' a 10
+<pre>
+&lt;foo x="0" .../&gt; 
+	&lt;animate id="A1" attributeName="x" by="-10" dur="10s" fill="freeze" /&gt; 
+	&lt;animate id="A2" attributeName="x" to="10"  dur="10s" fill="freeze" /&gt; 
+&lt;/foo&gt; 
+</pre>
+</p>
+<p>
+L'esempio successivo invece è "cumulativo" ma non "aggiuntivo". Succede che per mezzo di 'replace' non tiene conto del valore dato a "top" ed inizia al valore di 20 aumenta di 10px arrivando a 30px; è cumulativo quindi la seconda iterazione riprende da 30px e aumenta di 10 arrivando a 40px e cosi via
+<pre>
+&lt;img ... &gt; 
+	&lt;animate dur="10s" repeatDur="indefinite" attributeName="top" from="20" by="10" additive="replace" accumulate="sum" /&gt; 
+&lt;/img&gt; 
+</pre>
+</p>
+
+
+<h3>Controllo della durata attiva (end)</h3>
+
+<p class="nota">SMIL fornisce ulteriori attributi che permettono di controllare la <q>durata attiva</q> (<b>durata effettiva dell'animazione</b>).  </p>
+<dl>
+	<dt><b>end</b>: definisce un valore finale per l'animazione che può vincolare la durata attiva</dt>
+	<dd>Il suo valore può specificare una lista di tempi. Questo può essere utile per specificare differenti modi e regole per terminare un'animazione </dd>
+</dl>	
+<p>
+Esempi: <br />
+Nell'esempio seguente l'aniazione terminerà dopo 10 secondi oppure quando l'elemento 'foo' termina.
+<pre>
+&lt;animate dur="2s" repeatDur="10s" end="foo.end" ... /&gt; 
+</pre>
+</p>
+<p>
+Nell'esempio successivo l'animazione inizia quando l'utente clicca sull'elemento target e termina dopo 30 secondi che è avvenuto l'evento 'click'. Attenzione che se l'utente non clicca sull'elemento entro 30 secondi e vi clicca dopo l'animazione non partirà
+<pre>
+&lt;animate begin="click" dur="2s" repeatDur="indefinite" end="30s" ... /&gt; 
+</pre>
+</p>
+<p>
+L'esempio successivo mostra una presentaione in cui un'immagine è mossa da una parte all'altra. Ogni passo è impostato a ripetersi 3 volte prima di terminare (il secondo inizia quando termina il primo e cosi via) però allo stesso tempo può essere concluso dal click fatto su un eventuale elemento 'next'; tale click quindi permette di avanzare di un passo la presentazione.
+<pre>
+&lt;img id="objectToMove" ...&gt; 
+	&lt;animateMotion id="step1" begin="0" dur="5s" repeatCount="3" end="next.click" path.../&gt; 
+	&lt;animateMotion id="step2" begin="step1.end" dur="5s" repeatCount="3" end="next.click" path.../&gt; 
+	&lt;animateMotion id="step3" begin="step2.end" dur="5s" repeatCount="3" end="next.click" path.../&gt; 
+	&lt;animateMotion id="step4" begin="step3.end" dur="5s" repeatCount="3" end="next.click" path.../&gt; 
+	&lt;animateMotion id="step5" begin="step4.end" dur="5s" repeatCount="3" end="next.click" path.../&gt; 
+&lt;/img&gt; 
+</pre>
+</p>
+
+<dl>
+	<dt><b>min</b>: specifica il valore minimo della durata attiva </dt>
+	<dt><b>max</b>: specifica il valore massimo della durata attiva </dt>
+</dl>	
+<p>
+&bull; Se il valore di "dur" è maggiore del valore di "max" la durata attiva sarà uguale al valore di "max" <br />
+&bull; Se il valore di "dur" è inferiore al valore di "min" la durata attiva sarà uguale al valore di "min" 
+</p>
+
+
+<h3>begin & end</h3>
+
+<p>
+Sia <tt>begin</tt> che <tt>end</tt>  possono accettare una serie di valori separati da un punto e virgola. Per esempio nell'esempio seguente l'animazione partirà dopo 1 secondo oppure se viene fatto 'click' sull'elemento "rettangolo1"
+<pre>
+&lt;animate attributeName="x" from="0" to="250" dur="2s" begin="1s;rettangolo1.click" fill="freeze" /&gt;
+</pre>
+</p>
+<p>
+Oltremodo interessante la cosa diventa quando si impostano più valori sia per <tt>begin</tt> che per <tt>end</tt>. In questo caso il primo valore di <tt>begin</tt> va a corrispondersi a quello di <tt>end</tt> e cosi via in modo da realizzare un'animazione con stop e riprese come nell'esempio seguente
+<pre>
+&lt;animate attributeName="x" from="0" to="300" dur="7s" begin="0; 2s; 4s" end="1s; 3s; 5s" fill="freeze" /&gt;
+</pre>
+succede che l'animazione scatta subito e si interrompe dopo 1 secondo; al secondo due riparte (dall'inizio) per fermarsi al secondo tre cioè dopo 1 secondo; al quarto secondo riprende per fermarsi al secondo cinque ma sempre dopo un secondo. In pratica la posizione finale dell'elemento sarà quella ottenuta in un secondo di tempo che sarebbe la settima parte della durata totale 
+</p>
+
+
+<h3>Calcolare la durata attiva</h3>
+
+<p class="nota">La seguente  <a href="http://www.w3.org/TR/2001/REC-smil-animation-20010904/#ComputingActiveDur">tabella</a> è molto indicativa al fine di comprendere il valore della durata attiva (durata effettiva dell'animazione)
+</p>
+
+<h3>Congelamento di animazioni</h3>
+
+<p>
+Un'animazione una volta terminata, per default reimposta i valori iniziali. L'attributo <b>fill</b> ci da la possibilità di cambiare questo settaggio e congelare i valori ottenuti dall'animazione. Nell'esempio seguente notiamo che: 
+<pre>
+&lt;img top="3" ...&gt; 
+	&lt;animate begin="5s" dur="10s" attributeName="top" by="100" /&gt; 
+&lt;/img&gt; 
+</pre>
+</p>
+<p>
+il 'top' dell'immagine rimarrà stazionario al valore di 3 per 5 secondi poi nell'arco di 10s diventerà 100; quindi dopo 15 secondi l'animazione sarà terminata e il valore di 'top' ritornerà 3. Per cambiare questo e fare in modo che il valore si blocchi a 100 assegnamo all'attributo "fill" il valore <b>freeze</b> 
+<pre>
+&lt;img top="3" ...&gt; 
+	&lt;animate begin="5s" dur="10s" attributeName="top" by="100" fill="freeze" /&gt; 
+&lt;/img&gt; 
+</pre>
+</p>
+
+<dl>
+	<dt>L'attributo <b>fill</b> può avere i seguenti valori:</dt>
+	<dd><b>freeze</b>: questo valore permette di congelare i valori ottenuti al termine dell'animazione. Tali valori rimarranno tali fino alla chiusura del documento </dd>
+	<dd><b>remove</b>: è il valore di default e fa si che l'effetto dell'animazione venga rimosso quando l'animazione termina a meno che l'animazione non venga <q>reiniziata</q> (restarted).  </dd>
+</dl>	
+<p>
+Nell'esempio seguente l'animazione si ripeterà per 2 volte ed ancora una mezza volta per cui si avrà un valore finale bloccato a 15.
+<pre>
+&lt;animate from="10" to="20" dur="4s" repeatCount="2.5" fill="freeze" ... /&gt; 
+</pre>
+</p>
+<p>
+Nell'esempio successivo manca l'attributo "dur" per cui la semplice animazione risulta indefinita. La <q>durata attiva</q> è forzata da "end" a 10 secondi ma dal momento in cui un'interpolazione non è definita il valore sarà congelato a 10
+<pre>
+&lt;animate from="10" to="20" end="10s" fill="freeze" .../ &gt; 
+</pre>
+</p>
+
+
+<h3>Ricominciare un'animazione</h3>
+<p>
+Nel caso di un animazione definita con l'attributo "begin" relativa ad un evento (es: begin=foo.click) l'evento può verificarsi in qualsiasi momento e più volte. In questo caso potrebbe essere utile ricominciare di nuovo l'animazione se dovesse verificarsi, per esempio, un secondo click. L'  attributo <b>restart</b> permette di definire tale controllo:
+<dl>
+	<dt><b>restart</b>: può avere i seguenti valori</dt>
+	<dd><b>always</b>: è il valore di default che permette all'animazione di essere ripresa in qualsiasi momento </dd>
+	<dd><b>whenNotActive</b>: l'animazione può essere reiniziata solo quando non è attiva</dd>
+	<dd><b>never</b>: l'animazione non può essere reiniziata per il resto della durata del documento</dd>
+</dl>	
+</p>
+
+
+<h2>Elementi per Animazioni</h2>
+<p class="nota">Vedere <a href="http://www.w3.org/TR/2001/REC-smil-animation-20010904/#AnimationElements">SMIL Recommendation</a>  oppure 
+ <a href="http://www.w3.org/TR/SVG11/animate.html#AnimateElement">SVG Recommendation</a>
+</p>
+<dl>
+	<dt><b>&lt;animate&gt; </b> : vedi sopra</dt>
+	<dt><b>&lt;set&gt;</b> : permette di definire il valore di un attributo per una specifica durata e dopo che l'animazione è completata l'effetto non è più applicabile e il valore ritorna quello originario come nel caso dell'esempio seguente. </dt>
+</dl>	
+
+<p>
+Esempi di <tt>set</tt> sono in questa <a href="Set.html">pagina</a>
+</p>
+
+
+<dl>
+	<dt><b>&lt;animateMotion&gt;</b> : permette di spostare un elemento lungo un percorso ("path") definito. </dt>
+</dl>	
+<p>
+Vedere il file <a href="animateMotion.html">animateMotion</a>
+</p>
+
+<dl>
+	<dt><b>&lt;animateColor&gt;</b> : permette di definire un'animazione dell'attributo colore </dt>
+</dl>	
+<dl>
+	<dt><b>&lt;animateTransform&gt; </b>: permette nell'animazione di un elemento di controllare la sua traslazione, la sua scala, rotazione e inclinazione (translation, scaling, rotation, skewing). </dt>
+</dl>	
+
+<p>
+	<a href="http://www.w3.org/TR/SVG11/animate.html#AnimateTransformElement">Specifiche SVG su animateTransform</a>. <br />
+</p>
+<p>
+Vedere il file <a href="../transform.html#animateTransform">Transform</a>
+</p>
+
+<h3>Elementi che possono essere animati </h3>
+
+<p class="nota"> <a href="http://www.w3.org/TR/SVG11/animate.html#AnimationAttributesAndProperties">Vedere qui</a> </p>
+
+
+<h2>Interfacce del DOM</h2>
+
+<h3>ElementTimeControl</h3>
+<p class="nota ">Ci sono diversi metodi per controllare il comportamento delle animazioni. Questi metodi sono utilizzati per iniziare o terminare la "durata attiva" di un elemento</p>
+
+<dl>
+	<dt><b>beginElement()</b> : crea un'istanza "begin" del tempo attuale </dt>
+	<dt><b>beginElementAt(in float offset)</b> : crea un'istanza "begin" del tempo attuale maggiorato del parametro 'offset' (che deve essere in secondi) </dt>
+	<dt><b>endElement()</b> : crea un'istanza "end" del tempo attuale </dt>
+	<dt><b>endElementAt(in float offset)</b> : crea un'istanza "end" del tempo attuale maggiorato del parametro 'offset' (che deve essere in secondi) </dt>
+</dl>	
+
+<h3>TimeEvent</h3>
+
+<dl>
+	<dt><b>beginEvent</b> : scatta quando inizia l'animazione. Può scattare ogni volta che incomincia la 'durata attiva' (quando c'è il "restart" ma non quando c'è il "repeat"). Può anche scattare anche quando l'elemento venga iniziato con i metodi "beginElement" e "beginElementAt"   </dt>
+	<dt><b>endEvent</b> : scatta quando scatta l'"end". Non scatta ad ogni semplice ripetizione. Può scattare anche quando l'elemento è terminato con i metodi "endElement" e "endElementAt" </dt>
+	<dt><b>repeatEvent</b> : scatta quando ogni iterazione si ripete ma solo dopo la prima. Il metodo fornisce una indicazione numerica di quale iterazione si sta compiendo   </dt>
+</dl>	
+<p>
+Esempio dell'evento <b>repeat</b>: <br /> 
+Qui avviene che l'immagine con id=endAnim inizi (venga visualizzata) dopo che l'elemento "foo" si è ripetuto 2 volte. Allo stesso tempo quest'ultimo termina quando si fa click sull'immagine. In altre parole, ponendo come esempio che l'elemento "foo" fosse una presentazione (oppure un'altra immagine), si obbliga l'utente a vedere la presentazione (o immagine) 2 volte prima di dargli la possibilità di poter chiudere la presentazione.
+<pre>
+&lt;animate id="foo" repeatCount="10" end="endAnim.click" ... /&gt; 
+&lt;img id="endAnim" begin="foo.repeat(2)" .../&gt; 
+</pre> 
+<h3>Interfacce SVGAnimationElement </h3>
+<p class="nota"> <a href="http://www.w3.org/TR/SVG11/animate.html#InterfaceSVGAnimationElement">Vedere qui</a> </p>
+
+
+
+<br /><br /><br /><br /><br /><br />
+
+
+</p>
+
+
+<br />
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+<embed src="allegati/Animazione.svg" type="image/svg+xml" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Sfpndo finestra documento</title>
+<style type="text/css">
+html,body{margin:0; padding:0;}
+h3{ margin:0; padding:5px 10px; color:rgb(50,50,250); font-size:18px; }
+
+#container{ position:absolute; width:100%; height:100%; margin:0; padding:0; }
+
+div.j1{ position:absolute; width:100%; height:100%;  z-index:1; }
+#canvas_rettangolo{ position:absolute; width:100%; height:100%; margin:0; padding:0;  }
+
+div.j2{ position:relative; width:600px;  margin:10px; padding:10px; background:#FF0; z-index:2;}
+
+</style>
+
+<script type="text/javascript" src="../../jQuery-1.6.min.js"></script>
+
+<script type="text/javascript">
+
+function contesto(canvass){
+var canvas = document.getElementById(canvass);
+if (canvas.getContext){
+var ctx = canvas.getContext('2d');
+} // if  
+else{
+alert("Aggiorna Microsoft o CAMBIALO")
+}
+return ctx; 
+} // chiude la funzione 'contesto' 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function cerchio_strambo(x,y,r){
+var ctx = contesto('canvas_rettangolo');
+ctx.fillStyle = "rgb(0,0,0)";
+ctx.globalAlpha = Math.random()/2;			// l'opacità sarà al massimo 0.5
+//ctx.globalAlpha = 0.8;
+ctx.arc(x,y,r,0,Math.PI*2,true);
+ctx.fill();
+} // chiude la funzione 'arco_strambo' 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function draw(){
+var ctx = contesto('canvas_rettangolo');
+ctx.fillStyle = "#F00";
+ctx.fillRect(0,0,100,100);			// rettangolo che occupa l'intero elemento <canvas>
+// creazione di 10 cerchi con misure casuali richiamando la funzione "cerchio_strambo"  
+for(i=1; i<10; i++ ){
+ctx.beginPath();
+var x = Math.random()*10*i;
+var y = Math.random()*10*i;
+var r = Math.random()*15;
+ctx.moveTo(x,y);
+cerchio_strambo(x,y,r);			// richiamo funzione 
+ctx.closePath();
+} // for 
+} // chiude la funzione 'draw' 
+
+
+</script>
+
+
+</head>
+
+<body onLoad="draw();"> 
+
+<div id="container">
+	
+<div class=j1>
+		<canvas id="canvas_rettangolo" width="100" height="100"></canvas>  
+</div><!--j1-->
+ 
+
+<div class="j2"> 
+<h3>Sfondo per la finestra con &lt;canvas&gt;   </h3>
+Per dare come sfondo della finestra la figura di un elemento &lt;canvas&gt; ho creato un &lt;div&gt; container che occupa la finestra in tutta la sua grandezza. Poi ho creato un &lt;div&gt; (j1) in cui ho inserito l'elemento &lt;canvas&gt;. Ad entrambi ho assegnato nei CSS <q>position:absolute</q> con dimensioni di altezza e larghezza del 100%. 
+A questo punto si possono inserire altri elementi (&lt;div&gt;, ecc.. ) e stare accorti ad assegnare l'appropriato <q>z-index</q> 
+</div><!--j2-->
+
+
+
+</div><!--container-->
+ 
+
+
+
+</body>
+</html>

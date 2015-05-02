@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>rotate</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+
+#canvas{ margin:10px; padding:0; border: 1px solid black; } 
+#canvas2{ margin:20px; padding:0; border: 2px solid #000; }
+	   
+</style>  
+
+<script type="text/javascript">  
+ 
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');     
+
+var radians = (Math.PI/180)* 20;  // converte 20 gradi in radianti
+
+ctx.fillStyle = "red";
+ctx.fillRect(0,0,100,100); 
+
+ctx.rotate(radians);
+//ctx.translate(100,100);     
+ctx.fillRect(100,100,100,100); 
+
+} // chiude la funzione 'draw' 
+
+</script>  
+
+</head>  
+<body onLoad="draw(); draw2()"> 
+
+<h3>rotate(angolo)</h3>
+
+<p>
+Accetta un solo parametro che rappresenta il valore (espresso in radianti) di rotazione dell'elemento &lt;canvas&gt;. Il punto di rotazione centrale è sempre l'origine del canvas; per cambiare il punto centrale c'è bisogno di spostare il canvas con il metodo <q>translate</q>.  
+</p>
+
+<canvas id="canvas" width="200" height="300"></canvas>
+
+<!--
+///////////////////////////////////////////////////////////////////////
+-->
+
+<canvas id="canvas2" width="150" height="150"></canvas>  
+  
+<script type="text/javascript">
+
+function draw2() {
+var ctx = document.getElementById('canvas2').getContext('2d');
+ctx.translate(75,75);		// posizionamento del punto di rotazione al centro dell'elemento <canvas> 
+for (i=1;i<6;i++){
+ctx.save();			// senza questo metodo non cambia niente 
+//ctx.fillStyle = 'rgb(255,'+Math.abs(306-51*i)+',0)';	// 306-51=255 -- vedere riga 71 il significato di Math.abs 
+var tt = 306-51*i;	// va bene anche senza il Math.abs (esegue prima la mpltiplicazione e poi la sottrazione)
+ctx.fillStyle = 'rgb(255,'+tt+',0)';
+for (j=0;j<i*6;j++){
+ctx.rotate(Math.PI*2/(i*6));		// Math.PI*2 è uguale a 360° in radianti per cui dividendolo nel ciclo per un valore pari al numero di iterazione del ciclo (6) si ha uno spostamento del punto di rotazione centrale per tutto l'intero cerchio 
+ctx.beginPath();
+ctx.arc(0,i*12.5,5,0,Math.PI*2,true);	// si imposta il primo parametro (x) a 0 perchè sarà grazie al metodo 'rotate' che avverrà lo spostamento del valore x; il secondo parametro (y) lo si imposta ad un valore che va da 0 a un massimo di 12.5*6=75 che è la metà dell'elemento <canvas>; il raggio a 5 e lo 'startAngle' e 'endAngle' a formare un cerchio intero. Conseguentemente verranno creati tanti cerchietti fino a quando non si sarà esaurito il primo ciclo con gli spostamenti impostati in riga 62   
+ctx.fill();
+} // for
+ctx.restore();		// senza questo metodo non cambia niente 
+} // for 
+} // chiude la funzione 'draw2' 
+
+//var jk = Math.abs(-20);	// output: 20 -- Math.abs restituisce un valore assoluto. Nel senso che se è negativo lo trasforma in positivo  
+//alert(jk);
+//var k = 306-51*5;		// 51 -- esegue prima la mpltiplicazione e poi la sottrazione 
+//alert(k);
+</script>  
+  
+  
+  
+  
+
+</body>
+</html>

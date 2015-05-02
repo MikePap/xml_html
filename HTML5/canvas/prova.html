@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>prova</title>
+<style type="text/css">
+html,body{margin:0; padding:0;}
+
+#divo{ /*width:100%; height:100%; background-color:#FF0;*/ }
+
+#container{ position:absolute; width:100%; height:100%; margin:0; padding:0; }
+#canvas_rettangolo{ position:absolute; width:100%; height:100%; margin:0; padding:0;  /*display:none;*/  }
+div.j1{ position:absolute; width:100%; height:100%;  z-index:1; }
+div.j2{ position:relative; width:200px; height:80px; margin:0; padding:0; background:#FF0; z-index:2;}
+
+</style>
+
+<script type="text/javascript" src="../../jQuery-1.6.min.js"></script>
+
+<script type="text/javascript">
+
+function contesto(canvass){
+var canvas = document.getElementById(canvass);
+if (canvas.getContext){
+var ctx = canvas.getContext('2d');
+} // if  
+else{
+alert("Aggiorna Microsoft o CAMBIALO")
+}
+return ctx; 
+} // chiude la funzione 'contesto' 
+
+function arco_strambo(x,y,r){
+var ctx = contesto('canvas_rettangolo');
+ctx.fillStyle = "rgb(0,0,0)";
+ctx.globalAlpha = Math.random()/2;			// l'opacità sarà al massimo 0.5
+//ctx.globalAlpha = 0.8;
+ctx.arc(x,y,r,0,Math.PI*2,true);
+ctx.fill();
+} // chiude la funzione 'arco_strambo' 
+
+
+function draw(){
+var ctx = contesto('canvas_rettangolo');
+
+ctx.fillStyle = "#F00";
+ctx.fillRect(0,0,100,100);			// rettangolo che occupa l'intero elemento <canvas>
+
+
+for(i=1; i<10; i++ ){
+ctx.beginPath();
+var x = Math.random()*10*i;
+var y = Math.random()*10*i;
+var r = Math.random()*15;
+
+//ctx.moveTo(5*i,5*i);
+ctx.moveTo(x,y);
+//ctx.moveTo(Math.random()*,);
+// Fare la prova anche senza le due precedenti righe (il 'beginPath' e il 'moveTo') 
+//var casuale = Math.random()*20*i;
+arco_strambo(x,y,r);
+ctx.closePath();
+} // for 
+} // chiude la funzione 'draw' 
+
+
+</script>
+
+
+</head>
+
+<body onLoad="draw();"> 
+<!--
+<body onLoad="draw();"> 
+-->
+
+<script  type="text/javascript">
+jQuery(document).ready(function(){
+
+var L_finestra = $(window).width();
+var H_finestra = $(window).height();
+
+//$("#divo").css({"width":L_finestra, "height":H_finestra, 'background-color':'#FF0' });
+//$("#canvas_rettangolo").css({"width":L_finestra, "height":H_finestra });
+//draw();
+
+//$("#canvas_rettangolo").css({"width":"100%", "height":"100%" });
+
+}); // chiude ready 
+</script>
+
+
+<div id="container">
+	
+	<div class=j1>
+		<canvas id="canvas_rettangolo" width="100%" height="100%"></canvas>  
+	</div> 
+
+	<div class="j2">hiuhiu qwqewqe</div>
+
+
+</div><!--container-->
+ 
+
+
+
+
+<!--
+<canvas id="canvas_rettangolo" ></canvas>  
+
+<div>
+	<button class="pik">click me</button>
+</div>
+<div id="divo">
+	<canvas id="canvas_rettangolo" width="100%" height="100%"></canvas>  
+</div>
+
+/*
+//ctx.globalAlpha = 0.5;
+ctx.fillStyle = "#FFF";
+//ctx.globalAlpha = Math.random()/2;
+ctx.globalAlpha = 0.1;
+
+for(i=0; i< 15; i++){ 
+//ctx.arc(30,55,5,0,Math.PI*2,true);		// cerchio 
+var r = Math.floor( Math.random()*10);
+var left = Math.floor( Math.random() * 10); 
+var top = Math.floor( Math.random() * 10); 
+ctx.arc(left*i,top*i,r,0,Math.PI*2,true);		// cerchio 
+ctx.fill();
+} // for 
+*/
+
+-->
+
+
+
+<!--
+
+http://localhost/xml_html/HTML5/canvas/prova.html
+
+-->
+
+
+
+</body>
+</html>

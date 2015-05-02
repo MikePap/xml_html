@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Polilinea</title>
+<style type="text/css">
+html, body{ margin:0; padding:0;  }
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+code, pre{ color:rgb(50,150,50);}
+
+svg{ width:300px; height:250px; border:1px solid #CCC;  }
+embed{ width:300px; height:250px; border:1px solid #CCC; }
+
+</style>
+<script type="text/javascript" src="../jQuery-1.6.min.js"></script>
+</head>
+<body>
+
+<h1>Polyline</h1>
+
+<p class="nota">L'elemento &lt;polyline&gt; è utilizzato per creare una figura che è formata da più linee dritte. L'attributo <b>points</b> definisce le coordinate di ogni vertice delle varie linee  </p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <polyline points="20,20 40,25 60,40 80,120 130,140 200,180"
+  style="fill:none;stroke:black;stroke-width:3" />
+<!--
+** Provare ad assegnare al 'fill' un colore **
+  style="fill:blue;stroke:black;stroke-width:3" />
+-->
+
+</svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <polyline points="0,40 40,40 40,80 80,80 80,120 120,120 120,160" style="fill:white;stroke:red;stroke-width:4" />
+</svg>
+
+<br />
+
+<!--[if lt IE 9]>
+	<p class="codice">File SVG esterno incorporato per soddisfare IE 8</p>
+	<embed src="allegati/polilinea.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

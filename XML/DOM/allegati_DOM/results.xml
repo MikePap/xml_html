@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<resultset>
+  <record>
+    <field>6</field>
+    <field>Evento Olio Capitale</field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>7</field>
+    <field>Concorso AVPA 2011  Oli dal Mondo</field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>8</field>
+    <field>Evento Olio Sol 2011</field>
+    <field>Notizie_generali</field>
+  </record>
+  <record>
+    <field>9</field>
+    <field>Evento Sirena d'oro</field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>10</field>
+    <field>Oro giallo 2011</field>
+    <field>Notizie_generali</field>
+  </record>
+  <record>
+    <field>11</field>
+    <field>Concorso regionale Olio Nuovo</field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>12</field>
+    <field>PREMIO L'ORCIOLO D'ORO</field>
+    <field>Frodi</field>
+  </record>
+  <record>
+    <field>13</field>
+    <field>Ercole Olivario 2010</field>
+    <field>Frodi</field>
+  </record>
+  <record>
+    <field>14</field>
+    <field>L'Oro d'Italia</field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>15</field>
+    <field>Premio Nazionale MONTIFERRU</field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>17</field>
+    <field>Si avvicina l'evento del concorso Oro d'Italia</field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>26</field>
+    <field>Scadenza concorso Orciolo d'0ro</field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>27</field>
+    <field>Scadenza concorso Premio Olio Capitale </field>
+    <field>Eventi_fiere</field>
+  </record>
+  <record>
+    <field>30</field>
+    <field>Fatevi il nodo al fazzoletto. Sta per arrivare il concorso oro d'italia.   </field>
+    <field>Eventi_fiere</field>
+  </record>
+</resultset>

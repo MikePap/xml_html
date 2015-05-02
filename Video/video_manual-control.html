@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>video con controlli manuali  </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px; }
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+#divo{position:relative; width:100%; margin:0 auto; text-align:center;  }
+
+
+</style>
+</head>
+<body>
+
+<h1>Video con controlli manuali gestiti con Javascript</h1>
+
+
+<div id="divo"> 
+	<button onclick="playPause()">Play/Pause</button> 
+	<button onclick="makeBig()">Big</button>
+	<button onclick="makeSmall()">Small</button>
+	<button onclick="makeNormal()">Normal</button>
+	<button onclick="SchermoIntero()">Scherno Intero</button>
+<br />
+	<video id="video1" width="420">
+		<source src="allegati/prim.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+		<source src="allegati/prim.webmvp8.webm" type='video/webm; codecs="vp8, vorbis"' />
+		<source src="allegati/prim.ogg" type='video/ogg; codecs="theora, vorbis"' />
+    Your browser does not support HTML5 video.
+	</video>
+</div> 
+
+<script type="text/javascript"> 
+
+var myVideo=document.getElementById("video1"); 
+var divo = document.getElementById("divo"); 
+
+function playPause(){ 
+if (myVideo.paused) 
+  myVideo.play(); 
+else 
+  myVideo.pause(); 
+} // "playPause" 
+
+function makeBig(){ 
+	myVideo.width=560; 
+} // "makeBig"
+
+function makeSmall(){ 
+	myVideo.width=320; 
+} // "makeSmall"
+
+function makeNormal(){ 
+	myVideo.width="420px"; 
+} // makeNormal
+
+function Intero(){
+//var l_page = screen.width;
+//var h_page = screen.height;
+
+divo.style.position = "absolute";
+divo.style.left = 0;
+divo.style.top = 0;
+myVideo.height= screen.availHeight;		// stesso discorso 
+myVideo.width = screen.availWidth;		// Restituisce la larghezza dello schermo sottratte le dimnensioni (larghezze) dei vari oggetti presenti quali barra degli strumenti, barra degli indirizzi, ecc.. 
+
+} // "Intero" 
+
+function NoIntero(){
+	divo.style.position = "relative";
+} // "NoIntero"
+
+
+function SchermoIntero(){
+var w = myVideo.width;
+//alert(w);
+
+if(w < screen.availWidth)
+	Intero();
+else
+makeNormal();
+//	myVideo.width="420px"; 
+} // "SchermoIntero"
+
+</script> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

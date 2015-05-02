@@ -1,0 +1,7 @@
+<?xml version="1.0"  standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<svg width="300" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg"> 
+
+<text x="10" y="100" style="fill:red;font-family:times;font-size:18">Primo esempio di SVG</text> </svg> 

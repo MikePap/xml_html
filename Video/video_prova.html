@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>video_prova</title>
+<style type="text/css">
+
+.nota{ color:red; }
+.codice{ color:green;}
+
+div.video-js-box{ /*width:500px;*/ border:5px solid #F00; }
+
+</style>
+
+<script language="javascript">AC_FL_RunContent = 0;</script>
+<script src="AC_RunActiveContent.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="video-js/video-js.css" type="text/css" media="screen" title="Video JS" charset="utf-8" /> 
+
+<script type="text/javascript" src="video-js/video.js" charset="utf-8"></script>
+
+
+
+</head>
+
+<body>
+<script type="text/javascript" charset="utf-8">
+    // Add VideoJS to all video tags on the page when the DOM is ready
+    VideoJS.setupAllWhenReady();
+  </script>
+
+<h1>Personalizzare i controlli del tag video</h1>
+<p>
+In questo caso con l'aggiunta degli script recuperati dal sito <a href="http://videojs.com/">videojs.com/</a> sono stati aggiunti dei controller che permettono l'utilizzo del "full screen". Per cui serve collegare al documento lo script <b>video.js</b> e il css <b>video-js.css</b>, oltrechè inserire lo script che aggiunge gli script quando il DOM è pronto: <br />
+
+<span class="codice"><code>
+&lt;script type="text/javascript" charset="utf-8"&gt;
+    VideoJS.setupAllWhenReady();
+&lt;script&gt; 
+</code> </span>
+</p>
+
+
+<div class="video-js-box">
+	<video class="video-js" width="480" height="310" controls preload poster="../grafic/sipario.jpg">
+
+		<source src="prim.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+		<source src="prim.webmvp8.webm" type='video/webm; codecs="vp8, vorbis"' />
+		<source src="prim.ogv" type='video/ogg; codecs="theora, vorbis"' />
+
+		<object class="vjs-flash-fallback" width="480" height="310" type="application/x-shockwave-flash"
+        data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
+			<param name="movie" value="video_prova.swf" />
+			<param name="allowfullscreen" value="true" />
+			<param name="flashvars" value='config={"playlist":["http://video-js.zencoder.com/oceans-clip.png", 'autoPlay':false,'autoBuffering':true}]}' />
+ 
+			<img src="http://video-js.zencoder.com/oceans-clip.png" width="480" height="370" alt="Poster Image" 
+          title="No video playback capabilities." />
+		</object>
+
+	</video>
+</div>
+
+<p class="nota">
+E' necessario racchiudere il tag video nel div con classe <b>video-js-box</b> e dare al tag video la classe <b>video-js</b>
+</p>
+<p>Il programma per convertire video in tutti i formati è  <span class="codice">Miro video converter</span>. <br />
+E' gratuito dal sito <a href="http://www.mirovideoconverter.com/"> http://www.mirovideoconverter.com/</a> </p>
+
+
+
+<!--
+
+<video width="640" height="360" controls>
+	<source src="__VIDEO__.MP4"  type="video/mp4" />
+	<source src="__VIDEO__.OGV"  type="video/ogg" />
+	<object width="640" height="360" type="application/x-shockwave-flash" data="__FLASH__.SWF">
+		<param name="movie" value="__FLASH__.SWF" />
+		<param name="flashvars" value="controlbar=over&amp;image=__POSTER__.JPG&amp;file=__VIDEO__.MP4" />
+		<img src="__VIDEO__.JPG" width="640" height="360" alt="__TITLE__"
+		     title="No video playback capabilities, please download the video below" />
+	</object>
+</video>
+
+-->
+
+
+
+
+</body>
+</html>

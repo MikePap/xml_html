@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>canvas element</title>
+<style type="text/css">
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+#canvas{ border:1px solid #CCC;  }
+
+</style>
+<script type="text/javascript" src="../../jQuery-1.6.min.js"></script>
+</head>
+
+<body>
+
+<p class="rosso">p rosso</p>
+
+<canvas id="canvas" width="200" height="200"></canvas>
+
+<script type="text/javascript">
+$(document).ready(function(){
+//$('p').css('color', 'red');
+/*
+var ctx = document.getElementById('myCanvas').getContext('2d');
+ctx.fillStyle='#F00';
+ctx.fillRect(0,0,80,100);
+*/
+/*
+//function draw2(){
+ctx = document.getElementById('canvas').getContext('2d');     
+
+//var ctx = $("#canvas2");	// NON FUNZIONA 
+//ctx.getContext('2d');
+
+ctx.fillStyle = "#00F";
+ctx.fillRect(10,10,100,100);
+
+//ctx.globalCompositeOperation = "destination-over";	
+// mettendo qui la regola fa si che la prima figura sta sopra tutte le altre e la seconda sulla terza
+
+ctx.fillStyle = "#0F0";
+ctx.fillRect(50,20,80,80);
+
+//ctx.globalCompositeOperation = "destination-over";	
+// qui invece fa si che la seconda figura stia sopra le altre e la prima sta in seconda posizione sopra la terza 
+
+ctx.fillStyle = "#F00";
+ctx.arc(100,100,50,0,Math.PI*2,true);
+ctx.fill();
+//} // chiude la funzione 'draw2()'
+//draw2();
+*/
+
+function rettangolo(){
+var ctx = document.getElementById('canvas').getContext('2d');     
+ctx.fillStyle = "#00F";
+ctx.fillRect(10,10,100,100);
+
+} // chiude la funzione 'rettangolo' 
+
+
+/*
+$('#canvas').hover(function(){
+var jk = rettangolo();
+
+//rettangolo();
+//$(this).hide();
+},
+function(){
+$(this).css({'width':0, 'height':0});
+//jk.detach();
+//$('p.rosso').hide();
+}
+); // hover 
+*/
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+function Lin_Gradiente2(elem,incl,fin,colore1,colore2){ 
+var ctx = document.getElementById(elem).getContext('2d');
+var lingrad = ctx.createLinearGradient(0,0,incl,fin);		
+// i primi 2 parametri rappresentano il punto iniziale del gradiente per cui 0 e 0 sono da considerarsi fissi. "fin" deve essere uguale all'altezza dell'elemento <canvas> ed "incl" stabilisce una eventuale inclinazione del gradiente: se impostato a zero sarà verticale. 
+lingrad.addColorStop(0, colore1);	//il primo parametro stabilisce la posizione del gradiente; in questo caso, del primo colore, sarà per forza 0; 
+lingrad.addColorStop(1, colore2);	// il primo parametro è fissato a 1 che rappresenta il punto massimo(finale) del gradiente 
+return lingrad;
+} // chiude la funzione "Lin_Gradiente"
+
+
+//Lin_Gradiente("canvas");
+
+
+var ctx = document.getElementById('canvas').getContext('2d');
+ctx.fillStyle = Lin_Gradiente2("canvas",0,200,"#F00","#00F");
+ctx.fillRect(0,0,200,200);		// 
+
+}); // chiude ready 
+
+</script>
+
+
+<script type="text/javascript">
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+http://localhost/xml_html/HTML5/canvas/primo.html
+
+
+var canvas=document.getElementById('myCanvas');
+//var canvas = $('#myCanvas'); // NON FUNZIONA
+ // canvas is a reference to a <canvas> element
+  var context = canvas.getContext('2d');
+  context.fillRect(0,0,50,50);
+  canvas.setAttribute('width', '300'); // clears the canvas
+  context.fillRect(0,100,50,50);
+  canvas.width = canvas.width; // clears the canvas
+  context.fillStyle='#FF00FF';
+  context.fillRect(100,0,150,350); // only this square remains
+-->
+
+
+
+
+</body>
+</html>

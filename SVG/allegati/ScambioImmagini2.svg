@@ -1,0 +1,66 @@
+<?xml version="1.0" standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<svg	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+			width="250" height="150" version="1.1" id="svgImm2" >
+	<desc>This graphic links to an external image</desc>
+
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/batuffolo.jpg" id="imm1" >
+		<title>My image 1</title>
+	<set attributeName="display"  to="none" begin="click" end="imm2.click"  />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/epidermide.jpg" id="imm2" >
+		<title>My image 2</title>
+	<set attributeName="display"  to="none" begin="click" end="imm3.click"  />  					
+	</image>
+
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/macchie.jpg" id="imm3" >
+		<title>My image 3</title>
+	<set attributeName="display"  to="none" begin="click" end="imm4.click"  />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/gocce.jpg" id="imm4" >
+		<title>My image 4</title>
+	<set attributeName="display"  to="none" begin="click" end="imm1.click"  />  					
+	</image>
+
+
+</svg>
+
+
+<!-- 
+
+va bene anche il seguente ma è più confusionario
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/batuffolo.jpg" id="imm1" >
+		<title>My image 1</title>
+	<set attributeName="display"  to="none" begin="click" end="imm4.click"  />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/epidermide.jpg" id="imm2" >
+		<title>My image 2</title>
+	<set attributeName="display"  to="none" begin="click;imm4.click" end="imm1.click"  />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/macchie.jpg" id="imm3" >
+		<title>My image 3</title>
+	<set attributeName="display"  to="none" begin="click;imm4.click" end="imm2.click"  />  					
+	</image>
+
+	<image x="10" y="10" width="100px" height="100px" xlink:href="../../Immagini/gocce.jpg" id="imm4" >
+		<title>My image 4</title>
+	<set attributeName="display"  to="none" begin="click" end="imm3.click"  />  					
+	</image>
+
+
+
+
+ -->
+
+
+
+
+

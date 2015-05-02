@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Disabiltare un form  </title>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+code, pre{ color:rgb(50,150,50);}
+.nota{ color:rgb(250,120,0);}
+.codice{ color:rgb(30,120,30);}
+.grigio{color: grey;}
+.blu{color:#00f;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+dd{ color:#0066FF;}
+tt, em{color:#6a9999}
+
+
+#name:invalid {
+background-color: #DEABB3;
+}
+
+</style>
+</head>
+<body>
+
+
+<h1>Disabiltare i form</h1>
+
+<p>
+Ci sono due metodi per rendere un &lt;form&gt; invalido, cioè far si che vengano disabilitate le convalide definite. 
+</p>
+<dl>
+	<dd>Inserire l'attributo <b>novalidate</b>  nel tag &lt;form&gt; </dd>
+</dl>
+<pre>
+&lt;form  method="post" novalidate&gt;
+	....
+&lt;/form&gt;
+</pre>
+
+<dl>
+	<dd>Inserire l'attributo <b>formnovalidate</b> nel tag &lt;input type="submit"&gt; </dd>
+</dl>
+
+<pre>
+&lt;form  method="post" &gt;
+	&lt;input id="username" placeholder="Inserrisci qualcosa" required /&gt;
+	&lt;input type="submit" name="sub" value="Invia"  id="sub" formnovalidate /&gt;
+&lt;/form&gt;
+</pre>
+
+
+
+<form  method="post" novalidate >
+	<input id="username" placeholder="Inserisci un nome" required />
+	<input type="submit" name="sub" value="Invia"  id="sub" />
+</form>
+
+
+<form  method="post" >
+	<input id="username" placeholder="Inserrisci qualcosa" required>
+	<input type="submit" name="sub" value="Invia"  id="sub" formnovalidate />
+</form>
+
+
+<form  method="post" >
+	<input id="email-address" required pattern="\S+@[a-z]+.[a-z]{3}"  >
+	<input type="submit" name="sub" value="Invia"  id="sub"  />
+</form>
+
+
+
+
+
+<!--
+placeholder="inserisci qualcosa"
+
+jjj@hgh.kjkkl
+
+-->	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

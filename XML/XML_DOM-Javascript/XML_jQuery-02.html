@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>xml e jQuery 2</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+#jk{ position:relative; width:60%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/jQuery-1.6.min.js"></script> 
+
+</head>
+
+<body>
+
+<script  type="text/javascript">
+$(document).ready(function(){
+
+$("select#cambia").change(function() {
+var st = "";
+$("select#cambia option:selected").each(function () {  
+st += $(this).val() + ""; 
+
+$.ajax({
+type: "GET",
+url: "../allegati/books.xml",
+dataType: "xml",
+success: function(xml){  
+
+$('#jk').find('p').detach();					// Eliminazione dati (contenuti nel tag 'p') prima di inserire i nuovi
+			
+$(xml).find('book').each(function(i){
+var title = $(this).find(st).text();			// recupera i nodi che hanno come valore 'st' (opzioni della <select> selezionate)
+$('#jk').append("<p class='codice'>"+title+"</p>");	
+//return (i != 2);		// interrompe il ciclo all'indice 2 che corrisponde al 3 elemento 
+return (i < 2);			// interrompe il ciclo all'indice 2 che corrisponde al 3 elemento 
+}); // each 	
+} // success
+}); // ajax
+}); // chiude select 
+}) // chiude change 
+
+
+}); // chiude ready 
+</script>
+
+
+
+<select id="cambia">
+		<option>Seleziona</option>
+		<option value="title">title</option>
+        	<option value="author">Author</option>
+        	<option value="year">Year</option>
+        	<option value="price">Price</option>
+
+</select>
+
+
+
+<div id="jk"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

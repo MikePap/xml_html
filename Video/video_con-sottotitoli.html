@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>video con sottotitoli</title>
+<style type="text/css">
+html,body,div,video,h1,h2,h3,p{
+margin:0; padding:0; 
+}
+
+h1{ color:#00F; padding:10px;}
+h3{ padding:5px 10px; color:rgb(50,200,50); font-size:18px; }
+p{ padding:5px}
+.nota{ color:#F00;}
+.arancio{color:orange; }
+
+video{
+display:block; border:1px solid; width:380px; height:310;  margin-left:20px;
+}
+#tab_descr{
+margin:20px; background:#666; color:#fff;  
+}
+#tab_descr th{
+background:#333; color:#ff0; 
+}
+#tab_descr tr td:nth-child(odd){ text-align:center; font-size:20px; color:rgb(255,200,200); }
+caption{caption-side: top; text-align:left; color:#999900; font-size:12px;}
+
+
+</style>
+</head>
+<body>
+
+<h1>Video con aggiunta di sottotitoli</h1>
+
+<p>Al seguente video sono state aggiunte due tracce di testo: una in inglese e l'altra in italiano. Anche se alla traccia in inglese è stato dato il "default" (che vuol significare la precedenza), la traccia che i vari browser fanno visualizzare è la seconda cioè quella in italiano.  <br />
+Per vedere le specifiche per i cosidetti <a href="http://msdn.microsoft.com/en-us/library/ie/dn265043(v=vs.85).aspx">TextTrack Object dinamici</a>
+
+</p>
+
+<video width="480" height="310" controls preload>
+	
+	<source src="allegati/Mother2.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+	<source src="allegati/Mother.webm" type='video/webm; codecs="vp8, vorbis"' />
+	<track id="enTrack" src="allegati/Mother.vtt" label="English" kind="captions" srclang="en" default>
+	<track id="itTrack" src="allegati/Mother-it.vtt" label="Italiano" kind="captions" srclang="it">
+
+</video>
+
+
+<table id="tab_descr" width="60%" border="1" cellspacing="3" cellpadding="5">
+<caption>attributi del tag <q>track</q> </caption>
+<tr>
+	<th>Attributo</th>
+	<th>Descrizione</th>
+</tr>
+<tr>
+	<td>default</td>
+	<td>se specificato, questo attributo indica al browser quella che è la traccia di default da visualizzare; è un attributo opzionale, perché comunque si potrà selezionare la traccia dall’apposito controllo, ma non aderendo alla specifica browser come Safari, Chrome e Opera non mostrano i sottotitoli se non si indica almeno una traccia con questo attributo.</td>
+</tr>
+<tr>
+	<td>src</td>
+	<td>deve contenere il riferimento al file .vtt o TTML con i sottotitoli.</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ppecifica il titolo della traccia di testo. Tale titolo è usato dal browser per mostrare la lista delle tracce di testo presenti</td>
+</tr>
+<tr>
+	<td>srclang</td>
+	<td> è l’indicazione con il codice internazionale della lingua della traccia (opzionale)</td>
+</tr>
+<tr>
+	<td>kind</td>
+	<td>specifica la tipologia della traccia; i valori possibili sono <q>captions</q> (sottotitoli con gli effetti audio di accompagnamento come quelli per non udenti del Televideo), <q>subtitles</q> (sottotitoli solo dei dialoghi e del parlato), metadata (tracce per dati di accompagnamento non visuali), <q>description</q> (descrizione per la sintesi vocale), <q>chapters</q> (indicazione dei capitoli). Usando una delle tre ultime tipologie i sottotitoli non sono visualizzati, pertanto nella pratica comune si sceglierà sempre tra <span class="arancio">captions e subtitles</span>.</td>
+</tr>
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

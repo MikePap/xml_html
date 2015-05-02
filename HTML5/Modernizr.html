@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Modernizr</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+</style>
+
+<!--
+http://localhost/xml_html/HTML5/Modernizr.html
+-->
+
+
+<script type="text/javascript" src="../jQuery-1.6.min.js"> </script>
+<!-- <script type="text/javascript" src="../Modernizr_v2.0.js"> </script> collegamneto locale al file -->
+<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.js"> </script>
+
+
+</head>
+
+<body>
+
+<h1>Modernizr</h1>
+<p class="nota"><strong>Moderizr</strong> permette di controllare se una proprietà (elemento) dell'HTML 5 è supportata dal browser. <br />
+E' meglio utilizzare il collegamento alla pagina del sito piuttosto che il file locale; semplicemente per un discorso di aggiornamento
+</p>
+<p>Vedere <a href="http://diveintohtml5.info/detect.html">questo pagina</a> a riguardo </p>
+
+
+<script>
+$(document).ready(function(){
+
+// Controlli vari sugli elementi
+//if (Modernizr.canvas) {
+//if (Modernizr.canvastext) { // è indispensabile perchè alcuni browser supportano l'elemento <canvas> ma non la proprietà 'canvas text' che è stata aggiunta più tardi alla API
+//if (Modernizr.video) {
+//if (Modernizr.localstorage) { // Note that JavaScript is case-sensitive. The Modernizr attribute is called localstorage (all lowercase), but the DOM property is called window.localStorage (mixed case). SUPPORTATO IN IE8
+//if (Modernizr.webworkers) {
+//if (Modernizr.applicationcache) {//"OFFLINE WEB APPLICATIONS" The Modernizr attribute is 'applicationcache'(all lowercase), but the DOM object is called window.applicationCache (mixed case).
+//if (Modernizr.geolocation) {
+//if (Modernizr.inputtypes.tel) { // NON FUNZIONA PER TUTTI I TIPI 
+// al 24/06/2011: VALIDI -> search, tel, url, email
+//NON VALIDI -> number, range, color, date, month, week, time, datetime 
+
+//if (Modernizr.input.placeholder) {
+//if (Modernizr.input.autofocus) {
+if (Modernizr.history) {
+alert("ok");
+} else {
+alert("L'elemento non è disponibile");
+}
+
+
+
+
+/*
+// Controllo del formato video suipportato dal browser
+if (Modernizr.video) {
+  // let's play some video! but what kind?
+  if (Modernizr.video.webm) {
+    // try WebM
+	alert("Formato video supportato: WebW"); // E' QUESTO QUELLO SUPPORTATO DAL MIO BROWSER	Firefox 4
+	} else if (Modernizr.video.ogg) {
+    // try Ogg Theora + Vorbis in an Ogg container
+	alert("Formato video supportato: Theora + Vorbis");	  
+	}else if (Modernizr.video.h264){
+    // try H.264 video + AAC audio in an MP4 container
+	alert("Formato video supportato: H.264 video + AAC audio in an MP4 container");	  }
+}
+*/
+
+
+
+}); // chiude ready 
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

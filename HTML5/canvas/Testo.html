@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Testo</title>
+<style type="text/css">  
+h3{ color:#03F; margin-left:50px;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:50px; padding:0;  border: 1px solid black; } 
+
+dt{ color:#900; margin-left:10px;}
+dd{ color:#330;}
+
+	   
+	   
+</style>  
+
+<script type="text/javascript">  
+
+
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');  
+//ctx.dir = 'rtl';					//  rtl -- ltr		NON FUNZIONA     
+ctx.font = "20px bold Times New Roman ";  
+ctx.fillStyle = "green";  
+//ctx.textBaseline ='bottom';		//  top, hanging, middle, alphabetic, ideographic, bottom
+ctx.textAlign = 'end';			// start, end, left, right, center ('start' e 'left' mi sembrano uguali ma non è certo cosi)
+//ctx.fillText("Sample", 65, 50);		// senza 'maxWidth'
+ctx.fillText("Sample", 65, 50, 22);		// con 'maxWidth' ad un valore inferiore per ridurre e restringere la stringa 
+/* di default(start) o con con 'left' impostato il valore della coordinata x (65) è sottinteso dal margine sinistro dell'elemento canvas all'inizio della stringa. Se fosse impostato 'end' sarebbe inteso invece fino alla fine della stringa: ciò a dire che la stringa risulterebbe più verso sinistra di un valore pari a quello della sua lunghezza. Stessa discorso vale per gli altri valori. 
+Quindi si può dire che L'INIZIO DELLA STRINGA E' SI' IMPOSTATO DALLA COORDINATA X MA CHE E' ANCHE SUBORDINATO E RELATIVO AL VALORE DEL "textAlign" 
+*/
+ctx.font = "35px Arial";		// viene cambiato il valore 'font' ...
+ctx.textAlign = 'left';			// viene cambiato il valore del 'textAlign' 
+ctx.strokeStyle = "rgba(0,0,255,0.5)";    // ... viene assegnato uno stile per il contorno ...             
+var stringa = "Semplice Stringa";
+ctx.strokeText(stringa, 5, 100);  // ... e viene inserita una nuovo testo con 'strokeText' 
+
+
+} // chiude la funzione 'draw'
+
+</script>  
+
+   </head>  
+   <body onLoad="draw()"> 
+
+
+<h3>Testo</h3>
+
+<dl>
+    <dt>context.font [ = value ]</dt>
+    <dd>E' da considerarsi come la proprietà <em>font</em>  dei CSS in cui possono dichiararsi nell'ordine <em>fonrt-size, font-weigth, font-family</em> </dd>    
+</dl>
+<dl>
+	<dt>context.textAlign [ = value ]</dt>
+	<dd>Può accettare 5 valori: <em>start, end, left, right, center</em>. Sono valori riferiti alla lunghezza della stringa in base alle coordinate x e y impostate in <q>fillText</q> o <q>strokeText</q>. Il valore di default è <em>start</em>. (Vedere i commenti interni in riga 31)
+	</dd>    
+</dl>
+<dl>
+    <dt>context.textBaseline [ = value ]</dt>
+    <dd>Può acettare 6 valori: <em>top, hanging, middle, alphabetic, ideographic, bottom</em>. Il valore di default è <em>alphabetic</em> che è il <em>bottom</em> della maggior parte delle lettere nell'alfabeto romano  </dd>    
+</dl>
+<dl>
+    <dt>context . fillText(text, x, y [, maxWidth ])</dt>
+	<dd>Il primo parametro definisce la stringa da rappresentare. La x e y sono le coordinate dell'inizio della stringa e <em>maxWidth</em>, opzionale, indica un valore di grandezza (riduzione) da assegnare alla stringa. Se tale valore supera la lunghezza originale della stringa (creata col font assegnato) la stringa non subirà alterazione. Quindi con tale proprietà si può effettuare soltanto un restringimento della stringa   
+	</dd>    
+</dl>
+<dl>
+    <dt>context . strokeText(text, x, y [, maxWidth ] )</dt>
+    <dd>La differenza di questo metodo dal precedente è che la stringa non viene riempita ma vengono rappresentato solo i contorni (provare per credere)</dd>    
+</dl>
+<dl>
+    <dt></dt>
+    <dd></dd>    
+</dl>
+
+
+
+<canvas id="canvas" width="300" height="300"></canvas>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+</body>
+</html>

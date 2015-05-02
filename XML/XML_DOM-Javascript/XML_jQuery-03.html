@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>xml e jQuery 3</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+#jk{ position:relative; width:60%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/jQuery-1.6.min.js"></script> 
+
+</head>
+
+<body>
+
+
+<script  type="text/javascript">
+$(document).ready(function(){
+
+$("select#cambia").change(function(){
+var st = "";
+$("select#cambia option:selected").each(function() { 
+st += $(this).val() + ""; 
+
+$.ajax({
+type: "GET",
+url: "../allegati/books.xml",
+dataType: "xml",
+success: function(xml) {  
+
+$('#jk').find('p').detach();  // Eliminazione dati (contenuti nel tag 'p') prima di inserire i nuovi
+
+var title = $(xml).find('book').eq(st).find('title').text();// recupera il valore di <title> in base all'indice selezionato nella <select>		
+var autore = $(xml).find('book').eq(st).find('author');	// attenzione l'elemento <author> nel 3° book è ripetuto 5 volte (vedi riga 55)		
+var year = $(xml).find('book').eq(st).find('year').text();	// recupera il valore di <year> in base all'indice selezionato nella <select>		
+var price = $(xml).find('book').eq(st).find('price').text();//recupera il valore di <price> in base all'indice selezionato nella <select>		
+
+$('#jk').append("<p class='codice'>Title: "+title+"</p>");	// si inserisce gli elementi 'title'  
+$(autore).each(function(){		// potendo esserci più 'author' in 'book' ...  
+var autori = $(this).text();		// si ricava per ognuno il suo valore  ...
+var index = $(this).index();		// si ricava per ognuno il suo indice ...
+$('#jk').append("<p class='codice'>Author-"+index+ ": " +autori+ "</p>");	//... e si esegue l'inserimento di indice e valore   
+}); // each
+
+$('#jk').append("<p class='codice'>Year: "+year+"</p>");	// si inserisce l'elemento <year>
+$('#jk').append("<p class='codice'>Price: "+price+"</p>");	// si inserisce l'elemento <price>
+} // success
+}); // ajax
+
+}); // select 
+}) // change 
+
+
+
+
+}); // chiude ready 
+</script>
+
+
+
+<select id="cambia">
+		<option>Seleziona</option>
+		<option value="0">book 1</option>
+        	<option value="1">book 2</option>
+        	<option value="2">book 3</option>
+        	<option value="3">book 4</option>
+		<option value="04">book 5</option> 
+</select>
+
+
+
+<div id="jk"></div>
+
+
+
+
+
+
+
+
+</body>
+</html>

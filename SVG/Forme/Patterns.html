@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Patterns  </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+
+svg{ width: 400px; height:200px; border:1px solid #CCC; }
+
+</style>
+</head>
+<body>
+
+
+<h1>Patterns</h1>
+
+<p>
+I pattern sono usati per riempire l’elemento grafico con degli elementi grafici predefiniti che vengono ripetuti ad intervalli regolari in modo da ricoprire tutta l’area dell’elemento. <br />
+L’elemento per definire un pattern in SVG è <b>&lt;pattern&gt;</b>  ed al suo interno vanno inseriti tutti gli elementi grafici che costituiscono il pattern stesso.
+</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  >
+
+	<defs>
+		<pattern id="pois" patternUnits="userSpaceOnUse" x="0" y="0" width="30" height="30" viewBox="0 0 30 30">
+			<circle cx="15" cy="15" r="10" style="fill:red;stroke:black;stroke-width:1" />
+		</pattern>
+	</defs>
+
+	<rect x="10" y="10" width="300" height="100" fill="url(#pois)" stroke="black" stroke-width="2" />
+
+</svg>
+
+
+
+<p>
+L'attributo <b>patternUnit</b> ha lo stesso comportamento del tag <b>gradientUnits</b> nei <a href="Gradiente_Lineare.html">gradienti</a> 
+</p>
+
+<p>
+Nella cartella <q>Sfondi</q> ci sono alcuni sfondi fatti utilizzando l'elemento &lt;pattern&gt; ad esempio <a href="Sfondi/scacchiera.html">la scacchiera</a>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

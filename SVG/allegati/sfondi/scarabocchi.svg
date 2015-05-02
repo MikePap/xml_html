@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<svg xmlns='http://www.w3.org/2000/svg'  width="100%" height="100%" >
+
+	<defs>
+		<filter id="scarabocchi" >
+			<feTurbulence type="turbulence" baseFrequency="0.015" numOctaves="2" result="turbulence_3" data-filterId="3" />
+			<feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="turbulence_3" scale="88" />
+		</filter>
+
+		<filter id="seppia" >
+			<feColorMatrix type="matrix" values=".343 .669 .119 0 0 .249 .626 .130 0 0 .172 .334 .111 0 0 .000 .000 .000 1 0" />
+		</filter>
+
+		<pattern id="sbarre" patternUnits="userSpaceOnUse" x="0" y="0" width="250" height="250" viewBox="0 0 100 100">
+			<circle cx="60" cy="50" r="5" fill="#ccc"  /> 
+			<circle cx="10" cy="85" r="3" fill="#ccc"  /> 
+			<circle cx="40" cy="65" r="2" fill="#ccc"  /> 
+			<ellipse cx="80" cy="18" rx="3" ry="10" fill="#666" fill-opacity="0.5" />
+			<ellipse cx="82" cy="28" rx="4" ry="10" fill="#999" fill-opacity="0.3" />
+			<line x1="15" y1="20" x2="30" y2="40"  style="stroke:#888;stroke-width:4;stroke-opacity:0.5"/>
+			<line x1="80" y1="80" x2="50" y2="95"  style="stroke:#888;stroke-width:2"/>
+		</pattern>
+	</defs>
+
+	<rect width="100%" height="100%" fill="url(#sbarre)" filter="url(#scarabocchi)"   />
+
+	<!--applicazione di un rettangolo con un filtro seppia 
+	<rect width="100%" height="100%" fill="#fff" fill-opacity="0.5" filter="url(#seppia)"   />
+
+	-->
+
+</svg>
+
+
+<!--
+
+<feColorMatrix type="hueRotate" values="151" />
+-->
+
+
+
+
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>webWorkers 01  </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+</style>
+</head>
+<body>
+
+<h1>Web Workers </h1>
+
+<p class="nota">
+Un <b>web worker</b> è del codice javascript che agisce in background senza influenzare la performance della pagina 
+</p>
+<p>Quando viene eseguito uno script in una pagina html quest'ultima rimane bloccata fino a quando lo script non viene caricato. Perciò se in quel momento si esegue un click o un altro evento il tutto viene interrotto. Grazie ai <q>web workers</q> si può caricare tale script senza influenzare altri eventi che possono verificarsi.  <br />
+E' chiaro che tale pratica va usata con script che richiedono un consumo eccessivo della CPU
+</p>
+
+<dl>
+	<dt>Sono da notare due metodi</dt>
+	<dd><b>postMessage()</b>: che viene utilizzato all'interno dello script js per richiamare la pagina html </dd>
+	<dd><b>terminate()</b>: che serve per interrompere il <q>web worker</q> ed è posto all'interno della pagina html </dd>
+</dl>	
+
+<p>Dal momento in cui i webWorkers sono in file esterni essi non hanno accesso ai seguenti oggetti:  <br />
+<b>The window object</b> <br />
+<b>The document object</b> <br />
+<b>The parent object</b> 
+</p>
+
+
+<p>Count numbers: <output id="result"></output></p>
+<button onclick="startWorker()">Start Worker</button> 
+<button onclick="stopWorker()">Stop Worker</button>
+<br><br>
+
+<script>
+var w;
+
+function startWorker(){
+	if(typeof(Worker)!=="undefined"){
+		if(typeof(w)=="undefined"){
+			w = new Worker("demo_workers.js");
+		}
+
+		w.onmessage = function (event) {
+			document.getElementById("result").innerHTML=event.data;
+		};
+	}else{
+		document.getElementById("result").innerHTML="Sorry, your browser does not support Web Workers...";
+	}
+}; // 
+
+function stopWorker(){
+// To terminate a web worker, and free browser/computer resources, use the terminate() method:
+	w.terminate();		
+}; // 
+
+</script>
+
+
+
+
+
+</body>
+</html>
+

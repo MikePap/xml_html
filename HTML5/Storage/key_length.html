@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>key e length </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color: #060; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+
+</style>
+
+
+<script type="text/javascript"  src="../../../jQuery-1.6.min.js"> </script>
+
+</head>
+<body>
+
+<h3>length & key(n)</h3>
+
+<dl>
+	<dt>length</dt>
+    	<dd>Restituisce il numero delle coppie nome/valore immagazzinate</dd>
+    <dt>key(n)</dt>
+    	<dd>Restituisce il nome della chiave(key) in base alla posizione indicata nel parametro 'n'. L'ordine è stabilito dall'UserAgent(browser)</dd>    
+</dl>
+
+<br /><br />
+
+
+<script  type="text/javascript">
+$(document).ready(function(){
+
+
+alert(localStorage.length);	// restituisce il numero delle coppie nome/valore
+
+//alert(localStorage.key(0));	// retituisce il nome della chiave della prima coppia nome/valore secondo l'ordine stabilito dal browser
+//var jk = localStorage.getItem("bar").length;	// restituisce 5 che è la lunghezza del valore di 'lastname:'Smith' ('Smith' è appunto formata da 5 lettere) 
+//alert(jk);
+
+
+if(localStorage.length  == 0)			
+alert("Non c'è niente nel magazzino");
+
+/*
+for(var i=0; i<localStorage.length; i++){
+alert(localStorage.key(i));			// restituisce tutti i nomi delle chiavi delle coppie key/value immagazzinate
+}
+*/
+
+
+
+}); // chiude ready 
+</script>
+
+
+
+<div id="divo"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body> 
+</html>

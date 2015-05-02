@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>webWorkers 02</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+</style>
+</head>
+
+<!-- We load longjob.js here so that we can run in main ui thread -->
+<script src="longjob.js"></script>
+
+<script>
+
+function runInMainThread() {
+	// By invoking the function longJob normally it will be executed
+	// on the main thread blocking the UI until it completes.
+	result = longJob(30);
+	alert("longJob return: " + result);
+}
+
+var worker;
+function runInWebWorker() {
+// Does our browser support webworkers?
+	if (!worker && window.Worker) {
+	// A webworker is created and the JavaScript file longjob.js
+	// is loaded into its context.
+	worker = new Worker("longjob.js");
+	if(worker) {
+	// Register an event handler that will receive messages from our
+	// web worker
+		worker.addEventListener('message', function(e) {
+			// Our webworker sends us a message when it is done.
+			alert("longJob returned: " + e.data);
+		});    
+	}
+		// Send a message to the worker to execute the longJob function
+		// in the context of the workers thread.
+		worker.postMessage(30);
+	}else 
+		alert("Web Workers are not Supported in this Browser.");
+}
+
+function onLoad() {
+	// Start a simple clock to illustrate the main UI thread being blocked
+	window.setInterval(function() {
+		document.querySelector("#clock").innerHTML = new Date().toLocaleTimeString();
+	}, 1000);
+}
+</script>
+
+
+
+<body onload="onLoad();">
+    
+    <h1>HTML5 Web Workers</h1>
+    <a href="http://www.storminthecastle.com/2013/04/06/how-you-can-do-cool-image-effects-using-html5-canvas/">Article and Sample App by John Robinson.</a>
+
+    <p>This sample app allows you to run a long running job either within the main
+    thread or within a webworker thread.  Running this on the main thread will result in
+    the UI becoming non-responsive until the function completes.  Running this 
+    same job within a webworker allows the main thread to remain available for 
+    interaction even as the longJob function is executed in parallel.  </p>
+
+    <button onclick="runInWebWorker();" >Run long job in web worker</button>
+    <i>Notice that the clock continues to run while this is progress.</i>
+    <br/>
+    <br/>
+    <button onclick="runInMainThread();">Run long job in main thread</button>
+    <i>Notice that the clock stops running while this is in progress</i>
+    <br/>
+    <br/>
+    <span id="clock"></span>
+
+
+</body>
+</html>
+

@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<title>Demo 8</title>
+<head>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+code, pre{ color:rgb(20,150,30); font-weight:bold;}
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}		
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+
+</style>
+
+</head>
+    
+<body>
+
+<h2>Leggere i dati parzialmente (oggetto specifico)</h2>
+
+<p>
+La lettura dei dati è permessa grazie al metodo <b>get(x)</b> dove <q>x</q>  è il valore passato di un identificativo. <br />
+In questo test la lettura dei dati è prodotta a seguito della scelta numerica fatta in un campo input. Pertanto il risultato restituito sarà un oggetto avente come chiave il valore immesso nel campo input (placeholder 'key')
+</p>
+
+
+
+<script>
+var db;
+
+function indexedDBOk() {
+	return "indexedDB" in window;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+	//No support? Go in the corner and pout.
+	if(!indexedDBOk) return;
+
+	var openRequest = indexedDB.open("idarticle_people3",1);
+
+	openRequest.onupgradeneeded = function(e) {
+		var thisDB = e.target.result;
+
+		if(!thisDB.objectStoreNames.contains("people")) {
+			thisDB.createObjectStore("people", {autoIncrement:true});
+		}
+	}
+
+	openRequest.onsuccess = function(e) {
+		db = e.target.result;
+
+		//Listen for add clicks
+		document.querySelector("#addButton").addEventListener("click", addPerson, false);
+
+		//Listen for get clicks
+		document.querySelector("#getButton").addEventListener("click", getPerson, false);
+
+	}	
+
+	openRequest.onerror = function(e) {
+		//Do something for the error
+	}
+
+
+},false);
+
+
+function addPerson(e) {
+	var name = document.querySelector("#name").value;
+	var email = document.querySelector("#email").value;
+
+	console.log("About to add "+name+"/"+email);
+
+	//Get a transaction
+	//default for OS list is all, default for type is read
+	var transaction = db.transaction(["people"],"readwrite");
+	//Ask for the objectStore
+	var store = transaction.objectStore("people");
+
+	//Define a person
+	var person = {
+		name:name,
+		email:email,
+		created:new Date()
+	}
+
+	//Perform the add
+	var request = store.add(person);
+
+	request.onerror = function(e) {
+		console.log("Error",e.target.error.name);
+		//some type of error handler
+	}
+
+	request.onsuccess = function(e) {
+		console.log("Woot! Did it");
+	}
+}
+
+function getPerson(e) {
+	var key = document.querySelector("#key").value;
+	if(key === "" || isNaN(key)) return;
+
+	var transaction = db.transaction(["people"],"readonly");
+	var store = transaction.objectStore("people");
+
+	var request = store.get(Number(key));
+
+	request.onsuccess = function(e) {
+
+		var result = e.target.result;
+		console.dir(result);
+		if(result) {
+			var s = "<h2>Key "+key+"</h2><p>";
+			for(var field in result) {
+				s+= field+"="+result[field]+"<br>";
+			}
+			document.querySelector("#status").innerHTML = s;
+		} else {
+			document.querySelector("#status").innerHTML = "<h2>No match</h2>";
+		}	
+	}	
+}
+
+</script>
+
+<input type="text" id="name" placeholder="Name"><br/>
+<input type="email" id="email" placeholder="Email"><br/>
+<button id="addButton">Add Data</button>
+
+<p/>
+
+<input type="number" id="key" placeholder="Key"><br/>
+<button id="getButton">Get Data</button>
+
+<p/>
+
+<div id="status"></div>
+
+</body>
+</html>

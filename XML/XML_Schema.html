@@ -1,0 +1,2062 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>XML Schema</title>
+<style type="text/css">
+ul,li{ margin:0; padding:0;}
+body{  font-family:Verdana, Arial, Helvetica, sans-serif;}
+h1{ color: #00F; font-size:24px;}
+h2{ color: #60C; font-size:21px;}
+h3{ color:rgb(130,0,80); font-size:18px;}
+h4{ color:#333; font-size:16px;}
+dl{ font-size:12px;}
+dt{ color:#003399; margin-bottom:5px; font-size:14px;}
+dd{ color:#0066FF; font-size:12px;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+p, span{ font-size:12px; margin-left:10px;}
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+table#restrizioni td:nth-child(even), table#stringhe td:nth-child(even), table#date_time td:nth-child(even), table#numerico td:nth-child(even), table#miscel td:nth-child(even){ text-align:left;}
+caption{ caption-side:top; text-align:center; color:#663; font-size:10px; }
+table #entita{}
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+pre{ margin:0; padding:0;}
+.title_code{ font-weight:bold; margin-left:31px; padding:0;}
+div.barra_xsd{ position:relative; width:auto; height:200px; margin:10px;  font-size:16px; /*border:1px solid #CCC;*/ }
+div.barra_xsd ul { float:left; width:160px; padding:0; font-size:18px; border:1px solid; text-align:center; color:rgb(220,220,220); background:rgb(50,150,50);}
+div.barra_xsd ul li{ list-style-type:none; padding:0; background:rgb(50,150,50); margin-left:3px; text-align:left; font-size:12px; border-top:1px solid #FFF; display:none;  }
+div.barra_xsd ul li a:link, div.barra_xsd ul li a:visited{   color:rgb(0,50,0); text-decoration:none; font-weight:bold; display:block;  }
+div.barra_xsd ul li a:hover{ background:rgb(200,200,200);}
+div.barra_xsd ul:hover > li{ display:block;}
+
+.clear{ clear:both;}
+.top{ text-align:center; font-size:18px;}
+
+</style>
+
+</head>
+
+<body>
+
+
+<h1>XML Schema Definition (XSD)</h1>
+
+<p class="nota">Come i DTD un XML Schema (XSD) definisce la struttura di un documento XML. Però è scritto in XML (usa la stessa sintassi), oltre ad avere altre potenzialità</p>
+<dl>
+	<dt>Un XML Schema: </dt>
+    	<dd>definisce gli elementi che appariranno nel documento</dd>
+    	<dd>definisce gli attributi che appariranno nel documento</dd>
+    	<dd>definisce quali elementi sono elementi figli</dd>
+    	<dd>definisce l'ordine degli elementi figli</dd>
+    	<dd>definisce il numero degli elementi figli</dd>
+    	<dd>definisce se un elemento deve essere vuoto o contenere testo</dd>
+    	<dd>definisce il tipo di dati degli elementi e attributi</dd>
+    	<dd>definisce valori di default e valori fissi per elementi ed attributi</dd>
+</dl>
+
+<p>Un documento XML che fa riferimento ad un XSD:</p>
+
+<div class="code">
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;note
+xmlns="http://www.w3schools.com"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.w3schools.com note.xsd"&gt;
+  &lt;to&gt;Tove&lt;/to&gt;
+  &lt;from&gt;Jani&lt;/from&gt;
+  &lt;heading&gt;Reminder&lt;/heading&gt;
+  &lt;body&gt;Don't forget me this weekend!&lt;/body&gt;
+&lt;/note&gt;
+</pre>
+</div>
+
+<p>Il seguente esempio è un file XSD chiamato "note.xsd" che definisce gli elementi del documento XML "note.xml" (di cui sopra) </p>
+
+<div class="code">
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.w3schools.com"
+xmlns="http://www.w3schools.com"
+elementFormDefault="qualified"&gt;
+
+&lt;xs:element name="note"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="to" type="xs:string"/&gt;
+      &lt;xs:element name="from" type="xs:string"/&gt;
+      &lt;xs:element name="heading" type="xs:string"/&gt;
+      &lt;xs:element name="body" type="xs:string"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+&lt;/xs:schema&gt;
+</pre>
+</div>
+
+<p>Il tag <b>&lt;xs:schema&gt;</b> sta ad indicare l'elemento <b>root</b> di ogni documento XSD  <br />
+Il frammento <b>xmlns:xs="http://www.w3.org/2001/XMLSchema"</b> indica che gli elementi e i tipi di dati utilizzati provengono dal <b>namespace</b> "http://www.w3.org/2001/XMLSchema" e che gli elementi saranno prefissati con <b>xs:</b> <br />    
+Il frammento <b>targetNamespace="http://www.w3schools.com"</b> indica che gli elementi definiti da tale schema provengono dal <b>namespace</b> "http://www.w3schools.com" <br />
+Il frammento <b>xmlns="http://www.w3schools.com"</b> indica che il namespace di default è  "http://www.w3schools.com" <br />
+Il frammento <b>elementFormDefault="qualified"</b> indica che ogni elemento usato deve essere qualificato namespace. <br />
+Il tag <b>&lt;xs:element&gt;</b> serve a definire l'elemento <br />
+Il tag  <b>&lt;xs:complexType&gt;</b> sta ad indicare che l'elemento (a cui fa riferimento) può contenere altri elementi, i quali (to, from, heading,body) sono <b>simple types </b>
+</p>
+
+<span><a name="top_barra">&nbsp;</a></span>
+<div class="barra_xsd">
+		<ul> Simple Types
+        	<li><a href="#semplici">XSD Elements</a></li>
+            <li><a href="#attributi">XSD Attributes</a></li>
+            <li><a href="#restrizion">XSD Restrictions</a></li>
+		</ul>
+        <ul> Complex Types
+        	<li><a href="#element">XSD Elements</a></li>
+        	<li><a href="#empty">XSD Empty</a></li>
+        	<li><a href="#only">XSD Elements Only</a></li>
+        	<li><a href="#solo_testo">XSD Text Only</a></li>
+        	<li><a href="#mixed">XSD Mixed</a></li>
+        	<li><a href="#indicator">XSD Indicators</a></li>
+        	<li><a href="#any">XSD &lt;any&gt;</a></li>
+        	<li><a href="#any_attribute">XSD &lt;anyAttribute&gt;</a></li>
+        	<li><a href="#substitution">XSD Substitution</a></li>
+        	<li><a href="#esempi">XSD Example</a></li>
+        </ul>
+        <ul> Data Types
+        	<li><a href="#tipo_string">XSD String</a></li>
+        	<li><a href="#date">XSD Date</a></li>
+        	<li><a href="#numeric">XSD Numeric</a></li>
+        	<li><a href="#miscellaneous">XSD Misc</a></li>       
+        </ul>
+        
+</div><!--barra_xsd-->
+
+<span class="clear"></span>        
+<br /><br />
+
+<h2>Simple Types</h2>
+
+<h3><a name="semplici">Elementi</a></h3>
+<p class="nota">XML Schema  considera "simpleType" quei elementi che non possono contenere altri elementi e non prevedono attributi. Si possono usare tipi di dato semplici predefiniti oppure è possibile personalizzarli.</p>
+
+<div class="code">
+&lt;xs:element name="xxx" type="yyy"/&gt;
+</div>
+<p>dove "xxx" è il nome dell'elemento e "yyy" è il tipo di dato dell'elemento</p>
+<dl>
+	<dt>XML Schema ha una gran quantità di dati predefiniti:</dt>
+    	<dd>xs:string</dd>
+    	<dd>xs:decimal</dd>
+    	<dd>xs:integer</dd>
+    	<dd>xs:boolean</dd>
+    	<dd>xs:date => richiede il formato "YYYY-MM-DD"</dd>
+    	<dd>xs:time</dd>
+</dl>
+
+<span>Esempio di XML: </span>
+<div class="code">
+<pre>
+&lt;lastname&gt;Refsnes&lt;/lastname&gt;
+&lt;age&gt;36&lt;/age&gt;
+&lt;dateborn&gt;1970-03-27&lt;/dateborn&gt;
+</pre>
+</div>
+
+<span>Corrispondente XSD:</span>
+<div class="code">
+<pre>
+&lt;xs:element name="lastname" type="xs:string"/&gt;
+&lt;xs:element name="age" type="xs:integer"/&gt;
+&lt;xs:element name="dateborn" type="xs:date"/&gt;
+</pre>
+</div>
+
+<p class="codice">Gli elementi semplici possono avere un valore di <b>default</b> o un valore <b>fisso</b>. <br />
+Il valore di default che è assegnato ad un elemento viene applicato quando nessun altro valore viene specificato. <br />
+Mentre il valore fisso assegnato determina che non può essere specificato nessun altro valore.
+</p>
+
+<div class="code">
+<pre>
+&lt;xs:element name="color" type="xs:string" default="red"/&gt;
+&lt;xs:element name="color" type="xs:string" fixed="red"/&gt;
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h3><a name="attributi">Attributi</a></h3>
+<p class="nota">Gli elementi semplici non possono avere attributi altrimenti sono considerati elementi complessi. Ma l'attributo di se stesso è sempre dichiarato come simpleType</p>
+
+<div class="code">
+&lt;xs:attribute name="xxx" type="yyy"/&gt;
+</div>
+<p>dove "xxx" è il nome dell'attributo e "yyy" è il tipo di dato dell'attributo. <br />
+I tipi di dati predefiniti sono uguali a quelli indicati nella lista precedente. 
+</p>
+
+<span>Esempio XML:</span>
+<div class="code">
+<pre>
+&lt;lastname lang="EN"&gt; Smith &lt;/lastname&gt;
+</pre>
+</div>
+
+<span>Corrispondente XSD:</span>
+<div class="code">
+<pre>
+&lt;xs:attribute name="lang" type="xs:string"/&gt;
+</pre>
+</div>
+
+<p class="codice">Gli attributi possono avere un valore di <b>default</b> o un valore <b>fisso</b>. <br />
+Il valore di default che è assegnato ad un attributo viene applicato quando nessun altro valore viene specificato. <br />
+Mentre il valore fisso assegnato determina che non può essere specificato nessun altro valore.
+</p>
+
+<p class="nota">Gli attributi sono di default opzionali ma si possono rendere obbligatori indicando l'attributo "use"</p>
+<div class="code">
+<pre>
+&lt;xs:attribute name="lang" type="xs:string" use="required"/&gt;
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h3><a name="restrizion">Restrizioni</a></h3>
+<p class="nota">Le Restrizioni sono usate per definire valori accettabili sia per gli elementi che per gli attributi. Sono chiamati <b>facets</b></p>
+
+<table id="restrizioni" border="1" cellpadding="3" cellspacing="3">
+<tr>
+	<th>Restrizioni</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>enumeration</td>
+	<td>Definisce una lista di valori accettabili</td>
+</tr>
+<tr>
+	<td>fractionDigits</td>
+	<td>Definisce il numero di decimali permessi (>=0)</td>
+</tr>
+<tr>
+	<td>length</td>
+	<td>Specifica il numero esatto di caratteri o di articoli della lista (>=0)</td>
+</tr>
+<tr>
+	<td>maxExclusive</td>
+	<td>Specifica il valore massimo numerico (deve essere minore di quello impostato) </td>
+</tr>
+<tr>
+	<td>maxInclusive</td>
+	<td>Specifica il valore massimo numerico (deve essere minore o uguale di quello impostato)</td>
+</tr>
+<tr>
+	<td>maxLength</td>
+	<td>Specifica il numero massimo di caratteri o di articoli della lista (<=0)</td>
+</tr>
+<tr>
+	<td>minExclusive</td>
+	<td>Specifica il valore minimo numerico richiesto (deve essere maggiore di quello impostato)</td>
+</tr>
+<tr>
+	<td>minInclusive</td>
+	<td>Specifica il valore minimo numerico richiesto (deve essere maggiore o uguale di quello impostato)</td>
+</tr>
+<tr>
+	<td>minLength</td>
+	<td>Specifica il numero minimo di caratteri o di articoli della lista (>=0)</td>
+</tr>
+<tr>
+	<td>pattern</td>
+	<td>Definisce l'esatta sequenza di caratteri accettabili</td>
+</tr>
+<tr>
+	<td>totalDigits</td>
+	<td>Definisce l'esatto numero di digitazioni permessi</td>
+</tr>
+<tr>
+	<td>whiteSpace</td>
+	<td>Specifica come devono essere trattati gli spazi vuoti (line feeds, tabs, spaces, and carriage returns)</td>
+</tr>
+</table>
+
+<p class="title_code">minInclusive - maxInclusive</p>
+
+<span>L'esempio seguente definisce un elemento semplice di nome "age" con delle restrizioni che lo obbligano ad avere un valore tra zero e 120 (0 e 120 sono accettati).</span>
+<div class="code">
+<pre>
+&lt;xs:element name="age"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:integer"&gt;
+      &lt;xs:minInclusive value="0"/&gt;
+      &lt;xs:maxInclusive value="120"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<p class="title_code">enumeration</p>
+<span>L'esempio seguente definisce un elemento chiamato "car" con delle restrizioni che obbligano ad accettare solo i valori: Audi, Golf, BMW  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="car"&gt;  // qui si chiude il tag dell'elemento "car"
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:enumeration value="Audi"/&gt;
+      &lt;xs:enumeration value="Golf"/&gt;
+      &lt;xs:enumeration value="BMW"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Notare la differenza dall'esempio precedente: in questo caso il tipo "carType" può essere usato da altri elementi perchè non fa parte dell'elemento "car"</span>
+<div class="code">
+<pre>
+&lt;xs:element name="car" type="carType"/&gt;
+
+&lt;xs:simpleType name="carType"&gt;
+  &lt;xs:restriction base="xs:string"&gt;
+    &lt;xs:enumeration value="Audi"/&gt;
+    &lt;xs:enumeration value="Golf"/&gt;
+    &lt;xs:enumeration value="BMW"/&gt;
+  &lt;/xs:restriction&gt;
+&lt;/xs:simpleType&gt; // qui si chiude il tag dell'elemento "car"
+</pre>
+</div>
+
+<p class="title_code">pattern</p>
+<span>L'esempio seguente mostra delle restrizioni per l'elemento "letter" che obbligano ad accettare soltanto una lettera minuscola compresa tra 'a' e 'z'</span>
+<div class="code">
+<pre>
+&lt;xs:element name="letter"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="[a-z]"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+
+<span>Nel esempio seguente le restrizioni obbligano ad accetare soltanto 3 lettere comprese tra 'a' e 'z' di cui la prima maiuscola o minuscola e le atre due maiuscole </span>
+<div class="code">
+<pre>
+&lt;xs:element name="initials"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="[a-zA-Z][A-Z][A-Z]"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Nell'esempio seguente l'elemento ha delle restrizioni che obbligano ad accettare un solo valore tra le seguenti lettere: x,y,z</span>
+<div class="code">
+<pre>
+&lt;xs:element name="choice"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="[xyz]"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Nell'esempio seguente l'elemento "prodid" ha una restrizione che obbliga ad accettare 5 digitazioni in sequenza in cui ognuna deve avere un valore compreso tra 0 e 9 </span>
+<div class="code">
+<pre>
+&lt;xs:element name="prodid"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:integer"&gt;
+      &lt;xs:pattern value="[0-9][0-9][0-9][0-9][0-9]"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Nell'esempio seguente i valori accettati sono zero oppure più occorrenze di lettere minuscole tra 'a' e 'z'</span>
+<div class="code">
+<pre>
+&lt;xs:element name="letter"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="([a-z])*"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Valori accettati sono o una più paio-lettere ognuna delle quali formata da una lettera minuscola seguita da una maiuscola. Es: "sT" or "sToP" è corretto; "Stop" or "STOP" or "stop" è sbagliato </span>
+<div class="code">
+<pre>
+&lt;xs:element name="letter"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="([a-z][A-Z])+"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Nell'esempio seguente l'elemento "gender" ha una restrizione che obbliga ad accettare uno dei due valori tra "male" e "female"</span>
+<div class="code">
+<pre>
+&lt;xs:element name="gender"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="male|female"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Nell'esempio seguente l'elemento "password" deve contenere esattamente 8 caratteri di lettere minuscole o maiuscole comprese tra 'a' e 'z' o numeri tra zero e 9  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="password"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="[a-zA-Z0-9]{8}"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<p class="title_code">whiteSpace</p>
+
+<span>Nell'esempio seguente l'elemento "address" ha una restrizione 'whiteSpace'="preserve". Vuol dire che il processore XML non rimuoverà alcun spazio vuoto.</span>
+<div class="code">
+<pre>
+&lt;xs:element name="address"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:whiteSpace value="preserve"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Nell'esempio seguente "address" ha una restrizione di whiteSpace="replace". Vuol dire che il parser rimpiazzerà tutti gli spazi vuoti (line feeds, tabs, spaces, and carriage returns) con spazi. </span>
+<div class="code">
+<pre>
+&lt;xs:element name="address"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:whiteSpace value="replace"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:elementv
+</pre>
+</div>
+
+<span>Nell'esempio seguente l'elemento "address" ha una restrizione per gli spazi vuoti whiteSpace="collapse". Vuol dire che il parser rimuoverà tutti i caratteri di spazio riducendo il tutto ad un'unico spazio vuoto </span>
+<div class="code">
+<pre>
+&lt;xs:element name="address"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:whiteSpace value="collapse"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+
+
+<p class="title_code">length</p>
+
+<span>Nell'esempio seguente l'elemento "password" ha una restrizione di 'length' il cui valore deve essere esattamente di 8 caratteri</span>
+<div class="code">
+<pre>
+&lt;xs:element name="password"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:length value="8"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+
+<span>Nell'esempio seguente "password" deve essere formato da una stringa compreso di un minimo di 5 caratteri ad unj massimo di 8  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="password"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:minLength value="5"/&gt;
+      &lt;xs:maxLength value="8"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleTypev
+&lt;/xs:elementv
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h2>Complex Types</h2>
+
+<h3><a name="element">XSD Complex Elements</a></h3>
+
+<p class="nota">Un elemento complesso è un elemento che contiene altri elementi e/o attributi</p>
+
+<dl>
+	<dt>Ci sono quattro tipi di elementi complessi:</dt>
+    	<dd>elementi vuoti</dd>
+        <dd>elementi che contengono solo testo</dd>
+        <dd>elementi che contengono altri elementi</dd>
+        <dd>elementi che contengono sia testo che altri elementi</dd>
+
+</dl>
+
+
+<div class="code">
+<p class="title_code">Esempi di elementi complessi in XML</p>
+<pre>
+&lt;product pid="1345"/&gt;  // elemento vuoto con un attributo
+
+&lt;food type="dessert"&gt;Ice cream&lt;/food&gt;  // elemento che contiene solo testo
+
+&lt;employee&gt;  // elemento che contiene altri elementi 
+  &lt;firstname&gt;John&lt;/firstname&gt;
+  &lt;lastname&gt;Smith&lt;/lastname&gt;
+&lt;/employee&gt;
+
+&lt;description&gt;  // elemento che contiene sia testo che altri elementi
+It happened on &lt;date lang="norwegian"&gt;03.03.99&lt;/date&gt; ....
+&lt;/description&gt;
+
+</pre>
+</div>
+
+<span>Esempio 1) riferito all'elemento "employee" che contiene altri elementi (vedi sopra)  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="employee"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="firstname" type="xs:string"/&gt;
+      &lt;xs:element name="lastname" type="xs:string"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+<span>Nell'esempio di sopra solo l'elemento "employee" può usare lo specifico "complexType". Si riferisce solo a lui. <br />
+Differentemente nell'esempio di sotto "employee" può avere un tipo di attributo che si riferisce al nome di un "complexType". 
+</span>
+
+<div class="code">
+<pre>
+&lt;xs:element name="employee" type="personinfo"/>
+
+&lt;xs:complexType name="personinfo"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="firstname" type="xs:string"/&gt;
+    &lt;xs:element name="lastname" type="xs:string"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+</pre>
+</div>
+
+<span>Con questo metodo più elementi possono riferirsi allo stesso "complexType" attraverso l'attributo "type".</span>
+<div class="code">
+<pre>
+&lt;xs:element name="employee" type="personinfo"/&gt;
+&lt;xs:element name="student" type="personinfo"/&gt;
+&lt;xs:element name="member" type="personinfo"/&gt;
+
+&lt;xs:complexType name="personinfo"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="firstname" type="xs:string"/&gt;
+    &lt;xs:element name="lastname" type="xs:string"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+</pre>
+</div>
+
+<span>L'esempio seguente fa vedere come aggiungere un "complexType" all'interno di un'altro "complexType":</span>
+<div class="code">
+<pre>
+&lt;xs:element name="employee" type="fullpersoninfo"/>
+
+&lt;xs:complexType name="personinfo"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="firstname" type="xs:string"/&gt;
+    &lt;xs:element name="lastname" type="xs:string"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:complexType name="fullpersoninfo"&gt;
+  &lt;xs:complexContent&gt;
+    &lt;xs:extension base="personinfo"&gt;
+      &lt;xs:sequence&gt;
+        &lt;xs:element name="address" type="xs:string"/&gt;
+        &lt;xs:element name="city" type="xs:string"/&gt;
+        &lt;xs:element name="country" type="xs:string"/&gt;
+      &lt;/xs:sequence&gt;
+    &lt;/xs:extension&gt;
+  &lt;/xs:complexContent&gt;
+&lt;/xs:complexType&gt;
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h3><a name="empty">XSD Empty Elements</a></h3>
+
+<p class="nota">Un elemento vuoto non puo contenere testo bensì solo attributi</p>
+
+<span>Un elemento vuoto in XML:</span>
+<div class="code">
+<pre>
+&lt;product prodid="1345" /&gt;
+</pre>
+</div>
+
+<span>L'elemento "product" non ha contenuto. Per definire un 'type' senza contenuto dobbiamo definire un 'type' che permette elementi nel suo contenuto ma senza dichiarare elementi: </span>
+<div class="code">
+<pre>
+&lt;xs:element name="product"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:complexContent&gt;
+      &lt;xs:restriction base="xs:integer"&gt;
+        &lt;xs:attribute name="prodid" type="xs:positiveInteger"/&gt;
+      &lt;/xs:restriction&gt;
+    &lt;/xs:complexContent&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Nell'esempio di sopra viene definito un "complexType"  con un "complexContent". Il "complexContent" element indica che si intende restringere o estendere il content model di un "complexType" e la restrizione (integer) dichiara un attributo ma non introduce alcun elemento. <br />
+Ad ogni modo è possibile dichiarare l'elemento "product" in un'altro modo più compatto: </span>
+<div class="code">
+<pre>
+&lt;xs:element name="product"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:attribute name="prodid" type="xs:positiveInteger"/&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Oppure dare al "complexType" un nome e definirlo per poi far riferire l'elemento "product" al quel "complexType". In questo modo anche altri elementi possono far riferimento a quel "complexType" </span>
+<div class="code">
+<pre>
+&lt;xs:element name="product" type="prodtype"/&gt;
+
+&lt;xs:complexType name="prodtype"&gt;
+  &lt;xs:attribute name="prodid" type="xs:positiveInteger"/&gt;
+&lt;/xs:complexType&gt;
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+<h3><a name="only">XSD Elements Only</a></h3>
+
+<p class="nota">Un <b>"elements-only complex type"</b> contiene solo (only) altri elementi </p>
+
+<span>Esempio di XML di un "element-only"</span>
+<div class="code">
+<pre>
+&lt;person&gt;
+  &lt;firstname&gt;John&lt;/firstname&gt;
+  &lt;lastname&gt;Smith&lt;/lastname&gt;
+&lt;/person&gt;
+</pre>
+</div>
+
+<span>Definizione di un "complexType" per l'elemento "person"</span>
+<div class="code">
+<pre>
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="firstname" type="xs:string"/&gt;
+      &lt;xs:element name="lastname" type="xs:string"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+
+<span>Si può definire un "complexType" separato e far riferire l'elemento "person" (ache altri elementi) attraverso l'attributo "Type"  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="person" type="persontype"/&gt;
+
+&lt;xs:complexType name="persontype"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="firstname" type="xs:string"/&gt;
+    &lt;xs:element name="lastname" type="xs:string"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+<h3><a name="solo_testo">XSD Text-Only Elements</a></h3>
+<p class="nota">Un elemento "complex text-only" può contenere solo testo e attributi  </p>
+
+<span>Definizione di XSD per un elemento che contiene testo e attributo. Oltretutto viene aggiunto un "simpleContent" all'interno del "complexType" che ha lo scopo di definire ulteriori restrizioni o estensioni </span>
+<div class="code">
+<pre>
+&lt;xs:element name="somename"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:simpleContent&gt;
+      &lt;xs:extension base="basetype"&gt;
+        ....
+        ....
+      &lt;/xs:extension&gt;
+    &lt;/xs:simpleContent&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+OR
+
+&lt;xs:element name="somename"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:simpleContent&gt;
+      &lt;xs:restriction base="basetype"&gt;
+        ....
+        ....
+      &lt;/xs:restriction&gt;
+    &lt;/xs:simpleContent&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Esempio di XML in cui viene presentato l'elemento "shoesize" che contiene solo testo e un attributo.</span>
+<div class="code">
+<pre>
+&lt;shoesize country="france"&gt;35&lt;/shoesize&gt;
+</pre>
+</div>
+
+<span>L'esempio seguente dichiara un "complexType", "shoesize". Il contenuto è definito essere un 'integer' (numero intero) e viene definito anche l'attributo di nome "country"  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="shoesize"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:simpleContent&gt;
+      &lt;xs:extension base="xs:integer"&gt;
+        &lt;xs:attribute name="country" type="xs:string" /&gt;
+      &lt;/xs:extension&gt;
+    &lt;/xs:simpleContent&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Si può (come in altri esempi sopra) dare al "complexType" un nome e far in modo che l'elemento "shoesize" abbia un attributo 'type' che faccia riferimento al "complexType".  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="shoesize" type="shoetype"/>
+
+&lt;xs:complexType name="shoetype"&gt;
+  &lt;xs:simpleContent&gt;
+    &lt;xs:extension base="xs:integer"&gt;
+      &lt;xs:attribute name="country" type="xs:string" /&gt;
+    &lt;/xs:extension&gt;
+  &lt;/xs:simpleContent&gt;
+&lt;/xs:complexType&gt;
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h3><a name="mixed">XSD Mixed Content</a></h3>
+<p class="nota">Un elemento "complexType" può contenere attributi, elementi e testo. </p>
+
+<span>Un elemento in XML "letter" che contiene sia testo che altri elementi: </span>
+<div class="code">
+<pre>
+&lt;letter&gt;
+  Dear Mr.&lt;name&gt;John Smith&lt;/name>&gt;
+  Your order &lt;orderid&gt;1032&lt;/orderid&gt;
+  will be shipped on &lt;shipdate&gt;2001-07-13&lt;/shipdate&gt;
+&lt;/letter&gt;
+</pre>
+</div>
+
+<span>L'XSD seguente dichiara l'elemento "letter"</span>
+<div class="code">
+<pre>
+&lt;xs:element name="letter"&gt;
+  &lt;xs:complexType mixed="true"&gt; // <b>qui si dichiara che 'letter' contiene sia testo che elementi</b>
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="name" type="xs:string"/&gt;
+      &lt;xs:element name="orderid" type="xs:positiveInteger"/&gt;
+      &lt;xs:element name="shipdate" type="xs:date"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Al solito, si può dichiarare un "complexType" in modo che l'elemento "letter" attraverso l'attributo 'type' possa riferirsi. In questo modo anche altri elementi possono farlo.   </span>
+<div class="code">
+<pre>
+&lt;xs:element name="letter" type="lettertype"/&gt;
+
+&lt;xs:complexType name="lettertype" mixed="true"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="name" type="xs:string"/&gt;
+    &lt;xs:element name="orderid" type="xs:positiveInteger"/&gt;
+    &lt;xs:element name="shipdate" type="xs:date"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+</pre>
+</div>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h3><a name="indicator">XSD Indicators</a></h3>                                            
+<p class="nota">Gli <b>indicatori</b> permettono di controllare l'uso degli elementi </p>
+
+<dl> Ci sono sette indicatori che possiamo distinguere in tre gruppi:
+	<dt>Indicatori di ordine</dt>
+		<dd>All</dd>
+        <dd>Choice</dd>
+        <dd>Sequence</dd>
+	<dt>Indicatori di occorrenza</dt>
+    	<dd>maxOccurs</dd>
+        <dd>minOccurs</dd>
+    <dt>Indicatori di gruppo</dt>
+		<dd>Group name</dd>
+        <dd>attributeGroup name</dd>                                           
+</dl>                                            
+
+<h3>Indicatori di ordine</h3>
+<p class="nota">Gli Indicatori di ordine sono utilizzati per definire l'ordine degli elementi</p>
+
+<span>L'indicatore <b>all</b>  specifica che gli elementi figli possono apparire in qualsiasi ordine e che ognuno può apparire solo una volta. </span>
+<div class="code">
+<pre>
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:all&gt;
+      &lt;xs:element name="firstname" type="xs:string"/&gt;
+      &lt;xs:element name="lastname" type="xs:string"/&gt;
+    &lt;/xs:all&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>L'indicatore <b>choice</b> specifica che sia un elemento figlio che un'altro possono apparire </span>
+<div class="code">
+<pre>
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:choice&gt;
+      &lt;xs:element name="employee" type="employee"/&gt;
+      &lt;xs:element name="member" type="member"/&gt;
+    &lt;/xs:choice&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>L'indicatore <b>sequence</b> specifica che gli elementi figli devono apparire in sequenza nell'ordine in cui sono dichiarati  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="person"&gt;
+   &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="firstname" type="xs:string"/&gt;
+      &lt;xs:element name="lastname" type="xs:string"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<h3>Indicatori di occorrenza</h3>
+<p class="nota">Gli Indicatori di occorrenza sono usati per definire quante volte un elemento può apparire</p>
+
+<span>L'indicatore <b>maxOccurs</b> specifica il numero massimo di volte che un elemento puo apparire </span><br />
+<span>L'esempio seguente indica che l'elemento "child_name" può apparire massimo 10 volte con un <b>minimo di 1 che è il default</b> (all'interno dell'elemento "person")</span>
+<div class="code">
+<pre>
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="full_name" type="xs:string"/&gt;
+      &lt;xs:element name="child_name" type="xs:string" maxOccurs="10"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>L'indicatore <b>minOccurs</b> specifica il numero minimo di volte che un elemento puo apparire </span><br />
+<span>L'esempio seguente indica che l'elemento "child_name" può apparire zero volte o massimo 10 (all'interno dell'elemento "person")  </span>
+<div class="code">
+<pre>
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="full_name" type="xs:string"/&gt;
+      &lt;xs:element name="child_name" type="xs:string"&gt;
+      maxOccurs="10" minOccurs="0"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<p
+ class="codice">Per permettere ad un elemento di apparire un numero illimitato di volte si usa <b>maxOccurs="unbounded"</b>  </p>
+
+<span>Vediamo un esempio dimostrativo. L'XML di un file chiamato "Myfamily.xml":   </span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+
+&lt;persons xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="family.xsd"&gt;
+
+&lt;person&gt;
+  &lt;full_name&gt;Hege Refsnes&lt;/full_name&gt;
+  &lt;child_name&gt;Cecilie&lt;/child_name&gt;
+&lt;/person&gt;
+
+&lt;person&gt;
+  &lt;full_name&gt;Tove Refsnes&lt;/full_name&gt;
+  &lt;child_name&gt;Hege&lt;/child_name&gt;
+  &lt;child_name&gt;Stale&lt;/child_name&gt;
+  &lt;child_name&gt;Jim&lt;/child_name&gt;
+  &lt;child_name&gt;Borge&lt;/child_name&gt;
+&lt;/person&gt;
+
+&lt;person&gt;
+  &lt;full_name&gt;Stale Refsnes&lt;/full_name&gt;
+&lt;/person&gt;
+
+&lt;/persons&gt;
+</pre>
+</div>
+
+
+<span>Questo è l'XSD riferente (che utilizza il <b>maxOccurs="unbounded") </b></span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+elementFormDefault="qualified"&gt;
+
+&lt;xs:element name="persons"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="person" maxOccurs="unbounded"&gt;
+        &lt;xs:complexType&gt;
+          &lt;xs:sequence&gt;
+            &lt;xs:element name="full_name" type="xs:string"/&gt;
+            &lt;xs:element name="child_name" type="xs:string"
+            minOccurs="0" maxOccurs="5"/&gt;
+          &lt;/xs:sequence&gt;
+        &lt;/xs:complexType&gt;
+      &lt;/xs:element&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;&gt;
+</pre>
+</div>
+
+<span>Dal XML notiamo che il documento contiene un elemento <b>root</b> di nome "persons" nel quale sono stati inseriti 3 elementi chiamati "person". </span> <br />
+<span> Lo schema XSD definisce che ogni elemento "person" può contenere un elemento chiamato "full_name" e anche elementi chiamati "child_name" (massimo 5 e minimo zero).  </span>
+
+<h3>Indicatori di gruppo</h3>
+<p class="nota">Gli Indicatori di gruppo sono usati per definire relativi set di elementi   </p>
+
+
+<span>L'indicatore <b>group</b> può essere definito separatamente e poi riferito con l'attributo <b>ref</b>:  </span>
+<div class="code">
+<pre>
+&lt;xs:group name="persongroup"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="firstname" type="xs:string"/&gt;
+    &lt;xs:element name="lastname" type="xs:string"/&gt;
+    &lt;xs:element name="birthday" type="xs:date"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:group&gt;
+
+&lt;xs:element name="person" type="personinfo"/&gt;
+
+&lt;xs:complexType name="personinfo"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:group ref="persongroup"/&gt;
+    &lt;xs:element name="country" type="xs:string"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+</pre>
+</div>
+
+
+<span>Anche l'indicatore <b>attributeGroup</b> può essere definito separatamente e poi riferito con l'attributo <b>ref</b>   </span>
+<div class="code">
+<pre>
+&lt;xs:attributeGroup name="personattrgroup"&gt;
+  &lt;xs:attribute name="firstname" type="xs:string"/&gt;
+  &lt;xs:attribute name="lastname" type="xs:string"/&gt;
+  &lt;xs:attribute name="birthday" type="xs:date"/&gt;
+&lt;/xs:attributeGroup&gt;
+
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:attributeGroup ref="personattrgroup"/&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<h3><a name="any">XSD The &lt;any&gt; Element</a></h3>
+<p class="nota">L'elemento <b>&lt;any&gt;</b> permette la possibilità  di estendere il documento XML con elementi non specificati dallo schema XSD </p>
+
+<span>L'esempio seguente è un frammento di un file chiamato <b>"family.xsd"</b>. Mostra una dichiarzione per l'elemento "person". Con l'uso di &lt;any&gt; si può estendere il contenuto di "person" con altri elementi (da dichiararsi dopo l'elemento "last_name")   </span>
+<div class="code">
+<pre>
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="firstname" type="xs:string"/&gt;
+      &lt;xs:element name="lastname" type="xs:string"/&gt;
+      &lt;xs:any minOccurs="0"/&gt;  // <b>qui è indicata la dichiarazione per aggiungere altri elementi dopo 'lastname'</b>
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+
+<span>Ora per estendere l'elemento "person" del file "family.xsd" con un elemento figlio si può creare un'altro file chiamato <b>"children.xsd"</b> dove impostiamo una dichiarazione per un'altro 'elemento ("children"):  </span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.w3schools.com"
+xmlns="http://www.w3schools.com"
+elementFormDefault="qualified"&gt;
+
+&lt;xs:element name="children"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="childname" type="xs:string"
+      maxOccurs="unbounded"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+</pre>
+</div>
+
+
+<span>Il file seguente, <b>"Myfamily.xml"</b> usa le dichiarazioni dai due file precedenti "family.xsd" e "children.xsd":   </span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+
+&lt;persons xmlns="http://www.microsoft.com"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:SchemaLocation="http://www.microsoft.com family.xsd
+http://www.w3schools.com children.xsd"&gt;
+
+&lt;person&gt;
+  &lt;firstname&gt;Hege&lt;/firstname&gt;
+  &lt;lastname&gt;Refsnes&lt;/lastname&gt;
+  &lt;children&gt;
+    &lt;childname&gt;Cecilie&lt;/childname&gt;
+  &lt;/children&gt;
+&lt;/person&gt;
+
+&lt;person&gt;
+  &lt;firstname&gt;Stale&lt;/firstname&gt;
+  &lt;lastname&gt;Refsnes&lt;/lastname&gt;
+&lt;/person&gt;
+
+&lt;/persons&gt;
+</pre>
+</div>
+
+<span>Quindi come possiamo notare, in quest'ultimo file, all'interno di "person" dopo "lastname" è stato inserito un elemento "children" grazie alla dichiarazione &lt;any&gt; utilizzata nel file  "family.xsd"</span>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+<h3><a name="any_attribute">XSD The &lt;anyAttribute&gt; Element</a></h3>
+<p class="nota">L'elemento &lt;anyAttribute&gt; permette di estendere il documento XML con attributi non specificati dallo schema  </p>
+
+<span>L'esempio seguente è un frammento del file <b>"family.xsd"</b>. Mostra una dichiarazione per l'elemento "person". Utilizzando &lt;anyAttribute&gt; possiamo aggiungere qualsiasi numero di attributi per l'elemento "person":   </span>
+<div class="code">
+<pre>
+&lt;xs:element name="person"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="firstname" type="xs:string"/&gt;
+      &lt;xs:element name="lastname" type="xs:string"/&gt;
+    &lt;/xs:sequence&gt;
+    &lt;xs:anyAttribute/&gt;  // <b>qui è indicata la dichiarazione per aggiungere altri attributi</b>
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Ora si crea un nuovo file <b>"attribute.xsd"</b> ed estendiamo l'elemento "person" con un attributo chiamato "gender". Lo possiamo fare anche se nello schema del file "family.xsd" non è stato dichiarato nessun attributo "gender" </span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.w3schools.com"
+xmlns="http://www.w3schools.com"
+elementFormDefault="qualified"&gt;
+
+&lt;xs:attribute name="gender"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="male|female"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:attribute&gt;
+
+&lt;/xs:schema&gt;
+</pre>
+</div>
+
+<span>Il file seguente <b>"Myfamily.xml"</b> utilizza le dichiarazioni dai due file "family.xsd" e "attribute.xsd":   </span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+
+&lt;persons xmlns="http://www.microsoft.com"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:SchemaLocation="http://www.microsoft.com family.xsd
+http://www.w3schools.com attribute.xsd"&gt;
+
+&lt;person gender="female"&gt;
+  &lt;firstname&gt;Hege&lt;/firstname&gt;
+  &lt;lastname&gt;Refsnes&lt;/lastname&gt;
+&lt;/person&gt;
+
+&lt;person gender="male"&gt;
+  &lt;firstname&gt;Stale&lt;/firstname&gt;
+  &lt;lastname&gt;Refsnes&lt;/lastname&gt;
+&lt;/person&gt;
+
+&lt;/persons&gt;
+</pre>
+</div>
+
+<span>Il file XML risulta valido perchè lo schema del file "family.xsd" ci permette di aggiungere un attributo all'elemento "person"   </span>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h3><a name="substitution">XSD Element Substitution</a></h3>
+<p class="nota">Con XSD un elemento può sostituire un'altro elemento con la dichiarazione <b>substitutionGroup</b>  </p>
+
+<span>Esaminando questo frammento: </span>
+<div class="code">
+<pre>
+&lt;xs:element name="name" type="xs:string"/&gt;  // 'name' è il cosidetto elemento "head"
+&lt;xs:element name="navn" substitutionGroup="name"/&gt; // 'navn' è il sostituto di 'name'
+
+&lt;xs:complexType name="custinfo"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="name"/&gt; // qui il 'complexType'  fa riferimento a 'name' 
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="customer" type="custinfo"/&gt; // qui 'customer' assume il complexType 'custinfo' (in cui 'navn' può sostituire 'name') e che ...  
+&lt;xs:element name="kunde" substitutionGroup="customer"/&gt; // ... a sua volta può essere sostituito da 'kunde'
+</pre>
+</div>
+
+<span>abbiamo l'XML seguente risultante valido </span>
+<div class="code">
+<pre>
+&lt;customer&gt;
+  &lt;name&gt;John Smith&lt;/name&gt;
+&lt;/customer&gt;
+
+&lt;kunde&gt;
+  &lt;navn&gt;John Smith&lt;/navn&gt;
+&lt;/kunde&gt;
+</pre>
+</div>
+
+<p class="nota">Oltretutto si può usare <b>block="substitution"</b> per bloccare la sostituzione  </p>
+
+
+
+<span>Esaminando questo frammento:</span>
+<div class="code">
+<pre>
+&lt;xs:element name="name" type="xs:string" block="substitution"/&gt;
+&lt;xs:element name="navn" substitutionGroup="name"/&gt;
+
+&lt;xs:complexType name="custinfo"&gt;
+  &lt;xs:sequence&gt;
+    &lt;xs:element ref="name"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="customer" type="custinfo" block="substitution"/&gt;
+&lt;xs:element name="kunde" substitutionGroup="customer"/&gt;
+</pre>
+</div>
+
+
+<span>abbiamo valido il seguente XML: </span>
+<div class="code">
+<pre>
+&lt;customer&gt;
+  &lt;name&gt;John Smith&lt;/name&gt;
+&lt;/customer&gt;
+</pre>
+</div>
+
+
+<span>e NON valido il seguente XML:</span>
+<div class="code">
+<pre>
+&lt;kunde&gt;
+  &lt;navn&gt;John Smith&lt;/navn&gt;
+&lt;/kunde&gt;
+</pre>
+</div>
+
+<p>Il 'type' dell'elemento sostituto deve essere uguale a quello dell'elemento head (e in tal caso non c'è bisogno di dichiararlo). <br />
+Importante è che gli elementi in 'substitutionGroup' (head e sostituto) devono essere dichiarati come <b>elementi globals</b> altrimenti non funziona. <br />
+<span class="codice">Gli <b>"elementi globals"</b> (Globali) sono quelli che sono immediatamente figli dell'elemento <b>schema</b>.</span> <br />
+<span class="codice">Gli <b>"elementi Locals"</b> (Locali) sono quelli all'interno di altri elementi. </span>
+</p>
+                                            
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h2>Data Types</h2>
+
+
+<h3><a name="tipo_string">XSD String Data Types</a></h3>
+
+<p class="nota">Il tipo di dato <b>string</b> può contenere solo caratteri, line feeds(?), carriage returns(?), e caratteri tab.   </p>
+
+<span>L'esempio seguente è un esempio di dichiarazione XSD:</span>
+<div class="code">
+<pre>
+&lt;xs:element name="customer" type="xs:string"/&gt;
+</pre>
+</div>
+
+<span>E rispettando tale schema nel documento XML si poptrà avere:</span>
+<div class="code">
+<pre>
+&lt;customer&gt;John Smith&lt;/customer&gt;
+
+&lt;customer&gt;       John Smith     &lt;/customer&gt;
+</pre>
+</div>
+<span class="codice">Il processore XML non modificherà il valore se è impostato il 'type' string</span>
+
+<p>Questa è la lista dei vari tipi di dato che derivano da string (eccetto per string stessa) </p>
+
+<table id="stringhe" border="1" cellpadding="3" cellspacing="3">
+<caption>Questa è la lista dei vari tipi di dato che derivano da string (eccetto per string stessa)</caption>
+<tr>
+	<th>Nome</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>ENTITIES</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTITY</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ID</td>
+	<td>Una stringa che rappresenta l'attributo ID in XML(usato solo con l'attributo schema)</td>
+</tr>
+<tr>
+	<td>IDREF</td>
+	<td>Una stringa che rappresenta l'attributo IDREF in XML(usato solo con l'attributo schema)</td>
+</tr>
+<tr>
+	<td>IDREFS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>language</td>
+	<td>Una stringa che contiene un valido "language" id</td>
+</tr>
+<tr>
+	<td>Name</td>
+	<td>Una stringa che contiene un nome XML valido </td>
+</tr>
+<tr>
+	<td>NCName</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>NMTOKEN</td>
+	<td>Una stringa che rappresenta l'attributo NMTOKEN in XML(usato solo con l'attributo schema)</td>
+</tr>
+<tr>
+	<td>NMTOKENS</td>
+	<td></td>
+</tr>
+<tr>
+	<td>normalizedString</td>
+	<td>Una stringa che non contiene line feeds, carriage returns, or tabs</td>
+</tr>
+<tr>
+	<td>QName</td>
+	<td></td>
+</tr>
+<tr>
+	<td>string</td>
+	<td>Una string</td>
+</tr>
+<tr>
+	<td>token</td>
+	<td>Una stringa che non contiene line feeds, carriage returns, tabs, leading or trailing spaces, or multiple spaces</td>
+</tr>
+
+</table>
+
+<dl>
+	<dt>Le restrizioni che possono esere usate con il tipo string sono:</dt>
+    	<dd>enumeration</dd>
+    	<dd>length</dd>
+    	<dd>maxlength</dd>
+    	<dd>minlength</dd>
+    	<dd>pattern (NMTOKENS, IDREFS, e ENTITIES non possono utilizzarla) </dd>
+    	<dd>whiteSpace</dd>
+</dl>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+<h3><a name="date">XSD Date and Time Data Types</a></h3>
+<p class="nota">I type <b>date</b> e <b>time</b> sono utilizzati per valori che contengono date o tempo </p>
+
+<h4>Date type</h4>
+<p class="nota">Il tipo <b>date</b> è specificato nel seguente formato: <b>"YYYY-MM-DD"</b> (anno-mese-giorno)(tutti i componenti sono richiesti)</p>
+
+<span>Per una dichiarazione XSD di questo tipo:</span>
+<div class="code">
+<pre>
+&lt;xs:element name="start" type="xs:date"/&gt;
+</pre>
+</div>
+
+<span>L'elemento in XML apparirà cosi:</span>
+<div class="code">
+<pre>
+&lt;start&gt;2002-09-24&lt;/start&gt;
+</pre>
+</div>
+
+<span>Per specificare una <b>Time zone</b> si deve aggiungere una <b>Z</b> dopo la data: </span>
+<div class="code">
+<pre>
+&lt;start&gt;2002-09-24Z&lt;/start&gt;
+</pre>
+</div>
+
+<span>E volendo specificare un offset da un UTC si deve specificare un tempo positivo o negativo dopo la data:</span>
+<div class="code">
+<pre>
+&lt;start&gt;2002-09-24-06:00&lt;/start&gt;
+or
+&lt;start&gt;2002-09-24+06:00&lt;/start&gt;
+</pre>
+</div>
+
+<h4>Time type</h4>
+
+<p class="nota">Il tipo <b>time</b> è specificato nel seguente formato: <b>"hh:mm:ss"</b> (ore:minuti:secondi) (tutti i componenti sono richiesti)  </p>
+
+<span>Per una dichiarazione XSD di questo tipo:</span>
+<div class="code">
+<pre>
+&lt;xs:element name="start" type="xs:time"/&gt;
+</pre>
+</div>
+
+<span>Si può avere XML cosi:</span>
+<div class="code">
+<pre>
+&lt;start&gt;09:00:00&lt;/start&gt;
+or
+&lt;start&gt;09:30:10.5&lt;/start&gt;
+</pre>
+</div>
+
+<span>Per specificare una <b>Time zone</b> si deve aggiungere una <b>Z</b> alla fine:</span>
+<div class="code">
+<pre>
+&lt;start&gt;09:30:10Z&lt;/start&gt;
+</pre>
+</div>
+
+<span>E volendo specificare un offset da un UTC si deve specificare un tempo positivo o negativo alla fine</span>
+<div class="code">
+<pre>
+&lt;start&gt;09:30:10-06:00&lt;/start&gt;
+or
+&lt;start&gt;09:30:10+06:00&lt;/start&gt;
+</pre>
+</div>
+
+<h4>DateTime type</h4>
+<p class="nota">Il tipo <b>dateTime</b> è specificato nel seguente formato: <b>"YYYY-MM-DDThh:mm:ss"</b>  (tutti i componenti sono richiesti) <br />   
+<span class="codice">da notare la <b>T</b> fra DD e hh che sta ad indicare l'inizio della sezione 'time' (è un separatore) </span>
+</p>
+
+<span>Per una dichiarazione XSD di questo tipo:</span>
+<div class="code">
+<pre>
+&lt;xs:element name="startdate" type="xs:dateTime"/&gt;
+</pre>
+</div>
+
+<span>Si può avere XML cosi:</span>
+<div class="code">
+<pre>
+&lt;startdate&gt;2002-05-30T09:00:00&lt;/startdate&gt;
+or
+&lt;startdate&gt;2002-05-30T09:30:10.5&lt;/startdate&gt;
+</pre>
+</div>
+
+<span>Per specificare una <b>Time zone</b> si deve aggiungere una <b>Z</b> alla fine:</span>
+<div class="code">
+<pre>
+&lt;startdate&gt;2002-05-30T09:30:10Z&lt;/startdate&gt;
+</pre>
+</div>
+
+<span>E volendo specificare un offset da un UTC si deve specificare un tempo positivo o negativo alla fine</span>
+<div class="code">
+<pre>
+&lt;startdate&gt;2002-05-30T09:30:10-06:00&lt;/startdate&gt;
+or
+&lt;startdate&gt;2002-05-30T09:30:10+06:00&lt;/startdate&gt;
+</pre>
+</div>
+
+<h4>Duration Type</h4>
+<p class="nota">Il tipo <b>duration</b> è utilizzato per indicare un intervallo di tempo. </p>
+
+<dl>
+	<dt>E' specificato nel seguente fornato: <b>"PnYnMnDTnHnMnS"</b>:</dt>
+    	<dd>P: indica il periodo (è richiesto)</dd>
+    	<dd>nY: indica il numero degli anni</dd>
+    	<dd>nM: indica il numero dei mesi</dd>
+    	<dd>nD: indica il numero dei giorni</dd>
+    	<dd>T: indica l'inizio del periodo tempo (richiesto se si intende specificare ore, minuti o secondi) </dd>
+    	<dd>nH: indica il numero delle ore</dd>
+    	<dd>nM: indica il numero dei minuti</dd>
+    	<dd>nS: indica il numero dei secondi</dd>
+
+</dl>
+
+<span>Esempio di una dichiarazione del tupe "duration" in uno schema XSD:</span>
+<div class="code">
+<pre>
+&lt;xs:element name="period" type="xs:duration"/&gt;
+</pre>
+</div>
+
+<span>Esempi di XML che si riferiscono allo schema:</span>
+<div class="code">
+<pre>
+&lt;period&gt;P5Y&lt;/period&gt;    // indica un periodo di 5 anni
+&lt;period&gt;P5Y2M10D&lt;/period&gt;  // indica un periodo di 5 anni, 2 mesi, 10 giorni
+&lt;period&gt;P5Y2M10DT15H&lt;/period&gt;  // indica un periodo di 5anni, 2mesi, 10 giorni, 15 ore
+&lt;period&gt;PT15H&lt;/period&gt;  // indica un periodo di 15 ore 
+// Per specificare una durata negativa
+&lt;period&gt;-P10D&lt;/period&gt; // indica un periodo di minimo 10 giorni
+</pre>
+</div>
+
+<table id="date_time" cellpadding="3" cellspacing="3" border="1">
+<caption>Lista dei tipi di dati "Date e Time"  </caption>
+<tr>
+	<th>Nome</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>date</td>
+    <td>definisce un valore per le date</td>
+</tr>
+<tr>
+	<td>dateTime</td>
+    <td>definisce un valore per il tempo</td>
+</tr>
+<tr>
+	<td>duration</td>
+    <td>definisce l'intervallo di tempo</td>
+</tr>
+<tr>
+	<td>gDay</td>
+    <td>definisce una parte di "date" (DD) </td>
+</tr>
+<tr>
+	<td>gMonth</td>
+    <td>definisce una parte di "date" (MM)</td>
+</tr>
+<tr>
+	<td>gMonthDay</td>
+    <td>definisce il mese ed il giorno (MM-DD)</td>
+</tr>
+<tr>
+	<td>gYear</td>
+    <td>definisce l'anno (YY)YY</td>
+</tr>
+<tr>
+	<td>gYearMonth</td>
+    <td>definisce anno e mese (YYYY-MM)</td>
+</tr>
+<tr>
+	<td>time</td>
+    <td>definisce un valore di tempo</td>
+</tr>
+</table>
+
+<dl>
+	<dt>Le restrizioni che possono essere usate con il type Date:</dt>
+    	<dd>enumeration</dd>
+    	<dd>maxExclusive</dd>
+    	<dd>maxInclusive</dd>
+    	<dd>minExclusive</dd>
+    	<dd>minInclusive</dd>
+    	<dd>pattern</dd>
+    	<dd>whiteSpace</dd>
+</dl>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+<h3><a name="numeric">XSD Numeric Data Types</a></h3>
+<p class="nota">Il tipo numerico è utilizzato per specificare valori numerici</p>
+
+<table id="numerico" cellpadding="3" cellspacing="3" border="1">
+<caption>Lista dei type che specificano valori numerici:</caption>
+<tr>
+	<th>Nome</th>
+    <th>Descrizione</th>
+</tr>
+<tr>
+	<td>byte</td>
+    <td>indica un intero di 8-bit</td>
+</tr>
+<tr>
+	<td>decimal</td>
+    <td>indica un valore decimale</td>
+</tr>
+<tr>
+	<td>int</td>
+    <td>indica un intero di 32-bit</td>
+</tr>
+<tr>
+	<td>integer</td>
+    <td>specifica un numero intero</td>
+</tr>
+<tr>
+	<td>long</td>
+    <td>specifica un intero di 64-bit</td>
+</tr>
+<tr>
+	<td>negativeInteger</td>
+    <td>definisce un intero contenente solo valori negativi (-1, -22 ...)</td>
+</tr>
+<tr>
+	<td>nonNegativeInteger</td>
+    <td>un intero contenente solo valori non negativi (0,1,2,22 ...)</td>
+</tr>
+<tr>
+	<td>nonPositiveInteger</td>
+    <td>un intero contenente solo valori non positivi (-1, -22, 0 ...)</td>
+</tr>
+<tr>
+	<td>positiveInteger</td>
+    <td>intero contenente solo valori positivi (1,2, ..-)</td>
+</tr>
+<tr>
+	<td>short</td>
+    <td>specifica un intero di 16-bit</td>
+</tr>
+<tr>
+	<td>unsignedLong</td>
+    <td></td>
+</tr>
+<tr>
+	<td>unsignedInt</td>
+    <td></td>
+</tr>
+<tr>
+	<td>unsignedShort</td>
+    <td></td>
+</tr>
+<tr>
+	<td>unsignedByte</td>
+    <td></td>
+</tr>
+
+</table>
+
+<span>Esempio di schema XSD con una dichiarazione del 'type' <b>decimal</b>:</span>
+<div class="code">
+<pre>
+&lt;xs:element name="prize" type="xs:decimal"/&gt;
+</pre>
+</div>
+
+<span>Rappresentazione XML dell'elemento che si riferisce allo schema:</span>
+<div class="code">
+<pre>
+&lt;prize>999.50&lt;/prize&gt;
+&lt;prize>+999.5450&lt;/prize&gt;
+&lt;prize>-999.5230&lt;/prize&gt;
+&lt;prize>0&lt;/prize&gt;
+&lt;prize>14&lt;/prize&gt;
+</pre>
+</div>
+<span class="codice">Il numero massimo di decimali ammesso è <b>18</b></span> <br />
+
+<span>Esempio di schema XSD con una dichiarazione del 'type' <b>integer</b> </span>
+<div class="code">
+<pre>
+&lt;xs:element name="prize" type="xs:integer"/&gt;
+</pre>
+</div>
+
+<span>Rappresentazione XML: </span>
+<div class="code">
+<pre>
+&lt;prize&gt;999&lt;/prize&gt;
+&lt;prize&gt;+999&lt;/prize&gt;
+&lt;prize&gt;-999&lt;/prize&gt;
+&lt;prize&gt;0&lt;/prize&gt;
+</pre>
+</div>
+
+<dl>
+	<dt>Le restrizioni che possono essere usate con il tipo numerico:</dt>
+		<dd>enumeration</dd>
+		<dd>fractionDigits</dd>
+		<dd>maxExclusive</dd>
+		<dd>maxInclusive</dd>
+		<dd>minExclusive</dd>
+		<dd>minInclusive</dd>
+		<dd>pattern</dd>
+		<dd>totalDigits</dd>
+		<dd>whiteSpace</dd>
+</dl>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+
+<h3><a name="miscellaneous">XSD Miscellaneous Data Types</a></h3>
+<p class="nota">In questa sezione annotiamo altri 'data-type' che non rientrano nelle categorie precedenti. </p>
+
+<dl>
+	<dt>Altri 'type' vari sono i seguenti:</dt>
+    	<dd><b>anyURI </b></dd>
+    	<dd><b>base64Binary </b></dd>
+    	<dd><b>boolean </b></dd>
+    	<dd><b>double </b></dd>
+    	<dd><b>float </b></dd>
+    	<dd><b>hexBinary </b></dd>
+    	<dd><b>NOTATION </b></dd>
+    	<dd><b>QName </b></dd>
+</dl>
+
+
+<span>L'esempio seguente è una dichiarazione del 'type' <b>boolean</b>:</span>
+<div class="code">
+<pre>
+&lt;xs:attribute name="disabled" type="xs:boolean"/&gt;
+</pre>
+</div>
+
+<span>Tale elemento nell'XML apparirà cosi:</span>
+<div class="code">
+<pre>
+&lt;prize disabled="true"&gt;999&lt;/prize&gt;
+</pre>
+</div>
+<span class="codice">I valori ammessi per boolean sono: <b>true, false, 1(uguale a true), 0(uguale a false)</b>.  </span> <br />
+
+<span>L'esempio seguente è una dichiarazione del 'type' binary che specifica i dati binari. Ci sono due tipi: <b>hexBinary, base64Binary</b> </span>
+<div class="code">
+<pre>
+&lt;xs:element name="blobsrc" type="xs:hexBinary"/&gt;
+&lt;xs:element name="blobsrc" type="xs:base64Binary"/&gt;
+</pre>
+</div>
+
+<span>L'esempio seguente è una dichiarazione del 'type' <b>anyURI</b>:</span>
+<div class="code">
+<pre>
+&lt;xs:attribute name="src" type="xs:anyURI"/&gt;
+</pre>
+</div>
+
+<span>Tale elemento nell'XML apparirà cosi:</span>
+<div class="code">
+<pre>
+&lt;pic src="http://www.w3schools.com/images/smiley.gif" /&gt;
+</pre>
+</div>
+<span class="codice">Se un URI contiene uno spazio lo sostituisce con <b>%20</b>.</span>
+
+
+<dl>
+	<dt>Restrizioni sui type descritti:  </dt>
+    	<dd>enumeration (il type Boolean non può usare questa restrizione)</dd>
+    	<dd>length (il type Boolean non può usare questa restrizione)</dd>
+    	<dd>maxLength (il type Boolean non può usare questa restrizione)</dd>
+    	<dd>minLength (il type Boolean non può usare questa restrizione)</dd>
+    	<dd>pattern</dd>
+    	<dd>whiteSpace</dd>
+</dl>
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+
+
+
+
+<h3><a name="esempi">Esempi XSD</a></h3>
+
+
+<p>Questo è il file XML <span class="codice"><b>"shiporder.xml"</b>:</span></p>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+
+&lt;shiporder orderid="889923"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="shiporder.xsd"&gt;
+  &lt;orderperson>John Smith&lt;/orderperson&gt;
+  &lt;shipto&gt;
+    &lt;name&gt;Ola Nordmann&lt;/name&gt;
+    &lt;address&gt;Langgt 23&lt;/address&gt;
+    &lt;city&gt;4000 Stavanger&lt;/city&gt;
+    &lt;country&gt;Norway&lt;/country&gt;
+  &lt;/shipto&gt;
+  &lt;item&gt;
+    &lt;title&gt;Empire Burlesque&lt;/title&gt;
+    &lt;note&gt;Special Edition&lt;/note&gt;
+    &lt;quantity&gt;1&lt;/quantity&gt;
+    &lt;price&gt;10.90&lt;/price&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;title&gt;Hide your heart&lt;/title&gt;
+    &lt;quantity&gt;1&lt;/quantity&gt;
+    &lt;price&gt;9.90&lt;/price&gt;
+  &lt;/item&gt;
+&lt;/shiporder&gt;
+</pre>
+</div>
+
+<p>
+Il documento XML contiene l'elemento "root" di nome <strong>shiporder</strong> che contiene un attributo (richiesto) <strong>orderid</strong>. shiporder contiene 3 figli: <b>"orderperson", "shipto" e "item"</b>. <br />
+L'elemento "item" appare 2 volte e contiene 3 elementi, <strong>title, quantity e price</strong> obbligatori e un quarto <strong>note</strong> opzionale. <br />
+<span class="codice">Il namespace <strong>xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</strong> indica al parser XML che questo documento deve essere valutato con uno schema. <br />
+Il namespace <strong>xsi:noNamespaceSchemaLocation="shiporder.xsd"</strong> specifica dove risiede lo schema XSD (in questo caso sta nella stessa directory di "shiporder".xml). 
+</span></p>
+
+<h3>Realizziamo uno schema XSD per il file "shiporder.xml" </h3>
+<p>Si crea il file <span class="codice"><strong>"shiporder.xsd"</strong></span></p>
+<span>Innanzitutto si definisce la dichiarazione XML standard seguita dalla dichiarazione dell'elemento <strong>xs:schema</strong> che definisce, appunto, lo schema
+<br />
+<span class="codice">Il namespace (xs) usato è quello standard e l'URI associato con tale namespace è la definizione del linguaggio Schema che ha il valore standard:<strong>http://www.w3.org/2001/XMLSchema.</strong> </span>
+
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+...
+&lt;/xs:schema&gt;
+</pre>
+</div>
+
+<span class="codice"></span>
+<br />
+<span>Ora definiamo l'elemento root "shiporder" come un complex type. Definiamo con l'indicatore "sequence" che gli elementi al suo interno devono apparire come indicati nella sequenza. </span>
+<div class="code">
+<pre>
+&lt;xs:element name="shiporder"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      ...
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Ora definiamo l'elemento "orderperson" come un simple type perchè non conterrà ne attributi ne elementi</span>
+<div class="code">
+<pre>
+&lt;xs:element name="orderperson" type="xs:string"/&gt;
+</pre>
+</div>
+
+<span>Ora definiamo l'elemento "shipto" che è un complex type: </span>
+<div class="code">
+<pre>
+&lt;xs:element name="shipto"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="name" type="xs:string"/&gt;
+      &lt;xs:element name="address" type="xs:string"/&gt;
+      &lt;xs:element name="city" type="xs:string"/&gt;
+      &lt;xs:element name="country" type="xs:string"/&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Ora definiamo "item". Specificando maxOccurs="unbounded" indichiamo che "item" può apparire illimitate volte all'interno di "shiporder". <br /> 
+Da notare che che il figlio "note" è opzionale. Questo si realizza specificando l'attributo minOccurs a zero
+ </span>
+<div class="code">
+<pre>
+&lt;xs:element name="item" maxOccurs="unbounded"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="title" type="xs:string"/&gt;
+      &lt;xs:element name="note" type="xs:string" minOccurs="0"/&gt; // <b>qui si indica che 'note' è opzionale</b>
+      &lt;xs:element name="quantity" type="xs:positiveInteger"/&gt;
+      &lt;xs:element name="price" type="xs:decimal"/v
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+</div>
+
+<span>Infine definiamo l'attributo di "shiporder". Siccome lo si vuole obbligatorio lo specifichiamo con use="required". <br /></span>
+<span class="codice">Le dichiarazioni degli attributi devono obbligatoriamente essere poste alla fine.  </span>
+<div class="code">
+<pre>
+&lt;xs:attribute name="orderid" type="xs:string" use="required"/&gt;
+</pre>
+</div>
+
+<span>Il file <span class="codice">"shiporder.xsd"</span> completo è il seguente: </span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+
+&lt;xs:element name="shiporder"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element name="orderperson" type="xs:string"/&gt;
+      &lt;xs:element name="shipto"&gt;
+        &lt;xs:complexType&gt;
+          &lt;xs:sequence&gt;
+            &lt;xs:element name="name" type="xs:string"/&gt;
+            &lt;xs:element name="address" type="xs:string"/&gt;
+            &lt;xs:element name="city" type="xs:string"/&gt;
+            &lt;xs:element name="country" type="xs:string"/&gt;
+          &lt;/xs:sequence&gt;
+        &lt;/xs:complexType&gt;
+      &lt;/xs:element&gt;
+      &lt;xs:element name="item" maxOccurs="unbounded"&gt;
+        &lt;xs:complexType&gt;
+          &lt;xs:sequence&gt;
+            &lt;xs:element name="title" type="xs:string"/&gt;
+            &lt;xs:element name="note" type="xs:string" minOccurs="0"/&gt;
+            &lt;xs:element name="quantity" type="xs:positiveInteger"/&gt;
+            &lt;xs:element name="price" type="xs:decimal"/&gt;
+          &lt;/xs:sequence&gt;
+        &lt;/xs:complexType&gt;
+      &lt;/xs:element&gt;
+    &lt;/xs:sequence&gt;
+    &lt;xs:attribute name="orderid" type="xs:string" use="required"/&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+</pre>
+</div>
+<p class="codice">Questo metodo è semplice ma risulta difficile da leggere quando i documenti sono complessi. <br />
+Un'altro metodo è basato sulla definizione degli elementi ed attributi per prima cosa e poi usare i riferimenti con l'attributo <b>ref</b>.  </p>
+
+<span>Ecco di nuovo il file <span class="codice">"shiporder.xsd"</span> completo con il secondo metodo:</span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+vxs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+
+// <b>definitione dei simple elements </b>
+&lt;xs:element name="orderperson" type="xs:string"/&gt;
+&lt;xs:element name="name" type="xs:string"/&gt;
+&lt;xs:element name="address" type="xs:string"/&gt;
+&lt;xs:element name="city" type="xs:string"/&gt;
+&lt;xs:element name="country" type="xs:string"/&gt;
+&lt;xs:element name="title" type="xs:string"/&gt;
+&lt;xs:element name="note" type="xs:string"/&gt;
+&lt;xs:element name="quantity" type="xs:positiveInteger"/&gt;
+&lt;xs:element name="price" type="xs:decimal"/&gt;
+
+// <b>definitione degli attributi </b>
+&lt;xs:attribute name="orderid" type="xs:string"/&gt;
+
+// <b>definitione dei complex elements </b>
+&lt;xs:element name="shipto"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element ref="name"/&gt;  // qui viene richiamato il figlio 'name'  
+      &lt;xs:element ref="address"/&gt;  // qui viene richiamato il figlio 'address' 
+      &lt;xs:element ref="city"/&gt;    // qui viene richiamato il figlio 'city' 
+      &lt;xs:element ref="country"/&gt;  // qui viene richiamato il figlio  'country' 
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;xs:element name="item"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element ref="title"/&gt;  // qui viene richiamato il figlio 'title' 
+      &lt;xs:element ref="note" minOccurs="0"/&gt;  // qui viene richiamato il figlio 'note' 
+      &lt;xs:element ref="quantity"/&gt;  // qui viene richiamato il figlio 'quantity' 
+      &lt;xs:element ref="price"/&gt;  // qui viene richiamato il figlio 'price' 
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;xs:element name="shiporder"&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:sequence&gt;
+      &lt;xs:element ref="orderperson"/&gt;  // qui viene richiamato il figlio 'orderperson'
+      &lt;xs:element ref="shipto"/&gt;  // qui viene richiamato il figlio  'shipto'
+      &lt;xs:element ref="item" maxOccurs="unbounded"/&gt;  // qui viene richiamato il figlio  'item'
+    &lt;/xs:sequence&gt;
+    &lt;xs:attribute ref="orderid" use="required"/&gt;  // qui viene richiamato l'attributo 'orderid'
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+
+&lt;/xs:schema&gt;
+</pre>
+</div>
+
+<p class="codice">Un'altro metodo, più elegante, è quello di definire classi o tipi in modo da poterli utilizzare per ogni elemento</p>
+
+<span>Ecco completo il terzo file <span class="codice">"shiporder.xsd"</span>:</span>
+<div class="code">
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+
+// <b>definizione  di vari simple type (che si riferiscono agli elementi figli) </b>
+&lt;xs:simpleType name="stringtype"&gt;
+  &lt;xs:restriction base="xs:string"/&gt;
+&lt;/xs:simpleType&gt;
+
+&lt;xs:simpleType name="inttype"&gt;
+  &lt;xs:restriction base="xs:positiveInteger"/&gt;
+&lt;/xs:simpleType&gt;
+
+&lt;xs:simpleType name="dectype"&gt;
+  &lt;xs:restriction base="xs:decimal"/&gt;
+&lt;/xs:simpleType&gt;
+
+&lt;xs:simpleType name="orderidtype"&gt;
+  &lt;xs:restriction base="xs:string"&gt;
+    &lt;xs:pattern value="[0-9]{6}"/&gt;
+  &lt;/xs:restriction&gt;
+&lt;/xs:simpleType&gt;
+
+// <b>definizione di complex type che fanno riferimento ai simple type  </b>
+&lt;xs:complexType name="shiptotype"&gt;  // <b>riferito all'elemento 'shipto'   </b>
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="name" type="stringtype"/&gt;
+    &lt;xs:element name="address" type="stringtype"/&gt;
+    &lt;xs:element name="city" type="stringtype"/&gt;
+    &lt;xs:element name="country" type="stringtype"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexTypev
+
+&lt;xs:complexType name="itemtype"&gt;  // <b>riferito all'elemento 'item'   </b>
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="title" type="stringtype"/&gt;
+    &lt;xs:element name="note" type="stringtype" minOccurs="0"/&gt;
+    &lt;xs:element name="quantity" type="inttype"/&gt;
+    &lt;xs:element name="price" type="dectype"/&gt;
+  &lt;/xs:sequence&gt;
+&lt;/xs:complexTypev
+
+&lt;xs:complexType name="shipordertype"&gt;   // <b>riferito all'elemento 'shiporder'   </b>
+  &lt;xs:sequence&gt;
+    &lt;xs:element name="orderperson" type="stringtype"/&gt;
+    &lt;xs:element name="shipto" type="shiptotype"/&gt;
+    &lt;xs:element name="item" maxOccurs="unbounded" type="itemtype"/&gt;
+  &lt;/xs:sequencev
+  &lt;xs:attribute name="orderid" type="orderidtype" use="required"/&gt;
+&lt;/xs:complexType&gt;
+
+&lt;xs:element name="shiporder" type="shipordertype"/&gt;  // <b>richiamo del complex "shipordertype" che richiama a sua volta tutti gli altri   </b>
+
+&lt;/xs:schema&gt;
+</pre>
+</div>
+
+
+											<p class="top"><a href="#top_barra">SU</a></p>
+
+
+
+
+<!-- 
+<span></span>
+<div class="code">
+<pre>
+
+</pre>
+</div>
+-->
+
+
+<br /><br /><br />
+
+</span></body>
+</html>

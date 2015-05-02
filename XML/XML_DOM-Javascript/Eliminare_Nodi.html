@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Eliminare Nodi</title>
+<style type="text/css">
+body{  font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1{ color: #00F;}
+h3{ color:#663333;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+table{ border-collapse:collapse; margin:10px; background:rgb(220,220,255); }
+td{ text-align:center; font-size:12px;}
+th{ background:rgb(150,150,250);}
+
+div.code{ width:80%; margin:10px; padding:5px 10px; background:rgb(250,250,100); border:1px solid #999;  }
+
+
+</style>
+
+<script type="text/javascript" src="../allegati/loadxmldoc.js"></script> 
+<script type="text/javascript" src="../allegati/loadxmlstring.js"></script> 
+
+</head>
+
+<body>
+
+
+<h1>Eliminare Nodi</h1>
+<p class="nota">Il metodo <b>removeChild()</b> permette di rimuovere uno specifico nodo. Quando un nodo viene eliminato automaticamente vengono rimossi tutti i nodi figli</p>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+document.write("Numero di nodi 'book': ");
+document.write(xmlDoc.getElementsByTagName('book').length);
+document.write("<br>");
+
+y=xmlDoc.getElementsByTagName("book")[0]; // recupero del primo tag 'book' ... 
+xmlDoc.documentElement.removeChild(y);  // ... e successiva rimozione 
+
+document.write("Numero di nodi 'book' dopo l'applicazione del metodo removeChild(): ");
+document.write(xmlDoc.getElementsByTagName('book').length);
+
+</script>
+
+<p class="nota">altro esempio utilizzando <b>parentNode</b></p>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+document.write("Number of book nodes before removeChild(): ");
+document.write(xmlDoc.getElementsByTagName("book").length);
+document.write("<br>");
+
+x=xmlDoc.getElementsByTagName("book")[0]; // recupero del primo tag 'book' ... 
+x.parentNode.removeChild(x);  // ... si risale al suo nodo parente ("bookstore") per poi effettuare la sua eliminazione  
+
+document.write("Number of book nodes after removeChild(): ");
+document.write(xmlDoc.getElementsByTagName("book").length);
+
+</script>
+
+
+<h3>Eliminazione di un nodo testo</h3>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+x=xmlDoc.getElementsByTagName("title")[0];  // recupero del primo tag 'book' 
+
+document.write("Child nodes: ");
+document.write(x.childNodes.length);  // visualizza il numero dei suoi nodi (è 1)
+document.write("<br >");
+
+y=x.childNodes[0];	// recupero del suo (primo) nodo (testo) ... 
+x.removeChild(y);	// .. e successiva rimozione
+
+document.write("Child nodes: ");
+document.write(x.childNodes.length);  // nuova visualizzazione dei suoi nodi (stavolta è 0)
+</script>
+
+<h3>Eliminazione di un nodo testo utilizzando <b>nodeValue</b></h3>
+<p class="nota">Simile a quanto fatto per cambiare il valore (vedere file Manipolazione_Nodi.html)</p>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+x=xmlDoc.getElementsByTagName("title")[0].childNodes[0]; // recupero del primo nodo del primo tag 'title'
+
+document.write("Valore: " + x.nodeValue);
+document.write("<br>");
+
+x.nodeValue="";	// attribuzione di un valore nullo (stesso metodo utilizzato per cambiare il valore)
+
+document.write("Valore: " + x.nodeValue);
+</script>
+
+
+<h3>Rimuovere un nome di un attributo </h3>
+
+<p class="nota">Il metodo <b>removeAttribute(name)</b> permette di rimovere l'attributo di un elemento usando il suo nome </p>
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+x=xmlDoc.getElementsByTagName('book'); 	// recupero del tag 'book'
+
+document.write(x[0].getAttribute('category'));	// dal primo tag 'book' viene recuperato l'attributo 'category' e visualizzato ... 
+document.write("<br>");
+
+x[0].removeAttribute('category');	// ... e qui viene rimosso  ... 
+
+document.write(x[0].getAttribute('category')); 	// ... infatti non c'è più
+
+</script>
+
+<p class="nota">Esempio di rimozione di un atributo con il metodo <b>removeAttributeNode(x)</b></p>
+
+
+<script type="text/javascript">
+xmlDoc=loadXMLDoc("../allegati/books.xml");
+
+x=xmlDoc.getElementsByTagName('book');	// recupero del tag 'book'
+
+for (i=0;i<x.length;i++){
+while (x[i].attributes.length>0){ // controlla che il numero dei tag 'book' sia maggiore di zero
+  attnode=x[i].attributes[0];	// recupera tutti gli (primi ed unici) attributi di 'book' ...  
+  old_att=x[i].removeAttributeNode(attnode);	// ... e li rimuove
+
+  document.write("Rimosso: " + old_att.nodeName) 	// qui si visualizza il nome dell'attributo
+  document.write(": " + old_att.nodeValue)			// qui si visualizza il valore 
+  document.write("<br>")
+  } // chiude while 
+} // chiude for
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Proprietà di Riemepimento e Contorni</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+div{
+margin:10px;
+}
+
+svg{
+border:1px solid;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Painting: Filling, Stroking and Marker Symbols</h1>
+
+<p class="nota">Le figure di base (rettangoli, cerchi, ecc..) le stringhe di testo e i path (percorsi, traiettorie) possono essere riempiti di colore al loro interno (<q>filled</q>) o soltanto nel contorno (<q>stroked</q>). <br />
+Certi elementi (‘path’, ‘polyline’, ‘polygon’ and ‘line’) possono avere ai loro vertici dei simboli marcatori (es: punta di freccia).
+</p>
+
+<h3>Proprietà <q>fill</q> </h3>
+
+<p class="nota">La proprietà <b>fill</b> è utilizzata per riempire di un colore (o di un gradiente, o di un pattern) una figura. <br />
+La variante <b>fill-opacity</b> serve ad applicare l'opacità e può variare da 0.0 (trasparenza completa) ad 1 (senza trasparenza, colore allo stato puro). 
+</p>
+
+<h3>Proprietà <q>stroke</q> </h3>
+
+<p class="nota">La proprietà <b>stroke</b> serve a dare colore al contorno di ogni tipo di linea, testo e contorni di elementi quali cerchi, rettangoli, ecc..</p>
+
+<dl>
+	<dt>Le proprietà <b>stroke</b> sono:  </dt>
+	<dd>stroke</dd>
+	<dd>stroke-width</dd>
+	<dd>stroke-linecap</dd>
+	<dd>stroke-dasharray</dd>
+	<dd>stroke-linejoin</dd>
+	<dd>stroke-miterlimit</dd>
+	<dd>stroke-dashoffset</dd>
+	<dd>stroke-opacity</dd>
+</dl>	
+
+<div> 
+Esempio <b>stroke</b>: <br />
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+		<g fill="none">  <!-- l'elemento 'g' è usato per raggruppare elementi  -->
+			<path stroke="red" d="M5 20 l215 0" /> <!-- vedere il file "Path.html" -->
+			<path stroke="blue" d="M5 40 l215 0" />
+			<path stroke="black" d="M5 60 l215 0" />
+		</g>
+	</svg>
+</div>
+
+
+<div>
+Esempio di <b>stroke-linecap</b>: <br />
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+		<g fill="none" stroke="black" stroke-width="6">
+			<path stroke-linecap="butt" d="M5 20 l215 0" />
+			<path stroke-linecap="round" d="M5 40 l215 0" />
+			<path stroke-linecap="square" d="M5 60 l200 0" />
+		</g>
+	</svg>
+</div> 
+
+<div>
+<p>
+Esempio di <b>stroke-dasharray</b>: (permette di definire il modello del tratto potendo specificare sia la lunghezza del tratto che lo spazio successivo)
+</p>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+		<g fill="none" stroke="black" stroke-width="4">
+			<path stroke-dasharray="8,3" d="M5 20 l215 0" />
+			<path stroke-dasharray="20,10,5,5,5,10" d="M5 40 l215 0" />
+			<path stroke-dasharray="10,10" d="M5 60 l215 0" />
+		</g>
+	</svg>
+</div> 
+
+
+<div>
+<p>
+Esempio di <b>stroke-dashoffset</b>: (utilizzato con <q>stroke-dasharray</q>, permette di definire la dimensione del primo tratto, nel momento iniziale.  )
+</p>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+		<g fill="none" stroke="black" stroke-width="4">
+			<path stroke-dasharray="10,10" d="M5 20 l215 0" />
+			<path stroke-dasharray="10,10" stroke-dashoffset="5" d="M5 40 l215 0" />
+			<path stroke-dasharray="10,10" stroke-dashoffset="1" d="M5 60 l215 0" />
+			<path stroke-dasharray="10,10" stroke-dashoffset="9" d="M5 80 l215 0" />
+		</g>
+	</svg>
+</div>
+
+
+<div>
+<p>Esempi di <b>stroke-linejoin </b> (permette di gestire l'angolo di un path, in tre modalità)
+</p>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+		<g fill="none" stroke="black" stroke-width="20">
+			<path stroke="blue" d="M15,60 15,20, 55,20 " stroke-linejoin="miter" />
+			<path stroke="blue" d="M100,60 100,20, 150,20 " stroke-linejoin="round" />
+			<path stroke="blue" d="M200,60 200,20, 250,20 " stroke-linejoin="bevel" />
+		</g>
+	</svg>
+	
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br />
+
+</body>
+</html>

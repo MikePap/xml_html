@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>sessionStorage</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+
+</style>
+
+<script type="text/javascript" src="../../../jQuery-1.6.min.js"> </script>
+<!-- <script type="text/javascript" src="../Modernizr_v2.0.js"> </script> collegamneto locale al file -->
+<script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-2.0.js"> </script>
+
+
+</head>
+
+<body>
+
+<h1>sessionStorage</h1>
+<p class="nota"><b>L'oggetto sessionStorage</b>  immagazzina i dati soltanto per una sessione. I dati saranno cancellati quando la finestra del browser sarà chiusa</p>
+
+<script type="text/javascript">
+
+sessionStorage.lastname="Smith";
+document.write(sessionStorage.lastname);
+
+</script>
+
+<p class="codice">L'esempio seguente conta il numero delle volte che una pagina è visitata, nella sessione corrente: Quando la finestra del browser sarà chiusa il conteggio verrà interrotto.</p>
+
+<script type="text/javascript">
+
+if (sessionStorage.pagecount)
+	{
+	sessionStorage.pagecount=Number(sessionStorage.pagecount) +1;
+	}
+else
+	{
+	sessionStorage.pagecount=1;
+	}
+document.write("Visits " + sessionStorage.pagecount + " time(s) this session.");
+
+</script> 
+
+<p>Refresh the page to see the counter increase.</p>
+
+<p>Close the browser window, and try again, and the counter has been reset.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

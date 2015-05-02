@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>tag output  </title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+
+output{
+border:1px solid; padding: 1px 3px; margin-left:5px; color:green; 
+}
+
+table{
+background:rgb(220,220,255);
+}
+th{
+background:#333; color:#FFF;
+}
+td:nth-child(1){
+font-weight:bold; 
+}
+caption{
+color:#F66; text-align:left; 
+}
+
+
+</style>
+</head>
+<body>
+
+<h1>output</h1>
+
+<p class="nota">L'elemento &lt;output&gt; rappresenta il risultato di un calcolo come quello che può essere rappresentato in uno script </p>
+
+
+<form oninput="x.value=parseInt(a.value) + parseInt(b.value)">
+<input type="number" id="a" value="">
++<input type="number" id="b" value="">
+=<output name="x" for="a b"></output>
+</form>
+
+<table id="jkk" width="70%" border="1" cellspacing="3" cellpadding="3">
+<caption>Attributi dell'elemento &lt;output&gt; </caption>
+<tr>
+	<th>Attributo</th>
+	<th>Descrizione</th>
+</tr>
+<tr>
+	<td>for</td>
+	<td>Specifica una serie di <q>id</q> (separati da spazio vuoto) che rappresentano gli elementi interessati nel calcolo </td>
+</tr>
+<tr>
+	<td>form</td>
+	<td>Specifica il nome del form a cui l'elemento &lt;output&gt; appartiene. Questo ci da la possibilità di porre l'elemento &lt;output&gt; anche fuori dal form. Al momento non è supportato in nessun browser</td>
+</tr>
+<tr>
+	<td>name</td>
+	<td>Specifica il nome dell'elemento &lt;output&gt; '</td>
+</tr>
+	
+</table>
+
+
+<p class="codice">
+L'elemento &lt;output&gt; è supportato in Firefox, Opera, Chrome, and Safari ma non In IE. 
+</p>
+
+
+
+
+
+</body>
+</html>

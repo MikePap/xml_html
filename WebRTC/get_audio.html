@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Ottenere l'audio  </title>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+
+
+<h2>Prova microfono</h2>
+
+
+
+<script type="text/javascript">
+
+function gotStream(stream) {
+	window.AudioContext = window.AudioContext || window.webkitAudioContext;
+	var audioContext = new AudioContext();
+
+	// Create an AudioNode from the stream
+	var mediaStreamSource = audioContext.createMediaStreamSource(stream);
+
+	// Connect it to destination to hear yourself
+	// or any other node for processing!
+	mediaStreamSource.connect(audioContext.destination);
+}
+
+function errorCallback(error){
+	console.log("navigator.getUserMedia error: ", error);
+}
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+navigator.getUserMedia( {audio:true}, gotStream,  errorCallback);
+
+  
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

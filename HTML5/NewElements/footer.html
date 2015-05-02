@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>footer element</title>
+<style type="text/css">
+
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+footer nav{ float:left; margin:0 10px;}
+
+</style>
+
+</head>
+
+<BODY>
+
+<section>
+<p class="rosso">
+The <b>footer</b> element represents a footer for its nearest ancestor sectioning content or sectioning root element. <br />
+A footer typically contains information about its section such as who wrote it, links to related documents, copyright data, and the like. <br />
+Footers don't necessarily have to appear at the end of a section, though they usually do.
+</p>
+<p class="blu">
+L'elemento <b>footer</b> rappresenta la parte finale della sezione a cui appartiene o dell'intero documento. <br />
+Il "footer" generalmente contiene informazioni sulla sua sezione come ad esempio l'autore il copyright la data e links relativi. <br />
+Tale elemento non necessariamente deve essre posto alla fine della pagina, anche se spesso avviene.  
+</p>
+
+</section>
+
+
+
+<H1>The Ramblings of a Scientist</H1>
+<ARTICLE>
+ <H1>Episode 15</H1>
+ <VIDEO SRC="/fm/015.ogv" CONTROLS PRELOAD>
+  <P><A HREF="/fm/015.ogv">Download video</A>.</P>
+ </VIDEO>
+ <FOOTER> <!-- footer for article -->
+  <P>Published <TIME PUBDATE DATETIME="2009-10-21T18:26-07:00"></TIME></P>
+ </FOOTER>
+</ARTICLE>
+<ARTICLE>
+ <H1>My Favorite Trains</H1>
+ <P>I love my trains. My favorite train of all time is a Köf.</P>
+ <P>It is fun to see them pull some coal cars because they look so
+ dwarfed in comparison.</P>
+ <FOOTER> <!-- footer for article -->
+  <P>Published <TIME PUBDATE DATETIME="2009-09-15T14:54-07:00"></TIME></P>
+ </FOOTER>
+</ARTICLE>
+
+<FOOTER>
+<!-- al <nav> di <footer> è stato assegnato lo stile 'float:left' (vedere nei CSS)  -->
+
+ <NAV>
+  <P><A HREF="/credits.html">Credits</A> —
+     <A HREF="/tos.html">Terms of Service</A> —
+     <A HREF="/index.html">Blog Index</A></P>
+ </NAV>
+ <nav>
+ <p>
+ 	<a href="#">uno</a> - 
+    <a href="#">due</a> -
+    <a href="#">tre</a>
+ </p>
+ </nav>
+ <nav>
+ <P>Copyright © 2009 Gordon Freeman</P>
+ </nav>
+
+</FOOTER>
+
+
+
+
+
+
+
+
+</BODY>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Filtri</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+svg{ width:120px; height:120px;  border: 1px solid;  }
+embed{ width:120px; height:120px;  border: 1px solid;  } /* per IE8 */
+
+
+</style>
+</head>
+<body>
+
+<h1>Filtri</h1>
+
+<p class="nota">Tutti i filtri SVG sono definiti all'interno dell'elemento &lt;def&gt; che racchiude a sua volta l'elemento &lt;filter&gt; <br />
+L'elemento &lt;filter&gt; richiede necessariamente un attributo<q>id</q> che serve ad identificarlo in modo che possa essere richiamato all'interno di una qualsiasi figura (rettangolo, cerchio, ecc..). 
+</p>
+<p>
+Gli effetti SVG disponibili sono: <span class="codice">
+feBlend - filter for combining images, 
+feColorMatrix - filter for color transforms, 
+feComponentTransfer, 
+feComposite, 
+feConvolveMatrix, 
+feDiffuseLighting, 
+feDisplacementMap, 
+feFlood, 
+feGaussianBlur, 
+feImage, 
+feMerge, 
+feMorphology, 
+feOffset - filter for drop shadows, 
+feSpecularLighting, 
+feTile, 
+feTurbulence, 
+feDistantLight - filter for lighting, 
+fePointLight - filter for lighting, 
+feSpotLight - filter for lighting, 
+</span>
+</p>
+<p>In  <a href="http://ie.microsoft.com/testdrive/graphics/hands-on-css3/hands-on_svg-filter-effects.htm">questa pagina</a> c'è' un ottimo tool per la creazione di filtri </p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<defs>
+		<filter id="f1" x="0" y="0">
+			<feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+		</filter>
+	</defs>
+	<rect width="90" height="90" stroke="green" stroke-width="3" fill="yellow" filter="url(#f1)" />
+</svg>
+
+<!--
+- l'attributo 'id' dell'elemento <filter> lo identifica in modo univoco 
+- l'elemento <feGaussianBlur> definisce il tipo di effetto 
+- l'attributo in="SourceGraphic" stabilisce che l'effetto è creato per l'intero elemento 
+- l'attributo 'stdDeviation' stabilisce l'ammontare del blur (offuscamento)'
+- l'attributo 'filter' dell'elemento <rect> si riferisce al filtro attraverso il suo attributo 'id' 
+-->
+
+<br />
+
+
+
+<!--[if lt IE 9]>
+<p>Per soddisfare IE8. Invece Safari non li supporta i filtri </p>
+<embed src="allegati/filtri.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

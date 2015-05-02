@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>SVG in div  </title>
+<style type="text/css">
+
+html,body,h1,h2,h3,p,dl,dt,dd,pre,ul, embed{ margin:0; padding:0; }
+h1{ color: #00F; font-size:31px; margin-left:100px; padding:10px; }
+h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
+h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
+p{ padding:5px; }
+dl{margin-left:20px;}
+dt{ color:#039; margin-bottom:5px;}
+dd{ color:#06F; margin-left:10px; }
+li{margin-left:31px;}
+.nota{ color:#F66;}
+.codice{ color:#060}
+pre{color:rgb(50,150,50); margin-left:5px; }
+
+#divo{ 
+margin: 20px 10px; float:left;
+position:relative; width:300px; height:450px; background:#CCC; border: 1px solid; 
+background: linear-gradient(top, blue, white);			/* GENERALE */
+background: -moz-linear-gradient(top, blue, white);		/* per FIREFOX  */
+background:-webkit-linear-gradient(top, blue, white); 	/* per CHROME E SAFARI */
+background:-o-linear-gradient(top, blue, white);		/* per OPERA */
+}
+#divo2{ 
+margin: 20px 20px; float:left;
+position:relative; width:600px; height:450px; background:#CCC; border: 1px solid; 
+}
+#divo3{ 
+position:relative; margin:0 auto; width:1000px; height:450px; background:#CC9; border: 1px solid;  
+}
+div.divo3a{
+position:relative; margin:0 auto; width:50%; height:50%; background:rgb(255,200,200); 
+}
+
+#svg1{ position:relative; margin:20px 10px;   border: 1px solid;  }
+#svg2{ position:relative; margin:31px 100px;   border: 1px solid red; } 
+#svg3{ position:relative; width:100%; height:100%;   border: 1px solid; }
+embed{ position:relative; width:100%; height:100%;   border: 1px solid; background-color:rgb(255,200,200); 	}
+/* svg è non è un elemento di blocco e quindi non potrebbe essere posizionato centralmente con "margin:0 auto" */
+
+div.separa{ clear:both; }
+
+</style>
+</head>
+<body>
+
+<h3> &lt;svg&gt;  all'interno di un elemento &lt;div&gt;  </h3>
+
+
+<p class="nota">L'elemento &lt;svg&gt;  è stato inserito in un elemento &lt;div&gt;  a cui ho dato come background un gradiente. Nell'SVG ho creato un rettangolo in cui ho definito un'animazione. <br />
+<span class="codice">l'elemento &lt;svg&gt; non è un elemento di blocco e quindi non potrebbe essere posizionato centralmente con "margin: 0 auto"  però si potrebbe risolvere in un'altro modo (vedi sotto) </span>  </p>
+
+<div id="divo">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"   id="svg1" width="200" height="350" > 
+		<rect x="0" y="40" width="200" height="100" style="fill:rgb(250,250,0);stroke-width:1; stroke:rgb(0,0,0)">
+			<animate attributeType="CSS" attributeName="opacity" from="1" to="0" dur="5s" repeatCount="2" />
+		</rect>
+	</svg>
+</div>
+ 
+<div id="divo2">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"  
+			id="svg2" width="400" height="350" > 
+
+	<rect x="100" y="100" width="200" height="150" fill="imm" stroke="yellow" stroke-width=".02cm" />
+	<image x="100" y="100" width="200px" height="150px" xlink:href="../Immagini/grafico_canvas.png" id="imm" >
+		<title>My image</title>
+	</image>
+	<path	d="M0 0 L300 100 L300 0 Z " style="fill:none;stroke:white;stroke-width:1" 	/>
+
+</svg>
+</div>
+ 
+<div class="separa"></div> 
+
+
+<div id="divo3">
+	<div class="divo3a">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg3"  > 
+			<rect x="30%" y="30%" width="40%" height="40%" fill="red" stroke="blue" stroke-width=".02cm" />
+		</svg>
+<!--[if lt IE 9]>
+<embed src="allegati/svg_in-div.svg" type="image/svg+xml" wmode="transparent" />
+<![endif]--> 
+	</div><!--divo3a-->
+
+Essendo che l'elemento &lt;svg&gt; non è un elemento di blocco e quindi non potrebbe essere posizionato centralmente in un elemento con "margin: 0 auto" allora l'ho inserito  all'interno di un div (rettangolo rosa) assegnandogli <q>width</q> e <q>height</q> al '100%'. Naturalmente il div rosa l'ho posizionato centralmente con <q>margin:0 auto</q>. A sua volta ho creato un rettangolo rosso nel svg che ho posizionato al centro sfruttando sempre le percentuali: <q>width e height:40%</q> e <q>x e y:30%</q>. <b>Il gioco è risolto</b>  <br />
+Il problema dato dal tag embed di IE che non accetta il background e restitisce un background bianco lo risolto con la regola <b>wmode="transparent"</b>  dichiarata all'interno del tag &lt;embed&gt; che rende tale tag trasparente e quindi evidenziando il div rosa 
+
+</div><!--divo3-->
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

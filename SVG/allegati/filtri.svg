@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+<!--
+La primaq linea contiene la dichiarazione XML. L'attributo 'standalone' specifica se il file ha referenze o no ad un'altro file esterno. 'standalone="no"  intende che il file ha referenze ad un file esterno che in questo caso è il DTD.
+La seconda linea fa riferimento al DTD del SVG. tale DTD risiede a "w3.org" e contiene tutti gli elementi SVG ammissibili.  
+
+Il tag SVG ha bisogno del namespace che viene definito nell'attributo 'xmlns' e della versione usata definita nell'attributo 'version'
+-->
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <filter id="f1" x="0" y="0">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+    </filter>
+  </defs>
+  <rect width="90" height="90" stroke="green" stroke-width="3" fill="yellow" filter="url(#f1)" />
+</svg>
+
+<!--
+- l'attributo 'id' dell'elemento <filter> lo identifica in modo univoco 
+- l'elemento <feGaussianBlur> definisce il tipo di effetto 
+- l'attributo in="SourceGraphic" stabilisce che l'effetto è creato per l'intero elemento 
+- l'attributo 'stdDeviation' stabilisce l'ammontare del blur (offuscamento)'
+- l'attributo 'filter' dell'elemento <rect> si riferisce al filtro attraverso il suo attributo 'id' 
+-->
+
+
+
+
+

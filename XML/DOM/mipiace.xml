@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<like>
+	<mipiace>25</mipiace>
+	<nopiace>14</nopiace>
+	<totale>39</totale>
+</like>
+<!--
+La prima volta si parte con i seguenti valori impostati a 0 (zero) per tutti e 3 gli elementi 
+<like>
+	<mipiace>0</mipiace>
+	<nopiace>0</nopiace>
+	<totale>0</totale>
+</like>
+
+-->

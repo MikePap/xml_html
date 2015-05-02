@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Eseguire Script in SVG  </title>
+<style type="text/css">
+html,body,h1,h2,h3,p,dl,dt,dd,pre,ul, embed{ margin:0; padding:5px; }
+h1{ color: #00F; font-size:31px; margin-left:100px; padding:10px; }
+h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
+h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
+p{ padding:5px; }
+dl{margin-left:20px;}
+dt{ color:#039; margin-bottom:5px;}
+dd{ color:#06F; margin-left:10px; }
+li{margin-left:31px;}
+.nota{ color:#F66;}
+.codice{ color:#060}
+pre{color:rgb(50,150,50); margin-left:5px; }
+
+embed{ width:300px; height:150px; border:1px solid #CCC;   }
+
+#cerchiogiallo{ /*width:300px; height:150px;*/ border:1px solid #CCC;    }
+
+
+</style>
+<script type="text/javascript" src="../../jQuery-1.6.min.js"></script>
+</head>
+<body>
+
+<h1>Specificare lo Scripting Language </h1>
+
+<p class="nota">
+L'attributo <b>contentScriptType </b> permette di specificare il linguaggio di scripting che sarà utilizzato nel frammento posto all'interno dell'elemento SVG. Tale linguaggio sarà utilizzato per tutti gli di script che non specificano il loro linguaggio. Il valore di default è <b>application/ecmascript</b>. <a href="http://www.w3.org/TR/SVG11/script.html">Vedere qui</a> 
+</p>
+
+<h3>L'elemento &lt;script&gt;  </h3>
+
+<p class="nota">E' anche possibile specificare lo <q>scripting language</q>  per ogni script grazie all'elemento &lt;script&gt; definendolo nel suo attributo &lt;type&gt;. L'elemento &lt;script&gt; è equivalente a quello dell'HTML e ogni funzione definita in esso ha un "scopo globale" per tutto l'intero documento. <span class="codice"> IE8 e Safari non lo supportano.</span>
+</p>
+
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="6cm" height="5cm" viewBox="0 0 600 500"
+	xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<desc>Example script01 - invoke an ECMAScript function from an onclick event</desc>
+	<!-- ECMAScript to change the radius with each click -->
+	<script type="application/ecmascript"> <![CDATA[
+		function circle_click(evt){
+			var circle = evt.target;
+			var currentRadius = circle.getAttribute("r");
+			if (currentRadius == 100)
+			circle.setAttribute("r", currentRadius*2);
+			else
+			circle.setAttribute("r", currentRadius*0.5);
+		} // 
+	]]> </script>
+
+	<rect x="1" y="1" width="598" height="498" fill="none" stroke="blue"/>
+	<circle onclick="circle_click(evt)" cx="300" cy="225" r="100" fill="red"/>
+	<text x="300" y="480" font-family="Verdana" font-size="35" text-anchor="middle">
+		Click on circle to change its size
+	</text>
+</svg>
+
+<p> <a href="http://www.w3.org/TR/SVG11/script.html#EventAttributes">Vedere qui</a>  la lista degli <b>Event attributes</b>. La lista completa di tutti gli eventi che sono parte del linguaggio SVG sono <a href="http://www.w3.org/TR/SVG11/interact.html#SVGEvents">qui</a>     </p>
+
+<p class="jq"><b><span class="vb_vbc"></b></span></p>
+<svg width="6cm" height="5cm" viewBox="0 0 600 500" 
+	xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<desc>Example script01 - invoke an ECMAScript function from an onclick event</desc>
+<!--
+	<script type="application/ecmascript" src="../jQuery-1.6.min.js"> <![CDATA[
+		function circle_click1(){ 
+			$("span.vb_vbc").text("Hurrà");
+		      $("p.jq").css("color", "red");	
+			$("#cerchio1").css('fill', 'green');
+			$("#testo").text("Va bene va bene così").css('fill', 'green');
+//			alert('ok')
+		}; // chiude  
+		]]> </script>
+-->
+	<script type="application/ecmascript"> <![CDATA[
+		function circle_click1(){ 
+			document.querySelector('span.vb_vbc').innerHTML  = 'Hurrà';
+			document.querySelector('p.jq').style.color = 'green';
+			document.getElementById("cerchio1").style.fill = 'green';
+			document.getElementById('testo').style.fill = 'green';
+			document.getElementById('testo').innerHTML = "Va bene va bene così";
+		};
+	]]> </script>
+
+	<!-- Outline the drawing area with a blue line -->
+	<rect x="1" y="1" width="598" height="498" fill="none" stroke="blue"/>
+	<!-- Act on each click event -->
+	<circle onclick="circle_click1(evt)" cx="300" cy="225" r="100" fill="red" id="cerchio1"  />
+	<text x="300" y="480" font-family="Verdana" font-size="35" text-anchor="middle" id="testo">
+		Please click on circle 
+	</text>
+</svg>
+
+<svg width="6cm" height="5cm" viewBox="0 0 600 500"
+	xmlns="http://www.w3.org/2000/svg" version="1.1"  >
+	<desc>Example script01 - invoke an ECMAScript function from an onclick event</desc>
+
+	<rect x="1" y="1" width="598" height="498" fill="none" stroke="blue"/>
+	<!-- Act on each click event -->
+	<circle cx="300" cy="225" r="100" fill="red" id="cerchio2"  />
+	<text x="300" y="480" font-family="Verdana" font-size="35" text-anchor="middle" id="testo2">
+		Please click on circle 
+	</text>
+
+	<script type="application/ecmascript"> <![CDATA[
+			!function cambioColore(){ 
+				var cerchio = document.getElementById('cerchio2');
+				cerchio.addEventListener('click', function (e){
+					var io = e.target;
+					var coloreMio = io.getAttribute('fill');
+					if(coloreMio == 'blue'){
+						io.setAttribute('fill', 'red');
+						document.getElementById('testo2').innerHTML = 'capa rossa';
+					}else{
+						io.setAttribute('fill', 'blue');
+						document.getElementById('testo2').innerHTML = 'capa blu';
+					}
+				}, false)
+			}(); //
+	]]> </script>
+</svg>
+
+<!--[if lt IE 9]>
+	<p>Per soddisfare IE8 bisogna definire l'elemento &lt;embed&gt; nei CSS </p>
+	<embed id="ie1" src="../allegati/scripting.svg" type="image/svg+xml" />
+<![endif]--> 
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+<!--
+
+http://goo.gl/Fofspo
+http://goo.gl/
+-->
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br />
+<br /><br /><br />
+
+
+
+
+
+
+</body>
+</html>

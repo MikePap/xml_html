@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title> progress </title>
+<style type="text/css">
+
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+.rosso{ color:#993300; }
+.blu{ color:#0066FF; }
+code, pre{ color:rgb(50,150,50);  background:rgb(220,220,220); padding:10px;}
+
+
+</style>
+<script type="text/javascript" src="../../jQuery-1.6.min.js"></script>
+</head>
+
+<body>
+
+<h1>progress</h1>
+
+<p class="nota">IL tag &lt;progress&gt; rappresenta il <q>work-in-progress;</q> mostra l'avanzamento di un compito, attività, di un download ecc...</h3>
+
+<dl>
+Accetta due attributi per definire lo stato di completamento dell'attività.
+	<dt>value</dt>
+    	<dd>Specifica la quantità di lavoro completata</dd>
+    <dt>max</dt>
+    	<dd>Specifica il valore massimo richiesto per il completamento dell'attività</dd>    
+
+</dl>
+
+<p class="codice">Attualmente suportato dai browsers Firefox, Chrome e Opera</p>
+
+<section>  
+  <p>Caricati: <progress id="mioLoader" max="100" value="30"><span>30</span>%</progress></p>  
+</section>
+
+<section>  
+<p class="rosso">In questo secondo caso l'attributo <q>value</q> non è indicato per cui si avrà un effetto di caricamento (solo Chrome e Firefox lo mostrano), come a voler indicare che il compito da svolgere è in una fase attiva </p>
+  <p>In Caricamento: <progress id="mioLoader2" max="100"><span>30</span>%</progress></p>  
+</section>
+
+<section>
+
+ <h2>Task Progress</h2>
+ <p>Progress: <progress id="p" max=100><span>0</span>%</progress></p>
+ <script type="text/javascript">
+  var progressBar = document.getElementById('p');
+  function updateProgress(newValue) {
+    progressBar.value = newValue;
+    progressBar.getElementsByTagName('span')[0].textContent = newValue;
+  }
+  updateProgress(80);
+  
+ </script>
+</section>
+
+
+<section>
+<progress id="vaiJo" max="100"></progress>
+<p id="posizione"></p>
+</section>
+
+<script type="text/javascript">
+
+!function barraProgresso(){
+	var progress = 0;
+	var d = document.getElementById("vaiJo");
+	
+	!function progresso(){
+		progress = progress + 1;
+//		if(progress == 100) return;					// si ferma quando arriva al massimo
+		if(progress == 100) progress = 1;				// animazione all'infinito
+		d.value = progress;
+		setTimeout(progresso, 10);
+	}()
+}()
+
+/*
+$(document).ready(function(){
+
+//$('#poppo').attr('value',10);
+$('#vaiJo').animate({'value':100 }, 5000 );
+//$('#posizione').text(jk);
+
+}); // chiude ready
+*/
+/*
+function step(timestamp) {
+	var progress;
+	var d = document.getElementById("vaiJo");
+//	var start = 0;
+
+//	if (start === null) start = timestamp;
+//	progress = timestamp - start;
+progress = timestamp;
+	d.value = Math.min(progress/10, 100);			// non superiore a 100
+//d.value = progress/10;
+console.log(timestamp);
+	if (progress < 1000) {
+		requestAnimationFrame(step);
+	}
+}
+//requestAnimationFrame(step);
+*/
+
+
+
+</script>
+
+
+
+<h3>Styling progress bar</h3>
+
+<pre>
+
+progress {
+	/* styles */					<span class="nota">HTML5</span>	
+	
+}
+
+progress::-webkit-progress-bar {
+	/* styles  */					<span class="nota">Chrome e safari</span>	
+}
+
+progress::-webkit-progress-value {
+	/* styles */					<span class="nota">Chrome e safari</span>	
+}
+
+progress::-moz-progress-bar {
+	/* styles */					<span class="nota">Firefox</span>	
+}
+
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+</p></body>
+</html>

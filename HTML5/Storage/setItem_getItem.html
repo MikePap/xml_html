@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>setItem getItem </title>
+<link rel="stylesheet" href="../../../baseLocali.css" type="text/css"/>
+<style type="text/css">
+
+</style>
+
+
+</head>
+<body>
+
+<h1>setItem(key, value) & getItem(key)</h1>
+
+<dl>
+    <dt>setItem(string,  any data)</dt>
+    	<dd>Imposta la coppia key/value; se la key(chiave) esiste, nel senso che è stata precedentemente impostata, allora il suo valore sarà aggiornato(sostituito) con il nuovo valore </dd>    
+	<dt>getItem(string)</dt>
+    	<dd>Restituisce il valore associato con la chiave(data)</dd>
+</dl>
+
+<p>
+Possono essere impostati sia per il <tt>localStorage</tt> che per il <tt>sessionStorage</tt>
+</p>
+
+
+<br /><br />
+
+
+
+<script  type="text/javascript">
+
+//### Con il localStorage  ####
+var somma = 5+4;
+localStorage.setItem("bar", somma);			
+//localStorage.setItem("bar", "Sport");	
+console.log(localStorage.getItem('bar'));
+
+//### Con il sessionStorage  ####
+
+sessionStorage.setItem('frutta', 'mele');
+console.log( sessionStorage.getItem('frutta'));
+
+
+
+
+</script>
+
+
+
+<div id="divo"></div>
+
+
+
+</body> 
+</html>

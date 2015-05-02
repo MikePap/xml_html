@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Rettangolo  Arrotondato</title>
+
+<style type="text/css">  
+body{ margin:0; padding:0; /*background:rgb(250,250,100);*/ }
+h3{ color:#03F;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:10px; padding:0; /*background:#F00;*/  /*border: 1px solid black;*/  /*crea un bordo all'elemento  */} 
+
+</style>  
+
+
+<script type="text/javascript">  
+
+function draw(){ 
+var canvas = document.getElementById("rectangle");
+var ctx = canvas.getContext('2d');
+
+ctx.beginPath();
+
+ctx.moveTo(0,20);
+ctx.lineTo(0,100);
+ctx.quadraticCurveTo(0,120,20,120);
+ctx.lineTo(160,120);
+ctx.quadraticCurveTo(180,120,180,100);
+ctx.lineTo(180,20);
+ctx.quadraticCurveTo(180,0,160,0);
+ctx.lineTo(20,0);
+ctx.quadraticCurveTo(0,0,0,20);
+ctx.stroke();
+} // chiude la funzione draw
+
+
+
+
+	 
+function Rettangolo_Arrotondato(elem,L,H,radius,riempimento){
+// 'elem' è l'id dell'elemento canvas; 'L' è la larghezza; 'H' è l'altezza; 'radius' è l'angolatura; 'riempimento' è il colore di riempimento del rettangolo 
+// RICORDARE  DI IMPOSTARE LE DIMENSIONI 'width' e 'height' DELL'ELEMENTO CANVAS  UGUALI RISPETTIVAMENTE A 'LARGHEZZA' E 'ALTEZZA' DEL RETTANGOLO   
+var canvas = document.getElementById(elem);
+var ctx = canvas.getContext('2d');
+var L_min = L - radius; // 180-20 = 160 
+var H_min = H - radius; // 120-20 = 100
+
+ctx.beginPath();
+ctx.moveTo(0,radius);
+ctx.lineTo(0,H_min);
+ctx.quadraticCurveTo(0,H,radius,H);
+ctx.lineTo(L_min,H);
+ctx.quadraticCurveTo(L,H,L,H_min);
+ctx.lineTo(L,radius);
+ctx.quadraticCurveTo(L,0,L_min,0);
+ctx.lineTo(radius,0);
+ctx.quadraticCurveTo(0,0,0,radius);
+ctx.fillStyle = riempimento; //  
+ctx.fill();
+}; // ########  chiude la funzione Rettangolo_Arrotondato ###########
+
+
+function Rettangolo_Arrotondato_vuoto(elem,L,H,radius,contorno){
+var canvas = document.getElementById(elem);
+var ctx = canvas.getContext('2d');
+var L_min = L - radius; // 180-20 = 160 
+var H_min = H - radius; // 120-20 = 100
+
+ctx.beginPath();
+ctx.moveTo(0,radius);				// punto di partenza 
+ctx.lineTo(0,H_min);				// va giù di H_min(150) 
+ctx.quadraticCurveTo(0,H,radius,H);		// 
+ctx.lineTo(L_min,H);
+ctx.quadraticCurveTo(L,H,L,H_min);
+ctx.lineTo(L,radius);
+ctx.quadraticCurveTo(L,0,L_min,0);
+ctx.lineTo(radius,0);
+ctx.quadraticCurveTo(0,0,0,radius);
+ctx.strokeStyle = contorno;
+ctx.stroke();
+}; // ##### chiude la funzione  Rettangolo_Arrotondato_vuoto ######## 
+
+
+     </script>  
+
+   </head>  
+
+   <body onLoad="draw();"> 
+
+     <canvas id="rectangle" width="180" height="120"></canvas>  
+
+
+
+<!-- 
+
+   <body onLoad="draw();"> 
+
+   <body onLoad="Rettangolo_Arrotondato_vuoto('rectangle',180,180,30)"> 
+
+   <body onLoad="Rettangolo_Arrotondato_vuoto('rectangle',180,120,20,'rgb(0,200,0)')"> 
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

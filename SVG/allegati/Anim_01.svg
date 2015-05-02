@@ -1,0 +1,39 @@
+<?xml version="1.0" standalone="no"?> 
+<!DOCTYPE svg PUBLIC "-//W3C//Dtd SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/Dtd/svg11.dtd"> 
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300px" height="150px" id="jk"  >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green"  >
+		<animate attributeName="cx" begin="2s" from="50" to="250" dur="3s" repeatCount="3" fill="freeze" />
+		<animate attributeName="cy" begin="2s" from="50" to="100" dur="3s" repeatCount="3" fill="freeze" />
+	</circle>
+</svg>
+
+<!--
+
+*** Bisogna mostrare soltanto un elemento (frammento) SVG ***
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green" id="cerchio" >
+		<animate attributeName="cx" begin="cerchio.click" from="50" to="250" dur="3s" repeatCount="3" fill="freeze" />
+		<animate attributeName="cy" begin="cerchio.click" from="50" to="100" dur="3s" repeatCount="3" fill="freeze" />
+	</circle>
+</svg>
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="150" id="essevugi" >
+	<circle cx="50" cy="50" r="49" stroke="black"  stroke-width="2" fill="green" id="cerchio" >
+		<animate attributeName="cx" begin="essevugi.click" from="50" to="250" dur="3s" repeatCount="3" fill="freeze" />
+		<animate attributeName="cy" begin="essevugi.click" from="50" to="100" dur="3s" repeatCount="3" fill="freeze" />
+	</circle>
+
+</svg>
+
+
+
+-->
+
+
+

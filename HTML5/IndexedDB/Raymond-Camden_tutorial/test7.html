@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<title>Demo 7</title>
+<head>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+code, pre{ color:rgb(20,150,30); font-weight:bold;}
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}		
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+
+</style>
+
+</head>
+<body>
+
+
+<h2>Keys</h2>
+<p>
+In un tradizionale database le tabelle sono senza chiavi ma in IndexedDB gli object stores necessitano di avere una chiave. Sono permesse una coppia di tipi di chiavi. <br />
+Nel <q>test6</q> precedente la chiave la si è aggiunta manualmente ma come si è visto, in certi casi, può produrrre errore. <br />
+Una seconda opzione è quella del <b>keypath</b> dove la chiave è basata su una proprietà facente parte dei dati 
+<pre>
+thisDb.createObjectStore("test", { keyPath: "email" });
+<span class="nota">in questo caso 'email' è una proprietà dell'oggetto che si vuole aggiungere </span>
+</pre>
+La terza opzione è quella dell'autogeneratore di chiavi, simile a quanto si verifica in MySQL con l'autoincrement
+<pre>
+thisDb.createObjectStore("test2", { autoIncrement: true });
+</pre>
+</p>
+
+<hr><hr><hr>
+
+
+<script>
+var db;
+
+function indexedDBOk() {
+	return "indexedDB" in window;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+	//No support? Go in the corner and pout.
+	if(!indexedDBOk) return;
+
+	var openRequest = indexedDB.open("idarticle_people2",1);
+
+	openRequest.onupgradeneeded = function(e) {
+		var thisDB = e.target.result;
+
+		if(!thisDB.objectStoreNames.contains("people")) {
+			thisDB.createObjectStore("people", {autoIncrement:true});
+		}
+	}
+
+	openRequest.onsuccess = function(e) {
+		console.log("running onsuccess");
+
+		db = e.target.result;
+
+		//Listen for add clicks
+		document.querySelector("#addButton").addEventListener("click", addPerson, false);
+	}	
+
+	openRequest.onerror = function(e) {
+		//Do something for the error
+	}
+
+
+},false);
+
+
+function addPerson(e) {
+	var name = document.querySelector("#name").value;
+	var email = document.querySelector("#email").value;
+
+	console.log("About to add "+name+"/"+email);
+
+	//Get a transaction
+	//default for OS list is all, default for type is read
+	var transaction = db.transaction(["people"],"readwrite");
+	//Ask for the objectStore
+	var store = transaction.objectStore("people");
+
+	//Define a person
+	var person = {
+		name:name,
+		email:email,
+		created:new Date()
+	}
+
+	//Perform the add
+	var request = store.add(person);
+
+	request.onerror = function(e) {
+		console.log("Error",e.target.error.name);
+		//some type of error handler
+	}
+
+	request.onsuccess = function(e) {
+		console.log("Woot! Did it");
+	}
+}
+</script>
+
+<input type="text" id="name" placeholder="Name"><br/>
+<input type="email" id="email" placeholder="Email"><br/>
+<button id="addButton">Add Data</button>
+
+</body>
+</html>

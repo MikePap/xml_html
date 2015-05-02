@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Demo 2</title>
+	</head>
+	<body>
+
+<h3>Instanziare una variabile che verifichi il suoorto di IndexedDB </h3>
+
+
+		
+	<script>
+    var idbSupported = false;
+        
+	document.addEventListener("DOMContentLoaded", function(){
+	
+		if("indexedDB" in window) {
+            idbSupported = true;
+		}
+	
+	},false);
+		
+	</script>	
+	</body>
+</html>

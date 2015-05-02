@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Drag e Drop  </title>
+<style type="text/css">
+h1{ font-size:31px; font-weight:bold; color:rgb(50,50,250); margin-left:50px;} 
+h2{ font-size:25px; font-weight:bold; color:rgb(250,50,150); margin-left:31px;}
+h3{ font-size:20px; font-weight:bold; color:rgb(200,20,20); margin-left:20px;}
+code, pre{ color:rgb(20,150,30); font-weight:bold; background:rgb(230,230,230); margin:0 10px; padding:10px; }
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}
+dl{
+padding:0 10px
+}		
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+p{
+padding-left:10px;
+}
+
+
+#drag-elements{
+width:80%; /*border:1px solid; */
+}
+#drag-elements li{
+display:inline-block; width:19%; text-align:center; border:1px solid #ccc;
+}
+
+#drop-target-one{
+width:80%; /*height:300px; margin:10px 100px;*/  padding:100px 0; text-align:center; border:3px dashed;
+}
+.over{
+background:#888; 
+}
+
+#dd-files{
+width:80%; padding:100px 0; text-align:center; border:3px dashed;
+}
+
+
+</style>
+</head>
+<body>
+
+
+<h1>Drag e Drop</h1>
+
+<p>
+Il sistema di <tt>Drag</tt> e <tt>Drop</tt> richiede alcune cose per il suo funzionamento
+<dl>
+	<dt>Qualcosa da trasportare</dt>
+	<dt>Un elemento target come contenitore finale di raccolta </dt>
+	<dt>Dei gestori di eventi </dt>
+</dl>	
+</p>
+
+<h3>Consentire il trascinamento di un elemento</h3>
+
+<p>
+Gli elementi &lt;img&gt; e &lt;a&gt; sono <em>draggable</em> (trascinabili) pert default ma per tutti gli altri c'è bisogno di impostare l'attributo <b>draggable</b> a <tt>true</tt>
+</p>
+<pre>
+&lt;div draggable="true"&gt; Div trascinabile &lt;/div&gt; 
+</pre>
+
+
+<h3>Eventi del drag e drop</h3>
+
+<p>
+Ci sono vari eventi che sono utilizzati durante un processo di <tt>drag</tt> e <tt>drop</tt>, alcuni scattano sugli elementi che sono trascinati e altri scattano sugli elementi che servono come target contenitore 
+<dl>
+	<dd><b>dragstart</b>: scatta sull'elemento quando inizia l'operazione di drag. Non scatta quando viene trascinato un file, dal proprio pc, nel browser </dd>
+	<dd><b>drag</b>: l'evento è continuamente in azione durante l'operazione di drag e drop</dd>
+	<dd><b>dragenter</b>: scatta quando l'elemento trascinato entra nell'elemento target (contenitore)</dd>
+	<dd><b>dragleave</b>: scatta quando l'emento da trascinare lascia il proprio elemento</dd>
+	<dd><b>dragover</b>: scatta nel momento in cui l'elemento trascinato entra nella zona dell'elemento target</dd>
+	<dd><b>drop</b>: scatta quando l'elemento trascinato atterra nell'elemento target </dd>
+	<dd><b>dragend </b>: scatta quando l'operazione di drag si conclude. E' applicato sull'elemento che è stato trascinato</dd>
+
+</dl>	
+Gli eventi del mouse, come per esempio il <tt>mousemove</tt> non sono funzionanti quando è attivo di <tt>drag e drop</tt>
+</p>
+<p>
+Per una prova si può usare lo script seguente per vedere se un operazione di drag e drop è iniziata
+</p>
+<pre>
+draggableElement.addEventListener('dragstart', function(e) {
+	console.log(l'operazione di drag e drop è iniziata!);
+});
+</pre>
+
+
+<h3>L'oggetto DataTransfer</h3>
+
+<p>
+Quando un operazione di <tt>drag e drop</tt> è iniziata viene creato un oggetto <tt>DataTransfer</tt> e associato all'interazione. Tale oggetto è utilizzato per immagazzinare informazioni circa l'interazione. <br />
+Attributi e metodi del <tt>DataTransfer</tt> sono i seguenti:
+<dl>
+	<dt>dropEffect</dt>
+	<dd>E' il tipo di operazione di drag e drop. Determina il cursore che il browser dovrebbe visualizzare durante l'interazione. Tipi di valori ammessi sono: <b>copy, move, link, none</b>.</dd>
+
+	<dt>effectAllowed </dt>
+	<dd>Specifica il tipo ammesso nell'interazione. Possibili valori sono: <b>copy, move, link, copyLink, copyMove, linkMove, all, none, uninitialized</b> (default) </dd>
+
+	<dt>files</dt>
+	<dd>Una filelist contenente gli oggetti file associati al drag. Questa proprietà è utile quando si vogliono trascinare file dal proprio pc nel browser</dd>
+
+	<dt>types</dt>
+	<dd>Una lista di tipi di formato per i dati immagazzinati nell'oggetto DataTransfer  </dd>
+	
+	<dt>setData(format, data)</dt>
+	<dd>Metodo utilizzato per immagazzinare dei dati nell'oggetto DataTransfer. L'argomento 'format' può essere di tipo 'text', 'url', 'text/html' </dd>
+
+	<dt>getData(format)</dt>
+	<dd>Metodo utilizzato per recuperare dati dall'oggetto DataTransfer </dd>
+			
+	<dt>clearData(format)</dt>
+	<dd>Metodo usato per rimuovere tutti i dati dall'oggetto DataTransfer. Specificando l'argomento 'format' verrà rimosso solo quel tipo di dati </dd>
+	
+	<dt>setDragImage(imgElement, x, y)</dt>
+	<dd>Metodo utilizzato per specificare una immagine da visualizare durante l'operazione di trascinamento. Per default i browsers mostrano un semitrasparente immagine dell'elemento sorgente. I parametri 'x' e 'y' permettono di definire una posizione dell'immagine da visualizzare rispetto al cursore mouse </dd>
+</dl>	
+</p>
+
+<h3>Esempio trascinamento elementi in un box contenitore</h3>
+
+<ul id="drag-elements">
+  <li draggable="true">Primo Elemento</li>
+  <li draggable="true">Secondo Elemento</li>
+  <li draggable="true">Terzo Elemento</li>
+  <li draggable="true">Quarto Elemento</li>
+  <li draggable="true">Quinto Elemento</li>
+</ul>
+
+<div id="drop-target-one">
+  Trascina qui gli elementi!
+</div>
+
+
+<script type="text/javascript">
+
+var dropZoneOne = document.querySelector('#drop-target-one');						// elemento target che serve da contenitore
+var dragElements = document.querySelectorAll('#drag-elements li');				// elementi LI che saranno trascinati 
+// Track the element that is being dragged.
+var elementDragged = null;																		// si inizializza una variabile per l'elemento che sta per essere trascinato 
+
+// Evento listener per quando il trascinamento ha inizio
+for (var i = 0; i < dragElements.length; i++) {
+	dragElements[i].addEventListener('dragstart', function(e) {
+		e.dataTransfer.effectAllowed = 'move';
+		e.dataTransfer.setData('text', this.innerHTML);
+		elementDragged = this;
+	});
+
+// Evento listener per quando il trascinamento termina
+	dragElements[i].addEventListener('dragend', function(e) {
+		elementDragged = null;
+	});
+
+	dragElements[i].addEventListener('mousedown', function(e){
+		this.style['cursor'] = "all-scroll";
+	}, false);
+
+	dragElements[i].addEventListener('drag', function(e){
+		cursor.style['cursor'] = "all-scroll";
+//		elementDragged.style['cursor'] = "all-scroll";
+	});
+};
+
+// Evento listener per quando inizia l'interazione per evitare che il browser si comporti come di default che, in altre parole, permetta il trascinamento
+dropZoneOne.addEventListener('dragover', function(e) {
+	if (e.preventDefault) {
+		e.preventDefault();
+	}
+	e.dataTransfer.dropEffect = 'move';
+	return false;
+});
+
+
+// Evento listener per quando gli elementi trascinabili entrano nella zona del contenitore
+dropZoneOne.addEventListener('dragenter', function(e) {
+	this.className = "over";											// è giusto uno stile per il background del contenitore
+//		this.style['cursor'] = "all-scroll";
+});
+
+// Evento listener per quando gli elementi trascinabili escono dalla zona del contenitore
+dropZoneOne.addEventListener('dragleave', function(e) {
+	this.className = "";
+});
+
+
+// Evento listener per quando gli elementi trascinabili vengono rilasciati nella zona del contenitore
+dropZoneOne.addEventListener('drop', function(e) {
+	if (e.preventDefault) e.preventDefault(); 
+	if (e.stopPropagation) e.stopPropagation();
+
+	this.className = "";
+	this.innerHTML = e.dataTransfer.getData('text')+ " trascinato" ;
+
+//	Remove the element from the list.
+	document.querySelector('#drag-elements').removeChild(elementDragged);
+	return false;
+});
+
+</script>
+
+
+<h3>Esempio di drag e drop con file e lettura del file</h3>
+
+
+<div id="dd-files">Trascina qui un file dal pc</div>
+<pre id="file-content"></pre>
+
+
+<script type="text/javascript">
+
+var dropZoneTwo = document.querySelector('#dd-files');						// elemento target che serve da contenitore
+var fileContentPane = document.querySelector('#file-content');				// elemento <pre> che nostrerà il file caricato 
+
+
+// Evento listener per quando inizia l'interazione per evitare che il browser si comporti come di default che, in altre parole, permetta il trascinamento
+dropZoneTwo.addEventListener('dragover', function(e) {
+	if (e.preventDefault) e.preventDefault(); 
+	if (e.stopPropagation) e.stopPropagation();
+	e.dataTransfer.dropEffect = 'copy';												// ...............
+});
+
+
+// Evento listener per quando gli elementi trascinabili entrano nella zona del contenitore
+dropZoneTwo.addEventListener('dragenter', function(e) {
+	this.className = "over";
+});
+
+// Evento listener per quando gli elementi trascinabili escono dalla zona del contenitore
+dropZoneTwo.addEventListener('dragleave', function(e) {
+	this.className = "";
+});
+
+
+// Evento listener per quando gli elementi trascinabili vengono rilasciati nella zona del contenitore
+dropZoneTwo.addEventListener('drop', function(e) {
+	if (e.preventDefault) e.preventDefault(); 
+	if (e.stopPropagation) e.stopPropagation();
+
+	this.className = "";
+
+	var fileList = e.dataTransfer.files;
+
+	if (fileList.length > 0) {
+		readTextFile(fileList[0]);
+	}
+});
+
+
+// Lettura del contenuto del file 
+function readTextFile(file) {
+	var reader = new FileReader();
+
+	reader.onloadend = function(e) {
+		if (e.target.readyState == FileReader.DONE) {
+			var content = reader.result;
+			dropZoneTwo.innerHTML = "File caricato: " +file.name;
+//			fileContentPane.innerHTML = "File caricato: " +file.name;
+			fileContentPane.innerHTML = "File: " + file.name + "\n\n" + content;
+		}
+	}
+
+	reader.readAsBinaryString(file);
+}
+
+
+</script>
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+
+
+</body>
+</html>

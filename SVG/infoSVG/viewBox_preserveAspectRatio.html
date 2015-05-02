@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>viewBox e preserveAspectRatio</title>
+<style type="text/css">
+html,body,h1,h2,h3,p,dl,dt,dd,pre,ul, embed{ margin:0; padding:5px; }
+h1{ color: #00F; font-size:31px; margin-left:100px; padding:10px; }
+h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
+h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
+p{ padding:5px; }
+dl{margin-left:20px;}
+dt{ color:#039; margin-bottom:5px;}
+dd{ color:#06F; margin-left:10px; }
+li{margin-left:31px;}
+.nota{ color:#F66;}
+.codice{ color:#060}
+.azzurro{
+color:blue;
+}
+pre{
+color:rgb(50,150,50); margin-left:5px; background:rgb(230,230,230);
+}
+tt{
+color:green;
+}
+
+svg{
+background:yellow;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Sistema di coordinate in SVG</h1>
+
+<h2>Il viewport</h2>
+<p>
+Il <q>viewport</q>  è l'area visibile in cui l'SVG sarà visibile. Il <tt>viewport</tt> dell'SVG è simile al <tt>viewport</tt> del browser; una pagina html può essere molto larga o lunga però solo una porzione di essa sarà visibile, a seguito dello scroll, che è quella del viewport. <br />
+Lo si può specificare con gli attributi <tt>width</tt> e <tt>height</tt> i quali sono definiti con le seguenti unità di misura: <tt>em, ex, px, pt, pc, cm, mm, in </tt> e <tt>percentuali</tt>. Se non si specifica l'unità allora SVG applicherà il px, come nell'esempio seguente
+<pre>
+&lt; svg width="800" height="600"&gt;
+	-------------
+&lt;/svg&gt; 
+<span class="nota">Il viewport sarà quindi 800px per 600px</span>
+</pre>
+</p>
+
+
+<h3>Il sistema di coordinate iniziale</h3>
+
+<p>
+Il sistema di coordinate iniziale stabilito per il <tt>viewport</tt> così come stabilito per il L'HTML e CSS dal DOM ha come origine l'angolo in alto a sinistra (0,0) con una direzione orizzontale che va da sinistra verso destra e quella verticale dall'alto verso il basso ed una unità di misura di default in <tt>pixel</tt>. <br />
+L'attributo <tt>viewBox</tt> permette eventualmente di cambiare questo sistema 
+</p>
+
+
+<h2>Il viewBox</h2>
+<p>
+Il <tt>viewBox</tt> rappresenta l'area in cui le figure definite nell'elemento SVG saranno visibili. Questo sistema di coordinate può essere più grande o più piccolo del <tt>viewport</tt> e quindi può essere visibile (all'interno del viewport) o interamente o parzialmente. <br />
+Il viewBox può essere definito nell'attributo &lt;viewBox&gt; 
+<pre>
+viewBox = &lt;min-x&gt;  &lt;min-y&gt;  &lt;width&gt;  &lt;height&gt; 
+</pre>
+Dove  &lt;min-x&gt; e &lt;min-y&gt; definiscono le distanze dall'angolo in alto a sinistra del viewport e &lt;width&gt;  &lt;height&gt; creano l'area rettangolare del viewBox che sarà visibile all'interno del viewport
+<pre>
+&lt;svg width="400" height="200" viewbox="0 0 400 200"&gt;
+	&lt;rect x="0" y="0" width="200" height="100" /&gt; 
+&lt;/svg&gt; 
+<span class="nota">In questo caso viewBox e viewport sono uguali</span>
+</pre>
+</p>
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="400" height=200>
+		<rect x="0" y="0" width="200" height="100" fill="red" />
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="400" height=200 viewbox="0 0 400 200">
+		<rect x="0" y="0" width="200" height="100" fill="red" />
+	</svg>
+</div>
+
+<p>
+Proviamo a cambiare la &lt;width&gt; e la &lt;height&gt; del viewBox lasciando inalterati gli altri valori. Riducendo i valori alla metà lasciando inalterate le misure del rettangolo
+<pre>
+&lt;svg width="400" height=200 viewbox="0 0 200 100"&gt;
+	&lt;rect x="0" y="0" width="200" height="100" fill="red"/&gt; 
+&lt;/svg&gt; 
+</pre>
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="400" height=200 viewbox="0 0 200 100">
+		<rect x="0" y="0" width="200" height="100" fill="red" />
+		<text x="10" y="10" fill="black" font-size="7" font-family="Verdana">viewbox="0 0 200 100</text>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="400" height=200 viewbox="0 0 205 105">
+		<rect x="0" y="0" width="200" height="100" fill="red"/>
+		<text x="10" y="10" fill="black" font-size="7" font-family="Verdana">viewbox="0 0 205 105</text>
+	</svg>
+
+</div>
+
+<p>
+E' come se si sia fatto uno <q>zoom in aumento</q> raddoppiando le misure precedenti. Per cui essendo la nostra area visibile ora uguale alle dimensioni del rettangolo, quest'ultimo la occupa completamente
+<br />
+Se invece aumentiamo la &lt;width&gt; e la &lt;height&gt; del viewBox  le cose cambiano al contrario
+<pre>
+&lt;svg width="400" height=200 viewbox="0 0 800 400"&gt; 
+	&lt;rect x="0" y="0" width="200" height="100" fill="red"/&gt; 
+&lt;/svg&gt; 
+</pre>
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="400" height=200 viewbox="0 0 800 400">
+		<rect x="0" y="0" width="200" height="100" fill="red"/>
+	</svg>
+</div>
+<p>
+In pratica abbiamo uno <q>zoom in diminuzione</q>. Questi esempi ci lasciano intendere che <b>il <tt>viewBox</tt> è la vera di area di visualizzazione</b> ma  rapportata al <tt>viewport</tt> 
+</p>
+
+<p>
+Vediamo altri esempi cambiando la &lt;min-x&gt; del <tt>viewBox</tt>  
+<pre>
+&lt;svg width="400" height=200 viewbox="190 0 400 200"&gt;				<span class="nota">esempio a sinistra</span> 
+	&lt;rect x="0" y="0" width="200" height="100" fill="red"/&gt; 
+&lt;/svg&gt; 
+
+&lt;svg width="400" height=200 viewbox="-190 0 400 200"&gt;				<span class="nota">esempio a destra</span> 
+	&lt;rect x="0" y="0" width="200" height="100" fill="red"/&gt; 
+&lt;/svg&gt; 
+</pre>
+Nell'esempio a sinistra è come se avessimo traslato l'area visibile di 190px a destra e quindi il rettangolo viene quasi del tutto oscurato. Effetto contrario abbiamo definendo un valore negativo alla &lt;min-x&gt; 
+</p>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="400" height=200 viewbox="190 0 400 200">
+		<rect x="0" y="0" width="200" height="100" fill="red"/>
+	</svg>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="400" height=200 viewbox="-190 0 400 200">
+		<rect x="0" y="0" width="200" height="100" fill="red"/>
+	</svg>
+</div>
+
+
+<h2>preserveAspectRatio</h2>
+
+<p>
+Negli esempi visti sopra abbiamo mantenuto il rapporto tra <tt>viewport</tt> e <tt>viewBox</tt> proporzionale. Raddoppiando o riducendo alla metà il <tt>viewBox</tt> rispetto al <tt>viewport</tt> si rispettano le proporzioni (<tt>aspect ratio</tt>) ma può accadere anche che le proporzioni non siano rispettate e in quel caso gli elementi all'interno risultano distorti. Pensiamo a quello che accadrebbe con le immagini.
+</p>
+<p>
+I seguenti tre esempi hanno tre differenti <tt>viewBox</tt>. Il primo lo si è lasciato uguale al <tt>viewport</tt> mentre negli altri due è diverso e non proporzionale. L'elemento all'interno ha sempre gli stessi valori
+<pre>
+&lt;svg width="400" height=200 viewbox="0 0 300 200"&gt;				<span class="nota">esempio a sinistra</span> 
+	&lt;rect x="0" y="0" width="200" height="100" /&gt; 
+&lt;/svg&gt; 
+
+&lt;svg width="400" height=200 viewbox="0 0 700 300"&gt;				<span class="nota">esempio centrale</span> 
+	&lt;rect x="0" y="0" width="200" height="100" /&gt; 
+&lt;/svg&gt; 
+
+&lt;svg width="400" height=200 viewbox="0 0 180 70"&gt;				<span class="nota">esempio a destra</span> 
+	&lt;rect x="0" y="0" width="200" height="100" /&gt; 
+&lt;/svg&gt; 
+</pre>
+
+quello che si vede è che l'elemento all'interno si trasforma in modo incontrollabile ed è qui che entra in ballo <tt>preserveAspectRatio</tt> a darci una mano 
+</p>
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200  viewbox="0 0 300 200" >
+		<rect x="0" y="0" width="200" height="100" fill="blue"/>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200  viewbox="0 0 700 300" >
+		<rect x="0" y="0" width="200" height="100" fill="blue"/>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200  viewbox="0 0 180 70" >
+		<rect x="0" y="0" width="200" height="100" fill="blue"/>
+	</svg>
+</div>
+
+<p>
+<span class="nota">
+L'attributo <tt>preserveAspectRatio</tt> ci permette di scalare uniformemente il <tt>viewBox</tt> in situazioni in cui non è proporzionale al <tt>viewport</tt> ed inoltre ci permette di posizionarlo in posizione differenti da quella centrata che è di default. </span> <br />
+E' possibile utilizzarlo sui quei elementi che stabiliscono un nuovo <tt>viewport</tt> (vedi <a href="nestingElements.html">qui</a>); la sua sintassi è: 
+</p>
+<pre>
+preserveAspectRatio = defer? &lt;align&gt;  &lt;meetOrSlice&gt; ?
+</pre>
+
+<p>
+Per <tt>preserveAspectRatio = "none"</tt>	si intende che gli elementi dell'SVG saranno scalati per rientrare all'interno del <tt>viewport</tt> senza mantenere le proporzioni (come visto negli ultimi tre esempi). <br />
+</p>
+
+<p>
+<span class="azzurro">defer </span> è opzionale ed è usato solo quando si applica il <tt>preserveAspectRatio</tt> sulle immagini ed ignorato su qualsiasi altro elemento. <br />
+</p>
+<p>
+<span class="azzurro">align e meetOrSlice</span> funzionano insieme in modo simile a come si comportano <tt>background-position </tt> e <tt>background-size</tt> nei CSS. 
+</p>
+
+<h3>align</h3>
+
+<p>
+<tt>align</tt> indica se forzare la scalatura e in tal caso quale metodo di posizionamento usare. E' simile al <tt>background-position</tt> dei CSS. Supporta nove parametri:
+<ul>
+	<li><b>xMinYMin</b>: Uguale al background-position: 0% 0%. Allinea il &lt;min-x&gt; del viewBox con il più piccolo valore X del viewport e il &lt;min-y&gt; con il più piccolo valore Y.     </li>
+	<li><b>xMinYMid</b>: Uguale al background-position: 0% 50%</li>
+	<li><b>xMinYMax</b>: Uguale al background-position: 0% 100%</li>
+
+	<li><b>xMidYMin</b>: Uguale al background-position: 50% 0%</li>
+	<li><b>xMidYMid</b>: Uguale al background-position: 50% 50% (valore di default)</li>
+	<li><b>xMidYMax</b>: Uguale al background-position: 50% 100%</li>
+
+	<li><b>xMaxYMin</b>: Uguale al background-position: 100% 0%</li>
+	<li><b>xMaxYMid</b>: Uguale al background-position: 100% 50%</li>
+	<li><b>xMaxYMax</b>: Uguale al background-position: 100% 100$</li>	
+</ul>
+</p>
+
+
+<h3>meetOrSlice</h3>
+
+
+<p>
+<tt>meetOrSlice </tt> è  opzionale e specifica se o no l'intero <tt>viewBox</tt> deve essere visibile all'interno del <tt>viewport</tt>.  <br />
+Accetta due valori che sono: <tt>meet</tt> (default) e <tt>slice</tt>. Si può pensare ad essi come ai valori <em>contain</em> e <em>cover</em> della proprietà <tt>background-size</tt> dei CSS. <br />
+<span class="azzurro">meet</span>: esegue la scalatura mantenendo le proporzioni facendo in modo che l'intero <tt>viewBox</tt> rientri nel <tt>viewport</tt>; è quello che succede con <tt>contain</tt> per il <tt>background-size</tt>. <br />
+<span class="azzurro">slice</span> esegue la scalatura affinchè il <tt>viewBox</tt> copra interamente il <tt>viewport</tt> sempre mantenendo le proporzioni. Però può accadere che dovendo mantenere le proporzioni parte degli elementi vengano tagliati. E' quello che accade con <tt>cover</tt> nella proprietà <tt>background-size</tt> dei CSS 
+
+<div>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200 >
+		<svg  viewbox="0 0 300 200" >
+			<rect x="0" y="0" width="35" height="15" fill="blue"/>
+		</svg>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200  >
+		<svg preserveAspectRatio="xMidYMid meet"  viewbox="0 0 80 60" >
+			<rect x="0" y="0" width="35" height="15" fill="blue"/>
+		</svg>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200  >
+		<svg preserveAspectRatio="xMidYMid slice"  viewbox="0 0 80 60" >
+			<rect x="0" y="0" width="35" height="15" fill="blue"/>
+		</svg>
+	</svg>
+
+
+
+</div>
+
+<div>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200  >
+		<svg  viewbox="0 0 800 350" >
+			<rect x="0" y="0" width="285" height="145" fill="blue"/>
+		</svg>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200  >
+		<svg preserveAspectRatio="xMinYMin meet"  viewbox="0 0 800 350" >
+			<rect x="0" y="0" width="285" height="145" fill="blue"/>
+		</svg>
+	</svg>
+
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1"  width="300" height=200  >
+		<svg preserveAspectRatio="xMinYMin slice"  viewbox="0 0 800 350" >
+			<rect x="0" y="0" width="285" height="145" fill="blue"/>
+		</svg>
+	</svg>
+
+</div> 
+
+<br />
+
+<p>
+l'esempio seguente è più esplicativo
+</p>
+
+<br />
+
+<div>
+	<img src="../allegati/preserveAspectRatio.svg" alt="" title="" />
+</div> 
+
+<br />
+
+<p>
+Vedere esempi con l'uso del <tt>preserveAspectRatio</tt>  <a href="../header-SVG_responsive.html">Figura header responsive</a> (leggere i commenti interni al documento) e anche in <a href="../menu_fluido.html">Menù fluido di Jake Archibald</a>
+<br />
+Per approfondimento sul viewport, viewBox e sistema di cooordinate <a href="http://sarasoueidan.com/blog/svg-coordinate-systems/?utm_source=CSS-Weekly&utm_campaign=Issue-120&utm_medium=email">vedere qui</a>
+</p>
+
+<!--
+
+preserveAspectRatio="xMaxYMax slice"
+width="100px" height="100px"
+
+
+http://localhost/xml_html/SVG/allegati/preserveAspectRatio.svg
+
+W x H
+elemento
+30 x 40 
+
+Viewport
+Viewport1	50 x 30		=> 50/30		1.66		(orizzontale)
+
+Viewport2	30 x 60		=> 60/40		1.50		(verticale)
+
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>yepnope.injectCSS yepnope.injectJs    </title>
+<style type="text/css">
+
+</style>
+<script type="text/javascript" src="yepnope.1.5.4-min.js"></script>
+
+
+</head>
+<body>
+
+<h1>yepnope.injectCSS yepnope.injectJs</h1>
+
+<code><pre>
+yepnope.injectJs( scriptSource [, callback ] [, elemAttributes ] [, timeout ]);
+
+yepnope.injectCss( stylesheetSource [, callback ] [, elemAttributes ] [, timeout ]);
+
+
+</pre></code>
+
+<script type="text/javascript">
+
+//yepnope.injectCss(["yepnope2.css", "yepnope.css"], function () {	// NON FUNZIONA (non carica tutti e due i files CSS)
+yepnope.injectCss("yepnope.css", function () {
+alert("css injected!");
+}, {
+//media: "print"
+style: "type"					// solo con questa indicazione carica gli stili del CSS 
+}, 5000);
+
+yepnope.injectJs("../../jquery-1.8.2.min.js", function () {
+alert("jQuery loaded!");
+$("h1").css('color', 'red');			// sostituisce quello dichiarato nei CSS
+}, {
+charset: "utf-8"
+}, 5000);
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

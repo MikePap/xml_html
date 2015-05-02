@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>sfumatura contorni</title>
+<style type="text/css">  
+body{ margin:0; padding:0;}
+h3{ color:#03F;}
+.rosso{ color:#F00;}
+.verde{ color:green;}
+canvas { margin:100px; padding:0;  border: 1px solid black;  } 
+	   
+	   
+</style>  
+
+<script type="text/javascript">  
+
+function draw() {  
+var ctx = document.getElementById('canvas').getContext('2d');  
+for (var i=0;i<6;i++){     // verticale  
+for (var j=0;j<6;j++){  // orizzontale 
+ctx.strokeStyle = 'rgb(0,' + Math.floor(255-42.5*i) + ',' + Math.floor(255-42.5*j) + ')';  
+ctx.beginPath();  
+ctx.arc(12.5+j*25,12.5+i*25,10,0,Math.PI*2,true); // 12.5 è la metà di 25(il centro del cerchio)  
+ctx.stroke();  
+} // for   
+} // for   
+}; // chiude la funzione   
+
+</script>  
+
+   </head>  
+   <body onLoad="draw();"> 
+
+<canvas id="canvas" width="150" height="150"></canvas>
+
+
+
+
+
+</body>
+</html>

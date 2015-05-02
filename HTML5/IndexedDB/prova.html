@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>prova</title>
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript" src="../jQuery-1.6.min.js"></script>
+
+
+
+</head>
+<body>
+
+
+
+<ul id="todoItems"></ul>
+<input type="text" id="todo" name="todo"  placeholder="What do you need to do?" style="width: 200px;" />
+<input type="submit" value="Add Todo Item" onclick="addTodo(); return false;"/>
+
+
+<script type="text/javascript">
+
+var html5rocks = {};
+window.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB;
+
+if ('webkitIndexedDB' in window) {
+	window.IDBTransaction = window.webkitIDBTransaction;
+	window.IDBKeyRange = window.webkitIDBKeyRange;
+}
+
+html5rocks.indexedDB = {};								// namespace
+html5rocks.indexedDB.db = null;
+
+html5rocks.indexedDB.onerror = function(e) {
+	console.log(e);
+};
+
+html5rocks.indexedDB.open = function() {
+	var version = 1;
+	var request = indexedDB.open("todos", version);
+
+	// We can only create Object stores in a versionchange transaction.
+	request.onupgradeneeded = function(e) {
+		var db = e.target.result;
+
+		// A versionchange transaction is started automatically.
+		e.target.transaction.onerror = html5rocks.indexedDB.onerror;
+
+		if(db.objectStoreNames.contains("todo")) {
+			db.deleteObjectStore("todo");
+		}
+
+		var store = db.createObjectStore("todo",
+			{keyPath: "timeStamp"});
+	};
+
+	request.onsuccess = function(e) {
+		html5rocks.indexedDB.db = e.target.result;
+		html5rocks.indexedDB.getAllTodoItems();
+	};
+
+	request.onerror = html5rocks.indexedDB.onerror;
+};
+
+html5rocks.indexedDB.addTodo = function(todoText) {
+	var db = html5rocks.indexedDB.db;
+	var trans = db.transaction(["todo"], "readwrite");
+	var store = trans.objectStore("todo");
+
+	var data = { 
+		"text": todoText,
+		"timeStamp": new Date().getTime()
+	};
+
+	var request = store.put(data);
+
+	request.onsuccess = function(e) {
+		html5rocks.indexedDB.getAllTodoItems();
+	};
+
+	request.onerror = function(e) {
+		console.log("Error Adding: ", e);
+	};
+};
+
+html5rocks.indexedDB.deleteTodo = function(id) {
+	var db = html5rocks.indexedDB.db;
+	var trans = db.transaction(["todo"], "readwrite");
+	var store = trans.objectStore("todo");
+
+	var request = store.delete(id);
+
+	request.onsuccess = function(e) {
+		html5rocks.indexedDB.getAllTodoItems();
+	};
+
+	request.onerror = function(e) {
+		console.log("Error Adding: ", e);
+	};
+};
+
+html5rocks.indexedDB.getAllTodoItems = function() {
+	var todos = document.getElementById("todoItems");
+	todos.innerHTML = "";
+
+	var db = html5rocks.indexedDB.db;
+	var trans = db.transaction(["todo"], "readwrite");
+	var store = trans.objectStore("todo");
+
+	// Get everything in the store;  @@@@@@@@@@@########################
+	var keyRange = IDBKeyRange.lowerBound(0);
+	var cursorRequest = store.openCursor(keyRange);
+
+	cursorRequest.onsuccess = function(e) {
+		var result = e.target.result;
+		if(!!result == false)
+			return;
+
+		renderTodo(result.value);
+			result.continue();
+	};
+
+	cursorRequest.onerror = html5rocks.indexedDB.onerror;
+};
+
+function renderTodo(row) {
+	var todos = document.getElementById("todoItems");
+	var li = document.createElement("li");
+	var a = document.createElement("a");
+	var t = document.createTextNode(row.text);
+
+	a.addEventListener("click", function() {
+		html5rocks.indexedDB.deleteTodo(row.timeStamp);
+	}, false);
+
+	a.href = "#";
+	a.textContent = " [Delete]";
+	li.appendChild(t);
+	li.appendChild(a);
+	todos.appendChild(li);
+}
+
+function addTodo() {
+	var todo = document.getElementById("todo");
+	html5rocks.indexedDB.addTodo(todo.value);
+	todo.value = "";
+}
+
+function init() {
+	html5rocks.indexedDB.open();
+}
+
+window.addEventListener("DOMContentLoaded", init, false);
+
+
+
+/*
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+var db;
+ 
+if (!window.indexedDB) {
+	window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+}else{
+
+	var request = window.indexedDB.open("MyTestDatabase", 3);
+	request.onerror = function(event) {
+		alert("Why didn't you allow my web app to use IndexedDB?!");
+	};
+	request.onsuccess = function(event) {
+		db = request.result;
+
+
+	};
+
+//	window.alert('IndexedDB è supportato');
+}
+*/
+
+
+
+/*
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange;
+window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
+var DAO = DAO || {};
+
+
+
+var request = window.indexedDB.open("CandyDB",
+                                    "My candy store database");
+request.onsuccess = function(event) {
+  var db = event.result;
+  if (db.version != "1") {
+    // User's first visit, initialize database.
+    var createdObjectStoreCount = 0;
+    var objectStores = [
+      { name: "kids", keyPath: "id", autoIncrement: true },
+      { name: "candy", keyPath: "id", autoIncrement: true },
+      { name: "candySales", keyPath: "", autoIncrement: true }
+    ];
+ 
+    function objectStoreCreated(event) {
+      if (++createdObjectStoreCount == objectStores.length) {
+        db.setVersion("1").onsuccess = function(event) {
+          loadData(db);
+        };
+      }
+    }
+ 
+    for (var index = 0; index < objectStores.length; index++) {
+      var params = objectStores[index];
+      request = db.createObjectStore(params.name, params.keyPath,
+                                     params.autoIncrement);
+      request.onsuccess = objectStoreCreated;
+    }
+  }
+  else {
+    // User has been here before, no initialization required.
+alert('NO');    
+loadData(db);
+  }
+};
+*/
+
+
+
+/////////////////////////////////////////////////////////
+
+
+
+/*
+document.write("Trying to open database ...");
+var db = null;
+try {
+  var dbOpenRequest = window.indexedDB.open("BookShop1");
+  dbOpenRequest.onsuccess = function(event){
+    db = dbOpenRequest.result;
+    DAO.version = db.version;
+    var thisDB = db; // Need to create this variable since the variable db is assigned to other things later
+    db.onversionchange = function(e){
+      write("Version change triggered, so closing database connection", e.oldVersion, e.newVersion, thisDB);
+      thisDB.close();
+    };
+    write("Database Opened", db, event);  Code for ${db.open}
+  };
+  dbOpenRequest.onupgradeneeded = function(e){
+    write("Database upgrade needed");
+    var db = dbOpenRequest.result;
+    var transaction = dbOpenRequest.transaction;  Code for ${db.upgrade} };
+  dbOpenRequest.onerror = function(e){
+    write("DB Open Request Error");
+  };
+  dbOpenRequest.onblocked = function(e){
+    write("DB Open Request Blocked");
+  };
+} catch (e) {
+  writeError(e);
+}
+*/
+///////////////////
+
+/*
+var kids = [
+  { name: "Anna" },
+  { name: "Betty" },
+  { name: "Christine" }
+];
+ 
+var request = window.indexedDB.open("CandyDB",
+                                    "My candy store database");
+request.onsuccess = function(event) {
+  var objectStore = event.result.objectStore(kids);
+  for (var index = 0; index < kids.length; index++) {
+    var kid = kids[index];
+    objectStore.add(kid).onsuccess = function(event) {
+alert(kid.name);
+//      document.getElementById("display").textContent =
+//        "Saved record for " + kid.name + " with id " + event.result;
+
+    };
+  }
+}
+else{alert('fuck')}
+*/
+/*
+var kids = [
+  { name: "Anna" },
+  { name: "Betty" },
+  { name: "Christine" }
+];
+ 
+var request = window.indexedDB.open("CandyDB",
+                                    "My candy store database");
+
+*/
+/*
+request.onsuccess = function(event) {
+  var objectStore = event.result.objectStore("kids");
+  for (var index = 0; index < kids.length; index++) {
+    var kid = kids[index];
+    objectStore.add(kid).onsuccess = function(event) {
+      document.getElementById("display").textContent =
+        "Saved record for " + kid.name + " with id " + event.result;
+    };
+  }
+};
+*/
+/*
+//request.onsuccess = function(event) {
+  var objectStore = event.result.objectStore("kids");
+  for (var index = 0; index < kids.length; index++) {
+    var kid = kids[index];
+    objectStore.add(kid).onsuccess = function(event) {
+      document.getElementById("display").textContent =
+        "Saved record for " + kid.name + " with id " + event.result;
+    };
+  }
+*/
+
+
+</script>
+
+
+
+
+<div id="display"></div> 
+
+
+
+
+</body>
+</html>

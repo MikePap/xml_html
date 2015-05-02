@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Mi piace Non mi piace</title>
+<style type="text/css">
+body{ z-index:1; /*background: #FFFF00; */}
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+
+.nota{ color:rgb(250,120,0);}
+.codice{ color:rgb(30,120,30); }
+table{ border-collapse: collapse; }
+table td{}
+input{ border:none; text-align:center; }
+
+#box{ position:relative; margin:31px auto;  width:500px; height:50px; border:1px solid; z-index:3; }
+#verde{position:absolute; left:0; top:0; height:50px; /*width:250px;*/ background:green;  }
+#rosso{position:absolute; /*left:0;*/ top:0; height:50px; /*width:250px;*/ background:red;  }
+
+#dati{position:absolute; bottom:10px; left:10px; padding:5px 10px; border:1px solid;}
+.piace, .nopiace{color:red;}
+.totale{color:blue; font-weight:bold;}
+
+</style>
+</head>
+
+<script type="text/javascript" src="../../jQuery-1.6.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+$.ajax({
+type: "GET",
+url: "mipiace.xml",
+dataType: "xml",
+success: function(xml){  
+
+//$(xml).find('like').each(function(){			// va bene anche utilizzando l'each'
+//var ilike = $(this).find('mipiace').text();
+
+var parent = $(xml).find('like');				// trattandosi di un solo elemento <like> può andare anche questo e ...
+var ilike = $(parent).find('mipiace').text();		// 
+//var ilike = parseInt(ilike);
+var nolike = $(parent).find('nopiace').text();
+//var nolike = parseInt(nolike);
+var totale = $(parent).find('totale').text();
+//var totale = parseInt(totale);
+
+$('span.piace').text(ilike);
+$('span.nopiace').text(nolike);
+$('span.totale').text(totale);
+
+//### Le seguenti funzioni vanno richiamate all'interno di questo metodo per visualizzare i segmenti 'verde' e 'rosso' all'apertura della pagina  
+verde();
+rosso();
+//}); // each
+} // success 
+}); // $.ajax
+
+function verde(){
+var L_box = $('#box').width();				// '500' larghezza del box 
+var tot = $('span.totale').text();
+var tot = parseInt(tot);
+var piace = $('span.piace').text();
+var piace = parseInt(piace);
+var larghezza = (piace/tot) * L_box;				// nuova larghezza del <div> verde in base al punteggio
+var new_rosso = L_box - larghezza;					// nuova larghezza del <div> rosso 
+$('#verde').css({'width':larghezza});				
+$('#rosso').css({'left':larghezza, 'width':new_rosso});	//
+//alert(L_box);
+} // chiude la funzione 'verde'
+
+///////////////////////////////////////////////////////////////////////////////////
+
+function rosso(){
+var L_box = $('#box').width();				// '500' larghezza del box 
+var tot = $('span.totale').text();
+var tot = parseInt(tot);
+var nopiace = $('span.nopiace').text();
+var nopiace = parseInt(nopiace);
+var larghezza = (nopiace/tot) * L_box;				// nuova larghezza del <div> rosso in base al punteggio 
+var new_verde = L_box - larghezza;					// nuova larghezza del <div> verde 
+$('#verde').css('width',new_verde);
+$('#rosso').css({'width':larghezza, 'left':new_verde});
+} // chiude la funzione 'rosso'
+
+///////////////////////////////////////////////////////////////////////////////////
+
+function tot(){
+var mp = $('span.piace').text();
+var mp = parseInt(mp);
+var np = $('span.nopiace').text();
+var np = parseInt(np);
+var totale = mp + np;
+$('span.totale').text(totale);
+} // chiude la funzione 'tot'
+
+/////////////////////////////////////////////////////////////
+
+$('#like').click(function(){
+
+$.ajax({
+type: "GET",
+url: "mipiace.xml",
+dataType: "xml",
+success: function(xml){  
+
+var parent = $(xml).find('like');					// recupero della root del documento xml 
+var ilike = $(parent).find('mipiace').text();			// recupero dell'elemento <mipiace> 
+var nolike = $(parent).find('nopiace').text();			// recupero dell'elemento <nopiace> 
+var totale = $(parent).find('totale').text();			// recupero dell'elemento <totale> 
+var ilike = parseInt(ilike) + 1;					// aggiornamento di +1 per l'elemento <mipiace> 
+var nolike = parseInt(nolike);
+var totale = parseInt(totale) + 1;					// aggiornamento di +1 per l'elemento <totale> 
+
+$('span.piace').text(ilike);					// reinserimento del nuovo valore aggiornato nell'elemento <span>
+$('span.nopiace').text(nolike);				// per l'elemento <nopiace> il valore non cambia 
+$('span.totale').text(totale);				// reinserimento del nuovo valore per l'elemento <totale> 
+
+//### Le seguenti funzioni vanno richiamate all'interno di questo metodo per visualizzare i segmenti 'verde' e 'rosso' aggiornati 
+verde();
+rosso();
+
+// Invio dei nuovi valori aggiornati al file "mipiace.php" che a sua volta aggiornerà il file "mipiace.xml" con i nuovi valori  
+$.ajax({
+	type: "GET",
+	url: "mipiace.php",
+	data: {a:ilike, b:nolike, c:totale}
+}); // $.ajax
+} // success 
+}); // $.ajax
+
+}); // click "like"
+
+
+////////////////////////////////////////////////////////////
+
+$('#nolike').click(function(){
+
+$.ajax({
+type: "GET",
+url: "mipiace.xml",
+dataType: "xml",
+success: function(xml){  
+
+var parent = $(xml).find('like');					// recupero della root del documento xml 
+var ilike = $(parent).find('mipiace').text();			// recupero dell'elemento <mipiace> 
+var nolike = $(parent).find('nopiace').text();			// recupero dell'elemento <nopiace> 
+var totale = $(parent).find('totale').text();			// recupero dell'elemento <totale> 
+var ilike = parseInt(ilike);					// 
+var nolike = parseInt(nolike) + 1;				// aggiornamento di +1 per l'elemento <nopiace> 
+var totale = parseInt(totale) + 1;				// aggiornamento di +1 per l'elemento <totale> 
+
+$('span.piace').text(ilike);					// per l'elemento <mipiace> il valore non cambia  
+$('span.nopiace').text(nolike);				// reinserimento del nuovo valore aggiornato per l'elemento <nopiace> 
+$('span.totale').text(totale);				// reinserimento del nuovo valore per l'elemento <totale> 
+
+//### Le seguenti funzioni vanno richiamate all'interno di questo metodo per visualizzare i segmenti 'verde' e 'rosso' aggiornati 
+verde();
+rosso();
+
+// Invio dei nuovi valori aggiornati al file "mipiace.php" che a sua volta aggiornerà il file "mipiace.xml" con i nuovi valori  
+$.ajax({
+	type: "GET",
+	url: "mipiace.php",
+	data: {a:ilike, b:nolike, c:totale}
+}); // $.ajax
+} // success 
+}); // $.ajax
+
+}); // click "nolike"
+
+///////////////////////////////////////////////////////
+
+//### Alla chiusura del file i valori contenuti negli <span> 'piace', 'nopiace', 'totale' vengono inviati al file "mipiace.php" attraverso il metodo 'GET' che a sua volta li invia al file "mipiace.xml" aggiornando per cui i valori degli elementi <mipiace>, <nopiace> e <totale>
+
+/*
+$(window).unload(function(){		// NON FUNZIONA con Chrome, Opera e Safari (OK con Firefox e IE)
+//$(document.body).unload(function(){		// NON FUNZIONA CON NESSUNO
+//$(document).unload(function(){			// NON FUNZIONA CON NESSUNO 
+//$(document.layers).unload(function(){		// NON FUNZIONA CON NESSUNO 
+//$(document.all).unload(function(){		// NON FUNZIONA CON NESSUNO 
+alert('Hello')
+var piace = $('span.piace').text();
+var piace = parseInt(piace);
+var nopiace = $('span.nopiace').text();
+var nopiace = parseInt(nopiace);
+var tot = piace + nopiace;
+
+$.ajax({
+	type: "GET",
+	url: "mipiace.php",
+	data: { a:piace, b:nopiace, c:tot}
+}); // $.ajax
+}); // chiude 'unload' 
+*/
+
+// #### Per via del fatto che il metodo "unload" non mi funziona con 'Chrome', 'Opera' e 'Safari' ho optato per un'altra soluzione. Invece di aggiornare il file "mipiace.xml" alla chiusura del presente file ho fatto in modo di aggiornarlo ad ogni click che avviene sui pulsanti "Mi piace" e "Non mi piace" 
+
+
+}); // chiude ready 
+</script>
+
+
+<body>
+<!--
+<body onunload="alert('Exiting the page!')>"
+-->
+
+
+
+<button id="like">Mi piace</button> &nbsp; &nbsp; <button id="nolike">Non mi piace</button>
+
+
+<div id="box">
+			<div id="verde"></div> 
+			<div id="rosso"></div> 
+</div><!--box-->
+
+
+
+<div id="dati">
+	<p>Mi piace: <span class="piace">0</span></p>
+	<p>Non mi piace: <span class="nopiace">0</span> </p>
+	<p>Totale: <span class="totale">0</span></p>
+</div><!--dati-->
+ 
+<br />
+<br />
+
+
+<p id="pil"></p>
+
+
+</body>
+</html>

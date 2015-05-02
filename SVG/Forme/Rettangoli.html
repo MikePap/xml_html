@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Rettangoli</title>
+<style type="text/css">
+h1{ color: #00F; font-size:24px;}
+h3{ color:#663333; font-size:18px;}
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+.nota{ color:#FF6666;}
+.codice{ color:#060}
+
+.svg_file{ width:570px; height:520px; border:1px solid; margin:10px; }
+
+</style>
+</head>
+<body>
+
+<h1> Rettangoli creati con svg e importati</h1>
+
+<ul> The <span class="nota">&lt;rect&gt;</span> tag is used to create a rectangle and variations of a rectangle shape.
+    <li>The <span class="nota">width</span> and <span class="nota">height</span> attributes of the rect element define the height and the width of the rectangle</li>
+    <li>The <span class="nota">style</span> attribute is used to define CSS properties</li>
+    <li>The CSS <span class="nota">fill</span> property defines the fill color of the rectangle (either an rgb value, a color name, or a hexadecimal value)</li>
+    <li>The CSS <span class="nota">stroke-width</span> property defines the width of the border of the rectangle</li>
+    <li>The CSS <span class="nota">stroke</span> property defines the color of the border of the rectangle</li>
+    <li>The <span class="nota">x</span> attribute defines the left position of the rectangle (e.g. x="0" places the rectangle 0 pixels from the left of the browser window)</li>
+    <li>The <span class="nota">y</span> attribute defines the top position of the rectangle (e.g. y="0" places the rectangle 0 pixels from the top of the browser window)</li>
+    <li>The CSS <span class="nota">fill-opacity</span> property defines the opacity of the fill color (legal range: 0 to 1)</li>
+    <li>The CSS <span class="nota">stroke-opacity</span> property defines the opacity of the stroke color (legal range: 0 to 1)</li>
+    <li>The CSS <span class="nota">opacity</span> property defines the opacity value for the whole element (legal range: 0 to 1)</li>
+    <li>The <span class="nota">rx</span> and the <span class="nota">ry</span> attributes rounds the corners of the rectangle</li>
+</ul>
+La sovrapposizione di un immagine sull'altra (lo z-index) è stabilita dalla posizione che ha nella dichiarazione. <b>Chi è impostato dopo sta 'sopra'</b>
+</p>
+
+<!-- <object data="allegati/Rettangoli.svg" width="800" height="700"  type="image/svg+xml" codebase="http://www.adobe.com/svg/viewer/install/">
+</object> NON FUNZIONA CON FIREFOX -->
+
+<div class="svg_file">
+<embed src="allegati/Rettangoli.svg" type="image/svg+xml" width="100%" height="100%" pluginspage="http://www.adobe.com/svg/viewer/install/"></embed>
+</div>
+
+<div class="svg_file">
+	<svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<rect width="200" height="100" style="fill:rgb(0,0,255); fill-opacity:0.4; stroke-width:1; stroke:rgb(0,0,0)"/>
+		<rect x="250" y="40" rx="20" ry="20" width="250" height="100" style="fill:red;stroke:black;stroke-width:5;opacity:0.5"/>
+		<rect x="20" y="120" width="250" height="250" style="fill:blue;stroke:pink;stroke-width:5; stroke-opacity:0.9"/>
+	</svg>
+</div> 
+
+
+
+
+
+</body>
+</html>

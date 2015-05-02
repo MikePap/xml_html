@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Demo 5</title>
+<style type="text/css">
+h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250);} 
+h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150);}
+h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20);}
+code, pre{ color:rgb(20,150,30); font-weight:bold;}
+.nota{ color:rgb(250,120,0);}
+.grigio{color:gray;}
+.azzurro{color:rgb(50,100,255);}
+.scuro{color:#333;}
+tt, em{color:#6a9999}
+.codice{ color:rgb(30,120,30);}		
+dt{ color:#003399; margin-bottom:5px;}
+dd{ color:#0066FF;}
+
+</style>
+
+	</head>
+	<body>
+
+<h2>Modica degli object stores</h2>
+<p>
+Nel test precedente si è creato un <q>object store</q> mentre in questo andiamo a modificarlo semplicemnte aggiungendo un altro <q>object store</q>. Oltre ad aggiungerlo con il metodo <tt>createObjectStore</tt> si deve apportare una modifica (importante) alla versione del database. Se la precedente versione era <q>1</q> la seguente sarà <q>2</q>   
+</p>
+
+
+		
+	<script>
+    var idbSupported = false;
+    var db;
+    
+    document.addEventListener("DOMContentLoaded", function(){
+	
+        if("indexedDB" in window) {
+            idbSupported = true;
+        }
+        
+        if(idbSupported) {
+            var openRequest = indexedDB.open("test_v2",2);
+
+            openRequest.onupgradeneeded = function(e) {
+                console.log("running onupgradeneeded");
+                var thisDB = e.target.result;
+                
+                if(!thisDB.objectStoreNames.contains("firstOS")) {
+                    thisDB.createObjectStore("firstOS");
+                }
+
+                if(!thisDB.objectStoreNames.contains("secondOS")) {
+                    thisDB.createObjectStore("secondOS");
+                }
+
+            }
+            
+            openRequest.onsuccess = function(e) {
+                console.log("Success!");
+                db = e.target.result;
+            }
+        
+            openRequest.onerror = function(e) {
+                console.log("Error");
+                console.dir(e);
+            }
+            
+        }
+	
+    },false);
+		
+	</script>	
+	</body>
+</html>
