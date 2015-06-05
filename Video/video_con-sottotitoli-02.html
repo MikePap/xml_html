@@ -24,7 +24,7 @@ position:relative; margin:10px auto; width:80%; padding:10px; border:1px solid #
 div.box div{
 float:left; margin-right:31px; 
 }
-#display{
+#displaySottitoli{
 height:300px; overflow:auto; 
 }
 #display2{
@@ -39,7 +39,8 @@ padding:10px; background:#333; color:#ff0;
 <h1>Opzioni per il tag <q>track</q> impostabili con JavaScript </h1>
 
 <p>
-Per gli sviluppatori la nota positiva è che per l’elemento track è disponibile una API completa con cui è possibile interagire tramite Javascript con la traccia dei sottotitoli, persino a livello delle singole battute.
+Per gli sviluppatori la nota positiva è che per l’elemento track è disponibile una API completa con cui è possibile interagire tramite Javascript con la traccia dei sottotitoli, persino a livello delle singole battute. <br />
+<span class="nota">Supportato in Chrome ma non in Firefox</span>
 </p>
 
 <div class="box">
@@ -54,11 +55,11 @@ se non si vuole che nel controllo del player appaia il pulsante per la visualizz
 -->
 
 		</video>
-		<p><button id="mostra" onclick="cambia();" value="jk" >Mostra i sottotitoli</button></p>
+		<p><button id="mostra_nascondi" value="jk" >Mostra i sottotitoli</button></p>
 		<p id="display3"></p>
 	</div>
 	<div>		
-		<div id="display"> </div><!-- è importante lasciare uno spazio in modo che si possa dichiarare la condizione if nella funzione "cambia()"  -->
+		<div id="displaySottitoli"> </div><!-- è importante lasciare uno spazio in modo che si possa dichiarare la condizione if nella funzione "cambia()"  -->
 		
 	</div>
 	<div>		
@@ -68,36 +69,35 @@ se non si vuole che nel controllo del player appaia il pulsante per la visualizz
 </div><!--box-->
 
 <script type="text/javascript">
-// La seguente funzione "cambia()" richiama le funzioni successive "getCues()" e "libera()" 
-function cambia(){
-var display = document.getElementById("display"); 
-var d0 = display.childNodes[0];
-var d_data = d0.data.length;			// IMPORTANTE: se tra il tag di apertura e chiusura non c'è almeno uno spazio NON rileva la proprietà 'length' 
-var m = document.getElementById("mostra"); 
-var mm = m.childNodes[0];
-if(d_data == 1){					// è importante perchè si verifichi questa condizione che nel <div> ci sia un solo spazio
-getCues();
-mm.data = "Nascondo i sottotitoli";
-}else{
-libera();
-mm.data = "Mostra i sottotitoli";
-}
-}; // chiude la funzione "cambia()" 
-////////////////////////////////////////////
-// funzione che carica tutto la traccia testo in un elemento div <div id="display">
-function getCues() {          
-var myTrack = document.getElementById("itTrack").track;			// è richiamata la traccia in inglese
-var myCues = myTrack.cues;                   
-for (var i = 0; i < myCues.length; i++) {
-document.getElementById("display").innerHTML += (myCues[i].text + "<br>");
-} // for 
-} // chiude la funzione "getCues()"
-///////////
-// Funzione che libera l'elemento <div id='display'> 
-function libera(){
-document.getElementById("display").innerHTML = " ";			// è importante dare lo spazio tra le virgolette in modo che abbia un valore
-}; // chiude la funzione 
 
+var mostra_nascondi = document.getElementById("mostra_nascondi"); 
+mostra_nascondi.addEventListener("click", function(){ 
+	
+	var displaySottitoli = document.getElementById("displaySottitoli"); 	
+	var display = displaySottitoli.style["display"];
+	if(display === "block"){
+		displaySottitoli.style["display"] = "none";
+		this.innerHTML = "Mostra i sottotitoli";
+	}else{
+		getCues();
+		displaySottitoli.style["display"] = "block";
+		this.innerHTML = "Nascondi i sottotitoli";
+	}
+},false);
+
+
+// funzione che carica tutto la traccia testo in un elemento div <div id="display">
+function getCues() {  
+	var testo = "";        
+	var myTrack = document.getElementById("itTrack").track;			// è richiamata la traccia in inglese
+	var myCues = myTrack.cues;                   
+	for (var i = 0; i < myCues.length; i++) {
+		testo += (myCues[i].text + "<br>");
+//		document.getElementById("display").innerHTML += (myCues[i].text + "<br>");
+	} 
+	document.getElementById("displaySottitoli").innerHTML = testo;
+//console.log(document.getElementById("display").childNodes[0].nodeValue.length	);
+} // 
 
 //////////////////////////////////////////////////
 
@@ -140,20 +140,20 @@ for (var i = 0; i < allTracks.length; i++) {
   temp.setAttribute("id", i);
   document.getElementById("display3").appendChild(temp);
 }
-} // chiude la funzione "getTracks()"
+} // 
 
 function changeTrack(index) {
-var allTracks = document.getElementById("myVideo").textTracks;
-for (var i = 0; i < allTracks.length; i++) {
-if (i == index) {
-  allTracks[i].mode = allTracks[i].SHOWING;
-  document.getElementById(i).innerText = "> " + allTracks[i].label + " <";
-} else {
-  allTracks[i].mode = allTracks[i].OFF;
-  document.getElementById(i).innerText = allTracks[i].label;
-}
-}
-} // chiude la funzione "changeTrack()" 
+	var allTracks = document.getElementById("myVideo").textTracks;
+	for (var i = 0; i < allTracks.length; i++) {
+		if (i == index) {
+			allTracks[i].mode = allTracks[i].SHOWING;
+			document.getElementById(i).innerText = "> " + allTracks[i].label + " <";
+		} else {
+			allTracks[i].mode = allTracks[i].OFF;
+			document.getElementById(i).innerText = allTracks[i].label;
+		}
+	}
+} // 
 
 
 </script>
