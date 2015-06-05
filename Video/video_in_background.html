@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title> Video in full background </title>
+<link rel="stylesheet" href="../../baseLocali.css" type="text/css" /> 
+<style type="text/css">
+
+.giallo{color:#ff0;}
+
+video#bgvid {
+position: fixed;
+top: 50%;
+left: 50%;
+min-width: 100%;
+min-height: 100%;
+width: auto;
+height: auto;
+z-index: -100;
+-webkit-transform: translateX(-50%) translateY(-50%);
+transform: translateX(-50%) translateY(-50%);
+background: url(Immagine-di-sfondo.jpg) no-repeat;
+background-size: cover;
+}
+
+/*
+Non visualizzazione dell'elemento <video> per gli screen infedriori a 800px
+@media screen and (max-device-width: 800px) {
+body { background: url(polina.jpg) #000 no-repeat center center fixed; }
+#bgvid { display: none; }
+}
+*/
+
+</style>
+</head>
+<body>
+
+<h1>Impostare un video come background del documento</h1>
+
+<p class="giallo" >Al momento non è ancora possibile poter impostare con i CSS un video in background per una pagina. Però si può rimediare diversamente. 
+</p>
+<p class="giallo">
+Come prima cosa è importante ricordare di inserire, all'interno dell'elemento &lt;video&gt; prima il tipo di video <q>mp4</q> per ovviare ad un bug di Firefox che non m ostra niente in caso contrario. <br />
+Per quei browser che non riconoscono l'elemento &lt;video&gt; bisogna impostare un immagine di sfondo definita nell'attributo <q>background</q> nei CSS oltre che nell'attributo <q>poster</q>. 
+</p>
+<p class="giallo">
+Per quanto riguarda  i mobile questo discorso può presentare qualche problema; per esempio alcune piattaforme rifiutano l'autoplay oppure  prevedono di default la visualizzazione  di un pulsante <q>play</q> quando riconoscono l'elemento &lt;video&gt;. <br />
+Pertanto la soluzione migliore sarebbe quella di non visualizzare l'elemento &lt;video&gt; per supporti mobile, quindi definire tale comportamento con le media query
+</p>
+<p class="giallo">
+Eventualmente si potrebbe anche predisporre un pulsante per mettere in pausa il video se nel caso a qualcuno dia fastidio. In tal modo bisogna scriver qualche riga di JavaScript. 
+
+</p>
+
+
+
+<button id="vidpause">Metti in Pausa</button>
+
+
+<video autoplay loop poster="Immagine-di-sfondo.jpg" id="bgvid" >
+
+	<source src="allegati/full-screen.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+	<source src="allegati/full-screen.webm" type='video/webm; codecs="vp8, vorbis"' />	
+
+</video>
+
+
+
+
+<script type="text/javascript">
+
+var vid = document.getElementById("bgvid");
+var pauseButton = document.getElementById("vidpause");
+function vidFade() {
+	vid.classList.add("stopfade");
+}
+
+
+vid.addEventListener('ended', function() {
+// only functional if "loop" is removed
+	vid.pause();
+// to capture IE10
+	vidFade();
+});
+
+
+pauseButton.addEventListener("click", function() {
+	vid.classList.toggle("stopfade");
+	if (vid.paused) {
+		vid.play();
+		pauseButton.innerHTML = "Metti in Pausa";
+	} else {
+		vid.pause();
+		pauseButton.innerHTML = "Riprendi";
+	}
+})
+</script>
+
+
+
+
+
+</body>
+</html>
+
