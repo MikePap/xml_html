@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Prove con SSE </title>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+
+
+
+<div id="noSSE"></div> 
+<div id="result"></div> 
+
+
+<script type="text/javascript">
+
+
+if(typeof(EventSource)!=="undefined"){
+	var stocks = new EventSource("eventi_multipli.php");
+	stocks.addEventListener('message', function (event) {
+//		var em = JSON.parse(event.data);
+//		document.getElementById("result").innerHTML = em.msg; 
+		document.getElementById("result").innerHTML = event.data; 
+	},false);
+}else{
+	document.getElementById("noSSE").innerHTML="Sorry, your browser does not support server-sent events...";
+}
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+http://localhost/xml_html/HTML5/SSE/prova.html
+-->
+
+
+
+
+</body>
+</html>
+
