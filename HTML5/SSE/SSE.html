@@ -25,9 +25,17 @@ http://www.html5rocks.com/en/tutorials/eventsource/basics/
 
 <body>
 
-<h1>Metodo per far aggiornare il server </h1>
+<h1>Ottenere aggiornamenti dal server </h1>
 
 <a href="http://www.html5rocks.com/en/tutorials/eventsource/basics/">vedi qui</a>
+
+<p>
+E' un metodo che permette di aprire un canale unidirezionale tra server e client (a differenza del <q>WebSocket</q> che è bidirezionale). <br />
+Una volta che la connessione è stata aperta il server può inviare dati al client quando tali dati vengono aggiornati sul server. Un esempio potrebbe essere la relazione di un browser con un database di un server; quando il database viene aggiornato di alcuni dati, tali dati andranno a sostituire i vecchi senza che il browser faccia una richiesta specifica. 
+
+</p>
+
+
 
 <dl>
 	<dt>Gli eventi sono: </dt>
@@ -65,16 +73,21 @@ data: first line\n
 data: second line\n\n
 </pre>
 
+Ma ora funziona anche senza 
+<pre>
+data: first line
+data: second line
+</pre>
 </p>
 
 
 <h3>Volendo utilizzare JSON </h3>
 <p>
 <pre>
-data: {\n
-data: "msg": "hello world",\n
-data: "id": 12345\n
-data: }\n\n
+data: {
+data: "msg": "hello world",
+data: "id": 12345
+data: }
 </pre> 
 e nella parte client :
 <pre>
@@ -90,20 +103,25 @@ source.addEventListener('message', function(e) {
 In questo caso l'ID va dichiarato nella prima linea seguito daq <q>data:</q> 
 
 <pre>
-id: 12345\n
-data: GOOG\n
-data: 556\n\n
+id: 12345
+data: GOOG
+data: 556
 </pre>
 La proprietà <b>e.lastEventId</b> rappresenta l'id dichiarato 
 </p>
 
-<h3>Controllo del timeout di riconnessione</h3>
+<h3>Controllo del timeout di riconnessione con <q>retry</q> </h3>
 
 <p>
-Il browser cerca di riconnettersi al server circa ogni tre secondi però questo tempo lo si può cambiare inpostando in una riga la parola chiave <b>retry</b> seguita dal numero di millesecondi che si desidera. La seguente imposta una riconnessione dopo 10 secondi:  
+Il browser cerca di riconnettersi al server circa ogni tre secondi però questo tempo lo si può cambiare inpostando in una riga la parola chiave <span class="nota">retry</span> seguita dal numero di millesecondi che si desidera. La seguente imposta una riconnessione dopo 10 secondi:  
+<pre>
+retry: 10000
+data: hello world
+</pre>
+In questo caso, per il campo retry, c'è da aggiungere che Firefox richiede l'uso del simbolo di fine linea (\n), per cui avremo
 <pre>
 retry: 10000\n
-data: hello world\n\n
+data: hello world
 </pre>
 </p>
 
@@ -148,6 +166,28 @@ source.close();
 </p>
 
 
+<h3>Migliorare la sicurezza</h3>
+
+<p>
+E' opportuno fare una verifica per assicurarsi che i dati arrivino dalla fonte desiderata per evitare che qualche malinytenzionato sfrutti la situazione. In tal caso ci viene in aiuto il metodo <span class="nota">origin</span>, pertanto potremmo agire nel seguente modo:
+<pre>
+source.addEventListener('message', function(e) {
+	if (e.origin !== 'http://example.com') {
+		alert('Origin was not http://example.com');
+		return;
+	}else{
+		... 
+	}
+}, false);
+</pre>
+
+</p>
+
+
+
+<br /><br />
+
+
 
 <button id="apriConnessione">Apri la Connessione</button> 	<button id="chiudiConnessione">Chiudi Connessione</button>
 <br /><br />
@@ -190,7 +230,7 @@ function ChiudiConnessione(){
 } //
 
 
-//function Ricezione(){
+function Ricezione(){
 	var source = new EventSource("demo_sse.php");
 	source.addEventListener('message', function(event) {
 		document.getElementById("result").innerHTML += event.data + "<br>";
@@ -200,16 +240,16 @@ function ChiudiConnessione(){
 //		document.getElementById("result").innerHTML += event.source + "<br>";				// null
 //		document.getElementById("result").innerHTML += event.ports + "<br>";					// undefined
 	}, false);
-//} //
+} //
 
 
 
-/*
+
 var pulsanteApri = document.getElementById('apriConnessione');
 pulsanteApri.addEventListener('click', ApriConnessione, false );
 var pulsanteChiudi = document.getElementById('chiudiConnessione');
 pulsanteChiudi.addEventListener('click', ChiudiConnessione, false);
-*/
+
 
 
 

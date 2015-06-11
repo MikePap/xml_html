@@ -44,11 +44,13 @@ if(typeof(EventSource)!=="undefined"){
 		d2 = document.querySelector('div:nth-child(2)'),
 		d3 = document.querySelector('div:nth-child(3)'),
 		d4 = document.querySelector('div:nth-child(4)');
-     
+ 
+//		d1.innerHTML = graph_data.data1;    
 		d1.style.height = "" + (graph_data.data1 * 20) + "px";		// vedere i CSS 
 		d2.style.height = "" + (graph_data.data2 * 20) + "px";
 		d3.style.height = "" + (graph_data.data3 * 20) + "px";
 		d4.style.height = "" + (graph_data.data4 * 20) + "px";
+
 	});
 }else{
 	document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events...";

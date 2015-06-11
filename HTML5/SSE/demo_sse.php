@@ -13,8 +13,8 @@ $time = date('r');
 // il retry imposta il tempo di riconnessione(in millesecondi). Di default è 3 secondi. Qui è impostato a 5
 
 echo "
-retry: 5000\n									
-data: The server time is: {$time}  \n\n ";			// questo output DEVE sempre incominciare con "data"
+retry: 5000									
+data: The server time is: {$time} ";			// questo output DEVE sempre incominciare con "data"
 
 //echo "data: <br />\n\n"
 //echo "data: fuck you";
