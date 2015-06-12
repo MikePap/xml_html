@@ -30,28 +30,45 @@ dd{ color:#0066FF;}
 I dati sono immagazzinati nella forma <b>chiave/valore</b> e saranno disponibili il giorno dopo o settimana o anno dopo.  <br />
 Il valore massimo di dati che possono essere aggiunti è al momento (06/08/2011) di <b>5 megabytes</b> </p>
 
-
-
-<script>
-$(document).ready(function(){
- 
-localStorage.lastname="Smith";					// 'lastname' è il "nome" e "Smith" è il suo valore 
-//document.write("Last name: " + localStorage.lastname);
-$("#divo-01").text("Cognome: " + localStorage.lastname);
-
-//alert(localStorage.length);
-//alert(jk);
-
-
-}); // chiude ready 
-</script>
-
 <div id="divo-01"></div>
 
 <p class="codice">L'esempiop seguente conta il numero di visite della pagina</p>
 
 
 <script>
+/*
+$(document).ready(function(){
+ 
+localStorage.lastname="Smith";					// 'lastname' è il "nome" e "Smith" è il suo valore 
+document.write("Last name: " + localStorage.lastname);
+//$("#divo-01").text("Cognome: " + localStorage.lastname);
+
+//alert(localStorage.length);
+//alert(jk);
+
+
+}); // chiude ready 
+*/
+</script>
+
+
+
+<script>
+
+var divo = document.getElementById('divo-01');
+
+//var contaPagina = localStorage.getItem("contaPagina");
+if(localStorage.contaPagina){
+	localStorage.contaPagina = parseInt(localStorage.contaPagina) + 1;
+}else{
+	localStorage.contaPagina = 1;
+}
+
+divo.innerHTML = localStorage.contaPagina;
+
+//localStorage.removeItem("contaPagina");
+
+/*
 $(document).ready(function(){
  
 if (localStorage.pagecount)		// 'pagecount' è il nome della chiave. Se 'pagecount' è gia presente (immagazzinato) ...
@@ -68,6 +85,7 @@ $("#divo-02").text("Visitata: " + localStorage.pagecount + " volte.");
 
 
 }); // chiude ready 
+*/
 
 </script>
 
