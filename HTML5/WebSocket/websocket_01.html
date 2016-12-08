@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8" />
 <title>websocket_01  </title>
+<link type="text/css" rel="stylesheet" href="../../../baseLocali.css" />
+
 <style type="text/css">
 h1{ color:#006600;}
 h3{ color:#663333;}
@@ -12,17 +14,221 @@ dd{ color:#0066FF;}
 .nota{ color: #F60;}
 .codice{ color:#060;}
 
+/* flexbox */
+
+#box{
+width: 60%;
+border: 1px solid;	
+display: -webkit-flex;
+-webkit-flex-direction: row;
+display: flex;
+flex-direction: row;
+}
+
+#box > section{
+padding: 0.5em; margin: 0.5em;	border: 1px solid;	
+}
+
+#box > section:nth-child(1){
+flex: auto;	
+}
+#box > section:nth-child(2){
+flex: 60%;	
+}
+
+
+#mostra-messaggi{
+width: 100%; /*height: 10em;*/ border: 	1px solid #ccc; padding: 0.5em;
+}
+
 </style>
+
+
+
+
 </head>
 <body>
 
-<h1>WebSocket </h1>
+<h2>WebSocket Test</h2>  
 
-<p>
-E' interessante questo articolo sulla sicurezza per le applicazioni con i web socket <a href="http://www.christian-schneider.net/CrossSiteWebSocketHijacking.html">vedi qui</a>
-</p>
+<div id="output"></div>  
 
-<script  type="text/javascript">
+<article id="box" >
+	<section id="input-utente">
+		<label>Location:</label>
+		<input type="text" id="url-websocket" value="" />
+		<br>
+		<button id="apri-connessione">Connetti</button>
+		<button id="chiudi-connessione">Disconnetti</button>
+		<br><br>
+		<label>Scrivi un Messaggio:</label>
+		<input type="text" id="testodainviare" value="" /> <br>
+		<button id="invio-messaggio">Invia messsaggio</button>
+	</section>
+	
+	<section id="output-utente">
+		<label>Output:</label> <br>
+		<div id="mostra-messaggi"></div> <br> 	
+		<button id="resetta">Pulisci</button>
+	</section>	
+</article>
+
+
+<script type="text/javascript">  
+
+var wsUri = "ws://echo.websocket.org/";	
+var websocket;
+var output;
+
+window.onload = function (){
+	document.getElementById('url-websocket').value = wsUri;	
+	output = document.getElementById("mostra-messaggi"); 
+}
+
+function nodiFigli(nodoGenitore, evento, funzione){
+	var genitore = document.querySelector(nodoGenitore);
+	genitore.addEventListener(evento, function (e){
+		funzione(e.target);
+	},false);
+}
+
+function esecuzione (e){
+	var idPulsante =  e.getAttribute('id');
+	switch(idPulsante){
+		case('apri-connessione'):
+			onOpen(e);			
+		break;
+		case 'invio-messaggio':
+			invioDati(e); 
+			websocket.onmessage = function(evt)	{ onMessage(evt) };
+		break;
+		case 'resetta': 
+			document.getElementById('mostra-messaggi').innerHTML = "";			// pulisce l'output 
+		break;
+		case("chiudi-connessione"): 
+			chiusuraWebSocket();
+		break;
+		default: 	
+		websocket.onerror = function(evt) { onError(evt) }; 
+	}
+}
+
+nodiFigli("#box", "click", esecuzione);
+
+function onOpen(evt){ 
+//	alert(websocket.readyState);			// 1 OPEN	
+//	alert(websocket.bufferedAmount);		// 0
+//	alert(websocket.extensions);			// ""
+//	alert(websocket.protocol);				// ""		
+	if(!websocket || websocket.readyState == 3 ){	// quando la connessione viene chiusa con close() il readyState diventa 3 
+		websocket = new WebSocket(wsUri);
+		writeToScreen("CONNESSO");
+	}
+}  
+
+function invioDati(evt){
+	var testo = document.getElementById('testodainviare').value;	
+	return (websocket.readyState == 1) ? doSend(testo) : ""; 
+}
+
+function doSend(message){ 
+	writeToScreen("SENT: " + message);  
+	websocket.send(message); 
+//	alert(websocket.readyState);			//
+}  
+
+function onMessage(evt) { 
+	writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>'); 
+}  
+
+function chiusuraWebSocket(){
+	writeToScreen("DISCONNESSO");
+	websocket.close();							// ora il readyState diventa uguale a 3	
+}
+
+function onError(evt){ 
+	writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data); 
+}  
+
+function writeToScreen(message) { 
+	var pre = document.createElement("p"); 
+	pre.style.wordWrap = "break-word"; 
+	pre.innerHTML = message; 
+	output.appendChild(pre);
+}  
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+
+/*
+var wsUri = "ws://echo.websocket.org/";					// OK
+//var wsUri = "ws://websocket.org/";						// NON FUNZIONA (da errore)
+//var wsUri = "ws://echo.localhost";						// NON FUNZIONA
+//var wsUri = "ws://0.0.0.0:8080";
+//var wsUri = "ws://echo.abcoliodoliva.com/";
+var output;  
+function init(){ 
+	output = document.getElementById("output"); 
+	testWebSocket(); 
+}
+  
+function testWebSocket() { 
+	websocket = new WebSocket(wsUri); 
+	websocket.onopen = function(evt) { 
+		onOpen(evt) 
+	}; 
+	websocket.onclose = function(evt){ 
+		onClose(evt) 
+	}; 
+	websocket.onmessage = function(evt)	{ 
+		onMessage(evt) 
+	}; 
+	websocket.onerror = function(evt) { 
+		onError(evt) 
+	}; 
+}  
+
+function onOpen(evt){ 
+	writeToScreen("CONNECTED"); 
+//	document.write("Connesso")
+	doSend("WebSocket rocks"); 
+}  
+
+function onClose(evt){ 
+	writeToScreen("DISCONNECTED"); 
+}  
+
+function onMessage(evt) { 
+	writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>'); 
+	websocket.close(); 
+}  
+
+function onError(evt){ 
+	writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data); 
+}  
+
+function doSend(message){ 
+	writeToScreen("SENT: " + message);  
+	websocket.send(message); 
+}  
+
+function writeToScreen(message) { 
+	var pre = document.createElement("p"); 
+	pre.style.wordWrap = "break-word"; 
+	pre.innerHTML = message; 
+	output.appendChild(pre); 
+}  
+
+window.addEventListener("load", init, false);  
+//window.onload = init;								// uguale alla precedente
+
+*/
+
+
+////////////////////////////##################################////////////////////////////////////
 
 /*
 EchoSocket = function(){
@@ -97,6 +303,7 @@ myWebSocket.close();												// to terminate the connection
 
 ///////////////
 
+/*
 EchoSocket = function()
 {
 	return 
@@ -148,7 +355,29 @@ EchoSocket = function()
 }();
 
 EchoSocket.init("ws://echo.websocket.org/");
+*/
 
+
+!function supportoWebSocket(){
+// Questa funzione richiama due funzioni che restituiscono la risposta del browser al supporto del WebSocket 
+// Le due funzioni vanno quindi definite a seconda delle esigenze	
+	if ("WebSocket" in window) {
+//		alert("WebSockets supported here!\r\n\r\nBrowser: " + navigator.userAgent);
+		webSocketSupportato();	
+	}else{
+		webSocketNONSupportato();
+	}
+}()
+
+//supportoWebSocket();
+
+function webSocketSupportato (){
+	console.log('WebSocket è suportato da questo browser');	
+}
+
+function webSocketNONSupportato (){
+	console.log('WebSocket non è suportato da questo browser');	
+}
 
 </script>
 

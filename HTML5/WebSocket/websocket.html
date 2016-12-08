@@ -2,102 +2,334 @@
 <html lang="it">
 <head>
 <meta charset="utf-8" />  
-<title>WebSocket Test</title> 
+<title>WebSocket info</title> 
+<link type="text/css" rel="stylesheet" href="../../../baseLocali.css" />
 <style type="text/css">
+
+h4{
+color:#555; margin-left: 1em; padding-top: 0.5em;	
+	
+}
+ul{
+margin-left: 2em;
+}
+ul li{
+list-style-position: inside;	
+list-style-type: decimal;	
+}
 
 </style> 
 
-<script type="text/javascript">  
 
-var wsUri = "ws://echo.websocket.org/";					// OK
-//var wsUri = "ws://websocket.org/";						// NON FUNZIONA (da errore)
-//var wsUri = "ws://echo.localhost";						// NON FUNZIONA
-//var wsUri = "ws://0.0.0.0:8080";
-//var wsUri = "ws://echo.abcoliodoliva.com/";
-var output;  
-function init() 
-{ 
-	output = document.getElementById("output"); 
-	testWebSocket(); 
-}
-  
-function testWebSocket() 
-{ 
-	websocket = new WebSocket(wsUri); 
-	websocket.onopen = function(evt) 
-	{ 
-		onOpen(evt) 
-	}; 
-	websocket.onclose = function(evt) 
-	{ 
-		onClose(evt) 
-	}; 
-	websocket.onmessage = function(evt) 
-	{ 
-		onMessage(evt) 
-	}; 
-	websocket.onerror = function(evt) 
-	{ 
-		onError(evt) 
-	}; 
-}  
 
-function onOpen(evt) 
-{ 
-	writeToScreen("CONNECTED"); 
-//	document.write("Connesso")
-	doSend("WebSocket rocks"); 
-}  
-
-function onClose(evt) 
-{ 
-	writeToScreen("DISCONNECTED"); 
-}  
-
-function onMessage(evt) 
-{ 
-	writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>'); 
-	websocket.close(); 
-}  
-
-function onError(evt) 
-{ 
-	writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data); 
-}  
-
-function doSend(message) 
-{ 
-	writeToScreen("SENT: " + message);  
-	websocket.send(message); 
-}  
-
-function writeToScreen(message) 
-{ 
-	var pre = document.createElement("p"); 
-	pre.style.wordWrap = "break-word"; 
-	pre.innerHTML = message; 
-	output.appendChild(pre); 
-}  
-
-window.addEventListener("load", init, false);  
-
-</script>  <h2>WebSocket Test</h2>  
 </head>
 <body>
 
+<h1>Web Socket</h1>
 
-<div id="output"></div>  
+<h2>Il Protocollo WebSocket </h2>
+
+<p>
+Il protocollo dell'<span class="nota">HTML5 WebSockets</span> permette alle pagine web di comunicare con un host remoto. L'interfaccia WebSockets definisce un canale di comunicazione a doppia via (full duplex) che opera attraverso un singolo «socket». 
+</p>
+<p>
+Il protocollo definisce che la connessione WebSocket inizi il suo ciclo di vita come una connessione HTTP in modo da garantire una compatibilità con il mondo pre-WebSocket. La comnnessione passa dalla HTTP al WebSocket a seguito di uno scambio di informazioni detto «handshake».
+</p>
+<p>
+Il seguente è un esempio di handshake fra client e server:
+</p>
+<pre>
+GET ws://echo.websocket.org/?encoding=text HTTP/1.1
+Origin: http://websocket.org
+Cookie: __utma=99as
+Connection: Upgrade
+Host: echo.websocket.org
+Sec-WebSocket-Key: uRovscZjNol/umbTt5uKmw==
+Upgrade: websocket
+Sec-WebSocket-Version: 13
+</pre>
+<p>
+Il browser invia una richiesta al server indicando che vuole cambiare protocollo per passare dal protocollo HTTP a quello WebSocket. L'header <b>Upgrade</b> indica tale richiesta. Se il server supporta il protocollo WebSocket, accetta il cambiamento rispondendo con il seguente header:
+</p>
+<pre>
+HTTP/1.1 101 WebSocket Protocol Handshake
+Date: Fri, 10 Feb 2012 17:38:18 GMT
+Connection: Upgrade
+Server: Kaazing Gateway
+Upgrade: WebSocket
+Access-Control-Allow-Origin: http://websocket.org
+Access-Control-Allow-Credentials: true
+Sec-WebSocket-Accept: rLHCkw/SKsO9GAH/ZSFhBATDKrU=
+Access-Control-Allow-Headers: content-type
+</pre>
+<p>
+A questo punto la connessione HTTP si interrompe per dare posto a una nuova connessione WebSocket sempre sulla connessione di fondo TC/IP. La connessione WebSocket usa le stesse porte di default di HTTP(80) E HTTPS(443) 
+</p>
+
+
+<h2>WebSocket API</h2>
+
+<p>Ogni oggetto WebSocket ha un URL (URL record) associato. Il costruttore Websocket accetta uno o due parametri:</p>
+<pre>
+ WebSocket(url, protocols)	
+</pre>	
+<p>
+Il primo argomento «url» specifica l'URL a cui connettersi; Il secondo «protocols», se presente, può essere una stringa o un array di stringhe. 
+Se è una stringa è equivalente ad un array contenente quella tale stringa, se omesso è equivalente ad un array vuoto. <br>
+Ogni stringa nell'array rappresenta il nome di un <b>subprotocollo</b>. 
+La connessione si realizzerà se il server riporta che egli ha selezionato uno di questi subprotocolli. 
+</p>
+<p>
+I nomi dei subprotocolli accettati sono quelli riportati nel <a href="http://www.iana.org/assignments/websocket/websocket.xml"> Registro della «IANA»</a> 
+</p>
+
+<p>
+Il costruttore WebSocket quando invocato deve eseguire le seguenti operazioni:	
+</p>	
+
+<ul>
+	<li>Lasciare che l'URL (URL record) sia il risultato dell'applicazione del parser URL all'url stesso </li>
+	<li>Restituire un errore ("SyntaxError" DOMException) in caso di fallimento dell'URL  </li>
+	<li>Restituire un errore ("SyntaxError" DOMException) se lo schema dell'URL non è «ws» oppure «wss» </li>
+	<li>Restituire un errore ("SyntaxError" DOMException) se il "fragment" dell'URL è «non-null» (?)</li>
+	<li>Se il protocollo è una stringa, impostare il protocollo ad una sequenza formata solo da quella stringa</li>
+	<li>Restituire un errore ("SyntaxError" DOMException) se uno dei valori del protocollo si ripete </li>  
+	<li>Restituire un oggetto WebSocket il cui URL sia l'URL record altrimenti continuare questi passi in parallelo</li>
+	<li>Stabilire una connessione in base all'URL, ai protocolli e ai " entry settings object"(?)</li>
+</ul>	
+
+<h3>Attributi</h3>
+
+<h4>readyState</h4>
+
+<p>L'attributo <span class="nota">readyState</span> rappresenta lo stato della connessione. Può avere i seguenti valori: </p>
+
+<dl>
+	<dd><b>CONNECTING</b> (valore 0): la connessione WebSocket non si è realizzata</dd>
+	<dd><b>OPEN</b> (valore 1): la  connessione si è realizzata e la comunicazione è ora possibile</dd>
+	<dd><b>CLOSING</b> (valore 2): la connessione si sta per chiudere o il metodo <span class="nota">close()</span> sta per essere invocato</dd>
+	<dd><b>CLOSED</b> (valore 3): la connessione è stata chiusa o non può essere aperta</dd> 
+</dl>
+<p>Quando l'oggetto viene creato il suo «readyState» deve essere impostato a  CONNECTING (0).</p>
+
+<h4>extensions</h4>
+<p>L'attributo <span class="nota">extensions </span> (che restituisce l'estensione selezionata dal server)
+deve inizialmente restituire una stringa vuota. 
+Dopo che la connessione è stabilita il suo valore può cambiare
+</p>
+
+<h4>protocol</h4>
+<p>La stessa cosa vale per l'attributo <span class="nota">protocol</span> che restituisce il protocollo selezionato dal server (se c'è').
+Esso può essere usato in congiunzione con l'array del secondo argomento del costruttore per stabilire la negoziazione
+</p>
+
+<h4>bufferedAmount</h4>
+<p>
+L'attributo <span class="nota">bufferedAmount</span> deve restituire il numero di bytes di dati (testo o dati binari) che sono messi in coda
+usando il metodo <span class="nota">send()</span> ma che non sono stati trasmessi alla rete. Se la connessione viene chiusa, 
+il valore di questo attributo aumenterà ad ogni chiamata al metodo <span class="nota">send()</span>. <br>
+Nell'esempio seguente l'attributo <span class="nota">bufferedAmount</span> è utilizzato per assicurarsi che ogni "update" sia inviato 
+ogni 50 ms (millisecondi), considerato che la rete possa gestire quel valore
+</p>	
+<pre>
+var socket = new WebSocket('ws://game.example.com:12010/updates');
+socket.onopen = function () {
+	setInterval(function() {
+	if (socket.bufferedAmount == 0)
+		socket.send(getUpdateData());
+	}, 50);
+};
+</pre>
+<p>
+Inoltre l'attributo <span class="nota">bufferedAmount</span> può essere usato per saturare la rete, bloccando l'invio dei dati, 
+qualora la rete non possa gestirli.  	
+</p>	
+
+<h3>Metodi</h3>
+
+<h4>close()</h4>
+
+<p>
+Il metodo <span class="nota">close(code, reason)</span> quando invocato deve eseguire i seguenti passi
+<ul>
+	<li>Se «code» è presente ma non è uguale a 1000 o compreso tra 3000 e 4999 deve restituire un errore ("InvalidAccessError" DOMException)
+	<li>Se «reason» è presente deve eseguire le seguenti sottoperazioni:
+		<ul>
+			<li>Lasciare che "reasonBytes" sia il risultato della codifica di "reason"(?)</li>
+			 <li>Se "reasonBytes" è maggiore di 123 bytes deve restituire un errore ("SyntaxError" DOMException)(?)</li>
+		</ul>	
+	<li>Eseguire la prima operazione, che incontra, fra le seguenti:
+		<ul>
+			<li>Non far nulla se l'attributo <b>readyState</b> è nello stato "CLOSING" o "CLOSED"</li>
+			<li>Impostare a "CLOSING(2)" il valore di "readyState" se la connessione non è stata ancora stabilita</li>
+			<li>Impostare a "CLOSING(2)" il valore di "readyState" se il "WebSocket closing handshake" non è ancora iniziato</li>
+			<li>Altrimenti impostare a "CLOSING(2)" il valore di "readyState"</li>
+		</ul>	 	
+</ul>	
+</p>	
+
+<h4>send()</h4>
+<p>
+Il metodo <span class="nota">send(data)</span> trasmette dati tramite la connessione. <br>
+Se l'attributo <span class="nota">readyState</span> è <b>CONNECTING</b> deve far scattare un errore ("InvalidStateError" DOMException) altrimenti
+l'<b>user agent</b> (es: browser) deve eseguire le appropriate operazioni in base alle seguenti condizioni:
+</p>	
+<b>Se l'argomento è una stringa</b>
+<p>
+Se la connessione WebSocket è stabilita ma il "WebSocket closing handshake" non è iniziato, l'user agent deve trasmettere un messaggio 
+comprendente l'argomento dei dati in formato testo. <br>
+Se i dati non possono essere inviati, perchè per esempio c'è bisogno di metterli nella memoria buffer e questa risulta piena, allora l'user agent 
+è tenuto ad indicare che il WebSocket è pieno ed a chiudere la connessione. <br>
+Ogni invocazione a questo metodo, con un argomento string che non stabilisce un'eccezione, aumenta l'attributo "bufferedAmount" di tanti bytes 
+quanto quelli necessari per esprimere l'argomento. 
+</p>	
+
+<b>Se l'argomento è un'oggetto Blob (sequenza di bytes) </b>
+<p>
+Se la connessione WebSocket è stabilita ma il "WebSocket closing handshake" non è iniziato, l'user agent deve trasmettere un messaggio 
+comprendente l'argomento dei dati in formato binario. <br>
+Se i dati non possono essere inviati, perchè per esempio c'è bisogno di metterli nella memoria buffer e questa risulta piena, allora l'user agent 
+è tenuto ad indicare che il WebSocket è pieno ed a chiudere la connessione. <br>
+I dati da inviare sono dati grezzi cosi come rappresentati dall'oggetto Blob. <br>
+Ogni invocazione a questo metodo, con un argomento Blob che non stabilisce un'eccezione, aumenta l'attributo "bufferedAmount" di tanti bytes 
+quanto quelli espressi dall'oggetto Blob. 
+</p>	
+
+<b>Se l'argomento è un'ArrayBuffer (oggetto che mantiene un puntatore a un buffer di un numero fisso di byte)</b>
+<p>
+Se la connessione WebSocket è stabilita ma il "WebSocket closing handshake" non è iniziato, l'user agent deve trasmettere un messaggio 
+comprendente l'argomento dei dati in formato binario. <br>
+Se i dati non possono essere inviati, perchè per esempio c'è bisogno di metterli nella memoria buffer e questa risulta piena, allora l'user agent 
+è tenuto ad indicare che il WebSocket è pieno ed a chiudere la connessione. <br>
+I dati da inviare sono i dati conservati nel buffer descritto dall'oggetto ArrayBuffer. <br>
+Ogni invocazione a questo metodo, con un argomento ArrayBuffer, che non stabilisce un'eccezione, aumenta l'attributo "bufferedAmount" di tanti bytes 
+quanto la lunghezza dell'ArrayBuffer. 
+</p>	
+
+<b>Se l'argomento è un oggetto che corrisponde alla definizione di un ArrayBufferView </b>
+<p>
+ArrayBufferView è usato per rappresentare oggetti che forniscono una vista di oggetti ArrayBuffer	
+</p>	
+<p>
+Se la connessione WebSocket è stabilita ma il "WebSocket closing handshake" non è iniziato, l'user agent deve trasmettere un messaggio 
+comprendente l'argomento dei dati in formato binario. <br>
+Se i dati non possono essere inviati, perchè per esempio c'è bisogno di metterli nella memoria buffer e questa risulta piena, allora l'user agent 
+è tenuto ad indicare che il WebSocket è pieno ed a chiudere la connessione. <br>
+I dati da inviare sono i dati conservati nella sezione del buffer descritto dall'oggetto ArrayBuffer. <br>
+Ogni invocazione a questo metodo aumenta l'attributo "bufferedAmount" di tanti bytes quanto la lunghezza dei dati del buffer.  
+</p>	
+	
+<h3>Event handlers</h3>
+
+<p>
+Gli <b>event handlers</b> (gestori di eventi) supportati dagli oggetti che implementano l'interfaccia WebSocket sono:
+	<dl>
+		<dt>onopen</dt>
+		<dt>onmessage</dt>
+		<dt>onerror</dt>
+		<dt>onclose</dt>		
+	</dl>	
+ </p>
+<p>
+E i loro corrispondenti <span class="nota">Event handler event type</span> sono: <b>open, message, error, close</b> 
+</>	
+
+<h2>Compiti dell'user agent nelle connesioni WebSocket</h2>
+
+<p>
+Quando <b>la connessione WebSocket è stabilita</b> l'user agent deve eseguire i seguenti compiti: 	
+	
+<ul>
+	<li>Cambiare il valore dell'attributo <span class="nota">readyState</span> a OPEN(1) </li>
+	<li>Cambiare il valore dell'attributo <span class="nota">extensions</span> a «extensions in use» </li>
+	<li>Cambiare il valore dell'attributo <span class="nota">protocol</span> a «subprotocol in use» </li>
+	<li>Far scattare l'evento «open» per l'oggetto WebSocket</li>
+</ul>	
+</p>
+<p>
+Quando <b>un messaggio WebSocket è stato ricevuto</b> l'user agent deve eseguire i seguenti passi: 	
+	
+<ul>
+	<li>Se il valore dell'attributo <span class="nota">readyState</span> non è «OPEN(1)» allora deve sospendere questi compiti</li>
+	<li>Lasciare che l'evento sia dichiarato affidabile, con nome evento <span class="nota">message</span> e che non sia cancellabile 
+	e non abbia azioni di default   </li>
+	<li>Inizializzare la serializzazione dell'origine dell'«url» che è stato passato al costruttore  </li>
+	<li>Inizializzare l'attributo "event data" a «data» se il tipo di dati indicati sono di tipo «testo» oppure a Blob o ArrayBuffer se ... </li>
+	<li>Spedire l'evento all'oggetto WebSocket</li>
+</ul>	
+</p>
+<p>
+Il seguente è un esempio di come gestire un evento "message" per una struttura testo:	
+</p>	
+<pre>
+mysocket.onmessage = function (event) {
+	if (event.data == 'on') {
+		turnLampOn();
+	} else if (event.data == 'off') {
+		turnLampOff();
+	}
+};	
+</pre>	
+<p>
+Quando <b>il WebSocket closing handshake è iniziato</b> l'user agent deve cambiare il valore dell'attributo "readyState" a "CLOSING(2)"   	 	
+</p>	
+<p>
+Quando <b>la connessione al WebSocket è terminata</b> l'user agent deve compiere i seguenti passi:
+</p>
+<ul>
+	<li>Cambiare il valore dell'attributo "readyState" a "CLOSED"(3)</li>
+	<li>Se la connessione fosse chiusa dopo a seguito di un riempimento del buffer deve emettere un evento chiamato <b>error</b>  </li>
+	<li>Creare un evento affidabile che usi l'interfaccia "CloseEvent" con il tipo di evento «close» che non è cancellabile </li>
+	
+</ul>	
+
+
+<br>
+<hr>
+
+<h3>Controllo supporto WebSocket</h3>
+<p>
+La seguente funzione controlla il supporto del browser al WebSocket e richiama due funzioni che restituiscono delle risposte a seconda del caso:
+</p>
+
+<pre>
+!function supportoWebSocket(){
+
+	if ("WebSocket" in window) {
+<span class="grigio">//		alert("WebSockets supported here!\r\n\r\nBrowser: " + navigator.userAgent);</span>
+		webSocketSupportato();	
+	}else{
+		webSocketNONSupportato();
+	}
+}()
+</pre>
+
+<p>
+Le due funzioni vanno quindi definite a seconda delle esigenze, per esempio:	
+</p>
+
+<pre>
+function webSocketSupportato (){
+	console.log('WebSocket è suportato da questo browser');	
+}
+
+function webSocketNONSupportato (){
+	console.log('WebSocket non è suportato da questo browser');	
+}
+</pre>
 
 
 
+<br><br>
 
-<!--
+<hr /> <br>
 
-http://www.unaprol.it/images/stories/News%20Mercati%20sett%2047_13.pdf
+<p>
+E' interessante questo articolo sulla sicurezza per le applicazioni con i web socket <a href="http://www.christian-schneider.net/CrossSiteWebSocketHijacking.html">vedi qui</a>
+</p>
 
-http://www.unaprol.it/images/stories/News%20Mercati%20sett%2045_13.pdf
+<br><br><br><br><br>
 
--->
 
 
 

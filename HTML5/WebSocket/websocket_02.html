@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>WebSocket test 2  </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+
+</style>
+</head>
+<body>
+
+<p>
+web socket
+</p>
+
+<!-- 
+<img src="../../../Immagini/dop.jpg" alt="description" title="tool tip" width="" height="" />
+-->
+
+<script type="text/javascript">  
+/*
+//var wsUri = "ws://echo.websocket.org/";	
+var wsUri = "ws://localhost/";	
+var websocket;
+websocket = new WebSocket(wsUri);
+*/
+
+////////////////////////////////////////
+
+/*
+https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css
+
+https://fonts.googleapis.com/css?family=ABeeZee:100,200,300,400,400italic,500,600,700,700,800,900italic&subset=latin,greek-ext,cyrillic,latin-ext,greek,cyrillic-ext,vietnamese
+
+http://www.websocket.org/img/check.png
+
+*/
+
+//http://echo.websocket.org/
+var wsUri = "ws://echo.websocket.org/";
+//var wsUri = "ws://kaipai.it/";	
+var websocket;
+
+websocket = new WebSocket(wsUri);
+
+
+
+!function supportoWebSocket(){
+// Questa funzione richiama due funzioni che restituiscono la risposta del browser al supporto del WebSocket 
+// Le due funzioni vanno quindi definite a seconda delle esigenze	
+	if ("WebSocket" in window) {
+//		alert("WebSockets supported here!\r\n\r\nBrowser: " + navigator.userAgent);
+		webSocketSupportato();	
+	}else{
+		webSocketNONSupportato();
+	}
+}()
+
+//supportoWebSocket();
+
+function webSocketSupportato (){
+	console.log('WebSocket è suportato da questo browser');	
+}
+
+function webSocketNONSupportato (){
+	console.log('WebSocket non è suportato da questo browser');	
+}
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
+

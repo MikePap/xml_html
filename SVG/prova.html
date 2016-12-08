@@ -5,37 +5,204 @@
 <title> prova </title>
 <style type="text/css">
 
-svg{
-border: 1px solid;
+html, body{
+font-size:100%; margin:0; padding:0; font-family:Helvetica;
 }
 
+#box-oli{
+width:100%; height:300px; /*background:#ff0;*/
+overflow: auto;
+position:absolute; top:0; bottom:0; left:0; right:0;
+margin:0;
+z-index:10;
+}
+
+svg{
+width:100%; height:98%; 
+background:transparent; /* e6ff99 #324632 */ 
+/*
+background: -moz-radial-gradient(top left, circle, #FFFFFF, #ffff4d 50%, #ffb366);
+background: webkit-radial-gradient(top left, circle, #FFFFFF, #ffff4d 50%, #ffb366);
+background: -o-radial-gradient(top left, circle, #FFFFFF, #ffff4d 50%, #ffb366);
+background: radial-gradient(top left, circle, #FFFFFF, #ffff4d 50%, #ffb366);
+*/
+}
+
+#abcoliodoliva{
+position: relative; margin: 150px auto 0 23%; padding:1em 0;
+width:25%; text-align: center;
+/*
+position: relative; margin: 50px auto; padding:1em 0;
+position:absolute; left:0; right:0; bottom:auto; top:50px;
+margin:auto; padding:1em 0;
+
+*/
+/*	background:#ffcc80;*/
+border:1px solid #ccc; border-radius:20%;
+z-index:20;
+}
+
+#abcoliodoliva h1{
+margin:0; padding:0;
+font-size:2em; color:green; 
+}
+#abcoliodoliva p{
+margin:0; padding:0;/*text-align:left;*/ font-size:0.8em; color:#4d4d4d;
+}
 
 </style>
 </head>
 <body>
 
 
+<div id="box-oli">
+	<svg viewBox="0 0 100 100" preserveAspectRatio="none" id="essevg1" >
 
-<svg width="500" height="300" id="essevg1" >
+	<defs>
+		<linearGradient id="Gradient01"> 
+			<stop offset="20%" stop-color="#ffff4d" /> 
+			<stop offset="90%" stop-color="#ffb366" /> 
+		<linearGradient>
+	</defs> 
+	<defs>
+		<pattern id="puntinato" patternUnits="userSpaceOnUse" x="0" y="0" width="0.30" height="0.30" viewBox="0 0 10 10"  >
+			<circle cx="0.15" cy="0.15" r="0.15" stroke="#444" stroke-width="1" fill="none"  />
+		</pattern> 
+	</defs>
 
-	<path d="M 34.256055,182.69896 267.82007,57.093426 390.31142,223.18339 Z " 
-	stroke="purple" stroke-width="2" fill="none" />
+	<path
+	d="m 0,0 c 0,0 20,8.375209 20,75 0,66.62479 0,25 0,25 l 80,0 0,-100 z"
+		stroke="#cc9900" stroke-width="0.1" stroke-linejoin="round" fill="url(#Gradient01)" 
+	/>
+	<path
+	d="m 0,0 c 0,0 20,8.375209 20,75 0,66.62479 0,25 0,25 l 80,0 0,-100 z"
+		stroke="none"  fill="url(#puntinato)" 
+	/>
 
-</svg>
+<!--
+i due <path> sono simili tranne che per il "fill". Ne ho creati due per poter assegnare i due "fill".
+I <path> li ho creati con Inkscape impostando il documento a 100x100(px) dato che il viewbox dell'<svg> è 0 0 100 100
 
+Il seguente path è un rettangolo posto sul lato destro e puntinato		
+	<path  
+			d=" M 100,0 100,100 60,100 z"
+		stroke="none" fill="url(#puntinato)" 
+	/>
 
+-->	
 
+	</svg>
+</div><!--box-oli -->	 
 
-
-
-
-
+<div id="abcoliodoliva"> 
+	<h1>abc Olio di Oliva</h1>
+	<p>Olio nostrano</p>
+</div>
 
 
 
 <!--
 
+
+		<pattern id="puntinato" patternUnits="userSpaceOnUse" x="0" y="0" width="0.25" height="0.25" viewBox="0 0 10 10"  >
+			<circle cx="1" cy="1" r="0.5" stroke="#444" stroke-width="1" fill="none"  />
+		</pattern> 
+
+
+			<line x1="0" y1="0" x2="10" y2="10" stroke="#555" stroke-width="0.2" fill="none" />
+			<circle cx="0.6" cy="0.6" r="0.3" stroke="#555" stroke-width="1" fill="none"  />
+
+viewBox="0 0 10 10" preserveAspectRatio="none"
+
+M100,0 100,100 75,100 z
+fill="red" fill-opacity="0.65" 
+
+	<path 
+			d=" m 0,22 c 0,0 6,14 26,30 19,15 39,13 52,23 12,10 19,23 22,25"
+		stroke="#cc9900" stroke-width="0.5" fill="none" 
+	/>
+
+poligono: M 63.316584,55.443886 38.733915,55.108175 31.456732,31.624926 51.541856,17.447192 71.232327,32.168119 z
+
+m 1.0050251,22.445561 c 0,0 6.27197,14.70921 26.1306529,30.150754 19.858684,15.441544 39.83061,13.409081 52.596315,23.61809 12.765705,10.209009 19.76549,23.618091 19.76549,23.618091
+
+
+			d="M0,100 Q50,-99 100,100 "
+			d="M25,50 Q50,-49 75,50 "
+
+	497:16 = 281:x
+
+	<svg viewBox="0 0 497 281" preserveAspectRatio="none" id="essevg1" >
+
+		<g transform="translate(346, 65)" id="oliva" >
+
+		<g transform="translate(270, 30)" id="origini" >
+			<ellipse cx="0" cy="0" rx="18" ry="12" fill="#408000"  />
+			<text x="0" y="0"  fill="#fff" font-size="5" font-weight="bold" font-family="Helvetica" text-anchor="middle" dominant-baseline="before-edge"  >Origini 
+			</text>
+			<text x="0" y="7"  fill="#fff" font-size="5" font-weight="bold" font-family="Helvetica" text-anchor="middle" dominant-baseline="text-after-edge" >Leggende
+			</text>
+		</g>
+
+
+
+dominant-baseline="middle"
+				<ellipse cx="272" cy="30" rx="16" ry="10" fill="#408000"  />
+
+		<g id="fg" rx="6" ry="5" fill="#408000" >
+
+		</g>
+
+
+		<path d="m 0.33500837,90.452261 c 0,0 9.88347263,-8.815189 17.25293063,-21.60804 C 32.082531,43.682648 28.223379,29.684667 37.18593,11.892796 40.545068,5.224453 46.901168,0.16750419 46.901168,0.16750419" 
+			stroke="#cc9900" stroke-width="1" fill="none" 
+		/>	
+
+		<path d="
+m 100,17.28513 c 0,0 -7.658414,11.19378 -10.887774,19.09548 -5.88477,14.39899 -8.337762,29.10359 -19.932997,45.39359 -6.436217,9.0422 -17.420439,16.583 -17.420439,16.583"
+			stroke="#cc9900" stroke-width="1" fill="none" 
+		/>	
+
+
+
+		<ellipse cx="45" cy="10" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="28" cy="18" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="37" cy="31" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="21.5" cy="45" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="28.5" cy="60" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="8" cy="73" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="10" cy="88" rx="6" ry="5" fill="#408000"  />
+
+
+		<ellipse cx="93" cy="17" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="85" cy="31" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="91" cy="48" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="75" cy="58" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="83" cy="70" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="67" cy="75" rx="6" ry="5" fill="#408000"  />
+		<ellipse cx="69" cy="90" rx="6" ry="5" fill="#408000"  />
+
+
+
+
+
+
+fill="none"	stroke="#000000" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke-opacity="1"
+
+500/16*9 = 281
+280/9*16 = 497
+
+100/16*9 = 56
+
+-->	
+
+
+<!--
+
 http://localhost/xml_html/SVG/prova.html
+
+
+http://localhost/abc_locale/index.php
 
 -->
 
