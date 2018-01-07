@@ -1,0 +1,4 @@
+# ignora tutti i file che finiscono con tilde (~)
+*~
+
+
