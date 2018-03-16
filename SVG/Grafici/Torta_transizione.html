@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Torta in transizione</title>
+<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+
+div{
+	position:relative; width: 100%; margin: 50px auto; text-align: center;
+}
+
+svg {
+	border: 1px solid #ccc;
+	width: 200px; height: 200px;
+	transform: rotate(-90deg);
+	background: yellowgreen;
+	border-radius: 50%;
+}
+
+circle {
+	fill: yellowgreen;
+	stroke: #655;
+	stroke-width: 32;
+	stroke-dasharray: 10 100; 			/*	10% (impostazione iniziale) */	
+}
+
+</style>
+</head>
+<body>
+
+<h1>Torta in transizione</h1>
+
+
+<div id="boxSVG">
+	<svg viewBox="0 0 32 32" id="essevugi" >
+		<circle r="16" cx="16" cy="16" id="cerchio" />
+	</svg>
+</div> 
+
+<div id="boxPercentuali" >
+	<button value="25">25%</button>
+	<button value="45">45%</button>
+	<button value="75">75%</button>
+	<button value="85">85%</button>
+</div>
+
+
+<script type="text/javascript">
+
+var boxPercentuali = document.getElementById("boxPercentuali"); 
+//	var circle = document.getElementById("cerchio"); 	
+var circle = document.getElementsByTagName('circle')[0];
+var NS = "http://www.w3.org/2000/svg";												// relativo alla visualizzazione del tooltip
+var title = document.createElementNS(NS, "title");	
+	
+boxPercentuali.addEventListener("click", function(e){ 
+	var percentuale = e.target.value;
+	circle.style.transition = "stroke-dasharray 500ms ease-out";
+	circle.style['stroke-dasharray'] = percentuale + " 100";
+//	circle.setAttribute('title', e.target.textContent);						// cosi NON funziona
+	title.textContent = e.target.textContent;
+	document.getElementById("essevugi").appendChild(title);
+},false);
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
+

@@ -3,20 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <title>Path  </title>
+<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
 <style type="text/css">
-html, body{ margin:0; padding:0;  }
-h1{ color: #00F; font-size:24px;}
-h3{ color:#663333; font-size:18px;}
-dt{ color:#003399; margin-bottom:5px;}
-dd{ color:#0066FF;}
-.nota{ color:#FF6666;}
-.codice{ color:#060}
-code, pre{ color:rgb(50,150,50);}
 
 svg{ width:500px; height:400px; border:1px solid #CCC; display:block;  }
 
 </style>
-<script type="text/javascript" src="../jQuery-1.6.min.js"></script>
 </head>
 <body>
 
@@ -26,10 +18,10 @@ svg{ width:500px; height:400px; border:1px solid #CCC; display:block;  }
 
 <dl>
 	<dt>Per creare una figura con l'elemento &lt;path&gt; sono disponibili i seguenti comandi da impostare all'attributo <b>d</b>: </dt>
-	<dd><b>M</b> = move-to</dd>
-	<dd><b>L</b> = line-to</dd>
-	<dd><b>H</b> = line-to orizzontale</dd>
-	<dd><b>V</b> = line-to verticale</dd>
+	<dd><b>M</b> = move-to (x,y) </dd>
+	<dd><b>L</b> = line-to (x,y) </dd>
+	<dd><b>H</b> = line-to (orizzontale x) </dd>
+	<dd><b>V</b> = line-to (verticale y)</dd>
 	<dd><b>C</b> = curve-to (disegna una curva cubic Bézier)</dd>
 	<dd><b>S</b> = smooth curve-to</dd>
 	<dd><b>Q</b> = quadratic bèzier curve </dd>
@@ -44,9 +36,24 @@ svg{ width:500px; height:400px; border:1px solid #CCC; display:block;  }
 style="fill:rgb(255,255,0);stroke:purple;stroke-width:4"   />
 </svg>
 
-<div>
+<p>
+Nell'esempio di sopra ho utilizzato soltanto il comando «L» (line-to) a cui bisogna passargli le coordinate x e y. <br>
+Nell'esempio di sotto ho disegnato un poligono utilizzando anche i comandi «H» e «V» ai quali viene passato soltanto un valore che rappresenta la coordinata x o y rispettiva.<br>
+Per la linea orizzontale ho definito <q>H 400</q> che mi ha disegnato una linea orizzontale dal punto corrente fino ad arrivare a 400x. <br />
+Successivamente ho definito <q>V 300</q> disegnando una linea verticale dal punto corrente fino ad arrivare a 300y.
+</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<path d="M 10,100 H400 V 300 L 40,350 z " fill="none" stroke="blue" stroke-width="2"   />		
+</svg>
+
+
+
+<h3>cubic Bézier curve</h3>
+
+<p>
 Il <b>cubic Bézier curve commands</b> viene definito da un punto di partenza, due punti di controllo e un punto finale. Nella figura seguente il punto di partenza è quello rappresentato dal cerchietto vuoto in basso a sinistra (impostazione: M 100,200); il secondo punto da dichiarare (1° punto di controllo) è quello rappresentato dal cerchietto nero in alto a sinistra (impostazione: C 100,100); il terzo punto da dichiarare (secondo punto di controllo) è quello rappresentato dal cerchietto nero in alto a destra (impostazione: 400,100); il quarto punto da dichiarare (punto finale) è quello rappresentato dal cerchietto vuoto in basso a destra (impostazione: 400,200). 
-</div> 
+</p> 
 
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
 	<path d="M100,200 C100,100 400,100 400,200 " stroke="purple" stroke-width="2" fill="none" />
@@ -88,9 +95,10 @@ Il <b>cubic Bézier curve commands</b> viene definito da un punto di partenza, d
 	<line x1="400" y1="350" x2="400" y2="200" stroke="grey"  stroke-width="1" />
 </svg>
 
-<div>
+<h3>quadratic Bézier curve</h3>
+<p>
 il <b>quadratic Bézier curve commands</b> viene definito da un punto di partenza un punto di controllo e un punto finale. Nella figura seguente il punto di partenza è quello rappresentato dal cerchietto vuoto in basso a sinistra (impostazione: M100,200); il secondo punto da dichiarare è il punto di controllo rappresentato dal cerchietto nero (impostazione: Q 200,100); il terzo punto da dichairare è il punto finale rappresentato dal cerchietto vuoto in basso a destra (impostazione: 300,200).
-</div> 
+</p> 
 
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
 	<path d="M100,200 Q200,100 300,200  " stroke="purple" stroke-width="2" fill="none" />
@@ -99,21 +107,79 @@ il <b>quadratic Bézier curve commands</b> viene definito da un punto di partenz
 	<circle cx="300" cy="200" r="5" stroke="black"  stroke-width="1" fill="none"  />	
 	<line x1="100" y1="200" x2="200" y2="100" stroke="grey"  stroke-width="1" />
 	<line x1="200" y1="100" x2="300" y2="200" stroke="grey"  stroke-width="1" />
-
 </svg>
+
+<h3>elliptical arc curve</h3>
+<p>
+Il comando <b>elliptical arc</b> permette di disegnare un ellisse. I parametri dell'arco sono: 
+</p>
+<pre>
+A rx,ry  x-axis-rotation  large-arc-flag  sweep-flag  x,y
+</pre>
+<p>
+Nella seguente disegno ho definito:
+</p>
+<pre>
+&lt; path d="M 250,200  H 125 A 125,125 0 1 0 250,75 z" fill="red" /&gt;		<span class="nota">tracciato rosso</span>	
+
+&lt; path d="M 240,190 V 65  A 125,125 0 0 0 115,190 z" fill="blue" /&gt;		<span class="nota">tracciato blu</span>
+
+</pre>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<path d="M 250,200  H 125 A 125,125 0 1 0 250,75 z " fill="red" />
+	<path d="M 240,190 V 65  A 125,125 0 0 0 115,190 z " fill="blue" />			
+</svg>
+
+<p>
+Per la <ins>forma rossa</ins> sono partito dal centro dell'svg (M 250,200) per poi tracciare il tratto orizzontale di 125 (H 125) portandomi a 125 dal lato sinistro. <br />
+Quindi ho iniziato a tracciare l'arco. <br>
+1) «rx» altro non è che il raggio della forma che si sta cercando di realizzare. Quindi anche «ry» deve avere lo stesso valore, sempre se si vuol realizzare un arco perfetto, ma esso è anche relativo al parametro «y» di cui di seguito. <br>
+2) «x-axis-rotation» indica come l'ellisse (arco) sia ruotato relativo al sistema di coordinate corrente. Ho provato a passargi diversi valori ma il risultato non cambia (?) <br>
+3) «large-arc-flag» e «sweep-flag» dovranno avere valori di 1 o 0. Piuttosto che spiegarli è meglio provare ad alternare i due valori per capire il loro significato. <br>
+4) «x» e «y» rappresentano le coordinate di fine arco. Da notare che la «x» corrisponde al centro che è il punto di partenza; invece il valore di «y» altro non è che la differenza tra 200, che è la coordinata y di partenza (centro), e 125, che è il valore del parametro «ry». Quindi definendo «ry» uguale a 75 otteniamo che il tratto finale verticale sarà di 125 che è uguale al tratto orizzontale che altro non è che il raggio della nostra forma. Verrebbe da dire che <em>il cerchio si chiude</em>  correttamente.
+</p>
+<p>
+Nella <ins>forma blu</ins> c'è da notare la differenza del parametro «large-arc-flag». <br>
+Sono, comunque partito da un centro leggermente spostato di -10x e -10y per poi tracciare un tratto verticale di 125, che sarebbe il raggio della forma blu, portandomi a 65 dal lato superiore. <br>
+1) Quindi «rx» e «ry» saranno di 125. Da notare che questo caso è inverso al precedente perchè mi sono diretto dal centro verso l'alto e quindi sarà il parametro «x» ad essere relativo ad «rx». <br />
+2) «x-axis-rotation» sempre zero. <br>
+3) «large-arc-flag» stavolta è zero e «sweep-flag» è ancora zero. <br />
+4) Le coordinate di fine arco saranno: «y» uguale alla coordinata y di partenza (190) e «x» sarà dato dalla differenza della coordinata x di partenza (centro sfalsato) e il valore di «rx» (240-125=115). 
+
+</p>
+
+
+
 
 
 <br /><br /><br /><br /><br /><br />
 
 
 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-	<path d="M0,400 500,0  " stroke="purple" stroke-width="2" fill="none" />
-
-</svg>
-
 
 <!--
+
+
+
+
+
+
+	<rect x="1" y="1" width="1198" height="398" fill="none" stroke="blue" stroke-width="1" />
+
+	<path d="M300,200 h-150 a150,150 0 1,0 150,-150 z" fill="red" stroke="blue" stroke-width="5" />
+	<path d="M275,175 v-150 a150,150 0 0,0 -150,150 z" fill="yellow" stroke="blue" stroke-width="5" />
+
+	<path d="M600,350 l 50,-25 
+				a25,25 -30 0,1 50,-25 l 50,-25 
+				a25,50 -30 0,1 50,-25 l 50,-25 
+				a25,75 -30 0,1 50,-25 l 50,-25 
+				a25,100 -30 0,1 50,-25 l 50,-25"
+				fill="none" stroke="red" stroke-width="5"  />
+
+
+
+
 
 	<circle cx="" cy="" r="5" stroke="black"  stroke-width="1" fill="none"  />	
 	<circle cx="" cy="" r="5" stroke="none"  stroke-width="none" fill="black"  />	

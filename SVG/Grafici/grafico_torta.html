@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Grafico a torta  </title>
+<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+
+.boxSVG{ width:400px; height:400px; margin:50px auto; border:1px solid; background:rgb(230,230,220); }
+
+svg > path:hover{
+fill-opacity: 0.1;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Grafico a torta</h1>
+
+
+<div class="boxSVG">
+	<svg width="100%" height="100%" viewbox="0 0 2 2"  id="essevugi"  >
+
+		<defs> <path id="pathTesto1" /> </defs>
+		<defs> <path id="pathTesto2" /> </defs>
+		<defs> <path id="pathTesto3" /> </defs>
+		<defs> <path id="pathTesto4" /> </defs>
+
+		<g fill="black" font-size="0.08" font-family="Verdana">
+			<text> <textPath xlink:href="#pathTesto1" id="testo1"> </textPath> </text>
+			<text> <textPath xlink:href="#pathTesto2" id="testo2"> </textPath> </text>
+			<text> <textPath xlink:href="#pathTesto3" id="testo3"> </textPath> </text>
+			<text> <textPath xlink:href="#pathTesto4" id="testo4"> </textPath> </text>
+		</g>
+
+		<path fill="green" id="fetta1" />		
+		<path fill="blue" id="fetta2" />		
+		<path fill="red" id="fetta3" />		
+		<path fill="purple" id="fetta4" />		
+
+	</svg>
+</div>
+
+<p>
+In questo grafico ho adattato il «viewbox» a quello della «circonferenza unitaria». In questo <a href="Sistema_quadranti.html">sistema di quadranti</a>  si possono vedere i due quadranti.
+</p> 
+
+
+<script type="text/javascript">
+
+//		100% = 360° = 6.28rad	;	75% = 270° = 4.71rad		;	50% = 180° = 3.14rad		;	25% = 90° = 1.57rad
+//		100:6.28 = 25:x	;	x = 25*6.28/100 = 1.57 radianti	
+
+(function torta () {
+
+	var getCoordinate = function (percentuale) {
+		var rad, x, y;
+		rad = percentuale * 6.28 / 100;
+
+		if(percentuale >= 0 && percentuale <= 25){
+			x = 1 + Math.abs(Math.sin(rad));
+			y = 1 - Math.abs(Math.cos(rad));
+		}else	if(percentuale > 25 && percentuale <= 50){
+			x = 1 + Math.abs(Math.sin(rad));
+			y = 1 + Math.abs(Math.cos(rad));
+		}else if(percentuale > 50 && percentuale <= 75){
+			x = 1 - Math.abs(Math.sin(rad));
+			y = 1 + Math.abs(Math.cos(rad));		
+		}else if(percentuale > 75 && percentuale <= 100){
+			x = 1 - Math.abs(Math.sin(rad));
+			y = 1 - Math.abs(Math.cos(rad));
+		}else{return false}
+
+			return [x, y];
+	}//
+
+	const percentuali = [ 0, 25, 55, 80, 100 ];						// @@@ variabile da definire in partenza per le percentuali 
+
+	var setCoordinateFette = function (percent) {
+		var i, per, per1, startX, startY, endX, endY, semiQuadrante, largeAarcFlag, pathData;
+		var percTesto, testoX, testoY, pathtesto, valorePercentualeFetta, testo;
+
+		for(i=1; i < percent.length; i++){
+//		Impostazione Coordinate fette
+			per = percent[i];
+			per1 = percent[i - 1];
+			semiQuadrante = per - per1;
+			largeAarcFlag = (semiQuadrante > 50) ? 1 : 0;
+			startX = getCoordinate(per)[0];
+			startY = getCoordinate(per)[1];
+			endX = getCoordinate(per1)[0];
+			endY = getCoordinate(per1)[1];
+			pathData = 'M 1,1 '+startX+ ','+startY+ ' A 1,1 0 '+largeAarcFlag+ ' 0 ' +endX+ ','+endY+ ' Z';
+			document.getElementById('fetta'+i).setAttribute('d', pathData);
+
+//		Impostazione Coordinate testo
+//			if(i == 1){ percAnte = 0; }							// percAnte => per1
+			percTesto = per1 + (per - per1) / 2;
+			testoX = getCoordinate(percTesto)[0];
+			testoY = getCoordinate(percTesto)[1];	
+			pathtesto = 'M 1,1 L '+testoX+','+testoY;
+			document.getElementById('pathTesto'+i).setAttribute('d', pathtesto);					
+			valorePercentualeFetta = (per - per1);				
+			testo = '&nbsp;&nbsp; ' + valorePercentualeFetta + '%';
+			document.getElementById('testo'+i).innerHTML = testo;
+		}
+	}(percentuali);
+
+})()//
+
+
+</script>
+
+
+
+<!--
+
+In questo grafico ho utilizzato un'approccio diverso da quello utilizzato da David Gilbertson.
+Ho definito il «viewbox="0 0 2 2"», e di conseguenza ho trasformato la funzione "getCoordinate()" per ottenere le coordinate dei vari punti della circonferenza.
+Nella funzione, ho dovuto creare delle condizioni per adattare il mio viewbox a quello della «circonferenza unitaria» (vedi file Sistema_quadranti.html) e ottenere i valori delle coordinate con l'uso di «Math.sin» e «Math.cos» passandogli direttamente il valore in radianti.
+
+Altro particolare da notare è che nel tag <svg> i tag <path> relativi alle fette sono messi in basso sotto i testi (<text>) altrimenti, in caso contrario, quest'ultimi ostacolano il «mouseover» rendendo l'area delle fette occupata appunto dall'area dei testi
+
+-->	
+
+
+
+</body>
+</html>
+

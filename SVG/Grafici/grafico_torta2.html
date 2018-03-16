@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Grafico di David Gilbertson  </title>
+<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+
+.boxSVG{ width:400px; height:400px; margin:50px auto; border:1px solid; background:rgb(200,250,200); }
+
+svg > path:hover{
+fill-opacity: 0.1;
+}
+
+
+</style>
+</head>
+<body>
+
+<h1>Grafico a torta di David Gilbertson</h1>
+
+
+<div class="boxSVG">
+	<svg  width="100%" height="100%" viewbox="-1 -1 2 2" style="transform: rotate(-90deg)" id="essevugi" >
+
+		<circle cx="0" cy="0" r="1" fill="gray" fill-opacity="1" />
+
+		<defs> <path id="pathTesto1" /> </defs>
+		<defs> <path id="pathTesto2" /> </defs>
+		<defs> <path id="pathTesto3" /> </defs>
+		<defs> <path id="pathTesto4" /> </defs>
+
+		<g fill="white" font-size="0.08" font-family="Verdana">
+			<text> <textPath xlink:href="#pathTesto1" id="testo1"> </textPath> </text>
+			<text> <textPath xlink:href="#pathTesto2" id="testo2"> </textPath> </text>
+			<text> <textPath xlink:href="#pathTesto3" id="testo3"> </textPath> </text>
+			<text> <textPath xlink:href="#pathTesto4" id="testo4"> </textPath> </text>
+		</g>
+
+		<path fill="green" id="fetta1" />		
+		<path fill="blue" id="fetta2" />		
+		<path fill="red" id="fetta3" />		
+		<path fill="purple" id="fetta4" />		
+
+	</svg>
+</div>
+
+
+<script type="text/javascript">
+
+(function torta () {
+
+	var getCoordinatesForPercent = function getCoordinatesForPercent (percentuale) {
+		const x = Math.cos(2 * Math.PI * percentuale);
+		const y = Math.sin(2 * Math.PI * percentuale);
+		return [x, y];
+	}//
+
+	const percent = [ 0, 0.25, 0.55, 0.80, 1 ];							// @@@ variabile da definire in partenza per le percentuali 
+//	const percent = [ 0, 0.125 ];							// @@@ variabile da definire in partenza per le percentuali 
+
+	var setCoordinateFette = function (percent) {
+		var i, n, per, per1, startX, startY, endX, endY, pathData;
+		for(i=0; i < percent.length - 1; i++){
+			per = percent[i];
+			per1 = percent[i + 1];
+			n = i + 1;
+	//		const largeArcFlag = per > .5 ? 1 : 0;			// errore (il terzo <path> viene sproporzionato perchè il valore risulta 0
+			const largeArcFlag = 1;								// OK
+			startX = getCoordinatesForPercent(per)[0];
+			startY = getCoordinatesForPercent(per)[1];
+			endX = getCoordinatesForPercent(per1)[0];
+			endY = getCoordinatesForPercent(per1)[1];
+			pathData = 'M ' + startX + ',' + startY + ' A 1,1,0,0,1,' + endX + ',' + endY + ' L 0,0 z';
+			document.getElementById('fetta'+n).setAttribute('d', pathData);
+//			console.log(endX, ' - ', endY, '; ');
+			console.log(pathData);
+		}
+	}(percent);
+
+	var setCoordinateTesto = function (listaPercentuali) {
+		var i, perc, percAnte, percTesto, testoX, testoY, pathtesto, valorePercentualeFetta, testo;
+		for(i=1; i < listaPercentuali.length; i++){
+			perc = listaPercentuali[i];
+			if(i == 1){ percAnte = 0; }
+			percAnte = listaPercentuali[i-1];
+			percTesto = percAnte + (perc - percAnte) / 2;
+			testoX = getCoordinatesForPercent(percTesto)[0];
+			testoY = getCoordinatesForPercent(percTesto)[1];	
+			pathtesto = 'M0,0 L'+testoX+','+testoY;
+			document.getElementById('pathTesto'+i).setAttribute('d', pathtesto);					
+			valorePercentualeFetta = ((perc - percAnte) * 100).toFixed(0);				// es: 25  
+			testo = '&nbsp;&nbsp; ' + valorePercentualeFetta + '%';
+			document.getElementById('testo'+i).innerHTML = testo;
+		}
+	}(percent);
+
+})()//
+
+
+</script>
+
+
+
+<!--
+
+			dal sito: https://hackernoon.com/a-simple-pie-chart-in-svg-dbdd653b6936
+
+1) Soluzione dal sito da inserire nel tag <svg 	style="transform: rotate(-0.25turn)" >
+	-0.25turn è uguale a -90deg
+
+2) Soluzione alternativa suggerita da un utente: <path transform="rotate(-90)" />
+
+La spiegazione fornita da David Gilbertson riguardo al valore di «largeArcFlag» non sembra corretta. 
+Secondo lui dovrebbe essere dipendente dalla percentuale ed essere 1 se la percentuale è maggiore del 50% oppure 0.
+A me questo dava errore. il terzo <path> viene sproporzionato perchè il valore risulta essere 0.
+Il valore fisso di 1 sembra essere la soluzione.
+
+
+-->	
+
+
+
+</body>
+</html>
+

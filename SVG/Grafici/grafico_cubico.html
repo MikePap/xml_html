@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Grafico cubico </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+<style type="text/css">
+
+body{
+background: #404040;
+}
+
+#boxSVG{
+position:relative; margin: 0 auto; width:60%; height:500px; border: 1px solid #ccc;
+background: #fff;
+}
+
+svg {
+width: 100%; height: 100%;
+}
+
+#boxpulsanti{
+position: relative; margin: 50px auto; text-align:center;
+color:white;
+}
+
+</style>
+</head>
+<body>
+
+<h2>Grafico cubico</h2>
+
+<div id="boxSVG">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewbox="0 0 80 80" transform="rotate(-180)" id="essevugi"  >
+
+		<title> Grafico cubico a pilastrini </title>  
+		<desc> 
+Le coordinate {0,0} sono in bottom-right (basso-destra).
+Le forme si protaggono al contrario, la "width" verso sinistra e la "height" verso l'alto
+		</desc>
+
+<!--linee margine verticale e orizzontale 
+		<g fill="none" stroke="red" stroke-width="0.1" stroke-dasharray="0.3,0.3" >
+			<line x1="80" y1="0" x2="80" y2="80" />
+			<line x1="0" y1="0" x2="80" y2="0" />	
+		</g>		
+-->
+
+		<g stroke="black" stroke-width="0.1" >					<!--coordinate sistema-->
+			<line x1="75" y1="5" x2="75" y2="75" />			<!--ordinate y verticale  -->	
+			<line x1="80" y1="10" x2="0" y2="10" />			<!--ascisse x oriizzontale -->	
+		</g>
+
+		<g>		<!--sfondi grigio -->	
+			<rect x="-4" y="14" width="74" height="70" fill="#e6e6e6"  />
+			<rect x="0" y="0" width="5" height="65" fill="#a6a6a6" transform="translate(70,15) skewY(-44)" />
+			<rect x="0" y="0" width="75" height="4" fill="#ccc" transform="translate(0,10) skewX(-45)"  />
+		</g>
+
+
+		<symbol id="trattini">
+			<path d="M 0,0  H 2 " stroke="#4d4d4d" stroke-width="0.25" />		<!-- trattini valori -->
+		</symbol>
+			<use xlink:href="#trattini" transform="translate(74.5,20)" />		
+			<use xlink:href="#trattini" transform="translate(74.5,30)" />		
+			<use xlink:href="#trattini" transform="translate(74.5,40)" />		
+			<use xlink:href="#trattini" transform="translate(74.5,50)" />		
+			<use xlink:href="#trattini" transform="translate(74.5,60)" />		
+			<use xlink:href="#trattini" transform="translate(74.5,70)" />		
+
+		<g fill="#f00" font-size="2" font-family="Verdana" >						<!--valori-->	
+			<text x="0" y="0" transform="translate(77.3,8.5) rotate(180, 1,1)" >0</text>
+			<text x="0" y="0" transform="translate(77.3,18) rotate(180, 1,1)" >10</text>
+			<text x="0" y="0" transform="translate(77.3,28) rotate(180, 1,1)" >20</text>
+			<text x="0" y="0" transform="translate(77.3,38) rotate(180, 1,1)" >30</text>
+			<text x="0" y="0" transform="translate(77.3,48) rotate(180, 1,1)" >40</text>
+			<text x="0" y="0" transform="translate(77.3,58) rotate(180, 1,1)" >50</text>
+			<text x="0" y="0" transform="translate(77.3,68) rotate(180, 1,1)" >60</text>
+		</g>
+
+		<g>		<!--blocco 1 -->
+			<rect x="0" y="0" width="10" fill="#33cc33" transform="translate(60,14)" class="blocco1" />	<!--lato C-->
+			<rect x="0" y="0" width="4"  fill="#33cc33" transform="translate(70,14) skewY(-45)" class="blocco1" /><!--lato B-->
+			<rect x="0" y="0" width="10" fill="#2eb82e" transform="translate(64,10)" class="blocco1" /><!--lato A-->
+			<rect x="0" y="0" width="4"  fill="#248f24" transform="translate(60,14) skewY(-45)" class="blocco1" />	<!--lato D-->
+		</g>
+
+		<g>	<!--blocco 2 -->
+			<rect x="0" y="0" width="10" fill="#ff8533" transform="translate(40,14)" class="blocco2" /><!--lato C-->
+			<rect x="0" y="0" width="4"  fill="#ff8533" transform="translate(50,14) skewY(-45)" class="blocco2" /><!--lato B-->
+			<rect x="0" y="0" width="10" fill="#ff6600" transform="translate(44,10)" class="blocco2" /><!--lato A-->
+			<rect x="0" y="0" width="4"  fill="#cc5200" transform="translate(40,14) skewY(-45)" class="blocco2" /><!--lato D-->			
+		</g>
+
+		<g>		<!--blocco 3 -->
+			<rect x="0" y="0" width="10" fill="#1a75ff" transform="translate(20,14)" class="blocco3" /><!--lato C-->
+			<rect x="0" y="0" width="4"  fill="#1a75ff" transform="translate(30,14) skewY(-45)" class="blocco3" /><!--lato B-->			
+			<rect x="0" y="0" width="10" fill="#0066ff" transform="translate(24,10)" class="blocco3" /><!--lato A-->
+			<rect x="0" y="0" width="4"  fill="#0052cc" transform="translate(20,14) skewY(-45)" class="blocco3" /><!--lato D-->
+		</g>
+
+		<g>		<!--blocco 4 -->
+			<rect x="0" y="0" width="10" fill="#e60073" transform="translate(0,14)" class="blocco4" /><!--lato C-->
+			<rect x="0" y="0" width="4"  fill="#e60073" transform="translate(10,14) skewY(-45)" class="blocco4" /><!--lato B-->
+			<rect x="0" y="0" width="10" fill="#cc0066" transform="translate(4,10)" class="blocco4" /><!--lato A-->
+			<rect x="0" y="0" width="4"  fill="#99004d" transform="translate(0,14) skewY(-45)" class="blocco4" /><!--lato D-->			
+		</g>
+
+	</svg>
+</div> 
+
+
+<div id="boxpulsanti">
+	<select id="valblocco1">
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>		
+		<option value="40">40</option>
+		<option value="50">50</option>
+		<option value="60">60</option>		
+	</select>
+	<select id="valblocco2">
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>		
+		<option value="40">40</option>
+		<option value="50">50</option>
+		<option value="60">60</option>		
+	</select>
+	<select id="valblocco3">
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>		
+		<option value="40">40</option>
+		<option value="50">50</option>
+		<option value="60">60</option>		
+	</select>
+	<select id="valblocco4">
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>		
+		<option value="40">40</option>
+		<option value="50">50</option>
+		<option value="60">60</option>		
+	</select>
+</div> 
+
+
+
+<script type="text/javascript">
+
+function setAltezza (blocco, valore) {
+	var nodiBlocco = document.querySelectorAll(blocco);
+	for(var i=0; i < nodiBlocco.length; i++){
+		nodiBlocco[i].setAttribute('height', valore);
+	}	
+}//
+
+////// Impostazione "valori iniziali" altezze pilastrini e rispettivi valori select
+var pilastrini = { 'blocco1': 60, 'blocco2': 50, 'blocco3': 30, 'blocco4': 50 };
+
+for(var blocco in pilastrini){
+	var classePilastrini = '.' + blocco;
+	var classeSelect = 'val' + blocco;
+	setAltezza(classePilastrini, pilastrini[blocco]);
+	document.getElementById(classeSelect).value = pilastrini[blocco];	
+} 
+
+
+function animazione (blocco, valFinale) {										
+	var nodiBlocco = document.querySelectorAll(blocco);
+	var valCorrente = nodiBlocco[0].getAttribute('height');				// hanno tutti lo stesso valore di altezza	
+
+	(function anima () {
+		if(valCorrente == valFinale) return;
+		if(valCorrente > valFinale) { valCorrente = parseInt(valCorrente) - 1; }
+		if(valCorrente < valFinale) { valCorrente = parseInt(valCorrente) + 1; }
+		for(var i=0; i < nodiBlocco.length; i++){
+			nodiBlocco[i].setAttribute('height', valCorrente);
+		}	
+		setTimeout(anima, 0.01);	
+	})();
+};//
+
+
+// Animazione pilastrini a seguito di scelta
+var boxpulsanti = document.getElementById("boxpulsanti"); 
+boxpulsanti.addEventListener("change", function(event){ 
+	var seletta = event.target;
+	var blocco =  '.' + seletta.getAttribute('id').slice(3);			// es: da "valblocco1" elimina "val" e restituisce "blocco1"
+//	console.log(iddiSeletta, ' - ', blocco);
+	animazione(blocco, seletta.value );	
+},false);
+
+
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
+
+
+
