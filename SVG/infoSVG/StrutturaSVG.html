@@ -2,21 +2,10 @@
 <html lang="it">
 <head>
 <meta charset="utf-8" />
-<title>Struttura del documento  </title>
+<title>Struttura del documento SVG</title>
+<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
 <style type="text/css">
 
-html,body,h1,h2,h3,p,dl,dt,dd,pre,ul, embed{ margin:0; padding:5px; }
-h1{ color: #00F; font-size:31px; margin-left:100px; padding:10px; }
-h2{color:rgb(50,150,100); font-size:25px; margin-left:50px; padding:10px; }
-h3{ color:rgb(200,0,100); font-size:20px; margin-left:31px; padding:10px;}
-p{ padding:5px; }
-dl{margin-left:20px;}
-dt{ color:#039; margin-bottom:5px;}
-dd{ color:#06F; margin-left:10px; }
-li{margin-left:31px;}
-.nota{ color:#F66;}
-.codice{ color:#060}
-pre{color:rgb(50,150,50); margin-left:5px; }
 
 svg.es1{ background:#FF0; }
 svg.es2{ background:#F00; }
@@ -30,10 +19,10 @@ svg.es3{ background:#0F0; }
 
 <h1>Struttura di un documento SVG</h1>
 <p class="codice"> <a href="http://www.w3.org/TR/SVG11/struct.html">Vedere qui</a> </p>
-<p class="nota">
+<p>
 Un elemento SVG può essere vuoto (a che scopo?) o contenere altri elementi grafici SVG (es: rect). Il frammento SVG così ottenuto può essere incorporato in un file XML oppure costituire un file SVG proprio. Inoltre può essere inserito all'interno di un documento HTML
 </p>
-<p class="codice">Se all'elemento SVG non vengono definite <b>width e height</b> per default gli viene assegnato rispettivamente <b>300 e 150</b> (non tutti i browser)   
+<p>Se all'elemento SVG non vengono definite <b>width e height</b> per default gli viene assegnato rispettivamente <b>300 e 150</b> (non tutti i browser)   
 </p>
 <p>
 Un esempio di file XML con incorporato un frammento SVG
@@ -65,7 +54,7 @@ oppure con l'uso del prefisso all'interno dell'attributo <b>xmlns</b>:
 
 <h3>L'elemento &lt;g&gt; </h3>
 
-<p class="nota">E' un elemento contenitore che può essere utilizzato per raggruppare elementi grafici. Può allo stesso tempo contenere altri elementi &lt;g&gt;. 
+<p>E' un elemento contenitore che può essere utilizzato per raggruppare elementi grafici. Può allo stesso tempo contenere altri elementi &lt;g&gt;. 
 Suoi attributi sono: <b>class</b>, <b>style</b>, <b>transform</b>, <b>externalResourcesRequired</b>. <br />
 L'esempio seguente mostra l'inserimento di due "rect" all'interno di un elemento "g". Ciò è stato fatto perchè entrambi hanno il valore dell'attributo "fill" in comune. Quindi definendo nell'elemento genitore, a cui viene assegnato un "id", l'attributo "fill" tale valore sarà assegnato ad entrambi i "rect" 
 
@@ -84,7 +73,7 @@ L'esempio seguente mostra l'inserimento di due "rect" all'interno di un elemento
 </p>
 
 <h3>L'elemento &lt;defs&gt;  </h3>
-<p class="nota">SVG permette di poter definire gli oggetti grafici e poterli poi utilizzare in un secondo momento. Per esempio è possibile creare un oggetto gradiente a cui gli viene assegnato un attributo "id" per renderlo identificabile e poi tale oggetto lo si può (attraverso il suo "id") richiamare all'interno di un elemento "rect". Tali elementi referenziali SVG permette di raggrupparli all'interno dell'elemento &lt;defs&gt; <br />
+<p>SVG permette di poter definire gli oggetti grafici e poterli poi utilizzare in un secondo momento. Per esempio è possibile creare un oggetto gradiente a cui gli viene assegnato un attributo "id" per renderlo identificabile e poi tale oggetto lo si può (attraverso il suo "id") richiamare all'interno di un elemento "rect". Tali elementi referenziali SVG permette di raggrupparli all'interno dell'elemento &lt;defs&gt; <br />
 Fra gli elementi che possono essere inseriti nell'elemento &lt;defs&gt; abbiamo: <b>‘altGlyphDef’, ‘clipPath’, ‘cursor’, ‘filter’, ‘linearGradient’, ‘radialGradient’ ‘marker’, ‘mask’, ‘pattern’ e ‘symbol’</b>. <br />
 Suoi attributi sono: <b>class</b>, <b>style</b>, <b>transform</b>, <b>externalResourcesRequired</b>.   
 </p>
@@ -120,7 +109,7 @@ Per una migliore implementazione l'uso di questo elemento è raccomandato. Il se
 
 <h3>Elementi &lt;title&gt; e &lt;desc&gt;  </h3>
 
-<p class="nota">Gli elementi &lt;title&gt; e &lt;desc&gt; sono elementi descrittivi che non vengono visualizzati. Qualche browser potrebbe visualizzare il &lt;title&gt; come tooltip ma ad ogni modo è raccomandato sempre inserirlo in ogni frammento SVG allo scopo di una sua  identificazione  </p>
+<p>Gli elementi &lt;title&gt; e &lt;desc&gt; sono elementi descrittivi che non vengono visualizzati. Qualche browser potrebbe visualizzare il &lt;title&gt; come tooltip ma ad ogni modo è raccomandato sempre inserirlo in ogni frammento SVG allo scopo di una sua  identificazione  </p>
 
 <pre>
 &lt;svg width="8cm" height="3cm" xmlns="http://www.w3.org/2000/svg" version="1.1"&gt; 
@@ -132,14 +121,14 @@ Per una migliore implementazione l'uso di questo elemento è raccomandato. Il se
 </pre>
 
 <h3>L'elemento &lt;symbol&gt;  </h3>
-<p class="nota">L'elemento &lt;symbol&gt; è un un elemento contenitore ed è utilizzato per raggruppare oggetti grafici ed è instanziato dall'elemento &lt;use&gt; <br />
+<p>L'elemento &lt;symbol&gt; è un un elemento contenitore ed è utilizzato per raggruppare oggetti grafici ed è instanziato dall'elemento &lt;use&gt; <br />
 E' simile all'elemento &lt;g&gt; ma da quest'ultimo si diffrenzia in quanto: <br />
 &bull; solo sue instanze sono visualizzate tramite l'utilizzo dell'elemento &lt;use&gt; <br />
 &bull; ha due attributi, <b> "viewBox" e "preserveAspectRatio"</b>  che gli permettono di scalare per essere inserito in un nuovo <q>viewport</q> rettangolare sempre tramite l'utilizzo dell'elemento &lt;use&gt; 
 </p>
 
 <h3>L'elemento  &lt;use&gt; </h3>
-<p class="nota">Gli elementi  &lt;symbol&gt;  e &lt;g&gt; sono degli elementi che contengono oggetti grafici e che loro volta possono essere riusati grazie all'elemento <b>&lt;use&gt; </b> tramite il suo attributo <q>xlink:href</q> <br />
+<p>Gli elementi  &lt;symbol&gt;  e &lt;g&gt; sono degli elementi che contengono oggetti grafici e che loro volta possono essere riusati grazie all'elemento <b>&lt;use&gt; </b> tramite il suo attributo <q>xlink:href</q> <br />
 Ha 4 attributi, <b> ‘x’, ‘y’, ‘width’, ‘height’</b>  che permettono di mappare gli oggetti referenziati in una regione rettangolare all'interno del sistema di coordinate corrente. Altri attributi sono: <b>class</b>, <b>style</b>, <b>transform</b>, <b>externalResourcesRequired</b>   
 </p>
 
@@ -273,8 +262,6 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <
 
 -->
 
-
-
 <p>L'esempio successivo è uguale al precedente</p>
 
 <svg width="12cm" height="3cm" viewBox="0 0 1200 300"
@@ -298,9 +285,9 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <
 
 <p>Il primo esempio non funziona bene in Chrome benchè sul sito funziona (con codice copiato direttamente dalla pagina che mostra la figura) </p>
 
-<h3>L'elemento &lt;image&gt; </h3>
+<h3 id="image" >L'elemento &lt;image&gt; </h3>
 
-<p class="nota"> L'elemento &lt;image&gt; permette di poter visualizzare un file esterno. I file supportati sono i formati raster <b>PNG, JPEG, SVG</b>. L'elemento &lt;image&gt; stabilisce un nuovo <q>viewport</q> dove con gli attributi <b> x, y, width, height</b> si posiziona l'immagine eventuale inserita. L'attributo <b>preserveAspectRatio</b> permette di posizionare ed scalare l'immagine all'interno del rettangolo (viewport). Per eventuali spiegazioni ed approfondimenti <a href="http://www.w3.org/TR/SVG11/struct.html#ImageElement">vedere qui</a>  
+<p> L'elemento &lt;image&gt; permette di poter visualizzare un file esterno. I file supportati sono i formati raster <b>PNG, JPEG, SVG</b>. L'elemento &lt;image&gt; stabilisce un nuovo <q>viewport</q> dove con gli attributi <b> x, y</b> si può posizionare l'immagine inserita. L'attributo <b>preserveAspectRatio</b> permette di posizionare ed scalare l'immagine all'interno del rettangolo (viewport). Per eventuali spiegazioni ed approfondimenti <a href="http://www.w3.org/TR/SVG11/struct.html#ImageElement">vedere qui</a>  
 </p>
 
 <svg width="250" height="150" version="1.1" id="essevg6"
@@ -311,9 +298,27 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <
 	</image>
 </svg>
 
+<p>
+Ci sono altri due attributi che possono essere definiti per l'elemento &lt;image&gt; che sono <b>width</b> e  <b>height</b>. Con essi, come è facile intuire, si può stabilire le dimensioni che l'immagine avrà all'interno dell'elemento SVG. Nell'esempio precedente l'immagine è stata scalata a 100x100. <br>
+Oltremodo è importante notare come la direttiva SVG applichi una scalatura proporzionale alle dimensioni dell'SVG quando si definisce <b>width</b> e <b>height</b> al 100%, cosi come fatto nell'esempio successivo. Si può notare anche il perfetto centramento
+</p>
+
+<svg width="250" height="150" version="1.1" id="essevg6"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>This graphic links to an external image</desc>
+
+	<image x="0" y="0" width="100%" height="100%" xlink:href="../../../Immagini/ulivo_05.jpg" id="imm" >
+		<title>Ulivi ballerini</title>
+	</image>
+</svg>
+
+
+
+
+
 <h3>L'elemento &lt;switch&gt;  </h3>
 
-<p class="nota">
+<p>
 L'elemento &lt;switch&gt; (<a href="http://www.w3.org/TR/SVG11/struct.html#ConditionalProcessingOverview">vedi qui</a>), attraverso i suoi attributi, permette di verificare se certe caratteristiche (elementi, attributi, ecc..) sono supportati dal <q>User Agent</q> (browser) . <br />
 Da notare che i valori delle proprietà <q>display</q> e <q>visibilty</q> non sono analizzati (processati). L'esempio di impostare <q>display=none</q> non produrrà nessuna conseguenza.    
 </p>
@@ -360,7 +365,7 @@ Per un ulteriore approfondimento	<a href="http://www.w3.org/TR/SVG11/backward.ht
 </svg>
 
 <h3>L'attributo  <q>externalResourcesRequired</q>   </h3>
-<p class="nota">
+<p>
 I documenti spesso referenziano e usano i contenuti di altri documenti nel loro contenuto. Può essere necessario a volte voler specificare che data risorsa è richiesta affinchè il processo sia valido.
 Per questo caso l'attributo <b>externalResourcesRequired</b> può essere definito in tutti gli elementi contenitori ed in ogni caso in tutti quei elementi che possono referenziare risorse esterne  
 </p>
