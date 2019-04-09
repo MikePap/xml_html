@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it" >
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lo pseudo-element slotted</title>
+	<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+	<style type="text/css"></style>
+
+</head>
+<body>
+
+	<h1>Esempio dello pseudo-elemento ::slotted</h1>
+
+	<template id="person-template">
+		<div>
+			<h2>Personal ID Card</h2>
+			<slot name="person-name">NAME MISSING</slot>
+			<ul>
+				<li><slot name="person-age">AGE MISSING</slot></li>
+				<li><slot name="person-occupation">OCCUPATION MISSING</slot></li>
+			</ul>
+		</div>
+	</template>
+	
+	<person-details>
+		<p slot="person-name">Morgan Stanley</p>
+		<span slot="person-age">36</span>
+		<span slot="person-occupation">Accountant</span>
+	</person-details>
+	
+	<person-details>
+		<p slot="person-name">Dr. Shazaam</p>
+		<span slot="person-age">Immortal</span>
+		<span slot="person-occupation">Superhero</span>
+	</person-details>
+	
+	<person-details>
+		<p slot="person-name">Boris</p>
+		<span slot="age">27</span>
+		<span slot="i-am-awesome">Time traveller</span>
+	</person-details>
+
+
+<script>
+
+customElements.define('person-details', class extends HTMLElement {
+	constructor() {
+		super();
+
+		const template = document.getElementById('person-template');
+		const templateContent = template.content;
+
+		const shadowRoot = this.attachShadow({mode: 'open'});
+
+		const style = document.createElement('style');
+		style.textContent = `
+		div { padding: 10px; border: 1px solid gray; width: 200px; margin: 10px; }
+		h2 { margin: 0 0 10px; }
+		ul { margin: 0; }
+		p { margin: 10px 0; }
+		::slotted(*) { color: red; font-family: sans-serif; }
+		`;
+
+		shadowRoot.appendChild(style);
+		shadowRoot.appendChild(templateContent.cloneNode(true));
+	}
+});
+
+</script>
+
+
+</body>
+</html>

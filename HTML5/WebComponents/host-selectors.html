@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it" >
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> Pseudo class host </title>
+	<style type="text/css">
+
+html {
+  font-family: sans-serif;
+  background-color: #a60000;
+}
+
+body {
+  margin: 0 auto;
+  width: 80%;
+  max-width: 800px;
+}
+
+header, article, aside, footer {
+  background-color: white;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+header, footer {
+  background-color: #ddd;
+}
+
+li, p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/*	Mio	*/
+a{
+	text-decoration: none;
+}
+
+	</style>
+
+</head>
+<body>
+
+	<header>
+		<h1>Host selectors <a href="#"><context-span>example</context-span></a></h1>
+	</header>
+
+	<main>
+		<article>
+			<h2>This is my first article.</h2>
+			<p>
+This article is rather lovely and exciting — it is all about animals, including <a href="#"><context-span>Beavers</context-span></a>, 
+ <a href="#"><context-span>Bears</context-span></a>, and <a href="#"><context-span>Wolves</context-span></a>. 
+ I love animals and I'm sure you will too; please let us know what your favorite animals are. Woo hoo!
+			</p>
+		</article>
+		<article>
+			<h2>This is my second article.</h2>
+			<p>
+This article is also quite exciting — it is all about colors, including <a href="#"><context-span>Red</context-span></a>, 
+<a href="#"><context-span>Blue</context-span></a>, and <a href="#"><context-span>Pink</context-span></a>. 
+A true joy indeed — funky exciting colors make the world go round. No more gray days for us.
+			</p>
+		</article>
+
+		<aside>
+			<h2>Some links about web components</h2>
+			<ul>
+				<li><a href="#"><context-span>Custom elements</context-span></a></li>
+				<li><a href="#"><context-span>Shadow DOM</context-span></a></li>
+				<li><a href="#"><context-span>Templates and slots</context-span></a></li>
+			</ul>
+		</aside>
+	</main>
+		
+	<footer>
+		<p>Copyright nobody; example written by <a href="#"><context-span class="footer">Chris Mills</context-span></a></p>
+	</footer>
+
+<script>
+
+class ContextSpan extends HTMLElement {
+	constructor() {
+		super();
+
+		const style = document.createElement('style');
+		const span = document.createElement('span');
+		span.textContent = this.textContent;
+
+		const shadowRoot = this.attachShadow({mode: 'open'});
+		shadowRoot.appendChild(style);
+		shadowRoot.appendChild(span);
+
+		style.textContent = `
+			span:hover { text-decoration: underline; }
+			:host-context(h1) { font-style: italic; }
+			:host-context(h1):after { content: " - no links in headers!" }
+			:host-context(article, aside) { color: gray; }
+			:host(.footer) { color : red; }
+			:host { background: rgba(0,0,0,0.1); padding: 2px 5px; }
+		`;
+	}
+}
+
+// Definizione del nuovo elemento
+customElements.define('context-span', ContextSpan);
+
+/*
+
+1) :host
+		La dichiarazione di questo pseudo-elemento la si nota in riga 102. 
+		In pratica definisce tutti gli elementi-componente <context-span> inseriti nel DOM
+
+2) :host()
+		La dichiarazione di questo pseudo-elemento la si nota in riga 101.
+		In pratica fa riferimento a quei componenti <context-span> che sono inseriti nell'elemento <footer>
+
+3) :host-context
+		Questo pseudo-elemento è dichiarato nelle righe 98-99-100.
+		Secondo "developer.mozilla", dovrebbe definire le istanze <context-span> all'interno di <h1> ma ...
+		non mi è chiaro
+
+*/
+
+</script>
+
+
+
+</body>
+</html>

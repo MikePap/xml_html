@@ -1,4 +1,6 @@
 # ignora tutti i file che finiscono con tilde (~)
 *~
+# Ignorare i seguenti file
+HTML5/WebComponents/prova.html
 
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it" >
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Esempio evento slotchange</title>
+	<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+	<style type="text/css">
+	
+	li {
+        cursor: pointer;
+      }
+
+
+	</style>
+
+</head>
+<body>
+
+
+	<h1>Esempio evento slotchange</h1>
+
+	<summary-display>
+		<ul slot="master-list">
+			<li>Apples</li>
+			<li>Pears</li>
+			<li>Bananas</li>
+			<li>Oranges</li>
+			<li>Peaches</li>
+			<li>Strawberries</li>
+			<li>Blueberries</li>
+		</ul>
+
+		<p data-name="Apples">A common, sweet, crunchy fruit, usually green or yellow in color.</p>
+		<p data-name="Pears">A fairly common, sweet, usually green fruit, usually softer than Apples.</p>
+		<p data-name="Bananas">A long, curved, yellow fruit, with a fairly gentle flavor.</p>
+		<p data-name="Oranges">Orange in color, usually sweet but can be sharp, often contains pips.</p>
+		<p data-name="Peaches">An orange fruit with big stone in the middle, and sweet, juicy flesh.</p>
+		<p data-name="Strawberries">A red fruit with yellow seeds on the outside; has a sweet flavor and a pretty shape.</p>
+		<p data-name="Blueberries">They are berries and they are blue; sweet in flavor, small in size, round.</p>
+	</summary-display>
+
+	<template id="summary-display-template">
+		<article>
+			<div>
+				<slot name="master-list"></slot>
+			</div>
+			<div>
+				<slot name="choice"></slot>
+			</div>
+		</article>
+	</template>
+
+
+<script>
+'use strict';
+
+customElements.define('summary-display', class extends HTMLElement {
+	constructor() {
+		super();
+
+		const template = document.getElementById('summary-display-template');
+		const templateContent = template.content;
+
+		const shadowRoot = this.attachShadow({mode: 'open'});
+		shadowRoot.appendChild(templateContent.cloneNode(true));
+
+		const items = Array.from(this.querySelectorAll('li'));
+//		const items = this.querySelectorAll('li');									// uguale al precedente
+		const descriptions = Array.from(this.querySelectorAll('p'));
+
+		items.forEach(item => {
+			handleClick(item);
+		});
+
+		function handleClick(item) {
+			item.addEventListener('click', function() {
+				items.forEach(item => {
+					item.style.backgroundColor = 'white';
+				});
+
+				descriptions.forEach(description => {
+					updateDisplay(description, item);
+				});
+			});
+		}//
+
+		function updateDisplay(description, item) {
+			description.removeAttribute('slot');
+
+			if(description.getAttribute('data-name') === item.textContent) {
+				description.setAttribute('slot', 'choice');
+				item.style.backgroundColor = '#bad0e4';
+			}
+		}//
+
+		const slots = this.shadowRoot.querySelectorAll('slot');
+		slots[1].addEventListener('slotchange', function(e) {
+			const nodes = slots[1].assignedNodes();
+			console.log(`Element in Slot "${slots[1].name}" changed to "${nodes[0].outerHTML}".`);
+		});
+	}
+});
+
+
+</script>
+
+
+</body>
+</html>

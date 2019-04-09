@@ -1,324 +1,527 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8" />
-<title>Web Components  </title>
-<style type="text/css">
-h1{ font-size:24px; font-weight:bold; color:rgb(50,50,250); margin-left:20px;} 
-h2{ font-size:18px; font-weight:bold; color:rgb(250,50,150); margin-left:20px;}
-h3{ font-size:14px; font-weight:bold; color:rgb(200,20,20); margin-left:20px;}
-code, pre{ color:rgb(20,150,30); font-weight:bold; background:rgb(230,230,230); margin:5px; padding:5px;}
-dt{ color:#003399; margin-bottom:5px;}
-p{
-margin:10px;
-}
-
-.nota{ color:rgb(250,120,0);}
-.grigio{color:gray;}
-.azzurro{color:rgb(50,100,255);}
-.scuro{color:#333;}
-
-.codice{ color:rgb(30,120,30);}		
-dd{ color:#0066FF;}
-
-div.divo{
-width:500px; height:350px; background:yellow;
-}
-
-</style>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Web Components </title>
+	<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+	<style type="text/css">
+	
+		h4{
+			font-size:1.2em; font-weight:bold; color:rgb(20,20,100); margin:10px 25px;			
+		}
+		article {
+			text-align: center;
+		}
+ 
+	</style>
 </head>
 <body>
 
 <h1>Web Components</h1>
 
 <p>
-I <q>Web components</q> sono composti da quattro pezzi ideati per essere utilizzati insieme che permettono agli autori di definire dei widgets ad un livello che oggi non è possibile fare con i CSS e che risultano essere facili da utilizzare e riutilizzare ancor meglio di quello che ci permettono le librerie. 
-I quattro pezzi sono:
-<dl>
-	<dt><b>templates</b>: pezzi di markup inerti che possono essere utilizzati quando lo si vuole</dt>
-	<dt><b>custom elements</b>: che permettono agli autori di definire degli elementi personalizzati da inserirre nel documento </dt>
-	<dt><b>shadow DOM</b>: che permettono di definire presentazione e comportamento dei <q>decorators</q> e <q>custom elements</q> all'interno del DOM   </dt>
-	<dt><b>HTML Import</b>:  </dt>
-</dl>	
+I <b>Web Components</b> sono una suite di diverse tecnologie che consente di creare elementi personalizzati riutilizzabili, 
+con la loro funzionalità incapsulata lontano dal resto del codice.
+</p>
+
+<p>
+Si compone di tre tecnologie principali, che possono essere utilizzate insieme per creare elementi personalizzati versatili 
+con funzionalità incapsulate che possono essere riutilizzate ovunque, senza temere collisioni di codice:
+	<dl>
+		<dt><b>templates</b>: pezzi di markup inerti che possono essere utilizzati quando lo si vuole</dt>
+		<dt><b>custom elements</b>: set di API Javascript che permettono di creare elementi personalizzati </dt>
+		<dt><b>shadow DOM</b>: che permettono di definire presentazione e comportamento dei <q>decorators</q> e <q>custom elements</q> all'interno del DOM   </dt>
+	</dl>	
 </p>
 
 <h2>Templates</h2>
 <p>
-L'elemento &lt;template&gt; contiene markup inteso per essere utilizzando in un secondo momento. Il suo contenuto viene analizzato dal parser ma rimane inerte nel senso che i suoi scripts (al suo interno) non vengono processati cosi come non vengono scaricate le sue immagtini ecc.. In altre parole l'elemento non viene restituito. <br />
-L'elemento &lt;template&gt; ha una proprietà chiamata <b>content</b> che contiene il contenuto dell'elemento &lt;template&gt; in un <q>document fragment</q>. Quindi quando si vuole utilizzare questo contenuto lo si può spostare e copiare come un semplice nodo.  
+L'elemento &lt;template&gt; contiene markup inteso per essere utilizzando in un secondo momento. 
+Il suo contenuto viene analizzato dal parser ma rimane inerte nel senso che i suoi scripts (al suo interno) 
+non vengono processati cosi come non vengono scaricate le sue immagtini ecc.. <br>
+In altre parole l'elemento non viene restituito ma lo si può referenziare con Javascript.
+</p>
+<p>
+L'elemento &lt;template&gt; ha una proprietà chiamata <b>content</b> che contiene il contenuto dell'elemento &lt;template&gt; 
+in un <q>document fragment</q>. Quindi quando si vuole utilizzare questo contenuto lo si può spostare e 
+copiare come un semplice nodo.  
+</p>
+
+<p>Vediamo un esempio semplice</p>
 
 <pre>
-&lt;template id="commentTemplate"&gt;
-	&lt;div&gt; 
-		&lt;img src=""&gt;
-		&lt;div class="comment-text"&gt;&lt;/div&gt; 
-	&lt;/div&gt; 
-&lt;/template&gt; 
-
-function addComment(imageUrl, text) {
-	var t = document.querySelector("#commentTemplate");
-	var comment = t.content.cloneNode(true);
-	comment.querySelector('img').src = imageUrl;
-	comment.querySelector('.comment-text').textContent = text;
-	document.body.appendChild(comment);
-}
+&lt;template id="my-paragraph"&gt;
+	&lt;p&gt; My paragraph &lt;/p&gt;
+&lt;/template&gt;
+</pre>
+<p>
+Questo markup non sarà inserito nel documento (DOM) anche se sarà analizzato dal parser. <br>
+Per inserirlo nel DOM dobbiamo fare uso di Javascript scrivendo qualcosa del genere:
+</p>
+<pre>
+let template = document.getElementById('my-paragraph');
+let templateContent = template.content;				<span class="nota">** da notare la proprietà content</span>
+document.body.appendChild(templateContent);
 </pre>
 
-Ciò che è contenuto nell'elemento &lt;template&gt; non sta nel documento ma in <q>document fragment</q>. Per cui aggiungendo una copia del contenuto del &lt;template&gt; in un medesimo istante lo rende attivo solo in quel punto in quel momento .   
+<h3>Uso dei Templates con i Web components</h3>
+<p>
+Nell'esempio precedente abbiamo fatto uso di un <q>Templates</q> da solo in modo semplice;
+ma utilizzandoli con i <q>Web components</q> che possiamo ottenere il meglio da loro. <br>
+Per esempio proviamo a definire un <q>Web components</q> che usa il nostro template:
 </p>
+<pre>
+<span class="grigio">Javascript</span>
+customElements.define('my-paragraph', class extends HTMLElement {
+	constructor() {
+		super();
+		let template = document.getElementById('my-paragraph');
+		let templateContent = template.content;
+		const shadowRoot = this.attachShadow({mode: 'open'})
+		.appendChild(templateContent.cloneNode(true));
+	}
+});
+</pre>
+
+<p>
+Da notare qui è il fatto che aggiungiamo il nuovo elemento allo <b>shadow root</b>;
+più precisamente aggiungiamo un suo clone. <br>
+Ciò consegue che possiamo includere delle dichiarazioni di stili CSS nel nostro template
+
+</p>
+
+<pre>
+<span class="grigio">HTML</span>
+&lt;template id="my-paragraph"&gt;
+	&lt;style&gt;
+		p {
+			color: white;
+			background-color: #666;
+			padding: 5px;
+		}
+	&lt;/style&gt;
+
+	&lt;p&gt;My paragraph&lt;/p&gt;
+
+&lt;/template&gt;
+
+</pre>
+<p>
+A questo punto non ci resta altro che inserire il nostro nuovo elemento in una qualsiasi sezione del documento 
+</p>
+<pre>
+<span class="grigio">HTML</span>
+&lt;my-paragraph&gt;&lt;/my-paragraph&gt;
+</pre>
+
+<h3>Aggiunta di flessibilità con l'elemento &lt;slot&gt; </h3>
+<p>
+L'elemento &lt;slot&gt; è un segnaposto che permette di aggiungere una maggiore flessibilità all'elemento &lt;template&gt;. 
+Per esempio nel paragrafo impostato nel template è stato definito un testo che possiamo rendere dinamico grazie a &lt;slot&gt;
+cambiandolo in questo modo:
+</p>
+<pre>
+&lt;p&gt; &lt;slot name="my-text"&gt; My default text &lt;/slot&gt; &lt;/p&gt;
+</pre>
+<p>
+A questo punto possiamo cambiare il testo del paragrafo a nostro piacimento nel momento in cui lo inseriamo in una parte 
+del documento; per esempio:
+</p>
+<pre>
+&lt;my-paragraph&gt;
+	&lt;span slot="my-text"&gt; Let's have some different text! &lt;/span&gt;
+&lt;/my-paragraph&gt;
+</pre>
+<p>
+Quindi in definitiva se inseriamo l'elemento cosi come fatto sopra (&lt;my-paragraph&gt;&lt;/my-paragraph&gt;)
+avremo come risultato il testo <em>My paragraph</em> altrimenti sarà visualizzato il testo <em>Let's have some different text!</em>. <br>
+Oppure potremmo anche passare un markup diverso:
+</p>
+<pre>
+&lt;my-paragraph&gt;
+	&lt;ul slot="my-text"&gt; 
+		&lt;li&gt;Let's have some different text! &lt;/li&gt;
+		&lt;li&gt;in a list &lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/my-paragraph&gt;
+</pre>
+<p>
+Al momento l'elemento &lt;slot&gt; non ha un supporto ampio e ciò comporta che se il browser non 
+lo supporta restituirà il testo di default "My paragraph".
+</p>
+		
+<h4>Evento slotchange</h4>
+<p>
+E' l'evento che scatta su un elemento &lt;slot&gt; quando il o i nodi contenuti all'interno di &lt;slot&gt; cambiano. 
+A riguardo vedere questo <a href="slot-change.html">file</a>
+</p>
+
+<h4>Il CSS pseudo elemento ::slotted</h4>
+<p>
+Rappresenta ogni elemento che è stato inserito in un elemento &lt;slot&gt; che fa parte di un template.
+A riguardo vedere questo <a href="slotted-pseudo-element.html">file</a>
+</p>
+
 
 <h2>Custom Elements</h2>
 <p>
-I <q>custom elements</q> (<b>elementi personalizzati</b>) sono elementi HTML definiti dall'autore. Possono essere creati con il metodo <b>registerElement</b>:
-<pre>
-var XFoo = document.registerElement('x-foo');
-document.body.appendChild(new XFoo());  
-</pre>
-Nell'esempio si nota un solo argomento che è il nome dell'elemento tag. C'è l'obbligo di raprresentare questo nome con un trattivo ( - ). Per esempio &lt;mio-tag&gt; oppure &lt;mio-elemento&gt; o &lt;la-mia-app&gt; ecc.. Mentre nomi tipo &lt;mioTag&gt; o &lt;mioelemento&gt; non sono accettati. <br />
-L'esempio di sopra sarebbe equivalente al seguente:
-<pre>
-var XFoo = document.registerElement('x-foo', {
-	prototype: Object.create(HTMLElement.prototype)
-});
-</pre>
+Una delle caratteristiche principali dello standard <q>Web Components</q> è la possibilità di creare elementi personalizzati 
+che racchiudono le funzionalità di una pagina HTML piuttosto che dover creare un lungo e annidato 
+insieme di elementi che forniscono una funzione di pagina personalizzata.
 </p>
-
-<h3>Estensione di elementi personalizzati</h3>
-<p>I <q>custom elements</q> danno la possibilità di estendere elementi sia da elementi nativi (div, button, p ecc..) che da altri elementi personalizzati (custom elements) sfruttando l'ereditarietà del prototype e l'uso della proprietà <b>extends</b>.    
-<pre>
-<span class="nota">Estensione da un elemento nativo</span> 
-var MegaButton = document.registerElement('mega-button', {
-	prototype: Object.create(HTMLButtonElement.prototype),
-	extends: 'button'
-});
-</pre>
-Nell'esempio l'elemento personalizzato <q>mega-button</q> eredità il prototype dell'elemento (nativo) &lt;button&gt;. <br />
-Gli elementi personalizzati che ereditano da elementi nativi (come in quest'ultimo caso) sono detti <b>type extension custom elements</b> (elementi personalizzati con estensioni di tipo). <br />
-Dall'esempio precedente di cui sopra si avrebbe in una raprresntazione HTML :
-<pre>
-&lt;button is="mega-button"&gt; 
-</pre>
-</p>
-
 <p>
-Per creare un elemento personalizzato che si estende da un'altro elemento personalizzato il procedimento è simile a quello visto sopra
-<pre>
-<span class="nota">Estensione da un elemento personalizzato ad un'altro</span> 
-var XFooProto = Object.create(HTMLElement.prototype);
-...
-
-var XFooExtended = document.registerElement('x-foo-extended', {
-	prototype: XFooProto,
-	extends: 'x-foo'
-});
-</pre>
+L'interfaccia <span class="nota">CustomElementRegistry</span> fornisce i metodi per registrare e interrogare i 
+nuovi elementi personalizzati. 
+Per ottenere una sua instanza dobbiamo utilizzare la proprietà <b>Window.customElements</b>.
 </p>
 
-<h3>HTMLElement e HTMLUnknownElement </h3>
+<h3>CustomElementRegistry.define()</h3>
 <p>
-L'HTML nella sue specifiche definisce degli elementi nativi quali &lt;div&gt;, &lt;p&gt;,  &lt;span&gt;, &lt;h1&gt;, &lt;h2&gt; ecc... Però se noi dovessimo inserire nel documento un elemento che non è fra i specificati (es: &lt;randomtag&gt; o &lt;miotago&gt; ecc..  ) tale elemento risulta comunque valido ma va a far parte degli <q>elementi non riconosciuti</q>  (HTMLUnknownElement). A differenza però gli elementi personalizzati vanno a far parte degli HTMLElement, qualora il browser li supporta altrimenti rientrano nella categoria degli HTMLUnknownElement. Ciò lo si può verificare con i seguenti 
-<pre>
-<span class="nota">dichiarazione di un elemento sconosciuto</span>
-document.createElement('tabs').__proto__ === HTMLUnknownElement.prototype		<span class="nota">// true </span>
-
-<span class="nota">dichiarazione di un elemento personalizzato</span>
-document.createElement('x-tabs').__proto__ == HTMLElement.prototype			<span class="nota">// true </span>
-</pre>
-<b>Va detto che se un elemento personalizzato viene dichiarato (o creato nello scipt) ma non registrato fa sempre parte degli HTMLElement ma è detto <q>Unresolved element</q> </b>
+E' il metodo che ci permette di definire un nuovo elemento personalizzato. La sintasssi è la seguente:
 </p>
-
-<h3>Instanziare gli elementi personalizzati</h3>
-<p>
-Cosi come per gli elementi normali anche per quelli personalizzati si possono usare le stesse tecniche 
 <pre>
-<span class="nota">Dichiarazione HTML</span>
-&lt;x-foo&gt;&lt;/x-foo&gt;  
-
-<span class="nota">Con l'uso di Javascript</span>
-var xFoo = document.createElement('x-foo');
-var testo = document.createTextNode('Sono x-foo');
-xFoo.appendChild(testo);
-document.body.appendChild(xFoo);
-xFoo.addEventListener('click', function(e) {
-	alert('Hello jo!');
-});
-
-<span class="nota">Con l'utilizzo dell'operatore <q>new</q> </span>
-var xFoo = new XFoo();
-document.body.appendChild(xFoo);
+	customElements.define(nome, costruttore, opzioni);
 </pre>
-</p>
-
-<h3>Instanziare elementi con estensione tipo (che si estendono da elementi nativi)</h3>
-<pre>
-<span class="nota">Dichiarazione HTML di un elemento personalizzato (mega-button) che si estende da un elemento nativo &lt;button&gt; </span>
-&lt;button is="mega-button"&gt; 
-
-<span class="nota">Con l'uso di Javascript</span>
-var megaButton = document.createElement('button', 'mega-button');
-
-<span class="nota">Con l'utilizzo dell'operatore <q>new</q> </span>
-var megaButton = new MegaButton();
-document.body.appendChild(megaButton);
-</pre>
-
-<h2>Aggiunta di proprietà e metodi</h2>
-<p>
-Una caratteristica importante dei <q>custom elements</q> è quella di poter definire proprietà e metodi all'elemento personalizzato quando lo si registra. La si può pensare come una pratica per poter creare una API per il proprio elemento. Quello che segue è un esempio distinto in varie parti
-<pre>
-var XFooProto = Object.create(HTMLElement.prototype);
-
-<span class="nota">1. Give x-foo a foo() method.</span>
-XFooProto.foo = function() {
-	alert('foo() called');
-};
-
-<span class="nota">2. Define a property read-only "bar".</span>
-Object.defineProperty(XFooProto, "bar", {value: 5});				
-<span class="azzurro"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">vedere qui</a> per il metodo defineProperty</span>
-
-<span class="nota"> 3. Register x-foo's definition.</span>
-var XFoo = document.registerElement('x-foo', {prototype: XFooProto});
-
-<span class="nota"> 4. Instantiate an x-foo.</span>
-var xfoo = document.createElement('x-foo');
-
-<span class="nota">5. Add it to the page.</span>
-document.body.appendChild(xfoo);
-</pre>
-
-Quello che segue è invece un modo per condensare varie definizioni in un solo blocco
- 
-<pre>
-var XFoo = document.registerElement('x-foo', {
-	prototype: Object.create(HTMLElement.prototype, {
-		bar: {
-			get: function() { return 5; }
-		},
-		foo: {
-			value: function() {
-				alert('foo() called');
-			}
-		}
-	})
-});
-</pre>
-
-<span class="azzurro"> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/get">vedere qui per il metodo get</a>  </span>
-</p>
-
-<h3>Metodi Lifecycle callback</h3>
-<p>
-Gli elementi personalizzati possono definire dei metodi speciali che permettono di intercettare momenti particolari della loro esistenza. Questio metodi sono propriamente detti <q>lifecycle callback</q>. Ognuno di essi rappresenta un suo proposito
-
 <dl>
-	<dt><b>createdCallback</b>: scatta quando una istanza dell'elemento viene creata</dt>
-	<dt><b>attachedCallback</b>: scatta quando l'istanza viene inserita nel documento </dt>
-	<dt><b>detachedCallback</b>: scatta quando l'istanza viene rimossa dal documento</dt>
-	<dt><b>attributeChangedCallback(attrName, oldVal, newVal)</b>: scatta quando un'attributo viene aggiunto, rimosso o aggiornato </dt>
-</dl>	
+	<dd><b>nome</b>: nome del nuovo elemento; deve obbligatoriamente contenere almeno un trattino 
+		(corretto: "mio-elemento" o "mio-nuovo-elemento"; errato: "mioelemento"  )</dd>
+	<dd><b>costruttore</b>: è l'oggetto in cui si definiscono tutte le funzionalità del nuovo elemento </dd>
+	<dd><b>opzioni</b>: (opzionale) <q>extends</q> è, al momento, l'unica opzione supportata che specifica l'elemento HTML da cui ereditare </dd>
+</dl>
 
+<p> 
+Ci sono due tipologie di elementi che è possibile creare:
+</p>
+<dl>
+	<dt><b>Elementi personalizzati Autonomi</b>: che sono autonomi con funzionalita tutte definite nel costruttore </dt>
+	<dt><b>Elementi personalizzati Integrati</b>: che ereditano e si estendono da elementi HTML </dt>
+</dl>
+
+<p>
+Per definire un costruttore viene utilizzata la sintassi <span class="rosso">ES 2015 class</span>
+</p>
 <pre>
-var proto = Object.create(HTMLElement.prototype);
+<span class="grigio">Elemento Autonomo</span>
 
-proto.createdCallback = function() {...};
-proto.attachedCallback = function() {...};
+class mioElementoNuovo extends HTMLElement {
+	constructor() {
+		super();
 
-var XFoo = document.registerElement('x-foo', {prototype: proto});
+<span class="nota">		funzionalità del nuovo elemento 		
 
-proto.createdCallback = function() {
-	this.addEventListener('click', function(e) {
-		alert('Thanks!');
-  });
-};
+		...</span>
+	}
+}
+
+customElements.define('mio-elemento-nuovo', mioElementoNuovo);
+
+<span class="grigio">Nel documento HTML va referenziato cosi</span>
+<span class="azzurro">&lt;mio-elemento-nuovo&gt;&lt;/mio-elemento-nuovo&gt;</span>
 
 </pre>
- 
-Il seguente è un modo per creare un elemento ed aggiungergli del testo. Utilizzando il metodo <q>createdCallback </q> possiamo indiririzzare il browser ad aggiungere il testo solo dopo che l'elemento è stato creato
+
 <pre>
-var XFooProto = Object.create(HTMLElement.prototype);
+<span class="grigio">Elemento integrato</span>
 
-XFooProto.createdCallback = function() {
-	this.innerHTML = "<b>I'm an x-foo-with-markup!</b>";
-};
+class WordCount extends HTMLParagraphElement {
+	constructor() {
+		super();
 
-var XFoo = document.registerElement('x-foo-with-markup', {prototype: XFooProto});
+<span class="nota">		funzionalità del nuovo elemento 		
 
-<span class="nota">quello che risulterà sarà il seguente markup</span>
-&lt;x-foo-with-markup&gt; 
-	&lt;b&gt;I'm an x-foo-with-markup!&lt;/b&gt;  
-&lt;/x-foo-with-markup&gt; 
+		...</span>
+	}
+}
+		
+customElements.define('word-count', WordCount, { extends: 'p' });
+
+<span class="grigio">Nel documento HTML va referenziato cosi</span>
+<span class="azzurro">&lt;p is="word-count"&gt;&lt;/p&gt;</span>
+
+</pre>
+
+<h3>CustomElementRegistry.get()</h3>
+<p>
+Questo metodo restituisce il costruttore dell'elemento personalizzato. La sintassi è:
+</p>
+<pre>
+	constructor = customElements.get(name);
+</pre>
+<p>
+Per esempio se abbiamo definito il costruttore del nuovo elemento <q>my-paragraph</q>:
+</p>
+<pre>
+customElements.define('my-paragraph',
+class extends HTMLElement {
+	constructor() {
+		super();
+		let template = document.getElementById('my-paragraph');
+		let templateContent = template.content;
+
+		const shadowRoot = this.attachShadow({mode: 'open'})
+		.appendChild(templateContent.cloneNode(true));
+	}
+})
+</pre>
+<p>
+Possiamo richiamarlo cosi:
+</p>
+<pre>
+let ctr = customElements.get('my-paragraph');
+</pre>
+
+<h3>CustomElementRegistry.upgrade()</h3>
+<p>
+Il metodo permette di aggiornare gli elementi personalizzati ancor prima che siano connessi al documento principale. 
+La sua sintassi è:
+</p>
+<pre>
+	customElements.upgrade(root);
+</pre>
+<p>Per esempio</p>
+<pre>
+const el = document.createElement("spider-man");
+
+class SpiderMan extends HTMLElement {}
+customElements.define("spider-man", SpiderMan);
+
+console.assert(!(el instanceof SpiderMan));		<span class="nota">** non ancora aggiornato</span>
+
+customElements.upgrade(el);
+console.assert(el instanceof SpiderMan);		<span class="nota">** aggiornato!</span>
+
+</pre>
+
+<h3>CustomElementRegistry.whenDefined()</h3>
+<p>
+Questo metodo restituisce un <q>Promise</q> che si risolve quando l'elemento personalizzato viene definito. <br>
+Nell'esempio viene utilizzato <q>whenDefined()</q> per rilevare quando vengono definiti gli elementi personalizzati 
+che compongono un menu.
+</p>
+<pre>
+<span class="grigio">HTML</span>
+&lt;nav id="menu-container"&gt;
+	&lt;div class="menu-placeholder"&gt;Loading ... &lt;/div&gt;
+	&lt;nav-menu&gt;
+		&lt;menu-item&gt; Item 1 &lt;/menu-item&gt;
+		&lt;menu-item&gt; Item 2 &lt;/menu-item&gt;
+		...
+		&lt;menu-item&gt; Item N &lt;/menu-item&gt;
+	&lt;/nav-menu&gt;
+&lt;/nav&gt;
+
+</pre>
+<p>
+Il menu visualizza il contenuto del segnaposto fino a quando il contenuto effettivo del menu è pronto per la visualizzazione.
+</p>
+<pre>
+const container = document.getElementById('menu-container');
+const placeholder = container.querySelector('.menu-placeholder');
+
+const undefinedElements = container.querySelectorAll(':not(:defined)');		<span class="nota">Rileva gli elementi del menù che non sono stati ancora definiti</span>
+
+const promises = [...undefinedElements].map(
+	button => customElements.whenDefined(button.localName)
+);
+
+await Promise.all(promises);				<span class="nota">Attende che gli elementi figli siano stati aggiornati e ... </span>
+container.removeChild(placeholder);			<span class="nota">... rimuove il segnaposto</span>
+</pre>
+
+<h3> lifecycle callbacks</h3>
+<p>
+E' possibile richiamare diversi <q>callback</q> durante il ciclo di vita di un elemento personalizzato.
+</p>
+<dl>
+	<dd><b>connectedCallback</b>: invocato ogni volta che un elemento personalizzato è inserito nel DOM </dd>
+	<dd><b>Node.isConnected</b>: è quasi uguale al precedente ma non ho capito la differenza </dd>
+	<dd><b>disconnectedCallback</b>: invocato ogni volta che un elemento personalizzato è disconnesso dal DOM</dd>
+	<dd><b>adoptedCallback</b>: invocato ogni volta che un elemento personalizzato passa in un nuovo documento</dd>
+	<dd><b>attributeChangedCallback</b>: invocato ogni volta che un attributo di un elemento personalizzato è aggiunto, rimosso o modificato</dd>
+</dl>
+<p>
+In questo <a href="life-cycle_callbacks.html">esempio</a> sono stati definiti alcuni callback fra quelli appena descritti.
+</p>
+
+<h3>CSS pseudo-classes </h3>
+<h4>:defined</h4>
+<p>
+La pseudo-classe <q>:defined</q> rappresenta ogni elemento che risulta definito col metodo <q>customElements.define()</q>. 
+Oppure un qualsiasi elemento HTML standard inserito nel DOM. <br>
+Vedere questo <a href="defined-pseudo-class.html">file</a>
+
+<h4>:host</h4>
+<p>
+La pseudo-class <q>host</q> ha tre varianti che sono <b>:host</b>, <b>:host()</b> e <b>:host-context</b>.
+Vedere il file <a href="host-selectors.html">esempio</a>
+
+</p>
+
+<h2>Shadow DOM</h2>
+<p>
+Un aspetto importante dei <q>Web Components</q> è l'incapsulazione che consiste nel mantenere la struttura di markup, 
+stili e comportamenti nascosti e separati dal resto della pagina in modo da tenere un codice più chiaro e leggibile. <br>
+Lo <b>Shadow Dom</b> permette di allegare al documento quel codice separato e nascosto.
+</p>
+<article>
+	<img src="img/shadow-dom.png" alt="Immagine dello Shadow-dom">
+</article>
+<dl>
+	<dt><b>Shadow host</b>: è un nodo del DOM a cui è allegato uno Shadow Dom</dt>
+	<dt><b>Shadow tree</b>: è l'albero DOM all'interno dello Shadow Dom</dt>
+	<dt><b>Shadow root</b>: è il nodo radice delo Shadow tree </dt>
+	<dt><b>Shadow boundary</b>: è quel punto in cui il Shadow Dom termina ed incomincia il DOM regolare </dt>
+</dl>
+<p>
+Si può manipolare lo Shadow-dom cosi come si fa per il DOM regolare, per esempio allegando nodi o impostando 
+attributi, defininendo stili CSS ecc.. senza creare collisione con quello al di fuori di esso.
+</p>
+
+<h3>Element.attachShadow()</h3>
+<p>
+E' il metodo che permette di allegare uno <q>Shadow tree</q> ad uno specifico elemento. Bisogna però ricordare che 
+non a tutti gli elementi è concesso questo permesso, come ad esempio all'elemento &lt;a&gt;. <br>
+La sintassi è :
+</p>
+<pre>
+	var shadowroot = element.attachShadow(shadowRootInit);
+</pre>
+<p>
+dove "shadowRootInit" è un oggetto che può contenere due proprietà: <b>mode</b> e <b>delegatesFocus</b>. <br>
+<q>mode</q> può accettare due valori:
+</p>
+<dl>
+	<dd><b>open</b>: gli elementi dello Shadow root sono accessibili al di fuori della root da Javascript </dd>
+	<dd><b>closed</b>: impedisce l'accesso ai nodi dello Shadow root (tale impedimento può però essere aggirato)</dd>
+</dl>
+<p>
+<q>delegatesFocus</q> è un booleano che se impostato a true specifica un comportamento che mitiga i problemi 
+di elementi personalizzati intorno alla focalizzazione. Al momento è un caratteristica ancora in fase sperimentale e 
+non supportata da tutti i browser.
+</p>
+<p>
+In definitiva il metodo <q>attachShadow()</q> restituisce un oggetto <b>ShadowRoot</b> allegato ad un tale elemento.
+</p>
+
+<h3>ShadowRoot</h3>
+<p>
+L'interfaccia <q>ShadowRoot</q> dello <q>Shadow-dom</q> rappresenta il nodo radice che viene restituito separatamente 
+dal DOM principale. Per ottenere una sua referenza possiamo dare <q>Element.shadowRoot</q>.
+</p>
+<p>
+Sue proprietà sono: <b>delegatesFocus</b>, <b>host</b>, <b>innerHTML</b> e <b>mode</b>. 
+Vedere il file <a href="shadowRoot.html">shadowRoot.html</a>
+</p>
+<p>
+<q>ShadowRoot</q> include dei metodi che al momento non hanno un buon supporto dai browser. Ricordiamo: 
+<b>getSelection()</b>, <b>elementFromPoint()</b>, <b>elementsFromPoint()</b> e <b>caretPositionFromPoint()</b>
+</p>
+
+<h4>Node.isConnected</h4>
+<p>
+E' una proprietà di solo-lettura dell'interfaccia <q>Node</q> che restituisce un booleano ad indicare se un nodo 
+risulta connesso ad un dato contesto che può essere un oggetto <q>document</q> (DOM) o lo <q>Shadow Dom</q>.
+</p>
+<pre>
+<span class="grigio">Standard DOM</span>
+let test = document.createElement('p');
+<span class="azzurro">console.log(test.isConnected);			<span class="nota">// false</span></span>
+
+document.body.appendChild(test);
+<span class="azzurro">console.log(test.isConnected);			<span class="nota">// true</span></span>
+
+</pre>
+<pre>
+<span class="grigio">Shadow DOM</span>
+var shadow = this.attachShadow({mode: 'open'});
+var style = document.createElement('style');
+<span class="azzurro">console.log(style.isConnected);			<span class="nota">// false</span></span>
+style.textContent = '.wrapper {' +
+                       'position: relative;' +
+						  '}' +
+
+			ecc ...
+
+shadow.appendChild(style);
+<span class="azzurro">console.log(style.isConnected);			<span class="nota">// true</span></span>
+
 </pre>
 
 
+<h2>Esempi vari </h2>
+
+<h3>pseudo class :defined</h3>
+<p>
+Questo semplice <a href="defined-pseudo-class.html">esempio</a> ha il solo scopo di mostrare il significato e l'utilità 
+della <q>pseudo class <b>:defined</b></q>
+</p>
+
+<h3>Componente details </h3>
+<p>
+In questo <a href="element-details.html">esempio</a> è stato creato un componente dell'elemento &lt;details&gt;. 
+&lt;details&gt; è un nuovo elemento HTML che si aziona all'evento click mostrando del testo nascosto. Più precisamente 
+si tratta dell'evento <q>toggle</q> che mostra e nasconde il testo in questione
+</p>
+
+<h3>Esempio evento slotchange</h3>
+<p>
+In questo <a href="slot-change.html">esempio</a> si fa uso dell'elemento &lt;slot&gt; del template per mostrare delle 
+descrizioni testuali
+</p>
+
+<h3>Esempio ::slot pseudo element </h3>
+<p>
+In quest'altro <a href="slotted-pseudo-element.html">esempio</a> è mostrato come definire lo pseudo elemento <q>::slot</q> 
+nei CSS dello shadowRoot
+</p>
+
+
+<h3>Componente conteggio parole</h3>
+<p>
+In questo <a href="word-count.html">esempio</a> è stato creato un componente che calcola il numero delle parole
+presenti in un tal nodo. Nel caso si tratta di un <q>elemento personalizzato Integrato</q>
+</p>
+
+<h3>Componente tooltip info</h3>
+<p>
+In questo <a href="tooltip-info.html">esempio</a> il componente creato è una immagine-icona che all'evento <q>hover</q>
+visualizza un testo informativo
+</p>
+
+<h3>Life cycle degli elementi personalizzati</h3>
+<p>
+In questo <a href="life-cycle_callbacks.html">esempio</a> sono stati definiti delle funzioni di callback che catturano 
+dei momenti del ciclo di vita degli elementi personalizzati
 </p>
 
 
 
+<br><br><br<<br><br><br><br<<br><br><br><br<<br>
 
-
-
-<br />
-<br />
-<br />
-
-
-<x-foo-with-markup></x-foo-with-markup>
-<br />
-<br />
-
-
-<script type="text/javascript">
-
+<script>
+//	https://github.com/mdn/web-components-examples
 /*
-//## Inserire un elemento <template> nel <div> esistente 'divo'
-var t = document.querySelector("#commentTemplate");
-t.content.querySelector('img').src = "../img/olive2.jpg";
-var clono = document.importNode(t.content, true);
-var divo = document.querySelector('.divo');
-divo.appendChild(clono);
-//document.body.appendChild(clono);
-
-function addComment(imageUrl, text) {
-	var t = document.querySelector("#commentTemplate");
-	var comment = t.content.cloneNode(true);
-	comment.querySelector('img').src = imageUrl;
-	comment.querySelector('.comment-text').textContent = text;
-	document.body.appendChild(comment);
-}
-//## Inserire lo stesso elemento '<template> nel <body>
-addComment("../img/olive2.jpg", 'bye');
+// Primo esempio
+let template = document.getElementById('my-paragraph');
+let templateContent = template.content;
+document.body.appendChild(templateContent);
 */
 
-//var b = document.createElement('button', 'fancy-button');
-//alert(b.outerHTML);
-
-//var xf = document.querySelector('x-foo');
-
-
-var xFoo = document.createElement('x-foo');
-var testo = document.createTextNode('Sono x-foo');
-xFoo.appendChild(testo);
-//var xFoo = new XFoo();
-document.body.appendChild(xFoo);
-
-xFoo.addEventListener('click', function(e) {
-	alert('Hello jo!');
-});
+customElements.define('my-paragraph', class extends HTMLElement {
+	constructor() {
+		super();
+		let template = document.getElementById('my-paragraph');
+		let templateContent = template.content;
+		const shadowRoot = this.attachShadow({mode: 'open'})
+		.appendChild(templateContent.cloneNode(true));
+	}
+})
 
 
-var XFooProto = Object.create(HTMLElement.prototype);
-
-XFooProto.createdCallback = function() {
-  this.innerHTML = "<b>I'm an x-foo-with-markup!</b>";
-};
-
-var XFoo = document.registerElement('x-foo-with-markup', {prototype: XFooProto});
 
 </script>
-
-
-
 
 </body>
 </html>

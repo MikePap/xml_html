@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it" >
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Shadow root</title>
+	<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+	<style type="text/css">
+	
+	p{
+		color: red;
+	}
+
+	</style>
+
+</head>
+<body>
+
+<h1>Shadow Dom</h1>
+<h2>Shadow tree</h2>
+<h3>Shadow root</h3>
+
+
+<p>
+Sono stati creati dei componenti con lo Shadow Dom API per poter vedere come sfruttare la proprietà <q>shadowRoot</q> per 
+accedere ai nodi dello Shadow Dom. <br>
+Inoltre nel componente <q>MyWebComponent</q> si è impostato il valore <em>open</em> al metodo <q>attachShadow</q> e 
+nel componente <q>AltroComponente</q>  il valore <em>closed</em>. 
+A quanto pare (<a href="https://blog.revillweb.com/open-vs-closed-shadow-dom-9f3d7427d1af">vedi articolo</a>) non 
+ha molto senso usare un valore piuttosto che l'altro, perchè la cosa può essere aggirata, comunque vale la pena 
+dare un'occhiata agli script per capire il loro significato.
+</p>
+
+<my-web-component></my-web-component>
+
+<altro-componente></altro-componente>
+
+<template id="my-paragraph">
+		<style>
+			p {
+				color: white;
+				background-color: #666;
+				padding: 5px;
+			}
+		</style>
+	
+		<p>My paragraph</p>
+	
+</template>
+	
+<my-paragraph></my-paragraph>
+
+<script>
+
+class MyWebComponent extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: "open" });
+	}
+	connectedCallback() {
+		this.shadowRoot.innerHTML = `
+		<p>I'm in the Shadow Root!</p>
+		`;
+	}
+}
+
+window.customElements.define("my-web-component", MyWebComponent);
+
+let p = document.querySelector('p');
+//console.log(p.textContent);
+
+let myComponent = document.querySelector('my-web-component');
+//console.log(myComponent.shadowRoot.querySelector("p").textContent);
+//myComponent.shadowRoot.querySelector("p").innerHTML = 'Ora sono diventato un\'altro';
+//console.log( myComponent.shadowRoot.childNodes.length );				// 3
+//console.log( myComponent.shadowRoot.childNodes[1].innerHTML);
+//console.log( myComponent.shadowRoot.children.length);					// 1
+//console.log( myComponent.shadowRoot.children[0]);							// <p>
+console.log( myComponent.shadowRoot.firstElementChild.textContent );		// I'm in the Shadow Root!
+
+
+//////////////////////////////////////////////
+
+
+class AltroComponente extends HTMLElement {
+	constructor() {
+		super();
+		this._root = this.attachShadow({ mode: "closed" });
+	}
+	connectedCallback() {
+		this._root.innerHTML = `
+		<p>I'm in the closed Shadow Root!</p>
+		`;
+	}
+}
+
+window.customElements.define("altro-componente", AltroComponente);
+
+let altroComponente = document.querySelector('altro-componente');
+//console.log( altroComponente.shadowRoot );					// null
+//console.log( altroComponente._root );							// ShadowRoot (closed)
+// Nonostante lo ShadoRoot sia "closed" possiamo tuttavia accedervi e applicare modifiche
+let modificaComponente = altroComponente._root.querySelector('p').innerHTML = 'Modificato';
+
+
+///////////////////////////////////////////////////
+
+customElements.define('my-paragraph', class extends HTMLElement {
+	constructor() {
+		super();
+		let template = document.getElementById('my-paragraph');
+		let templateContent = template.content;
+		const shadowRoot = this.attachShadow({mode: 'open'})
+		.appendChild(templateContent.cloneNode(true));
+	}
+});
+
+
+let customElem = document.querySelector('my-paragraph');
+let shadow = customElem.shadowRoot;
+console.log(shadow);
+//console.log(shadow.host);							// <my-paragraph>
+//console.log(shadow.innerHTML);						// da vedere (tutto il template)
+//console.log(shadow.mode);								// open
+//if(shadow) { shadow.mode = 'closed' }				// non funziona
+//console.log(shadow.mode);								// open
+//console.log( shadow.delegatesFocus );				// undefined
+
+
+
+
+</script>
+
+
+</body>
+</html>

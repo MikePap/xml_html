@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Pseudo class defined</title>
+   <style type="text/css">
+
+p {
+	background: yellow;
+}
+
+simple-custom {
+	background: cyan;
+}
+:defined {
+	font-style: italic; 
+	font-weight: bold; 
+}
+simple-custom:not(:defined) {
+	display: none;
+}
+simple-custom:defined {
+	display: block;
+}
+
+   </style>
+
+</head>
+<body>
+
+   <h1><code>:defined</code> demo</h1>
+
+   <simple-custom text="Custom element example text"></simple-custom>
+
+   <p>Elemento paragrafo Standard</p>
+
+<div>
+L'utilizzo della pseudo classe <q>:defined</q> è utile quando si ha a che fare con un elemento personalizzato
+molto complesso e che quindi ci mette molto a caricare. In tal caso fino a quando l'elemento non è stato definito 
+(quindi completo per la visualizzazione) si vorrà tenerlo nascosto (display: block, oppure opacity: 0)
+per evitare che si verifichino flash imprevisti o cose del genere 
+
+</div>
+
+
+<script>
+
+customElements.define('simple-custom',
+class extends HTMLElement {
+	constructor() {
+		super();
+
+		const divElem = document.createElement('div');
+		divElem.textContent = this.getAttribute('text');
+
+		const shadowRoot = this.attachShadow({mode: 'open'});
+		shadowRoot.appendChild(divElem);
+	}
+});
+      
+      
+</script>
+
+
+
+</body>
+</html>
