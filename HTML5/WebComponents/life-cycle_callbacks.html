@@ -71,6 +71,8 @@ class Square extends HTMLElement {
 
 }//
 
+// E' anche possibile inserire qui "observedAttributes" anzichè sopra
+// Square.observedAttributes = ['c', 'l'];						
 customElements.define('custom-square', Square);
 
 // Definizione stili CSS dell'elemento personalizzato
@@ -80,7 +82,7 @@ function updateStyle(elem) {
 	childNodes.forEach(childNode => {
 		if (childNode.nodeName === 'STYLE') {
 			childNode.textContent = `
-			div {
+			div {	
 				width: ${elem.getAttribute('l')}px;
 				height: ${elem.getAttribute('l')}px;
 				background-color: ${elem.getAttribute('c')};

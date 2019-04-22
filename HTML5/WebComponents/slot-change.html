@@ -55,6 +55,12 @@
 
 <script>
 'use strict';
+/*
+	ATTENZIONE: 
+gli elementi <p> non vengono visualizzati perchè non hanno inizialmente lo "slot: choice" cosi come richiesto nel template.
+Pertanto è nella funzione "updateDisplay()" che avviene l'assegnazione dello slot al <p> in base al suo attributo "data-name" 
+e quindi viene visualizzato solo il <p> che combacia con il rispettivo attributo
+*/
 
 customElements.define('summary-display', class extends HTMLElement {
 	constructor() {
@@ -96,8 +102,10 @@ customElements.define('summary-display', class extends HTMLElement {
 		}//
 
 		const slots = this.shadowRoot.querySelectorAll('slot');
+//		console.log(slots);													// Array degli slot ("master-list": 0;  "choice": 1)
 		slots[1].addEventListener('slotchange', function(e) {
-			const nodes = slots[1].assignedNodes();
+			const nodes = slots[1].assignedNodes();					// elemento a cui è assegnato lo slot; è comunque un Array
+//			console.log(nodes);												// es: Array [p] dove <p data-name="Oranges" slot="choice">
 			console.log(`Element in Slot "${slots[1].name}" changed to "${nodes[0].outerHTML}".`);
 		});
 	}

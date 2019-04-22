@@ -116,11 +116,12 @@ customElements.define('context-span', ContextSpan);
 2) :host()
 		La dichiarazione di questo pseudo-elemento la si nota in riga 101.
 		In pratica fa riferimento a quei componenti <context-span> che sono inseriti nell'elemento <footer>
+		Oppure ":host([disabled])" fa riferimento se il componente ha come attributo "disabled"
 
-3) :host-context
+3) :host-context(selettore)
 		Questo pseudo-elemento è dichiarato nelle righe 98-99-100.
-		Secondo "developer.mozilla", dovrebbe definire le istanze <context-span> all'interno di <h1> ma ...
-		non mi è chiaro
+		Dovrebbe far riferimento al componente se il componente o un suo genitore sono associati al 'selettore'
+		Per esempio la riga 98 dovrebbe definire le istanze <context-span> all'interno di <h1> ma non lo fa (??)
 
 */
 

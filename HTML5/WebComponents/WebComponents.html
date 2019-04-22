@@ -109,7 +109,7 @@ Ciò consegue che possiamo includere delle dichiarazioni di stili CSS nel nostro
 
 </pre>
 <p>
-A questo punto non ci resta altro che inserire il nostro nuovo elemento in una qualsiasi sezione del documento 
+A questo punto non ci resta altro che inserire il nostro nuovo elemento nel documento 
 </p>
 <pre>
 <span class="grigio">HTML</span>
@@ -336,7 +336,6 @@ E' possibile richiamare diversi <q>callback</q> durante il ciclo di vita di un e
 </p>
 <dl>
 	<dd><b>connectedCallback</b>: invocato ogni volta che un elemento personalizzato è inserito nel DOM </dd>
-	<dd><b>Node.isConnected</b>: è quasi uguale al precedente ma non ho capito la differenza </dd>
 	<dd><b>disconnectedCallback</b>: invocato ogni volta che un elemento personalizzato è disconnesso dal DOM</dd>
 	<dd><b>adoptedCallback</b>: invocato ogni volta che un elemento personalizzato passa in un nuovo documento</dd>
 	<dd><b>attributeChangedCallback</b>: invocato ogni volta che un attributo di un elemento personalizzato è aggiunto, rimosso o modificato</dd>
@@ -346,6 +345,26 @@ In questo <a href="life-cycle_callbacks.html">esempio</a> sono stati definiti al
 </p>
 
 <h3>CSS pseudo-classes </h3>
+<p>
+Bisogna ricordare che gli stili definiti dall'esterno hanno la precedenza su quelli definiti nello Shadow Dom. <br>
+Per esempio il seguente:
+</p>
+<pre>
+my-element {
+	display: inline-block;
+}
+</pre>
+<p>avrà la precedenza sul seguente: </p>
+<pre>
+:host {
+	display: block;
+}
+</pre>
+<p>
+<span class="rosso">Ogni elemento personalizzato è un <q>elemento inline</q> (display: inline) </span>. <br>
+Inoltre non è possibile assegnare stili CSS dall'esterno a qualsiasi nodo interno di elementi personalizzati.
+</p>
+
 <h4>:defined</h4>
 <p>
 La pseudo-classe <q>:defined</q> rappresenta ogni elemento che risulta definito col metodo <q>customElements.define()</q>. 
@@ -354,9 +373,9 @@ Vedere questo <a href="defined-pseudo-class.html">file</a>
 
 <h4>:host</h4>
 <p>
+I Web component possono definire stili CSS propri grazie alla pseudo-class <q>host</q>. <br>
 La pseudo-class <q>host</q> ha tre varianti che sono <b>:host</b>, <b>:host()</b> e <b>:host-context</b>.
 Vedere il file <a href="host-selectors.html">esempio</a>
-
 </p>
 
 <h2>Shadow DOM</h2>
@@ -383,6 +402,17 @@ attributi, defininendo stili CSS ecc.. senza creare collisione con quello al di 
 <p>
 E' il metodo che permette di allegare uno <q>Shadow tree</q> ad uno specifico elemento. Bisogna però ricordare che 
 non a tutti gli elementi è concesso questo permesso, come ad esempio all'elemento &lt;a&gt;. <br>
+Ai seguenti elementi è permesso:  <b>"article", "aside", "blockquote", "body", "div", "footer", 
+"h1", "h2", "h3", "h4", "h5", "h6", "header", "main" "nav", "p", "section", "span"</b>. <br>
+Ogni browser ha il suo Shadow Dom per elementi come "textarea" o "input". 
+Per esempio il seguente non funziona
+</p>
+<pre>
+
+document.createElement('input').attachShadow({mode: 'open'});		<span class="nota">// Error. "input" cannot host shadow dom.</span>
+
+</pre>
+<p> 
 La sintassi è :
 </p>
 <pre>
@@ -449,6 +479,159 @@ shadow.appendChild(style);
 
 </pre>
 
+<h3>Shadow DOM event model</h3>
+<p>
+Quando un evento si diffonde dallo Shadow Dom viene aggiustato in modo da garantire l'incapsulazione di cui fa parte. 
+Ciò a dire che l'evento sembra provenire dal componente piuttosto che da un suo elemento interno. <br>
+Non tutti gli eventi si propagano dallo Shadow Dom. Gli eventi che si propagano dallo <q>Shadow boundary</q> sono: <br>
+<em> blur, focus, focusin, focusout </em>; <br>
+<em>click, dblclick, mousedown, mouseenter, mousemove, etc.</em>; <br>
+<em>wheel</em>; <br>
+<em>beforeinput, input</em>; <br>
+<em>keydown, keyup</em>; <br>
+<em>dragstart, drag, dragend, drop, etc</em>; <br>
+<em>compositionstart, compositionupdate, compositionend</em>
+</p>
+<p>
+La chiamata al metodo <span class="rosso">event.composedPath()</span> restituisce un Array dei nodi attraversati dall'evento.
+</p>
+
+<h4>Utilizzo di eventi personalizzati</h4>
+<p>
+Eventi personalizzati creati con <q>dispatchEvent</q> su nodi all'interno dello Shadow-tree non si diffondono fuori dallo 
+<q>shadow boundary</q> a meno che non si imposti la proprietà <b>composed: true</b>
+</p>
+<pre>
+<span class="grigio">Definizione all'interno dell'elemento &lt;fancy-tab&gt;  </span>
+selectTab() {
+	const tabs = this.shadowRoot.querySelector('#tabs');
+	tabs.dispatchEvent(new Event('tab-select', {bubbles: true, composed: true}));
+}
+		
+</pre>
+<p>
+Se avessimo <b>composed: false</b>, che è il default, non potremmo utilizzare l'evento creato 
+</p>
+<pre>
+
+&lt;fancy-tabs&gt;&lt;/fancy-tabs&gt;
+
+&lt;script&gt;
+	const tabs = document.querySelector('fancy-tabs');
+	tabs.addEventListener('tab-select', e => {
+	<span class="nota">// in questo caso con "composed: false" l'evento non sarebbe gestibile  </span>
+	});
+&lt;/script&gt;
+		
+</pre>
+
+<h4>Getsione del focus</h4>
+<p>
+Come detto su, gli eventi che scattano all'interno dello Shadow Dom sembrano provenire dal componente host anche 
+quando sono originati su un elemento interno al componente host. <br>
+Per esempio, se abbiamo un elemento &lt;input&gt; nella shadow root:
+</p>
+<pre>
+&lt;x-focus&gt;
+	#shadow-root
+	&lt;input type="text" placeholder="Input inside shadow dom"&gt;
+
+</pre>
+<p>
+L'evento risulterà provenire da &lt;x-focus&gt; invece che da &lt;input&gt;. Infatti il metodo <em>document.activeElement</em> 
+ci restituirà appunto &lt;x-focus&gt;. <br>
+Se ci sono livelli multipli di Shadow Dom in gioco bisogna andare ricorsivamente a fondo nella shadow root, per ottenere 
+l'elemento che ha il focus, con qualcosa del genere
+</p>
+<pre>
+function deepActiveElement() {
+	let a = document.activeElement;
+	while (a && a.shadowRoot && a.shadowRoot.activeElement) {
+		a = a.shadowRoot.activeElement;
+	}
+	return a;
+}
+		 
+</pre>
+<p>
+Attenzione però che il metodo <em>activeElement</em> funziona solo con <q>mode: 'open'</q>
+</p>
+
+<h3> Tips & Tricks </h3>
+
+<h4>Reset stili ereditabili</h4>
+<p>
+Stili ereditabili quali <q>background, color, font, line-height, etc.</q> continuano ad essere tali nello Shadow Dom 
+cioè perforano lo shadow boundary. Se si vuole cambiare questo comportamento lo si può fare riportando 
+il tutto allo stato iniziale con la dichiarazione nei CSS <span class="rosso">all: initial</span>
+</p>
+<pre>
+<span class="grigio">HTML</span>
+&lt;style&gt;
+	div {
+		padding: 10px;
+		background: red;
+		font-size: 25px;
+		text-transform: uppercase;
+		color: white;
+	}
+&lt;/style&gt;
+
+&lt;div&gt;
+	&lt;p&gt; I'm outside the element &lt;/p&gt;
+	&lt;my-element&gt; Light DOM content is also affected. &lt;/my-element&gt;
+	&lt;p&gt; I'm outside the element &lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+
+const el = document.querySelector('my-element');
+el.attachShadow({mode: 'open'}).innerHTML = `
+	&lt;style&gt;
+		:host {
+			all: initial;		<span class="nota">** qui avviene il reset</span>
+			display: block;
+			background: white;
+		}
+	&lt;/style&gt;
+
+	&lt;p&gt; Ora tutte le proprietà CSS del componente sono resettate al loro stato iniziale &lt;/p&gt;
+	&lt;slot&gt; &lt;/slot&gt;
+`;
+
+&lt;/script&gt;
+
+</pre>
+
+<h4>Ricerca elementi personalizzati</h4>
+<p>
+Talvolta può essere utile fare una ricerca degli elementi personalizzati usati. 
+Per ottenere ciò bisogna attraversare tutto lo Shadow Dom 
+</p>
+<pre>
+
+const allCustomElements = [];
+
+function isCustomElement(el) {
+	const isAttr = el.getAttribute('is');
+	return el.localName.includes('-') || isAttr && isAttr.includes('-');
+}
+
+function findAllCustomElements(nodes) {
+	for (let i = 0, el; el = nodes[i]; ++i) {
+		if (isCustomElement(el)) {
+			allCustomElements.push(el);
+		}
+		if (el.shadowRoot) {
+			findAllCustomElements(el.shadowRoot.querySelectorAll('*'));
+		}
+	}
+}
+<span class="azzurro">
+findAllCustomElements(document.querySelectorAll('*'));
+</span>
+
+</pre>
 
 <h2>Esempi vari </h2>
 
