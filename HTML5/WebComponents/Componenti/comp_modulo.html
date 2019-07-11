@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it" >
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Componenti Modulo</title>
+	<link rel="stylesheet" href="../../../../baseLocali.css" type="text/css" /> 
+	<style type="text/css">
+	
+	div.registrazione-account {
+		width: 100%;
+/*		border: 2px solid red; */
+	}
+
+	@media screen and (min-width: 768px){ 
+
+		div.registrazione-account {
+			width: 50%;
+		}
+	}
+
+	</style>
+
+</head>
+<body>
+
+	<h1>Template per moduli di form </h1>
+
+	<p>
+Ho creato due elementi personalizzati che altro non sono che dei blocchi di elementi per la costituzione di un modulo come 
+può essere quello per la registrazione di un account. <br>
+Entrambi fanno riferimento a due &lt;template&gt; separati. 
+Il primo &lt;template id="template-label-input"&gt; contiene due segnaposti (slot) che sottintendono un elemento 
+<em>label</em> ed un elemento <em>input</em>. Tale &lt;template&gt; viene richiamato dal costruttore dell'elemento 
+personalizzato <span class="nota">&lt;box-label-input&gt;</span>. <br>
+L'altro &lt;template id="template-button-invia"&gt; contiene un solo segnaposto che sottintende un elemento 
+<em>button</em> o <em>input</em> del tipo <q>submit</q> per l'invio dati del modulo. Tale &lt;template&gt; è  
+richiamato dal costruttore dell'elemento personalizzato <span class="nota">&lt;box-invio-form&gt;</span>.
+	</p>
+	<p>
+All'interno dei due costruttori è stato creato un elemento &lt;style&gt; in cui sono stati definiti 
+dei stili che possono essere modificati a secondo delle esigenze. Ad esempio il primo elemento &lt;box-label-input&gt; 
+ha come regola <q>display:flex</q> a cui ho aggiunto <q>flex-direction:row</q>; ma potrei facilmente cambiarlo in 
+<q>flex-direction:column</q> in modo da avere l'elemento &lt;input&gt; sotto il &lt;label&gt;.		
+	</p>
+
+   <template id="template-label-input">
+         <slot name="label-template"></slot>
+			<slot name="input-template"></slot>
+   </template>
+
+	<template id="template-button-invia">
+		<slot name="invia-form"></slot>
+	</template>
+
+	<div class="registrazione-account">
+		<box-label-input>
+			<label slot="label-template" for="nome">Inserisci il nome</label>
+			<input type="text" name="nome" id="nome" slot="input-template">
+		</box-label-input>
+
+		<box-label-input>
+			<label for="cognome"  slot="label-template">Inserisci il cognome</label>
+			<input type="text" name="cognome" id="cognome" slot="input-template">
+		</box-label-input>
+
+		<box-label-input>
+			<label for="sceltaFile" slot="label-template">Scegli un immagine dal pc</label>
+			<input type="file" name="sceltaFile" id="sceltaFile" slot="input-template">
+		</box-label-input>
+
+		<box-invio-form>
+			<button slot="invia-form">Invia</button>
+		</box-invio-form>
+	</div>
+
+<script src="allegati/comp_modulo.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>

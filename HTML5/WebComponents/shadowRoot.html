@@ -71,6 +71,7 @@ let p = document.querySelector('p');
 //console.log(p.textContent);
 
 let myComponent = document.querySelector('my-web-component');
+console.log('Shadow-Dom di my-web-component: ', myComponent.shadowRoot);
 //console.log( myComponent.firstElementChild.textContent );					// da errore (risulta null, inesistente)
 //console.log(myComponent.shadowRoot.querySelector("p").textContent);
 //myComponent.shadowRoot.querySelector("p").innerHTML = 'Ora sono diventato un\'altro';
@@ -100,9 +101,11 @@ window.customElements.define("altro-componente", AltroComponente);
 
 let altroComponente = document.querySelector('altro-componente');
 //console.log( altroComponente.shadowRoot );					// null
-//console.log( altroComponente._root );							// ShadowRoot (closed)
-// Nonostante lo ShadoRoot sia "closed" possiamo tuttavia accedervi e applicare modifiche
-let modificaComponente = altroComponente._root.querySelector('p').innerHTML = 'Modificato';
+//let modificaComponente = altroComponente.shadowRoot.querySelector('p').innerHTML = 'Modificato';		// cosi NON funziona
+
+// Nonostante lo ShadoRoot sia "closed" possiamo tuttavia accedervi e applicare modifiche in questo modo
+//console.log( altroComponente._root );							// OK (questa è la scorciatoia)
+let modificaComponente = altroComponente._root.querySelector('p').innerHTML = 'Modificato';		// OK (modifica applicata)
 
 
 ///////////////////////////////////////////////////

@@ -15,6 +15,15 @@
 			text-align: center;
 		}
  
+		ul{
+			margin: 1rem 2rem;
+		}
+		ul a {
+			text-decoration: none; 
+			color: #006600;
+		}
+
+
 	</style>
 </head>
 <body>
@@ -28,7 +37,7 @@ con la loro funzionalità incapsulata lontano dal resto del codice.
 
 <p>
 Si compone di tre tecnologie principali, che possono essere utilizzate insieme per creare elementi personalizzati versatili 
-con funzionalità incapsulate che possono essere riutilizzate ovunque, senza temere collisioni di codice:
+con funzionalità incapsulate che possono essere riutilizzati ovunque, senza temere collisioni di codice:
 	<dl>
 		<dt><b>templates</b>: pezzi di markup inerti che possono essere utilizzati quando lo si vuole</dt>
 		<dt><b>custom elements</b>: set di API Javascript che permettono di creare elementi personalizzati </dt>
@@ -38,7 +47,7 @@ con funzionalità incapsulate che possono essere riutilizzate ovunque, senza tem
 
 <h2>Templates</h2>
 <p>
-L'elemento &lt;template&gt; contiene markup inteso per essere utilizzando in un secondo momento. 
+L'elemento &lt;template&gt; contiene markup inteso per essere utilizzato in un secondo momento. 
 Il suo contenuto viene analizzato dal parser ma rimane inerte nel senso che i suoi scripts (al suo interno) 
 non vengono processati cosi come non vengono scaricate le sue immagtini ecc.. <br>
 In altre parole l'elemento non viene restituito ma lo si può referenziare con Javascript.
@@ -382,7 +391,7 @@ Vedere il file <a href="host-selectors.html">esempio</a>
 <p>
 Un aspetto importante dei <q>Web Components</q> è l'incapsulazione che consiste nel mantenere la struttura di markup, 
 stili e comportamenti nascosti e separati dal resto della pagina in modo da tenere un codice più chiaro e leggibile. <br>
-Lo <b>Shadow Dom</b> permette di allegare al documento quel codice separato e nascosto.
+Lo <b>Shadow Dom</b> permette di allegare al documento quel codice separato e nascosto. 
 </p>
 <article>
 	<img src="img/shadow-dom.png" alt="Immagine dello Shadow-dom">
@@ -432,7 +441,9 @@ di elementi personalizzati intorno alla focalizzazione. Al momento è un caratte
 non supportata da tutti i browser.
 </p>
 <p>
-In definitiva il metodo <q>attachShadow()</q> restituisce un oggetto <b>ShadowRoot</b> allegato ad un tale elemento.
+In definitiva il metodo <q>attachShadow()</q> restituisce un oggetto <b>ShadowRoot</b> allegato ad un tale elemento. 
+Vedere <a href="Shadow-Dom.html">questo file</a>
+
 </p>
 
 <h3>ShadowRoot</h3>
@@ -669,7 +680,7 @@ presenti in un tal nodo. Nel caso si tratta di un <q>elemento personalizzato Int
 
 <h3>Componente tooltip info</h3>
 <p>
-In questo <a href="tooltip-info.html">esempio</a> il componente creato è una immagine-icona che all'evento <q>hover</q>
+In questo <a href="Componenti/tooltip-info.html">esempio</a> il componente creato è una immagine-icona che all'evento <q>hover</q>
 visualizza un testo informativo
 </p>
 
@@ -679,9 +690,14 @@ In questo <a href="life-cycle_callbacks.html">esempio</a> sono stati definiti de
 dei momenti del ciclo di vita degli elementi personalizzati
 </p>
 
+<h3>Miei Componenti </h3>
+
+<ul>
+	<li><a href="Componenti/comp_modulo.html">Componenti modulo form </a></li>
+</ul>
 
 
-<br><br><br<<br><br><br><br<<br><br><br><br<<br>
+<br><br><br<<br><br><br><br<<br><br><br><br><br>
 
 <script>
 //	https://github.com/mdn/web-components-examples

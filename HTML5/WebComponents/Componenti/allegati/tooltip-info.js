@@ -1,28 +1,7 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Componente tooltip</title>
-	<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
-    <title>Pop-up info — web components</title>
-</head>
-<body>
+// Il componente "PopUpInfo" rappresenta una immagine-icona che all'evento "hover" visualizza un testo informativo 
+// Questo componente è stato inserito in "tooltip-info.html"
 
-	<h1>Pop-up info widget - web components</h1>
-
-	<form>
-		<div>
-			<label for="cvc">Enter your CVC 
-				<popup-info img="img/alt.png" data-text="Your card validation code (CVC) is an extra security feature — it is the last 3 or 4 numbers on the back of your card.">
-			</label>
-			<input type="text" id="cvc">
-		</div>
-	</form>
-
-<script>
-	
+'use strict';
 class PopUpInfo extends HTMLElement {
 
 	constructor() {
@@ -49,10 +28,10 @@ class PopUpInfo extends HTMLElement {
 
 //		Definizione dell'attributo "src" di immagine-icona
 		let imgUrl;
-		if(this.hasAttribute('img')) {					// se viene impostata una immagine (c'è) ... 
+		if(this.hasAttribute('img')) {					// se è stata impostata una immagine (impostato "alt.png") 
 			imgUrl = this.getAttribute('img');
 		} else {
-			imgUrl = 'img/default.png';					// altrimenti sarà questa
+			imgUrl = 'img/default.png';					// altrimenti sarà presa quella di default
 		}
 
 //		Creazione di elemento <img> ed inserimento nello <span class="icon">
@@ -102,11 +81,3 @@ class PopUpInfo extends HTMLElement {
 
 //	Definizione del nuovo elemento
 customElements.define('popup-info', PopUpInfo);
-	
-</script>
-
-
-
-
-  </body>
-</html>

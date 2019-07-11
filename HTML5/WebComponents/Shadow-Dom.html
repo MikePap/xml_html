@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shadow Dom explain </title>
+	<link rel="stylesheet" href="../../../baseLocali.css" type="text/css" /> 
+	<style type="text/css">
+ 
+ mio-bel-elemento, #host {
+	 color: blue;
+	 font-weight: bold;
+ }
+
+	</style>
+</head>
+<body>
+	
+	<h1>Shadow Dom</h1>
+
+<p>
+Come già detto lo <em>Shadow Dom</em> permette di allegare al documento del codice separato e nascosto. 
+Cosa vuol dire esattamente e cosa a accade quando lo <em>Shadow Dom</em> entra in azione. <br>
+Proviamo ad inserire nel nostro documento un elemento personalizzato ("mio-bel-elemento")
+</p>
+<pre>
+&lt;mio-bel-elemento&gt; Io sono il nuovo bellimbusto &lt;/mio-bel-elemento&gt;
+</pre>
+
+<mio-bel-elemento>Io sono il nuovo bellimbusto</mio-bel-elemento>
+ 
+<p>
+Il parser HTML lo analizza e lo inserisce nel DOM come un elemento sconosciuto. <br>
+Ora proviamo a definirlo creandogli un costruttore
+</p>
+<pre>
+customElements.define('mio-bel-elemento', class extends HTMLElement { 
+	constructor() {
+		super();					
+
+	}
+});
+</pre>
+<p>
+Non succede ancora nulla, il nostro bellimbusto è ancora li presente nel nostro documento in bella mostra. <br>
+Quando decidiamo che è il momento di farlo sparire perchè ha rotto le scatole, allora chiamiamo in causa lo Shadow-Dom. 
+Lo facciamo usando il metodo <b>attachShadow()</b>
+</p>
+<pre>
+	const shadow = this.attachShadow({mode: 'open'});
+
+</pre>
+<p>
+A questo punto il nostro bellimbusto scompare dal documento ed entra nello Shadow-Dom, 
+dove lo possiamo combinare a nostro piacimento (vedere commenti script).
+</p>
+
+
+<div id="host"></div>
+
+
+
+<script>
+'use strict';
+
+customElements.define('mio-bel-elemento', class extends HTMLElement { 
+	constructor() {
+		super();					// è sempre il primo
+
+		const shadow = this.attachShadow({mode: 'open'});	// ora il "bellimbusto" scompare dal documento ed entra nello Shadow-Dom 
+		let divo = document.createElement('div');
+		let mioTesto = document.createTextNode(this.textContent);
+		divo.appendChild(mioTesto);
+
+		shadow.appendChild(divo);		// cosi riappare nel documento (nella posizione originale) in <divo>  che fa parte dello Shadow-Dom e conserva gli stili CSS	
+
+//		document.body.appendChild(divo);		// cosi viene aggiunto alla fine del documento (perde stili CSS)
+
+//		document.getElementById('host').appendChild(divo);		// cosi viene aggiunto in <div id='host'> e acquisisce i stili di "host" che sono uguali ai suoi
+
+
+/*
+@@@	Il seguente non funziona, da errore: "An attempt was made to use an object that is not, or is no longer, usable"
+		divo.appendChild(this);
+		document.body.appendChild(divo);
+*/ 
+
+	}
+});
+
+
+/*
+class belWaglione extends HTMLElement {
+	constructor() {
+		super();					// è sempre il primo
+
+//		const shadow = this.attachShadow({mode: 'open'});
+
+	}//
+}//
+
+//customElements.define('mio-bel-elemento', belWaglione);
+*/
+
+</script>
+
+
+
+</body>
+</html>

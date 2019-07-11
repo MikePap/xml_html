@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it" >
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Esempi</title>
+	<link rel="stylesheet" href="../../../../baseLocali.css" type="text/css" /> 
+	<style type="text/css">
+
+
+	</style>
+
+</head>
+<body>
+
+
+	<h1>Template per moduli di form </h1>
+
+	<p>
+Ho creato due elementi personalizzati che altro non sono che dei blocchi di elementi per la costituzione di un modulo come 
+può essere quello per la registrazione di un account. <br>
+Entrambi fanno riferimento a due &lt;template&gt; separati. 
+Il primo &lt;template id="template-label-input"&gt; contiene due segnaposti (slot) che sottintendono un elemento 
+<em>label</em> ed un elemento <em>input</em>. Tale &lt;template&gt; viene richiamato dal costruttore dell'elemento 
+personalizzato <span class="nota">&lt;box-label-input&gt;</span>. <br>
+L'altro &lt;template id="template-button-invia"&gt; contiene un solo segnaposto che sottintende un elemento 
+<em>button</em> o <em>input</em> del tipo <q>submit</q> per l'invio dati del modulo. Tale &lt;template&gt; è  
+richiamato dal costruttore dell'elemento personalizzato <span class="nota">&lt;box-invio-form&gt;</span>.
+	</p>
+	<p>
+All'interno dei due costruttori è stato creato un elemento &lt;style&gt; in cui sono stati definiti 
+dei stili che possono essere modificati a secondo delle esigenze. Ad esempio il primo elemento &lt;box-label-input&gt; 
+ha come regola <q>display:flex</q> a cui ho aggiunto <q>flex-direction:row</q>; ma potrei facilmente cambiarlo in 
+<q>flex-direction:column</q> in modo da avere l'elemento &lt;input&gt; sotto il &lt;label&gt;.		
+	</p>
+
+   <template id="template-label-input">
+         <slot name="label-template"></slot>
+			<slot name="input-template"></slot>
+   </template>
+
+	<template id="template-button-invia">
+		<slot name="invia-form"></slot>
+	</template>
+
+
+   <box-label-input>
+      <label slot="label-template" for="nome">Inserisci il nome</label>
+      <input type="text" id="nome" slot="input-template">
+   </box-label-input>
+
+	<box-label-input>
+		<label for="cognome"  slot="label-template">Inserisci il cognome</label>
+		<input type="text" id="cognome" slot="input-template" >
+	</box-label-input>
+
+	<box-label-input>
+		<label for="sceltaFile" slot="label-template">Scegli un immagine dal pc</label>
+		<input type="file" id="sceltaFile" slot="input-template" >
+	</box-label-input>
+
+	<box-invio-form>
+		<button slot="invia-form">Invia</button>
+	</box-invio-form>
+
+
+<script>
+'use strict';
+
+class boxlabelInput extends HTMLElement {
+	constructor() {
+		super();					// è sempre il primo
+
+		const style = document.createElement('style');
+      const template = document.getElementById('template-label-input');
+		const templateContent = template.content;
+		const shadowRoot = this.attachShadow({mode: 'open'});
+		shadowRoot.appendChild(templateContent.cloneNode(true));
+		shadowRoot.appendChild(style);
+		let inputFile = document.querySelector('#sceltaFile');
+		inputFile.style.opacity = 0;											// @@@ tipo file
+
+		style.textContent = `
+
+			:host { 
+				margin: 2px; padding: 5px;  background: #666633; 
+				display: flex; flex-direction: row;
+				width: 50%; border: 1px solid #ccc; border-radius: 3px;
+			}
+
+			::slotted(label) { display: block; color: #fff; width: 40% }
+			::slotted(input) { display: block;  width: 60% }
+
+		`;
+
+	}//
+};//
+
+customElements.define('box-label-input', boxlabelInput);
+
+class boxInvioForm extends HTMLElement {
+	constructor() {
+		super();					// è sempre il primo
+		const style = document.createElement('style');
+      const template = document.getElementById('template-button-invia');
+		const templateContent = template.content;
+		const shadowRoot = this.attachShadow({mode: 'open'});
+		shadowRoot.appendChild(templateContent.cloneNode(true));
+		shadowRoot.appendChild(style);
+
+		style.textContent = `
+
+		:host { 
+			width: 50%; display:block; text-align:center; padding: 5px; margin: 2px; 
+			border: 1px solid gray; border-radius: 3px;  
+		
+		}
+		::slotted(:nth-child(1))  { width: 40%; color: blue; }
+
+		`;
+
+	}//
+};//
+
+customElements.define('box-invio-form', boxInvioForm);
+
+/*
+
+	":host" => fa riferimento al suo template perchè è esso che abbiamo inserito nella ShadowRoot
+	
+	"::slotted(:nth-child(1)" => fa riferimento al primo slot del template
+	"::slotted(:nth-child(2)" => fa riferimento al secondo slot del template
+
+		Ciò non toglie che possiamo definire le regole CSS all'interno del template nel tag <style> ma 
+		è preferibile nasconderle nel costruttore
+
+		-->	slot:nth-child(1) { display: block; width: 250px; color: #fff; }			OK 
+
+
+		comp_modulo.html
+
+
+*/
+
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

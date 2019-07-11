@@ -56,9 +56,13 @@
 <script>
 'use strict';
 /*
-	ATTENZIONE: 
-gli elementi <p> non vengono visualizzati perchè non hanno inizialmente lo "slot: choice" cosi come richiesto nel template.
-Pertanto è nella funzione "updateDisplay()" che avviene l'assegnazione dello slot al <p> in base al suo attributo "data-name" 
+@@@ ATTENZIONE: 
+In questo caso è il template ("summary-display-template") che viene aggiunto allo Shadom-Dom.
+Questi contiene due <slot> che sono "master-list" e "choice" i quali sono referenziati nel nostro elemento 
+personalizzato "summary-display". Pertanto nel momento in cui andiamo ad aggiungere il template allo Shadow-Dom 
+l'elemento <ul slot="master-list"> mostra i suoi <li>. Gli elementi <p> non vengono visualizzati perchè 
+non hanno inizialmente lo "slot: choice" cosi come richiesto nel template.
+E' quindi nella funzione "updateDisplay()" che avviene l'assegnazione dello slot al <p> in base al suo attributo "data-name" 
 e quindi viene visualizzato solo il <p> che combacia con il rispettivo attributo
 */
 
