@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title> Componente box  </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+
+</style>
+
+	<script src="js/aframe.min.js"></script>
+	<script src="js/box.js"></script>
+
+</head>
+<body>
+
+<h3>Creazione di un oggetto 3D che fa capo a un componente che fa uso dei metodi THREE</h3>
+
+
+<a-scene>
+	<a-entity box="width: 3.5; height: 1.25; depth: 1; color: red" position="0 0 -5"></a-entity>
+</a-scene>
+
+
+
+<script>
+
+var el = document.querySelector('a-entity');
+el.setAttribute('box', { width:2,  color: '#00f' } );					
+el.setAttribute('position', '0 0 -8');
+
+</script>
+
+
+
+</body>
+</html>
+

@@ -20,14 +20,30 @@ dd{ color:#0066FF;}
 
 <h1>Input type: color</h1>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
-Select your favorite color: <input type="color" name="favcolor"><br>
-<input type="submit" name="sub" size="" maxlength="" value="Invia"/>
-</form>
+Scegli il colore: <input type="color" id="colore"><br>
+<br>
+<input type="submit" id="subColore" value="Dammi il colore"/>
+<br><br>
+<div id="colore-scelto"></div> 
+
+<script>
+
+
+let invio = document.getElementById("subColore");
+let result = document.getElementById("colore-scelto");
+
+invio.addEventListener("click", function(){ 
+	let colore = document.getElementById("colore"); 	
+	result.innerHTML = colore.value;
+},false);
+
+
+</script>
+
 
 <?php
-
+/*
 if(isset($_POST['sub'])){
 
 $jk = $_POST['favcolor']; 
@@ -37,7 +53,7 @@ echo $jk;
 
 //$jk = $_POST['']; 
 }; //  if(isset($_POST['sub'])){
-
+*/
 ?>
 
 

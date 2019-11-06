@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<meta charset="utf-8" />
+	<title> Componente console log</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style type="text/css"></style>
+<!--
+	<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+	<script src="js/aframe.min.js"></script>
+-->
+
+	<script src="js/aframe.min.js"></script>
+	<script src="js/consoleLog.js"></script>
+
+</head>
+<body>
+
+<h1>Componente console.log </h1> 
+
+
+<a-scene>
+	<a-entity log="event: anEvent; message: Hello, Metaverse!"></a-entity>
+</a-scene>
+
+
+
+<script>
+
+//document.querySelector('a-scene').setAttribute('hello-world', '');
+
+var el = document.querySelector('a-entity');
+el.emit('anEvent');									// Hello, Metaverse!
+
+el.setAttribute('log', {event: 'anotherEvent', message: 'Hello, new event!'});
+el.emit('anotherEvent');							// Hello, new event!
+
+el.removeAttribute('log');
+el.emit('anEvent');									// ''
+el.emit('anotherEvent');							// ''
+
+/*
+//*** Per aggiungere molteplici istanze di un componente
+
+var el = document.querySelector('a-entity');
+el.setAttribute('log__helloworld', {message: 'Hello, World!'});
+el.setAttribute('log__metaverse', {message: 'Hello, Metaverse!'});
+
+*/
+
+</script>
+
+
+<!--
+
+	<a-entity hello-world></a-entity>
+
+Per aggiungere molteplici istaqnze di un componente
+
+<a-scene>
+	<a-entity log__helloworld="message: Hello, World!"
+            log__metaverse="message: Hello, Metaverse!"></a-entity>
+</a-scene>
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
