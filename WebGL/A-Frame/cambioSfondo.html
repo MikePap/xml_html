@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title> Cambio sfondo scena </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+
+</style>
+
+<!-- 
+	<script src="js/aframe.min.js"></script>
+ --> 
+
+	<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+
+<script>
+
+AFRAME.registerComponent('cambio-sfondo', {
+
+//	schema: {type: 'string', default: '#giorno'}, 
+
+/*	events: {
+		click: function (evt) {
+			var ent = this.el;										// l'entità in cui è presente il componente
+			var sfondo = document.querySelector('a-sky');
+         var imgSfondo = sfondo.getAttribute('src');
+         var testo = document.querySelector('a-text');
+			console.log( sfondo  );
+			if(imgSfondo === '#giorno') {
+				sfondo.setAttribute('src', '#notte');
+            ent.setAttribute('color', '#000');
+            testo.setAttribute('value', 'Notte');
+			} else {
+				sfondo.setAttribute('src', '#giorno');
+            ent.setAttribute('color', '#ff0');
+            testo.setAttribute('value', 'Giorno');
+			}
+		}
+	}
+*/
+	init: function() {
+		this.el.addEventListener("click", (e)=> {
+			var ent = this.el;										// l'entità in cui è presente il componente
+			var sfondo = document.querySelector('a-sky');
+         var imgSfondo = sfondo.getAttribute('src');
+         var testo = document.querySelector('a-text');
+			if(imgSfondo === '#giorno') {
+				sfondo.setAttribute('src', '#notte');
+            ent.setAttribute('color', '#000');
+            testo.setAttribute('value', 'Notte');
+			} else {
+				sfondo.setAttribute('src', '#giorno');
+            ent.setAttribute('color', '#ff0');
+            testo.setAttribute('value', 'Giorno');
+			}
+		})
+	}
+
+});
+
+
+</script>
+	 
+</head>
+<body>
+
+
+<a-scene cursor="rayOrigin: mouse">
+	<a-assets>
+		<img id="giorno" src="img/myroom.jpg" alt="Il mio soggiorno">
+		<img id="notte" src="img/puydesancy.jpg">
+		<img id="platform" src="img/01.png">
+	</a-assets>
+
+
+	<a-sky src="#giorno" ></a-sky>
+
+
+	<a-circle radius="7" position="-25 -63 -92" color="#ff0" material="" geometry="" cambio-sfondo ></a-circle>
+
+   <a-text color="red" position="-14.53 -34.95 -52.45" value="Giorno" text="width: 14.35; align: center" scale="2.5 5.44001 1.27001"></a-text>
+
+
+</a-scene>
+
+
+
+<!-- 
+
+ --> 
+
+</body>
+</html>
+
+
+
+
+
+
+
+

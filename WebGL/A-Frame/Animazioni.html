@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title> Animazioni </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+
+#acca1 {
+   position: absolute;
+   top: 1rem; left: 1rem;
+   color: blue;
+}
+
+</style>
+
+<!-- 
+	<script src="js/aframe.min.js"></script>
+	<script src="js/aframe-motion-capture-components.min.js"></script>
+ --> 
+
+	<script src="js/aframe.min.js"></script>
+	<script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+   <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+</head>
+<body>
+
+<h1 id="acca1" >Animazioni</h1> 
+
+
+<a-scene background="color: #FAFAFA" environment="preset: forest">
+	<a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: #box"></a-entity>
+	
+	<a-entity id="box" geometry="primitive: box" material="color: red" position="0 1.8 -3" rotation="0 30 0"
+   animation__mouseenter="property: components.material.material.color; type: color; from: red; to: blue; startEvents: mouseenter; dur: 500"
+   animation__mouseleave="property: components.material.material.color; type: color; from: blue; to: red; startEvents: mouseleave; dur: 500"
+
+   ></a-entity>
+ </a-scene>
+
+
+<!-- 
+
+### Con l'uso del "event-set component" (fa riferimento al terzo script in <head>)
+
+         event-set__click="material.color: red; scale: 2 2 2"
+         event-set__mouseenter="material.color: blue"	
+         event-set__mouseleave="material.color: #ff0"	
+ 
+--> 
+
+</body>
+</html>
+
+
+
+
+
+
+
+

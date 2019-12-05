@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Link cambio pagina </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+
+</style>
+
+<!-- 
+	<script src="js/aframe.min.js"></script>
+	<script src="js/aframe-motion-capture-components.min.js"></script>
+ --> 
+
+	<script src="js/aframe.min.js"></script>
+
+	<script>
+		AFRAME.registerComponent("mylink", {
+			init: function() {
+				this.el.addEventListener("click", (e)=> {
+					window.location = this.data.href;
+				})
+			}
+
+/*
+//			Va bene anche con questo metodo
+			events: {
+				click: function (evt) {
+					console.log('This entity was clicked!');
+					window.location = this.data.href;
+				}
+			}
+*/
+		});
+	</script>
+	 
+</head>
+<body>
+
+	
+<a-scene cursor="rayOrigin: mouse">
+
+	<a-assets>
+		<img id="mio-soggiorno" src="img/myroom.jpg" alt="Il mio soggiorno">
+		<img id="jak" src="img/puydesancy.jpg">
+	</a-assets>
+
+
+	<a-sky src="#mio-soggiorno" rotation="-4.54 -0.81 0.74" material="" geometry="" scale="-1 0.7 0.97"></a-sky>
+
+	<a-text color="yellow" position="-4.5 1.5 -5.6 " value="HomePage" mylink="href: hello_A-Frame.html;"></a-text>
+	
+
+	
+</a-scene>
+
+
+<script>
+
+let testo = document.querySelector('a-text');
+console.log( testo.getAttribute('value')  );							// ok
+
+
+</script>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
